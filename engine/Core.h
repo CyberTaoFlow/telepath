@@ -1,8 +1,6 @@
 #ifndef _Core_h
 #define _Core_h
 
-
-
 #include <vector>
 #include <boost/unordered_set.hpp>
 
