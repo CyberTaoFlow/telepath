@@ -407,6 +407,7 @@ create_tarball() {
 
 cd ..
 svn up
+git pull
 cd trunk
 
 VER=`svn info | grep Revision | sed  's/Revision: //'`
