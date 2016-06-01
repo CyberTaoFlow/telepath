@@ -1,0 +1,4 @@
+Required:
+	responsive.py
+	repold.txt
+	log.txt

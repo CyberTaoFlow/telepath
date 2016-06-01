@@ -1,0 +1,64 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "c_NetworkIpsStore",
+        "storeId": "c_NetworkIpsStore"
+    },
+    "designerId": "22e02e0f-2a38-463c-92ff-affa7db0dbec",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "38823e19-5565-4deb-92a4-94725173a026",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "df81a330-b953-45a9-9bdf-d99e7afed63e"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "IP"
+            },
+            "designerId": "f1ce3742-1df3-473d-9d83-d9b9061aadfe"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onJsonstoreAdd",
+                "implHandler": [
+                    "Ext.getCmp(\"c_network_ip\").clearInvalid();"
+                ],
+                "name": "add",
+                "scope": "me"
+            },
+            "designerId": "5c5be3d3-6709-40c6-808b-85e9225dd534"
+        }
+    ]
+}

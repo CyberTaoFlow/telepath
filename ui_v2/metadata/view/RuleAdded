@@ -1,0 +1,78 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "closable": false,
+        "designer|snapToGrid": 10,
+        "designer|userClassName": "RuleAdded",
+        "draggable": false,
+        "height": 109,
+        "id": "ruleAdded",
+        "layout": "absolute",
+        "resizable": [
+            "false"
+        ],
+        "title": "",
+        "width": 340
+    },
+    "designerId": "8b9b1c2b-dd74-414c-991a-75ca14393e1c",
+    "cn": [
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "height": 40,
+                "layout|x": 100,
+                "layout|y": 30,
+                "style": [
+                    "font-weight:bold; text-align:center;",
+                    ""
+                ],
+                "text": "The criterion has been successfuly added",
+                "width": 190
+            },
+            "designerId": "aee2a637-212a-411f-bde8-f3d436507792"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onRuleAddedHide",
+                "implHandler": [
+                    "component.destroy();"
+                ],
+                "name": "hide",
+                "scope": "me"
+            },
+            "designerId": "67e8eae6-7781-4449-bdc9-a0c7ec575e2a"
+        },
+        {
+            "type": "Ext.Img",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "height": 50,
+                "layout|x": 20,
+                "layout|y": 20,
+                "src": "Htmls/images/success.gif",
+                "width": 50
+            },
+            "designerId": "8ee81c98-e7a1-466d-bf16-f34fb7177cc5"
+        }
+    ]
+}

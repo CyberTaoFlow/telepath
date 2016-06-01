@@ -1,0 +1,54 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "data": [
+            "[",
+            "{field:\"High\"},",
+            "{field:\"Medium\"},",
+            "{field:\"Low\"}",
+            "]"
+        ],
+        "designer|userClassName": "b_rgiLiteralFieldStore",
+        "storeId": "b_rgiLiteralFieldStore"
+    },
+    "designerId": "5f2a805d-d056-4576-822a-c0ba3a457fdf",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "e8eed5f1-9a7d-4441-a1a9-2bc46020e238",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "ef3a093d-770b-433c-8864-931bbb6bfbe3"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "field"
+            },
+            "designerId": "9b8f65d7-18d0-492b-98a7-fb882a86efbb"
+        }
+    ]
+}

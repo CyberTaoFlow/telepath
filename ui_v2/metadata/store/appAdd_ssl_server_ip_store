@@ -1,0 +1,67 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "appAdd_ssl_server_ip_store",
+        "designer|userClassName": "appAdd_ssl_server_ip_store",
+        "storeId": "appAdd_ssl_server_ip_store"
+    },
+    "designerId": "4bc74d6f-5864-4429-8341-9c651361f069",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "f3c57a5a-d737-434b-91c7-7cb1170a9c1a",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "3839eefd-8b8c-485c-9f2c-71a2f35f62d0"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "ip"
+            },
+            "designerId": "097ae748-20fd-49e4-941a-c4ac4b427b7d"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onJsonstoreAdd",
+                "implHandler": [
+                    "if (records.length){",
+                    "\tExt.getCmp('app_wizard_general_add_ip_list_alert').hide();    ",
+                    "}"
+                ],
+                "name": "add",
+                "scope": "me"
+            },
+            "designerId": "6889771a-7311-4596-bc31-0344804b48d3"
+        }
+    ]
+}

@@ -1,0 +1,1471 @@
+{
+    "type": "Ext.panel.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "alerts",
+        "designer|userClassName": "Alerts",
+        "id": "alertsPanel",
+        "layout": "fit",
+        "title": "Alerts"
+    },
+    "designerId": "9c562470-b206-4820-a2b4-e029027ae65c",
+    "cn": [
+        {
+            "type": "Ext.panel.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout": "fit"
+            },
+            "designerId": "0f370a54-ceb7-44fa-9c3e-28301df7c0b0",
+            "cn": [
+                {
+                    "type": "Ext.panel.Panel",
+                    "reference": {
+                        "name": "dockedItems",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "collapseDirection": "left",
+                        "collapsible": true,
+                        "dock": "left",
+                        "layout": "fit",
+                        "maxWidth": 330,
+                        "title": "Filters",
+                        "width": 338
+                    },
+                    "designerId": "1f007b73-d1c9-4d20-ba01-b3eaa0adb89b",
+                    "cn": [
+                        {
+                            "type": "Ext.toolbar.Toolbar",
+                            "reference": {
+                                "name": "dockedItems",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dock": "top",
+                                "height": null
+                            },
+                            "designerId": "a7dcd97f-f23b-4a60-86af-15858d15e99b",
+                            "cn": [
+                                {
+                                    "type": "Ext.button.Button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "icon": "Htmls/images/search.png",
+                                        "id": "a_search",
+                                        "layout|flex": null,
+                                        "text": "Apply"
+                                    },
+                                    "designerId": "17a18275-4401-4ebe-b926-8508e32aa949",
+                                    "cn": [
+                                        {
+                                            "type": "basiceventbinding",
+                                            "reference": {
+                                                "name": "listeners",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fn": "onA_searchClick",
+                                                "implHandler": [
+                                                    "telepath.alerts.filter.apply();"
+                                                ],
+                                                "name": "click",
+                                                "scope": "me"
+                                            },
+                                            "designerId": "8c57e25a-21ed-4a34-b281-4e4f7291a5df"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Ext.toolbar.Separator",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "layout|flex": null
+                                    },
+                                    "designerId": "4a1b86c9-be33-4149-809e-2dab462a6df2"
+                                },
+                                {
+                                    "type": "Ext.button.Button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "icon": "Htmls/images/undo.png",
+                                        "id": "a_reset",
+                                        "layout|flex": null,
+                                        "text": "Reset"
+                                    },
+                                    "designerId": "0675342b-11b4-4e73-ade6-027b58dfa58a",
+                                    "cn": [
+                                        {
+                                            "type": "basiceventbinding",
+                                            "reference": {
+                                                "name": "listeners",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fn": "onA_resetClick",
+                                                "implHandler": [
+                                                    "telepath.alerts.filter.reset();"
+                                                ],
+                                                "name": "click",
+                                                "scope": "me"
+                                            },
+                                            "designerId": "164a0294-19f4-4156-ade3-3523f530ce79"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.container.Container",
+                            "reference": {
+                                "name": "dockedItems",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|snapToGrid": 10,
+                                "dock": "top",
+                                "height": 600,
+                                "id": "alertFilters",
+                                "layout": "absolute"
+                            },
+                            "designerId": "1117c4d1-df9a-48ce-bad5-aa8bc2481fa5",
+                            "cn": [
+                                {
+                                    "type": "Ext.form.field.Date",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "editable": false,
+                                        "emptyText": "Choose Date",
+                                        "fieldLabel": "From",
+                                        "format": "d/m/y",
+                                        "id": "a_startDate",
+                                        "labelSeparator": " ",
+                                        "labelWidth": 70,
+                                        "layout|x": 10,
+                                        "layout|y": 10,
+                                        "width": 210
+                                    },
+                                    "designerId": "36c02548-a116-4969-b448-eef8504abc5d",
+                                    "cn": [
+                                        {
+                                            "type": "basiceventbinding",
+                                            "reference": {
+                                                "name": "listeners",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fn": "onI_startDateChange1",
+                                                "implHandler": [
+                                                    "telepath.alerts.changeFilter(field, newValue, oldValue, eOpts);"
+                                                ],
+                                                "name": "change",
+                                                "scope": "me"
+                                            },
+                                            "designerId": "738fe03e-b1a1-4c47-8db0-88e5b10a5443"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Ext.form.field.Time",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "editable": false,
+                                        "fieldLabel": "",
+                                        "format": "G:i",
+                                        "id": "a_fromHour",
+                                        "layout|x": 230,
+                                        "layout|y": 10,
+                                        "value": [
+                                            "\"0:00\""
+                                        ],
+                                        "width": 90
+                                    },
+                                    "designerId": "65920b42-29d7-40c4-975f-5c12a79d8416",
+                                    "cn": [
+                                        {
+                                            "type": "basiceventbinding",
+                                            "reference": {
+                                                "name": "listeners",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fn": "onI_fromHourChange1",
+                                                "implHandler": [
+                                                    "telepath.alerts.changeFilter(field, newValue, oldValue, eOpts);"
+                                                ],
+                                                "name": "change",
+                                                "scope": "me"
+                                            },
+                                            "designerId": "6f51e791-5780-4804-b099-8e2df09ef20f"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Ext.form.field.Date",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "editable": false,
+                                        "emptyText": "Choose Date",
+                                        "fieldLabel": "To",
+                                        "format": "d/m/y",
+                                        "id": "a_endDate",
+                                        "labelSeparator": " ",
+                                        "labelWidth": 70,
+                                        "layout|x": 10,
+                                        "layout|y": 40,
+                                        "width": 210
+                                    },
+                                    "designerId": "f240fb7c-cd78-420c-a2b8-41c0e988e091",
+                                    "cn": [
+                                        {
+                                            "type": "basiceventbinding",
+                                            "reference": {
+                                                "name": "listeners",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fn": "onI_endDateChange1",
+                                                "implHandler": [
+                                                    "telepath.alerts.changeFilter(field, newValue, oldValue, eOpts);"
+                                                ],
+                                                "name": "change",
+                                                "scope": "me"
+                                            },
+                                            "designerId": "6a6375c2-e60b-4b48-9ef7-5162f4a651c5"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Ext.form.field.Time",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "editable": false,
+                                        "fieldLabel": "",
+                                        "format": "G:i ",
+                                        "id": "a_toHour",
+                                        "layout|x": 230,
+                                        "layout|y": 40,
+                                        "value": [
+                                            "\"23:59\""
+                                        ],
+                                        "width": 90
+                                    },
+                                    "designerId": "5ce2c45f-33bd-4c64-9250-b970e3717248",
+                                    "cn": [
+                                        {
+                                            "type": "basiceventbinding",
+                                            "reference": {
+                                                "name": "listeners",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fn": "onI_toHourChange1",
+                                                "implHandler": [
+                                                    "telepath.alerts.changeFilter(field, newValue, oldValue, eOpts);"
+                                                ],
+                                                "name": "change",
+                                                "scope": "me"
+                                            },
+                                            "designerId": "9e3e3d57-72a5-440b-9d6d-7366c35140e6"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Ext.grid.Panel",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "enableColumnHide": false,
+                                        "enableColumnMove": false,
+                                        "enableColumnResize": false,
+                                        "height": 360,
+                                        "id": "a_filter_ip",
+                                        "layout|x": 0,
+                                        "layout|y": 240,
+                                        "store": "alerts_ips",
+                                        "title": "IP Filter"
+                                    },
+                                    "designerId": "d82f3e8c-a150-4784-a046-ba1f06696cca",
+                                    "cn": [
+                                        {
+                                            "type": "Ext.grid.column.Column",
+                                            "reference": {
+                                                "name": "columns",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "dataIndex": "IP",
+                                                "flex": 1,
+                                                "text": "IP Address"
+                                            },
+                                            "designerId": "5b87cfb6-25c9-43a9-8bf6-2982cb214793"
+                                        },
+                                        {
+                                            "type": "Ext.grid.View",
+                                            "reference": {
+                                                "name": "viewConfig",
+                                                "type": "object"
+                                            },
+                                            "codeClass": null,
+                                            "designerId": "398cf049-4058-4952-b44e-5d8abe8edd31"
+                                        },
+                                        {
+                                            "type": "Ext.selection.CheckboxModel",
+                                            "reference": {
+                                                "name": "selModel",
+                                                "type": "object"
+                                            },
+                                            "codeClass": "Ext.selection.CheckboxModel",
+                                            "designerId": "2016de56-1593-4e06-835d-bf71278ae4c7"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.container.Container",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dock": null,
+                                "height": 351,
+                                "layout": "fit"
+                            },
+                            "designerId": "a9e4832e-25b8-4900-83bd-8fe1ccae0a1b",
+                            "cn": [
+                                {
+                                    "type": "Ext.tree.Panel",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "id": "a_filter_rule",
+                                        "store": "a_rulesStore",
+                                        "title": "Rule Filter"
+                                    },
+                                    "designerId": "a717f140-019a-4917-a120-84eec9c7edde",
+                                    "cn": [
+                                        {
+                                            "type": "Ext.selection.RowModel",
+                                            "reference": {
+                                                "name": "selModel",
+                                                "type": "object"
+                                            },
+                                            "codeClass": "Ext.selection.RowModel",
+                                            "userConfig": {
+                                                "allowDeselect": true,
+                                                "mode": "MULTI"
+                                            },
+                                            "designerId": "12b444e6-3f7a-45eb-8ff2-febb92a6a2a7"
+                                        },
+                                        {
+                                            "type": "Ext.tree.View",
+                                            "reference": {
+                                                "name": "viewConfig",
+                                                "type": "object"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "id": "AlertsRuleFilter"
+                                            },
+                                            "designerId": "d46ecc8d-3cea-42a3-88f1-098667387e48"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.grid.Panel",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "collapsed": false,
+                        "enableColumnHide": false,
+                        "enableColumnMove": false,
+                        "forceFit": true,
+                        "height": null,
+                        "id": "a_alertsTable",
+                        "manageHeight": false,
+                        "padding": null,
+                        "store": "alerts",
+                        "title": null
+                    },
+                    "designerId": "e99ceda1-adb2-46ac-8b77-7586d72de4c6",
+                    "cn": [
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "autoRender": true,
+                                "autoShow": true,
+                                "draggable": false,
+                                "id": "alerts-checkbox",
+                                "maxWidth": 33,
+                                "minWidth": 33,
+                                "resizable": false,
+                                "sortable": false,
+                                "text": "<input type=\"checkbox\" class=\"alerts-checkbox-column\">",
+                                "width": 33
+                            },
+                            "designerId": "428a5591-9fa0-410a-8104-14c392469e3e",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "value",
+                                            "metaData",
+                                            "record",
+                                            "rowIndex",
+                                            "colIndex",
+                                            "store",
+                                            "view"
+                                        ],
+                                        "fn": "renderer",
+                                        "implHandler": [
+                                            "return '<input type=\"checkbox\" class=\"alerts-checkbox\" rel=\"' + record.data.td0 + '\">';",
+                                            ""
+                                        ]
+                                    },
+                                    "designerId": "e6565557-6eb4-45a5-8425-0d885fc37e86"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "td2",
+                                "defaultWidth": 50,
+                                "maxWidth": 50,
+                                "tdCls": "td-SID",
+                                "text": "SID",
+                                "width": 50
+                            },
+                            "designerId": "eb90c9a4-b53c-4759-be34-deaab6c3462f",
+                            "cn": [
+                                {
+                                    "type": "Ext.form.field.Text",
+                                    "reference": {
+                                        "name": "editor",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "allowBlank": false
+                                    },
+                                    "designerId": "edf98576-1602-4e81-9f00-250da5ca01c3"
+                                },
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "value",
+                                            "metaData",
+                                            "record",
+                                            "rowIndex",
+                                            "colIndex",
+                                            "store",
+                                            "view"
+                                        ],
+                                        "fn": "renderer",
+                                        "implHandler": [
+                                            "if(!SIDS[record.data.td2]) {",
+                                            "    SIDS[record.data.td2] = Object.keys(SIDS).length;",
+                                            "}",
+                                            "return Object.keys(SIDS).indexOf(record.data.td2);"
+                                        ]
+                                    },
+                                    "designerId": "9e9521aa-1e04-4d27-a710-d7fecb3eaf7e"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "td1",
+                                "maxWidth": 110,
+                                "text": "Time"
+                            },
+                            "designerId": "2e34bafd-fe04-4297-8a5d-f4d8d5bce4a9",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "value",
+                                            "metaData",
+                                            "record",
+                                            "rowIndex",
+                                            "colIndex",
+                                            "store",
+                                            "view"
+                                        ],
+                                        "fn": "renderer",
+                                        "implHandler": [
+                                            "return date_format('d/m/y H:i:s', value);"
+                                        ]
+                                    },
+                                    "designerId": "efd6defe-639f-40cb-b6da-7d6774baf7ba"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "td7",
+                                "defaultWidth": 50,
+                                "maxWidth": 50,
+                                "text": "Score"
+                            },
+                            "designerId": "77cec255-c722-4f69-850c-ab5ae9abab2c"
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "td4",
+                                "maxWidth": 100,
+                                "text": "IP",
+                                "width": 100
+                            },
+                            "designerId": "5f104da7-5b8b-4349-a6fa-a39f453400c2",
+                            "cn": [
+                                {
+                                    "type": "Ext.form.field.Text",
+                                    "reference": {
+                                        "name": "editor",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "allowBlank": false
+                                    },
+                                    "designerId": "56f1f29f-c44d-4be4-815d-01dc6d86b889"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "td9",
+                                "text": "Location"
+                            },
+                            "designerId": "6d982aa0-f11f-480b-846f-f4adf3035088",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "value",
+                                            "metaData",
+                                            "record",
+                                            "rowIndex",
+                                            "colIndex",
+                                            "store",
+                                            "view"
+                                        ],
+                                        "fn": "renderer",
+                                        "implHandler": [
+                                            "return '<div><span class=\"flag flag-' + record.data['td9'].toLowerCase() + '\"></span>&nbsp;&nbsp;' ",
+                                            "+ aliasToName[record.data['td9']] + (record.data['td10'] != 'Unknown' ? ', ' + record.data['td10'] : '') + '</div>';"
+                                        ]
+                                    },
+                                    "designerId": "9a435c16-2137-4337-b627-ce6e5b956393"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "td5",
+                                "text": "Rule Group"
+                            },
+                            "designerId": "632b6623-1b53-4734-ae54-3179f48d39a3",
+                            "cn": [
+                                {
+                                    "type": "Ext.form.field.Text",
+                                    "reference": {
+                                        "name": "editor",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "allowBlank": false
+                                    },
+                                    "designerId": "0c27c151-eae2-46e3-bc2a-e1a396fd4f35"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "td0",
+                                "hidden": true,
+                                "text": "Alert ID"
+                            },
+                            "designerId": "8af33d59-f317-423b-b84a-14cda9923d17"
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "td3",
+                                "hidden": true,
+                                "text": "User"
+                            },
+                            "designerId": "92376035-f908-4eac-ab4f-703d022ed793",
+                            "cn": [
+                                {
+                                    "type": "Ext.form.field.Text",
+                                    "reference": {
+                                        "name": "editor",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "allowBlank": false
+                                    },
+                                    "designerId": "22470326-9113-405d-8160-45e0206409f5"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "td6",
+                                "hidden": true,
+                                "text": "Description"
+                            },
+                            "designerId": "f66bb7b9-072c-4cf2-a153-a5404f23cf3d",
+                            "cn": [
+                                {
+                                    "type": "Ext.form.field.Text",
+                                    "reference": {
+                                        "name": "editor",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "allowBlank": false
+                                    },
+                                    "designerId": "6aea3bab-b407-438a-b1a2-6fefc51a5b80"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "td8",
+                                "maxWidth": 70,
+                                "text": "Aggregate"
+                            },
+                            "designerId": "e957a1d3-d258-4a5a-9761-098716fe1e98"
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "td10",
+                                "hidden": true,
+                                "text": "City"
+                            },
+                            "designerId": "05b47e62-0d74-43d9-bb69-7c1cab7637e3"
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "td11",
+                                "text": "Domain"
+                            },
+                            "designerId": "bd1b90f2-4c04-4f9e-9643-71bd85d2c6ee",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "value",
+                                            "metaData",
+                                            "record",
+                                            "rowIndex",
+                                            "colIndex",
+                                            "store",
+                                            "view"
+                                        ],
+                                        "fn": "renderer",
+                                        "implHandler": [
+                                            "if (value==\"None\" || !value)",
+                                            "return '<div>n/a</div>';",
+                                            "else",
+                                            "return value;"
+                                        ]
+                                    },
+                                    "designerId": "8213f23e-7eae-43ec-9668-02e938112b50"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "td13",
+                                "hidden": true,
+                                "id": "a_par_name_col",
+                                "maxWidth": null,
+                                "minWidth": 150,
+                                "text": "Name",
+                                "width": 150
+                            },
+                            "designerId": "743b3826-3f93-4849-839b-6ba5623f4f5e",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "value",
+                                            "metaData",
+                                            "record",
+                                            "rowIndex",
+                                            "colIndex",
+                                            "store",
+                                            "view"
+                                        ],
+                                        "fn": "renderer",
+                                        "implHandler": [
+                                            "var vals = value",
+                                            "if (vals.length){    ",
+                                            "    return \"<div align=\\\"left\\\" onmouseover=\\\"hovered_alert_params(\"+rowIndex+\",\"+colIndex+\")\\\">\"+vals[0]['par']+\"...</div>\"",
+                                            "}",
+                                            "else",
+                                            "return \"\"",
+                                            ""
+                                        ]
+                                    },
+                                    "designerId": "184ac36f-1ed6-4693-a1ca-b60390d5712d"
+                                },
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onA_par_name_colResize",
+                                        "implHandler": [
+                                            "resize_alert_params_window()"
+                                        ],
+                                        "name": "resize",
+                                        "scope": "me"
+                                    },
+                                    "designerId": "1acb571f-06d1-4e16-9de5-94ac4b2892e8"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "td12",
+                                "hidden": true,
+                                "text": "Rule Group ID"
+                            },
+                            "designerId": "d7cf2fbd-2f56-44ae-88c7-fde549c2b1df"
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "td13",
+                                "id": "a_par_val_col",
+                                "maxWidth": null,
+                                "minWidth": 150,
+                                "text": "Parameters",
+                                "width": 150
+                            },
+                            "designerId": "ecc280eb-a782-495c-a436-cbe4c302b8ea",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "value",
+                                            "metaData",
+                                            "record",
+                                            "rowIndex",
+                                            "colIndex",
+                                            "store",
+                                            "view"
+                                        ],
+                                        "fn": "renderer",
+                                        "implHandler": [
+                                            "var vals = value",
+                                            "if (vals.length){   ",
+                                            "    return \"<div align=\\\"left\\\" onmouseover=\\\"hovered_alert_params(\"+rowIndex+\",\"+colIndex+\")\\\">\"+vals[0]['par']+\"</div>\"",
+                                            "}",
+                                            "else",
+                                            "return \"\"",
+                                            ""
+                                        ]
+                                    },
+                                    "designerId": "422b4d4a-470e-4e23-8fe0-d73c7abc3a35"
+                                },
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onA_par_val_colResize",
+                                        "implHandler": [
+                                            "resize_alert_params_window()"
+                                        ],
+                                        "name": "resize",
+                                        "scope": "me"
+                                    },
+                                    "designerId": "e1a676e1-2f27-4adb-ba94-89f368549668"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.View",
+                            "reference": {
+                                "name": "viewConfig",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "designerId": "a5a92ff3-200f-4fd9-a29d-f6a32e96482d"
+                        },
+                        {
+                            "type": "Ext.toolbar.Toolbar",
+                            "reference": {
+                                "name": "dockedItems",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dock": "top",
+                                "width": 541
+                            },
+                            "designerId": "266db085-93e4-462d-a2e5-88a740d3b709",
+                            "cn": [
+                                {
+                                    "type": "Ext.button.Button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "iconCls": "icon-remove",
+                                        "id": "alerts-remove",
+                                        "layout|flex": null,
+                                        "text": "Delete Selected"
+                                    },
+                                    "designerId": "40e3335a-3215-4f9b-a5aa-26e971d492df",
+                                    "cn": [
+                                        {
+                                            "type": "basiceventbinding",
+                                            "reference": {
+                                                "name": "listeners",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fn": "alertsDeleteClick",
+                                                "implHandler": [
+                                                    "telepath.alerts.deleteSelected();"
+                                                ],
+                                                "name": "click",
+                                                "scope": "me"
+                                            },
+                                            "designerId": "7e2ff122-b106-4ba4-93b3-4117bea4e0dd"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Ext.toolbar.Separator",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "layout|flex": null
+                                    },
+                                    "designerId": "b878e9d7-c4ec-440c-97e1-78a4abb2661c"
+                                },
+                                {
+                                    "type": "Ext.button.Button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "icon": "Htmls/images/flow.png",
+                                        "id": "a_flowButton",
+                                        "layout|flex": null,
+                                        "text": "Show  Session Flow"
+                                    },
+                                    "designerId": "18b3b429-2c6c-475f-9636-cc34a3ad776f",
+                                    "cn": [
+                                        {
+                                            "type": "basiceventbinding",
+                                            "reference": {
+                                                "name": "listeners",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fn": "onA_flowButtonClick",
+                                                "implHandler": [
+                                                    "if (a_selected_row!=undefined){",
+                                                    "    Ext.getCmp('a_sessionDetails').expand();",
+                                                    "    select_row(a_selected_row);",
+                                                    "}"
+                                                ],
+                                                "name": "click",
+                                                "scope": "me"
+                                            },
+                                            "designerId": "31dde861-0960-4cbe-8a6f-13301e6fece4"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Ext.toolbar.Separator",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "layout|flex": null
+                                    },
+                                    "designerId": "e99d7a2a-4696-4551-b5a9-c594885206a7"
+                                },
+                                {
+                                    "type": "Ext.toolbar.Paging",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "border": "none",
+                                        "displayInfo": true,
+                                        "id": "a_alerts_paging",
+                                        "layout|flex": null,
+                                        "store": "alerts",
+                                        "width": 598
+                                    },
+                                    "designerId": "afeff28b-fb1f-40ec-945f-77e3c187f9cf",
+                                    "cn": [
+                                        {
+                                            "type": "Ext.toolbar.Separator",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "layout|flex": null
+                                            },
+                                            "designerId": "8e4ce846-94ae-4ee9-b601-3ec183c7a128"
+                                        },
+                                        {
+                                            "type": "basiceventbinding",
+                                            "reference": {
+                                                "name": "listeners",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fn": "onA_alerts_pagingBeforeChange",
+                                                "implHandler": [
+                                                    "return telepath.alerts.pagingBeforeChange(pagingtoolbar, page, eOpts);"
+                                                ],
+                                                "name": "beforechange",
+                                                "scope": "me"
+                                            },
+                                            "designerId": "da05a335-f771-4ecb-9932-8c8b61252582"
+                                        },
+                                        {
+                                            "type": "Ext.form.field.Checkbox",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "boxLabel": "",
+                                                "checked": true,
+                                                "fieldLabel": null,
+                                                "id": "a_refresh_checkbox",
+                                                "labelPad": 1,
+                                                "labelStyle": "",
+                                                "layout|flex": null
+                                            },
+                                            "designerId": "b6cf9414-0476-4be1-b882-e9cb409747a3",
+                                            "cn": [
+                                                {
+                                                    "type": "basiceventbinding",
+                                                    "reference": {
+                                                        "name": "listeners",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "fn": "onA_refresh_checkboxChange",
+                                                        "implHandler": [
+                                                            "if (newValue){",
+                                                            "    Ext.getCmp('a_refreshRate_panel').enable();",
+                                                            "    start_alerts_refresh(Ext.getCmp('a_refreshRate').getValue());",
+                                                            "}",
+                                                            "else{",
+                                                            "    Ext.getCmp('a_refreshRate_panel').disable();",
+                                                            "    stop_alerts_refresh();",
+                                                            "}"
+                                                        ],
+                                                        "name": "change",
+                                                        "scope": "me"
+                                                    },
+                                                    "designerId": "7989102f-5449-467b-abdf-6b94777ebb60"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "Ext.form.FieldContainer",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fieldLabel": "",
+                                                "height": null,
+                                                "id": "a_refreshRate_panel",
+                                                "layout": "column",
+                                                "layout|flex": null,
+                                                "width": 178
+                                            },
+                                            "designerId": "1d76a5fd-9492-4cfb-bad2-5b721a966f8c",
+                                            "cn": [
+                                                {
+                                                    "type": "Ext.form.field.ComboBox",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "displayField": "val",
+                                                        "fieldLabel": "Auto-refresh (Mins)",
+                                                        "id": "a_refreshRate",
+                                                        "labelSeparator": " ",
+                                                        "queryMode": "local",
+                                                        "store": "d_refreshStore",
+                                                        "style": [
+                                                            "margin-left:5px;",
+                                                            "margin-top:3px"
+                                                        ],
+                                                        "value": [
+                                                            "1"
+                                                        ],
+                                                        "width": 165
+                                                    },
+                                                    "designerId": "da94d0a0-f8dd-4ef2-8c6d-6d0a15a1e4f2",
+                                                    "cn": [
+                                                        {
+                                                            "type": "basiceventbinding",
+                                                            "reference": {
+                                                                "name": "listeners",
+                                                                "type": "array"
+                                                            },
+                                                            "codeClass": null,
+                                                            "userConfig": {
+                                                                "fn": "onA_refreshRateChange",
+                                                                "implHandler": [
+                                                                    "stop_alerts_refresh();",
+                                                                    "start_alerts_refresh(newValue);"
+                                                                ],
+                                                                "name": "change",
+                                                                "scope": "me"
+                                                            },
+                                                            "designerId": "c5920b28-3db6-403d-822e-c3d159f70571"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.selection.CellModel",
+                            "reference": {
+                                "name": "selModel",
+                                "type": "object"
+                            },
+                            "codeClass": "Ext.selection.CellModel",
+                            "designerId": "3c5e0775-f535-4d69-b3f5-bf02746d3c19",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onCellselectionmodelSelect2",
+                                        "implHandler": [
+                                            "alerts_cell_num = column;",
+                                            "setTimeout(function () {",
+                                            "\talerts_selected_index = cellmodel.selection.columnHeader.dataIndex;",
+                                            "}, 50);"
+                                        ],
+                                        "name": "select",
+                                        "scope": "me"
+                                    },
+                                    "designerId": "55cb0a23-0f6d-45f8-94fb-d8330a3f2d30"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onA_alertsTableSelect",
+                                "implHandler": [
+                                    "a_selected_row = record;"
+                                ],
+                                "name": "select",
+                                "scope": "me"
+                            },
+                            "designerId": "e4c3d937-d4fa-4f3d-83a1-2577d830168d"
+                        },
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onA_alertsTableCollapse",
+                                "implHandler": [
+                                    "if(a_selected_row!=undefined){",
+                                    "    draw_session_flow();",
+                                    "}"
+                                ],
+                                "name": "collapse",
+                                "scope": "me"
+                            },
+                            "designerId": "f7e746cd-5d88-4313-85b7-cb62b7dad166"
+                        },
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onA_alertsTableExpand",
+                                "implHandler": [
+                                    "if(a_selected_row!=undefined){",
+                                    "    draw_session_flow();",
+                                    "}"
+                                ],
+                                "name": "expand",
+                                "scope": "me"
+                            },
+                            "designerId": "56687e6a-0187-4fa3-abc6-43dadec4ca8d"
+                        },
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onA_alertsTableItemContextMenu",
+                                "implHandler": [
+                                    "show_alerts_menu(dataview,record,item,index,e,eOpts)",
+                                    ""
+                                ],
+                                "name": "itemcontextmenu",
+                                "scope": "me"
+                            },
+                            "designerId": "fcef97df-e6fc-4587-94c0-89ac6a6956cc"
+                        },
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onA_alertsTableSortChange",
+                                "implHandler": [
+                                    "if (a_prevField == column.dataIndex && a_prevOrder ==direction)",
+                                    "return;",
+                                    "a_prevField = column.dataIndex;",
+                                    "a_prevOrder = direction;",
+                                    "get_alerts(currType,currVal);\t",
+                                    ""
+                                ],
+                                "name": "sortchange",
+                                "scope": "me"
+                            },
+                            "designerId": "f6b68dd2-f77a-44b4-93c8-817167fb8801"
+                        },
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onA_alertsTableRender",
+                                "implHandler": [
+                                    "create_params_table()"
+                                ],
+                                "name": "render",
+                                "scope": "me"
+                            },
+                            "designerId": "c3f9caf1-ef06-467c-be07-5c47fb45173a"
+                        },
+                        {
+                            "type": "processcfgfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "config"
+                                ],
+                                "fn": "processA_alertsTable",
+                                "implHandler": [
+                                    "if(!config.viewConfig) {",
+                                    "    config.viewConfig = {};",
+                                    "}",
+                                    "",
+                                    "config.viewConfig.getRowClass = function (record) {",
+                                    "    if(!SIDS[record.data.td2]) {",
+                                    "        SIDS[record.data.td2] = Object.keys(SIDS).length;",
+                                    "    }",
+                                    "    return 'sid-color-' + (Object.keys(SIDS).indexOf(record.data.td2) % 10);",
+                                    "}",
+                                    "",
+                                    "return config;"
+                                ]
+                            },
+                            "designerId": "7ae110d0-cdc7-49ae-8775-c1a1451a506c"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Ext.panel.Panel",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "collapseDirection": "bottom",
+                "collapsed": true,
+                "collapsible": true,
+                "dock": "bottom",
+                "height": 500,
+                "id": "a_sessionDetails",
+                "maxHeight": 500,
+                "minHeight": null,
+                "padding": "",
+                "title": "Session Flow"
+            },
+            "designerId": "608cb7aa-6d83-418e-88c3-98a34dd43384"
+        }
+    ]
+}

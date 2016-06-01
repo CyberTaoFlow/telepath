@@ -1,0 +1,102 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "autoLoad": null,
+        "designer|userClassName": "rw_geoInsideChosen",
+        "storeId": "rw_geoInsideChosen"
+    },
+    "designerId": "694e196a-6653-4442-ae4c-d71f9b4da492",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "url": null
+            },
+            "designerId": "996ebdfc-24e3-4d40-841e-753f01763c0b",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "root": "countries"
+                    },
+                    "designerId": "8be068cc-0ea9-4cc2-bbd5-fff6e6e09eab"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "Country"
+            },
+            "designerId": "1c230e24-f51d-45e1-8341-f2d022c51d12"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onJsonstoreAdd",
+                "implHandler": [
+                    "Ext.getCmp('RWgeo_submit').enable();"
+                ],
+                "name": "add",
+                "scope": "me"
+            },
+            "designerId": "d6d9d32c-22c3-43d0-a0c3-bc5d50c02160"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onJsonstoreRemove",
+                "implHandler": [
+                    "if (store.getCount()==0){",
+                    "    Ext.getCmp('RWgeo_submit').disable();   ",
+                    "}"
+                ],
+                "name": "remove",
+                "scope": "me"
+            },
+            "designerId": "7d58cba7-5611-4a58-87e0-75d5b7ddd9dc"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "Alias"
+            },
+            "designerId": "a7d2b08e-acee-4068-8bcf-18875749016d"
+        }
+    ]
+}

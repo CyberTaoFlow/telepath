@@ -1,0 +1,88 @@
+<div class="tele-dashboard-block">
+				<div class="tele-block-title">Recent Cases</div>
+				<ul class="tele-list">
+					<li class="tele-listitem">
+						<div class="tele-listitem-icon tele-icon-case">&nbsp;</div>
+						<div class="tele-listitem-title"></div>
+						<ul class="tele-listitem-info tele-listitem-icon-case">
+							<li>Bruteforce</li>
+							<li>ID: <b>0123456789</b></li>
+						</ul>
+					</li>
+					<li class="tele-listitem">
+						<div class="tele-listitem-icon tele-icon-case">&nbsp;</div>
+						<div class="tele-listitem-count">6</div>
+						<div class="tele-listitem-title">Transaction risk-scoring systems</div>
+						<ul class="tele-listitem-info tele-listitem-icon-case">
+							<li>Bruteforce</li>
+							<li>ID: <b>0123456789</b></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			
+			<div class="tele-dashboard-block">
+			
+				<div class="tele-block-title">Recent Alerts</div>
+				<ul class="tele-list">
+					<li class="tele-listitem">
+						
+						
+						<div class="tele-listitem-title">Transaction risk-scoring systems</div>
+						<ul class="tele-listitem-info tele-listitem-icon-case">
+							<li>Bruteforce</li>
+							<li>ID: <b>0123456789</b></li>
+						</ul>
+						<div class="tele-listitem-time">9:55AM</div>
+					</li>
+					<li class="tele-listitem">
+						<div class="tele-listitem-icon tele-icon-alert2">&nbsp;</div>
+						<div class="tele-listitem-count">22</div>
+						<div class="tele-listitem-title">Transaction risk-scoring systems</div>
+						<ul class="tele-listitem-info tele-listitem-icon-case">
+							<li>Bruteforce</li>
+							<li>ID: <b>0123456789</b></li>
+						</ul>
+						<div class="tele-listitem-time">9:55AM</div>
+					</li>
+					<li class="tele-listitem">
+						<div class="tele-listitem-icon tele-icon-alert">&nbsp;</div>
+						<div class="tele-listitem-title">Transaction risk-scoring systems</div>
+						<ul class="tele-listitem-info tele-listitem-icon-case">
+							<li>Bruteforce</li>
+							<li>ID: <b>0123456789</b></li>
+						</ul>
+						<div class="tele-listitem-time">9:55AM</div>
+					</li>
+				</ul>
+			</div>
+			
+			<div class="tele-dashboard-block">
+				<div class="tele-block-title">Top Suspects</div>
+				<ul class="tele-list">
+					<li class="tele-listitem">
+						<div class="tele-listitem-icon tele-icon-suspect">&nbsp;</div>
+						<div class="tele-listitem-title">Transaction risk-scoring systems</div>
+						<ul class="tele-listitem-info tele-listitem-icon-case">
+							<li>Action: <b>Bruteforce</b></li>
+							<li>ID: <b>0123456789</b></li>
+						</ul>
+						<div class="tele-listitem-time">9:55AM</div>
+						<div class="tele-listitem-progbar">
+							<div class="tele-listitem-progbar-inner" style="width: 60%"></div>
+						</div>
+					</li>
+					<li class="tele-listitem">
+						<div class="tele-listitem-icon tele-icon-suspect">&nbsp;</div>
+						<div class="tele-listitem-title">Transaction risk-scoring systems</div>
+						<ul class="tele-listitem-info tele-listitem-icon-case">
+							<li>Action: <b>Bruteforce</b></li>
+							<li>Action: <b>Sending SMS</b></li>
+						</ul>
+						<div class="tele-listitem-time">9:55AM</div>
+						<div class="tele-listitem-progbar">
+							<div class="tele-listitem-progbar-inner" style="width: 20%"></div>
+						</div>
+					</li>
+				</ul>
+			</div>

@@ -1,0 +1,72 @@
+{
+    "type": "Ext.data.Store",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "agents",
+        "storeId": "agents"
+    },
+    "designerId": "a4d782e7-af1c-4785-87a3-114ce6f3d326",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Memory",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "3e0e5ce5-1ac9-4272-a6d6-0338d2831cdb"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "agent_id"
+            },
+            "designerId": "8a0d5f4e-bc1e-4b88-b65f-38179d90099f"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "FilterExpression"
+            },
+            "designerId": "93e42569-fa24-4828-b3fd-6b7dfb1ec7a3"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "NetworkInterface"
+            },
+            "designerId": "f88f0f8a-fa61-4a86-a87e-9dd75adb30c5"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "idx"
+            },
+            "designerId": "368bc7df-1d6f-40dc-8b9b-eb193c012916"
+        }
+    ]
+}

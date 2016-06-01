@@ -1,0 +1,59 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "data": [
+            "[    ",
+            "    {method:\"OPTIONS\"},",
+            "    {method:\"GET\"},",
+            "    {method:\"HEAD\"},",
+            "    {method:\"POST\"},",
+            "    {method:\"PUT\"},",
+            "    {method:\"DELETE\"},",
+            "    {method:\"TRACE\"},",
+            "    {method:\"CONNECT\"}",
+            "]"
+        ],
+        "designer|userClassName": "global_methods_store",
+        "storeId": "global_methods_store"
+    },
+    "designerId": "96e97ade-7221-41cf-912a-39b4f20f70bc",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "72043247-17f9-4bb4-885a-d1f92045a0cd",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "bd3f1d60-51d5-4f45-8ae1-4bdac5933898"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "method"
+            },
+            "designerId": "61d8fa67-2f19-42c7-ad70-c159095289c9"
+        }
+    ]
+}

@@ -1,0 +1,71 @@
+{
+    "type": "Ext.container.Container",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|snapToGrid": 10,
+        "designer|userClassName": "RequestAttributes_balloon",
+        "floating": true,
+        "height": 21,
+        "id": "RequestAttributes_balloon",
+        "layout": "absolute",
+        "style": [
+            "{",
+            "    'background-color':'#99BBE8'",
+            "}"
+        ],
+        "width": 600
+    },
+    "designerId": "4230d121-08ab-4f60-a2c8-7f32d3445ffe",
+    "cn": [
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "height": 21,
+                "id": "RequestAttributes_balloon_label",
+                "layout|x": null,
+                "layout|y": null,
+                "style": [
+                    "{",
+                    "    'color':'white'",
+                    "}"
+                ],
+                "text": "My Label",
+                "width": 340
+            },
+            "designerId": "f0616943-9ab5-48a6-ad51-e137549cd039"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onRequestAttributes_balloonRender",
+                "implHandler": [
+                    "component.getEl().addListener('mouseenter',function(){",
+                    "    i_hovering_request_attributes_balloon = true;",
+                    "});",
+                    "",
+                    "component.getEl().addListener('mouseleave',function(){",
+                    "    i_hovering_request_attributes_balloon = false;   ",
+                    "    component.hide();",
+                    "});"
+                ],
+                "name": "render",
+                "scope": "me"
+            },
+            "designerId": "ed25a7c1-30da-4a3f-a5d4-9bc058fc256b"
+        }
+    ]
+}

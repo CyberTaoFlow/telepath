@@ -1,0 +1,70 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "general_rule_groups_store",
+        "storeId": "general_rule_groups_store"
+    },
+    "designerId": "e1913928-dd07-4ca5-afa4-8082a2b453ec",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "extraParams": [
+                    "{",
+                    "    mode:'get_rule_groups_list'   ",
+                    "}"
+                ],
+                "url": null
+            },
+            "designerId": "e4e22bfa-549a-4828-b862-9b13cf26f619",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "root": "items"
+                    },
+                    "designerId": "5a944d70-5363-48dc-9d0a-d17afdaf21a2"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "group"
+            },
+            "designerId": "76c1a234-e698-48cf-83ac-e2e4df90409d"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "id"
+            },
+            "designerId": "9a6f02ca-1dbb-41be-bf8c-60d52cfa1354"
+        }
+    ]
+}

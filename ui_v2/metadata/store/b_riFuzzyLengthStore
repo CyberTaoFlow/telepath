@@ -1,0 +1,54 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "data": [
+            "[",
+            "{length:\"Is too Short\"},",
+            "{length:\"Is too Long\"},",
+            "{length:\"Either Short/Long\"}",
+            "]"
+        ],
+        "designer|userClassName": "b_riFuzzyLengthStore",
+        "storeId": "b_riFuzzyLengthStore"
+    },
+    "designerId": "c01ddd38-90b2-4c57-b7ed-3e38d5e9bb7c",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "be721e5a-edc8-4f55-ae8f-40f3215fe377",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "e5516ea3-81e7-47f5-899b-de1b9fe3a359"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "length"
+            },
+            "designerId": "7a7a2793-505c-4691-9729-722d05a9adf9"
+        }
+    ]
+}

@@ -1,0 +1,233 @@
+{
+    "type": "Ext.tree.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "height": null,
+        "id": "",
+        "width": 600,
+        "designer|userClassName": "AppTreePanel",
+        "designer|userAlias": "apptreepanel",
+        "header": false,
+        "title": "Telepath",
+        "store": null,
+        "rootVisible": false
+    },
+    "designerId": "e9d7d5b0-bb4d-4142-ae16-a25485cdd964",
+    "isBuiltIn": true,
+    "iconCls": "icon-treegridpanel",
+    "autoName": "TreeGrid",
+    "cn": [
+        {
+            "type": "Ext.tree.View",
+            "reference": {
+                "name": "viewConfig",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "b3af0bc6-d8ce-4af7-bede-4104a58abeb4"
+        },
+        {
+            "type": "Ext.tree.Column",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "text",
+                "text": "Nodes",
+                "flex": 1
+            },
+            "designerId": "31b15f20-6bf2-41b8-ad4e-7d470842e1f1"
+        },
+        {
+            "type": "Ext.grid.column.Column",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "value",
+                "text": "Value"
+            },
+            "designerId": "89e45a30-2978-4740-8aa4-5c09f0fadfcb"
+        },
+        {
+            "type": "Ext.toolbar.Toolbar",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dock": "top",
+                "hidden": true,
+                "itemId": "AppTreeTopBar",
+                "width": 400,
+                "designer|displayName": "AppTreeTopBar"
+            },
+            "designerId": "292d1a23-b3d5-46b2-94fd-d865c581bc27"
+        },
+        {
+            "type": "Ext.toolbar.Toolbar",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dock": "top",
+                "autoRender": true,
+                "height": null,
+                "id": null,
+                "itemId": "AppTreeSearch",
+                "designer|displayName": null,
+                "designer|createAlias": null
+            },
+            "designerId": "e83bf3ce-86eb-4527-918c-83119d7c5aec",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": null,
+                        "id": null,
+                        "itemId": "AppTreeSearchInput",
+                        "padding": "0px 0px 0px 10px",
+                        "width": 169,
+                        "fieldLabel": "Search",
+                        "labelWidth": 60
+                    },
+                    "designerId": "8fc19b4b-2e6a-4e70-86a5-893e417f9694"
+                },
+                {
+                    "type": "Ext.form.field.Radio",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": null,
+                        "cls": "app-tree-search-type",
+                        "id": null,
+                        "itemId": "AppTreeSearchPages",
+                        "padding": "0px 0px 0px 10px",
+                        "designer|displayName": "",
+                        "designer|createAlias": "",
+                        "fieldLabel": "",
+                        "hideLabel": true,
+                        "name": "AppTreeSearchType",
+                        "submitValue": false,
+                        "value": [
+                            "0"
+                        ],
+                        "boxLabel": "Page",
+                        "checked": true,
+                        "inputValue": ""
+                    },
+                    "designerId": "ee2a430e-78e1-43bf-8472-39fefec33028"
+                },
+                {
+                    "type": "Ext.form.field.Radio",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": null,
+                        "cls": "app-tree-search-type",
+                        "id": null,
+                        "itemId": "AppTreeSearchParams",
+                        "padding": "0px 0px 0px 10px",
+                        "designer|displayName": "",
+                        "designer|createAlias": "",
+                        "fieldLabel": "",
+                        "hideLabel": true,
+                        "name": "AppTreeSearchType",
+                        "submitValue": false,
+                        "value": [
+                            "1"
+                        ],
+                        "boxLabel": "Param",
+                        "inputValue": ""
+                    },
+                    "designerId": "cce11fd9-38e6-4861-a25d-aa3de4fb7f2b"
+                },
+                {
+                    "type": "Ext.form.field.Radio",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": null,
+                        "cls": "app-tree-search-type",
+                        "id": null,
+                        "itemId": "AppTreeSearchApps",
+                        "padding": "0px 0px 0px 10px",
+                        "designer|displayName": "",
+                        "designer|createAlias": "",
+                        "fieldLabel": "",
+                        "hideLabel": true,
+                        "name": "AppTreeSearchType",
+                        "submitValue": false,
+                        "value": [
+                            "1"
+                        ],
+                        "boxLabel": "App",
+                        "inputValue": ""
+                    },
+                    "designerId": "b1542e6f-0614-468f-bfb2-55b539406843"
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": null,
+                        "id": null,
+                        "itemId": "AppTreeSearchButton",
+                        "margin": "0px 0px 0px 10px",
+                        "padding": null,
+                        "iconCls": "icon-search",
+                        "text": "Search"
+                    },
+                    "designerId": "a8511c01-06a4-4358-b9f5-3809302a41d4"
+                }
+            ]
+        },
+        {
+            "type": "Ext.toolbar.Toolbar",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dock": "top",
+                "autoRender": true,
+                "height": null,
+                "id": null,
+                "itemId": "AppTreeToolbar",
+                "designer|displayName": "",
+                "designer|createAlias": ""
+            },
+            "designerId": "e3f18e8b-4144-467b-a6e5-02fa18e0db86"
+        }
+    ]
+}

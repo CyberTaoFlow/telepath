@@ -1,0 +1,36 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "height": 562,
+        "width": 923,
+        "designer|userClassName": "AppTreeWindow",
+        "constrain": true,
+        "layout": "fit",
+        "title": "Applications"
+    },
+    "designerId": "87d2675d-0c1f-4094-9164-1dcef591099c",
+    "cn": [
+        {
+            "type": "linkedinstance",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dock": null,
+                "height": 456,
+                "width": 805,
+                "manageHeight": true,
+                "forceFit": false
+            },
+            "designerId": "3812876d-71bd-4ec1-91e3-b311a20ec0ae",
+            "masterInstanceId": "e9d7d5b0-bb4d-4142-ae16-a25485cdd964"
+        }
+    ]
+}

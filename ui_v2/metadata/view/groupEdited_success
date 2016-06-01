@@ -1,0 +1,75 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "closable": false,
+        "designer|snapToGrid": 10,
+        "designer|userClassName": "groupEdited_success",
+        "draggable": false,
+        "height": 137,
+        "id": "groupEdited_success",
+        "layout": "absolute",
+        "resizable": [
+            "false"
+        ],
+        "title": "Information",
+        "width": 351
+    },
+    "designerId": "a2b44076-69bb-403d-8274-eed364233302",
+    "cn": [
+        {
+            "type": "Ext.Img",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "height": 50,
+                "layout|x": 40,
+                "layout|y": 20,
+                "src": "Htmls/images/success.gif",
+                "width": 50
+            },
+            "designerId": "277952ca-4908-403c-ac1f-d25f77e27044"
+        },
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 110,
+                "layout|y": 40,
+                "style": [
+                    "font-weight:bold;"
+                ],
+                "text": "Rule was saved successfuly"
+            },
+            "designerId": "379dce37-30cc-4192-a16b-eec51b9675b1"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onGroupEdited_successHide",
+                "implHandler": [
+                    "//abstractcomponent.destroy();"
+                ],
+                "name": "hide",
+                "scope": "me"
+            },
+            "designerId": "390ece64-f27b-418e-9a8e-789b6fbecf89"
+        }
+    ]
+}

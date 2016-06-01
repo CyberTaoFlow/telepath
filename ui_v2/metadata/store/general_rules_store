@@ -1,0 +1,82 @@
+{
+    "type": "arraystore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "general_rules_store",
+        "storeId": "general_rules_store"
+    },
+    "designerId": "658bff0f-c5f3-4257-8164-9c000a83c27e",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "extraParams": [
+                    "{",
+                    "    mode:\"expand_group\"",
+                    "}"
+                ],
+                "url": null
+            },
+            "designerId": "3935d69e-f504-4466-989f-f8c9ee8f7eb3",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "root": "items"
+                    },
+                    "designerId": "67d7ec49-dcb7-4d58-8990-1ed78e11c635"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "td0"
+            },
+            "designerId": "a32e44a1-3a3a-4c77-909f-68a310fb4e4b"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "td1"
+            },
+            "designerId": "49d624d9-7881-4310-8e44-0907ac503f77"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "td2"
+            },
+            "designerId": "40dcff00-2895-4b4d-9085-fe7a6807ff10"
+        }
+    ]
+}

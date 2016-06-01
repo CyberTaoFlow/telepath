@@ -1,0 +1,72 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "data": [
+            "[",
+            "    {cookie:'PHPSESSID'},",
+            "    {cookie:'PHPSESSIONID'},",
+            "    {cookie:'JSESSIONID'},",
+            "    {cookie:'ASPSESSIONID'},",
+            "    {cookie:'ASP.NET_SessionId'},",
+            "    {cookie:'VisitorID'},",
+            "    {cookie:'SESS'}",
+            "]"
+        ],
+        "designer|userAlias": "c_app_cookieStore",
+        "designer|userClassName": "c_app_cookieStore",
+        "storeId": "c_cookieStore"
+    },
+    "designerId": "3f085c1d-b072-4c95-b5a8-b6e967854803",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "extraParams": [
+                    "{",
+                    "    'mode':'get_cookie_suggestion'   ",
+                    "}",
+                    "    "
+                ],
+                "url": null
+            },
+            "designerId": "31d9e677-9506-4834-ac2c-fe5a9b3f74fe",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "root": "items"
+                    },
+                    "designerId": "ca5e05c0-1f6a-47f9-9e5b-6a4f196a67a2"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|displayName": null,
+                "name": "cookie"
+            },
+            "designerId": "a5568bc4-dcb3-4f88-b23e-99d3f20cd252"
+        }
+    ]
+}

@@ -1,0 +1,13 @@
+{
+    "type": "jsresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "js5",
+        "url": "Htmls/sha1.js"
+    },
+    "designerId": "fe3867dd-57fc-4bf0-8f15-dfd1ab8e15bb"
+}

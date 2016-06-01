@@ -1,0 +1,59 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "data": [
+            "[",
+            "//{type:\"Page Context\"},",
+            "{type:\"Average\"},",
+            "{type:\"Query\"},",
+            "{type:\"Speed\"},",
+            "{type:\"Location\"},",
+            "//{type:\"Hour\"},",
+            "//{type:\"Date\"},",
+            "{type:\"Navigation\"}",
+            "]"
+        ],
+        "designer|userClassName": "global_aspect_type_store",
+        "storeId": "global_aspect_type_store"
+    },
+    "designerId": "6bac41aa-948c-4b92-b106-a71f36199d8d",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "6136489c-9440-424f-b99e-7ad53b4feb96",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "2192e0c7-2b43-4c89-9104-7ea510be9453"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "type"
+            },
+            "designerId": "bf806460-ece6-44ff-8a48-c81b6dc5da10"
+        }
+    ]
+}

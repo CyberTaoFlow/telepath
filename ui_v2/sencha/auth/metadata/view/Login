@@ -1,0 +1,172 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|snapToGrid": 10,
+        "border": 0,
+        "draggable": false,
+        "height": 261,
+        "hidden": false,
+        "id": "login",
+        "margin": "",
+        "padding": null,
+        "renderTo": null,
+        "style": [
+            "background-color: white;"
+        ],
+        "width": 290,
+        "designer|userClassName": "Login",
+        "constrain": true,
+        "layout": "absolute",
+        "bodyStyle": [
+            "background-color: white;"
+        ],
+        "closable": false,
+        "collapseFirst": false,
+        "title": "Login",
+        "modal": true
+    },
+    "designerId": "928192c8-7682-4c75-ab3b-4127a25589ea",
+    "cn": [
+        {
+            "type": "Ext.form.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 20,
+                "layout|y": 110,
+                "id": "login-username",
+                "width": 250,
+                "fieldLabel": "Username",
+                "allowBlank": false
+            },
+            "designerId": "6281a54a-161f-4085-be36-657b5981b362"
+        },
+        {
+            "type": "Ext.form.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 20,
+                "layout|y": 140,
+                "id": "login-password",
+                "width": 250,
+                "fieldLabel": "Password",
+                "inputType": "password",
+                "allowBlank": false
+            },
+            "designerId": "f42214c1-8a2c-4cd2-ac84-34b12b5a060b"
+        },
+        {
+            "type": "Ext.button.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 230,
+                "layout|y": 200,
+                "text": "Login"
+            },
+            "designerId": "43190318-f7f1-4f1f-8983-c386b02ea020",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onButtonClick",
+                        "implHandler": [
+                            "telepath.login.do_login();"
+                        ],
+                        "name": "click",
+                        "scope": "me"
+                    },
+                    "designerId": "3cde80b0-24ff-4196-a214-a9472e52bd1a"
+                }
+            ]
+        },
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 20,
+                "layout|y": 200,
+                "height": 20,
+                "id": "login-msg",
+                "width": 200,
+                "text": ""
+            },
+            "designerId": "87acfe61-4f77-4028-8761-c628336495b0"
+        },
+        {
+            "type": "Ext.Img",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 10,
+                "layout|y": 0,
+                "height": 90,
+                "width": 260,
+                "src": "images/logo.png"
+            },
+            "designerId": "5da8094f-5912-42c6-97d1-640c6dce4c73"
+        },
+        {
+            "type": "Ext.form.field.Checkbox",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 20,
+                "layout|y": 170,
+                "id": "login-remember",
+                "fieldLabel": "Remember Me",
+                "labelSeparator": "&nbsp;",
+                "boxLabel": null
+            },
+            "designerId": "60e8bc44-d888-497f-b023-0709714ef0f1"
+        },
+        {
+            "type": "Ext.container.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 150,
+                "layout|y": 170,
+                "height": 20,
+                "html": [
+                    "<a href=\"#\" class=\"password-reset\">Reset Password</a>"
+                ],
+                "width": 120
+            },
+            "designerId": "222b3d40-7ebb-44a8-a872-acd3b1388a3c"
+        }
+    ]
+}

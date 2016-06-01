@@ -1,0 +1,142 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|snapToGrid": 10,
+        "designer|userClassName": "About",
+        "height": 242,
+        "layout": "absolute",
+        "modal": true,
+        "resizable": false,
+        "title": "About",
+        "width": 391
+    },
+    "configAlternates": {
+        "resizable": "boolean"
+    },
+    "designerId": "464ad4d4-aaaf-45b9-a5e0-1ed2df1cf691",
+    "cn": [
+        {
+            "type": "Ext.panel.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|snapToGrid": 10,
+                "height": 110,
+                "layout": "absolute",
+                "layout|x": 10,
+                "layout|y": 90,
+                "title": null,
+                "width": 360
+            },
+            "designerId": "87443707-2547-4fed-9f17-c87079b2b477",
+            "cn": [
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "cls": "tp-title",
+                        "id": null,
+                        "layout|x": 10,
+                        "layout|y": 10,
+                        "style": null,
+                        "text": "System Revision",
+                        "width": 340
+                    },
+                    "designerId": "c16f4630-fc76-4caf-9c41-d6066d69f2c4"
+                },
+                {
+                    "type": "Ext.form.field.Display",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Last updated on",
+                        "id": "c_soft_update_date",
+                        "labelSeparator": " ",
+                        "labelWidth": 200,
+                        "layout|x": 10,
+                        "layout|y": 50,
+                        "value": [
+                            "n/a"
+                        ],
+                        "width": 340
+                    },
+                    "designerId": "a7fe8f40-1ba4-4d0b-b6c2-9cdf591fdccf"
+                },
+                {
+                    "type": "Ext.form.field.Display",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "ATMS revision",
+                        "hidden": true,
+                        "id": "c_soft_atms_revision",
+                        "labelSeparator": " ",
+                        "labelWidth": 200,
+                        "layout|x": 10,
+                        "layout|y": 85,
+                        "value": [
+                            "n/a"
+                        ],
+                        "width": 340
+                    },
+                    "designerId": "b4f6f035-8d4d-451e-8b79-154a011ca23e"
+                },
+                {
+                    "type": "Ext.form.field.Display",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Engine revision",
+                        "id": "c_soft_engine_revision",
+                        "labelSeparator": " ",
+                        "labelWidth": 200,
+                        "layout|x": 10,
+                        "layout|y": 80,
+                        "value": [
+                            "n/a"
+                        ],
+                        "width": 340
+                    },
+                    "designerId": "4d5b591b-b09a-4946-80ba-8bddb7e97b1d"
+                }
+            ]
+        },
+        {
+            "type": "Ext.Img",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "height": 70,
+                "layout|x": 10,
+                "layout|y": 10,
+                "src": "images/logo.png",
+                "width": null
+            },
+            "designerId": "7a051167-6ff1-480b-ab4e-e1717a110c02"
+        }
+    ]
+}

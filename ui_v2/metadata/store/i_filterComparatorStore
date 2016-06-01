@@ -1,0 +1,56 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "data": [
+            "[",
+            "{field:'Greater Than',val:\"Gt\"},",
+            "{field:'Less Than',val:\"Lt\"},",
+            "{field:'At Least',val:\"Al\"},",
+            "{field:'At Most',val:\"Am\"},",
+            "{field:'Is Exactly',val:\"Eq\"}",
+            "]"
+        ],
+        "designer|userClassName": "i_filterComparatorStore",
+        "storeId": "i_filterComparatorStore"
+    },
+    "designerId": "1d6d7859-eb11-4986-ad83-6c2769681827",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "5ffccab1-cf11-4ccc-93d8-137bf175c4a7",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "0cbef81a-732b-4538-99a4-a040c560f612"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "field"
+            },
+            "designerId": "9151c3d3-963b-4fa9-a94a-c0bf8d734707"
+        }
+    ]
+}

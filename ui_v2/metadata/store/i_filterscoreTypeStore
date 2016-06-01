@@ -1,0 +1,56 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "data": [
+            "[",
+            "{field:'Average',val:\"Av\"},",
+            "{field:'Query',val:\"Qu\"},",
+            "{field:'Speed',val:\"Re\"},",
+            "{field:'Flow',val:\"Fl\"},",
+            "{field:'Geographic Location',val:\"Ge\"}",
+            "]"
+        ],
+        "designer|userClassName": "i_filterscoreTypeStore",
+        "storeId": "i_filterscoreTypeStore"
+    },
+    "designerId": "6c0cdaaa-4afe-4b0f-94f4-1d8ce054b8c2",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "8822a3d8-d46a-4a2e-a432-d8805ee3dab6",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "fd7bcf74-6d28-452c-8be4-823b64bf7da3"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "field"
+            },
+            "designerId": "bbdfad45-841d-4f88-990e-d0ffc380c437"
+        }
+    ]
+}

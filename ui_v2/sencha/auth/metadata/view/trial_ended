@@ -1,0 +1,112 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|snapToGrid": 10,
+        "height": 293,
+        "id": "trial_ended",
+        "width": 442,
+        "designer|userClassName": "trial_ended",
+        "layout": "absolute",
+        "closable": false,
+        "titleCollapse": true
+    },
+    "designerId": "3bb4e3d5-3ff4-4c37-8d09-a62b86623b0b",
+    "cn": [
+        {
+            "type": "Ext.Img",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 80,
+                "layout|y": 20,
+                "height": 90,
+                "width": 260,
+                "src": "images/logo.png"
+            },
+            "designerId": "51a5d276-65b9-448b-a996-61e9b407602c"
+        },
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 60,
+                "layout|y": 140,
+                "height": null,
+                "width": 250,
+                "text": "Dear customer,"
+            },
+            "designerId": "b9898ccb-738d-4ca7-8d14-029ea43b968c"
+        },
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 60,
+                "layout|y": 160,
+                "text": "Thank you for trying Hybrid Telepath."
+            },
+            "designerId": "7848d537-1afa-4823-8fe7-b5cebb5de53f"
+        },
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 60,
+                "layout|y": 180,
+                "text": "The trial period has ended. If you're interested in purchasing"
+            },
+            "designerId": "d58d7557-d774-476f-8073-dda35dbfa7e5"
+        },
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 60,
+                "layout|y": 200,
+                "text": "Hybrid Telepath, please leave contact details  "
+            },
+            "designerId": "4740a747-5a44-47cb-a4b6-2653bf35164f"
+        },
+        {
+            "type": "Ext.form.field.Display",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 310,
+                "layout|y": 196,
+                "fieldLabel": "",
+                "value": [
+                    "<a href=\"http://hybridsec.com/contact.php\" target='_blank'>on our website</a>"
+                ]
+            },
+            "designerId": "d0ac20c7-9501-45cc-84b3-a96e78a74634"
+        }
+    ]
+}

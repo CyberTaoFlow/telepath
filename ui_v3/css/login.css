@@ -1,0 +1,177 @@
+body {
+	background-color: #E6E6E6;
+	text-align: center;
+	font-family: Helvetica, sans-serif;
+}
+
+.tele-container {
+	margin: auto auto;
+	text-align: left;
+	width: 470px;
+	background-color: #FFFFFF;
+	min-height: 670px;
+}
+
+.tele-container-license {
+	margin: auto auto;
+	text-align: left;
+	width: 490px;
+	background-color: #FFFFFF;
+	/*min-height: 1088px;*/
+}
+
+.tele-logo {
+	margin: 65px 20px 0px 20px;
+}
+
+.tele-reset {
+	display: none;
+}
+
+.tele-login,
+.tele-reset {
+	margin: 65px 0px 0px 0px;
+	border-top: 1px solid #cecece;
+	padding: 65px 30px 0px 30px;
+	position: relative;
+}
+
+.tele-license{
+	margin: 65px 0px 0px 0px;
+	border-top: 1px solid #cecece;
+	padding: 65px 30px 0px 30px;
+	position: relative;
+}
+
+.loader {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+}
+
+h1 {
+	color: #333333;
+	font-weight: bold;
+	font-size: 28px;
+	margin-bottom: 50px;
+}
+
+.tele-field {
+	height: 50px;
+	clear: both;
+}
+
+.tele-label {
+	width: 120px;
+	float: left;
+	color: #555555;
+	margin-top: 7px;
+}
+
+.tele-label-license{
+	width: 100%;
+}
+
+.tele-input {
+	width: 270px;
+	border: 1px solid #555555;
+	border-radius: 20px;
+	padding: 5px 5px 5px 0px;
+	margin-top: 25px;
+}
+
+.tele-login .tele-field .tele-input{
+	border: 1px solid #555555;
+    border-radius: 20px;
+    margin-top: 0;
+    padding: 5px 5px 5px 10px;
+    width: 270px;
+}
+
+.tele-input-license{
+	margin-top: 25px;
+	width: 260px;
+	border: 1px solid #555555;
+	border-radius: 20px;
+	padding: 5px 5px 5px 10px;
+	text-align: center;
+}
+
+#login-reset {
+	float: left;
+	margin-left: 270px;
+	margin-top: -2px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	background-color: #555555;
+	color: white;
+	font-size: 14px;
+	padding: 5px 10px;
+	cursor: pointer;
+}
+
+
+/* Checkbox Element */
+
+.tele-checkbox {
+	background: transparent url("../img/icons.png") no-repeat scroll -326px -804px;
+	height: 32px;
+	width: 32px;
+	float: left;
+	cursor: pointer;
+	text-decoration: none;
+	border: 1px solid #D6D6D6;
+	border-radius: 16px;
+}
+
+.tele-checkbox.checked {
+	background: transparent url("../img/icons.png") no-repeat scroll -363px -804px;
+}
+
+.tele-button:hover {
+	background-color: #CE7720;
+}
+
+.tele-button {
+
+	margin-top: 30px;
+	-moz-box-shadow:inset 0px -4px 0px 0px #dd7d1d;
+	-webkit-box-shadow:inset 0px -4px 0px 0px #dd7d1d;
+	box-shadow:inset 0px -4px 0px 0px #dd7d1d;
+	background-color:#f7921e;
+	-webkit-border-top-left-radius:5px;
+	-moz-border-radius-topleft:5px;
+	border-top-left-radius:5px;
+	-webkit-border-top-right-radius:5px;
+	-moz-border-radius-topright:5px;
+	border-top-right-radius:5px;
+	-webkit-border-bottom-right-radius:5px;
+	-moz-border-radius-bottomright:5px;
+	border-bottom-right-radius:5px;
+	-webkit-border-bottom-left-radius:5px;
+	-moz-border-radius-bottomleft:5px;
+	border-bottom-left-radius:5px;
+	text-indent:0;
+	border:1px solid #ffffff;
+	display:inline-block;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	font-weight:normal;
+	font-style:normal;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 1px 0px #dd7d1d;
+	padding: 15px 35px;
+	cursor: pointer;
+}
+
+.tele-error {
+	background-color: #f2dede;
+	color: #a94442;
+	padding: 10px;
+	margin-bottom: 20px;
+	border: 1px solid #ebccd1;
+	border-radius: 4px;
+	display: none;
+}

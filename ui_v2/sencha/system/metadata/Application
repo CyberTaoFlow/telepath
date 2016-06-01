@@ -1,0 +1,26 @@
+{
+    "type": "Ext.app.Application",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "name": "MyApp",
+        "stores": [
+            "usersStore",
+            "groupsStore",
+            "permissionsStore",
+            "applicationsStore"
+        ],
+        "views": [
+            "usersWindow",
+            "groupsWindow",
+            "permissionsWindow",
+            "userWindow",
+            "groupWindow",
+            "permissionWindow"
+        ]
+    },
+    "designerId": "application"
+}

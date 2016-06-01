@@ -1,0 +1,407 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|snapToGrid": 10,
+        "designer|userClassName": "groupWindow",
+        "height": 528,
+        "id": "groupWindow",
+        "layout": "absolute",
+        "modal": true,
+        "title": "Group Editor",
+        "width": 752
+    },
+    "designerId": "b1ee2e0b-7e93-43f2-b4cd-c812ed3b21f9",
+    "cn": [
+        {
+            "type": "Ext.toolbar.Toolbar",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dock": "top"
+            },
+            "designerId": "0f29b7bc-dbed-4cd8-b7d4-82ba6c51387a",
+            "cn": [
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": null,
+                        "text": "Save Group"
+                    },
+                    "designerId": "c46d6707-d0d2-4716-b600-9d042b5e1253",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onButtonClick",
+                                "implHandler": [
+                                    "telepath.groups.save();"
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "designerId": "1d3522ee-04de-4354-b63a-eafc4821a53c"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "id": "group_delete",
+                        "layout|flex": null,
+                        "text": "Delete Group"
+                    },
+                    "designerId": "932749be-5080-4769-9d71-953dbca1e927",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onGroup_deleteClick",
+                                "implHandler": [
+                                    "telepath.groups.deleteClick();"
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "designerId": "00941da5-e480-43d6-a369-417e6c5b3ad5"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "disabled": true,
+                        "id": "group_activity",
+                        "layout|flex": null,
+                        "text": "View Activity"
+                    },
+                    "designerId": "e5288f13-23ea-4e5a-8bae-f6db9e4cdaee"
+                }
+            ]
+        },
+        {
+            "type": "Ext.form.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fieldLabel": "Name",
+                "id": "group_name",
+                "layout|x": 10,
+                "layout|y": 10,
+                "width": 240
+            },
+            "designerId": "f0ec6388-6492-4d54-b4ae-25c63c85a2b1"
+        },
+        {
+            "type": "Ext.grid.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "height": 180,
+                "id": "group_users",
+                "layout|x": 260,
+                "layout|y": 10,
+                "store": "usersStore",
+                "title": "User Selection",
+                "width": 230
+            },
+            "designerId": "b9703d15-2491-4dd4-933b-ff02ee25af6b",
+            "cn": [
+                {
+                    "type": "Ext.grid.View",
+                    "reference": {
+                        "name": "viewConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "2b08451f-cfd9-4051-96ba-fea0b0724c26"
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "login",
+                        "flex": 1,
+                        "text": "User Login"
+                    },
+                    "designerId": "e284dce1-b14e-4671-86ba-29001e672a3a"
+                },
+                {
+                    "type": "Ext.selection.CheckboxModel",
+                    "reference": {
+                        "name": "selModel",
+                        "type": "object"
+                    },
+                    "codeClass": "Ext.selection.CheckboxModel",
+                    "userConfig": {
+                        "checkOnly": true
+                    },
+                    "designerId": "700937c5-ca49-4a29-9907-a0b538644a86"
+                }
+            ]
+        },
+        {
+            "type": "Ext.form.field.TextArea",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fieldLabel": "Description",
+                "height": 106,
+                "id": "group_description",
+                "labelAlign": "top",
+                "layout|x": 10,
+                "layout|y": 80,
+                "width": 240
+            },
+            "designerId": "c9089701-9636-4351-bd91-a66e3ec2b4c9"
+        },
+        {
+            "type": "Ext.grid.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "height": 260,
+                "id": "group_permissions",
+                "layout|x": 10,
+                "layout|y": 200,
+                "store": "permissionsStore",
+                "title": "Permissions",
+                "width": 480
+            },
+            "designerId": "86f58452-13fb-43a3-bc38-38a0da7b2b7d",
+            "cn": [
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "class",
+                        "defaultWidth": 70,
+                        "text": "Scope",
+                        "width": 70
+                    },
+                    "designerId": "bb68c907-ffee-4d08-8214-271add34f248"
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "function",
+                        "defaultWidth": 70,
+                        "text": "Type",
+                        "width": 70
+                    },
+                    "designerId": "86afa324-5979-4669-9642-0313cbb97c9d",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "value",
+                                    "metaData",
+                                    "record",
+                                    "rowIndex",
+                                    "colIndex",
+                                    "store",
+                                    "view"
+                                ],
+                                "fn": "renderer",
+                                "implHandler": [
+                                    "switch(value) {\r",
+                                    "    case 'get': return 'View'; break;\r",
+                                    "    case 'set': return 'Modify'; break;\r",
+                                    "    case 'add': return 'Create'; break;\r",
+                                    "    case 'del': return 'Delete'; break;\r",
+                                    "}"
+                                ]
+                            },
+                            "designerId": "87621c28-c92f-43a7-bbff-464c275d046d"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "description",
+                        "flex": 1,
+                        "text": "Description"
+                    },
+                    "designerId": "f8a88e85-0ede-4265-a3ed-93591de2cdcb"
+                },
+                {
+                    "type": "Ext.grid.View",
+                    "reference": {
+                        "name": "viewConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "5b874cc8-eb12-431c-95a0-a483b38f244a"
+                },
+                {
+                    "type": "Ext.selection.CheckboxModel",
+                    "reference": {
+                        "name": "selModel",
+                        "type": "object"
+                    },
+                    "codeClass": "Ext.selection.CheckboxModel",
+                    "userConfig": {
+                        "checkOnly": true
+                    },
+                    "designerId": "a734458e-cc75-4f3f-bb9a-28d6f172dc43"
+                }
+            ]
+        },
+        {
+            "type": "Ext.grid.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "height": 450,
+                "id": "group_applications",
+                "layout|x": 500,
+                "layout|y": 10,
+                "store": "applicationsStore",
+                "title": "Applications",
+                "width": 230
+            },
+            "designerId": "a9f8012c-ac79-4d04-a9d7-442bc01dd9e0",
+            "cn": [
+                {
+                    "type": "Ext.grid.View",
+                    "reference": {
+                        "name": "viewConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "dbcf1c12-b7b4-44b4-b3aa-a933a3111134"
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "domain",
+                        "flex": 1,
+                        "text": "Application"
+                    },
+                    "designerId": "a257e194-5fdd-435e-9531-e8b3fd9ec1f3"
+                },
+                {
+                    "type": "Ext.selection.CheckboxModel",
+                    "reference": {
+                        "name": "selModel",
+                        "type": "object"
+                    },
+                    "codeClass": "Ext.selection.CheckboxModel",
+                    "userConfig": {
+                        "checkOnly": true
+                    },
+                    "designerId": "ca06f8d7-ff8e-4767-9938-9541193c17dd"
+                }
+            ]
+        },
+        {
+            "type": "Ext.form.field.Checkbox",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "boxLabel": "Subscribe to reports",
+                "fieldLabel": "",
+                "id": "group_mail_reports",
+                "layout|x": 10,
+                "layout|y": 40
+            },
+            "designerId": "bdbed0d7-d7d6-4ee8-bd4c-3605148599b7"
+        },
+        {
+            "type": "Ext.form.field.Checkbox",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "boxLabel": "Subscribe to alerts",
+                "fieldLabel": "",
+                "id": "group_mail_alerts",
+                "layout|x": 10,
+                "layout|y": 60
+            },
+            "designerId": "25a527af-9a9a-4f92-8724-e482a0aebe74"
+        }
+    ]
+}

@@ -1,0 +1,64 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "c_NetworkExtsStore",
+        "storeId": "c_NetworkExtsStore"
+    },
+    "designerId": "9569378c-d89b-4db5-871c-4d13273376c2",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "20f1bb4c-a382-44c6-8cca-48c806470b2b",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "18bbc129-a6be-45a6-ba63-6a600ec7a7e6"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "ext"
+            },
+            "designerId": "aff2745c-07ac-44f1-aba6-c60d27d78865"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onJsonstoreAdd",
+                "implHandler": [
+                    "Ext.getCmp(\"c_network_ext\").clearInvalid();"
+                ],
+                "name": "add",
+                "scope": "me"
+            },
+            "designerId": "58e37c40-49c9-4d47-9fd0-ce5d3ed302c4"
+        }
+    ]
+}

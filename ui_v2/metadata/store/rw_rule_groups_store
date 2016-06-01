@@ -1,0 +1,91 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "autoLoad": false,
+        "designer|userClassName": "rw_rule_groups_store",
+        "storeId": "rw_rule_groups_store"
+    },
+    "designerId": "13ecfe2b-ae54-4c65-8079-c406be886dbe",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "extraParams": [
+                    "{",
+                    "    mode:\"get_groups_per_category\",",
+                    "    category_id:-1",
+                    "}"
+                ],
+                "url": null
+            },
+            "designerId": "6abf9d59-2102-4afb-a0e8-5d2185c49599",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "root": "items"
+                    },
+                    "designerId": "73fadb0d-ab37-4520-a95b-00cb866f5213"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "group"
+            },
+            "designerId": "4b04e4d1-32ad-45b9-aefb-96208e2f2396"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "id"
+            },
+            "designerId": "efc0d852-498f-4395-ab1d-7d71e49de2cc"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onJsonstoreLoad",
+                "implHandler": [
+                    "if (records.length==0){",
+                    "    Ext.getCmp('RW1_f1').setValue(true);",
+                    "}"
+                ],
+                "name": "load",
+                "scope": "me"
+            },
+            "designerId": "720140f5-bf01-4f6b-abda-3014ec0327f7"
+        }
+    ]
+}

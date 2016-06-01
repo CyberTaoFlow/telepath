@@ -1,0 +1,53 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "data": [
+            "[",
+            "    {field:'IP'},",
+            "    {field:'Rule'}",
+            "]"
+        ],
+        "designer|userClassName": "a_searchFieldStore",
+        "storeId": "a_searchFieldStore"
+    },
+    "designerId": "35a73849-ab29-4123-9840-fc782fda33ca",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "8278102e-2baf-4a26-9802-6af591bd986a",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "0c20f321-4c46-4938-b6bc-ca605074ec6b"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "field"
+            },
+            "designerId": "12578157-0339-43e1-96f0-21b65fa4cf90"
+        }
+    ]
+}

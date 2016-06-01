@@ -1,0 +1,59 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "RequestAttributes_details",
+        "storeId": "RequestAttributes_details"
+    },
+    "designerId": "03490fdf-9be3-46ee-806c-3c428db4f70f",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "51726682-80ea-4327-b431-d09aa59d901e",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "ed082e10-498e-40e2-b907-aad8ca12fd4b"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "td0"
+            },
+            "designerId": "f46c441b-675d-4037-833a-69ff25e4d008"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "td1"
+            },
+            "designerId": "d76672c4-d0de-4e33-926a-5c2201272e61"
+        }
+    ]
+}

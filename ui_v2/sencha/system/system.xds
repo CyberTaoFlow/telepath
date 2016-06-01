@@ -1,0 +1,55 @@
+{
+    "name": "system",
+    "settings": {
+        "cmd": {
+            "license": "commercial"
+        },
+        "spacesToIndent": 4,
+        "lineEnding": "CRLF",
+        "genTimestamps": false,
+        "cacheBust": false,
+        "urlPrefix": "",
+        "exportPath": "",
+        "buildShouldOverwriteIndex": false,
+        "canvasControls": {
+            "viewportSize": {
+                "name": "Auto Expand",
+                "builtIn": true,
+                "height": null,
+                "width": null
+            }
+        },
+        "sdkPath": "",
+        "generateArchitectVersion": true
+    },
+    "xdsVersion": "3.0.4",
+    "xdsBuild": 1386,
+    "schemaVersion": 1,
+    "upgradeVersion": 300000000004,
+    "framework": "ext42",
+    "viewOrderMap": {
+        "view": [
+            "7f98a0d8-5260-4732-b386-ef35a03e1875",
+            "8e65ad71-7f6a-41cc-b84e-6c6e7d7393a5",
+            "0c038d83-7568-4652-96e0-8750b8b3065e",
+            "ddf296d1-2809-412c-b528-82abc5f2edb6",
+            "31ac429e-4e98-4a1e-a435-b858be5de1ba",
+            "64f20b3a-707f-4c83-a1f3-669bf66dbd35",
+            "b1ee2e0b-7e93-43f2-b4cd-c812ed3b21f9"
+        ],
+        "store": [
+            "72d27191-ce17-47ec-9429-81cd70f06f55",
+            "a6c6558d-86ee-42a2-8951-7ff8193fa74b",
+            "bebc475a-ea9f-4108-bf7f-e78d618592c0",
+            "61e65a27-312a-43f6-b3bd-97270c67aa18"
+        ],
+        "controller": [],
+        "model": [],
+        "resource": [
+            "6149beed-757e-4ba6-b7ee-4b83de18559b"
+        ],
+        "app": [
+            "application"
+        ]
+    }
+}

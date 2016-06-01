@@ -1,0 +1,65 @@
+{
+    "type": "Ext.container.Viewport",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|initialView": true,
+        "designer|userClassName": "systemViewPort",
+        "layout": "fit"
+    },
+    "designerId": "7f98a0d8-5260-4732-b386-ef35a03e1875",
+    "cn": [
+        {
+            "type": "Ext.panel.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "height": 250,
+                "id": "systemPanel",
+                "layout": "fit",
+                "title": null,
+                "width": 400
+            },
+            "designerId": "b821832d-4c92-4ad9-9c29-a1c7c87dcc15",
+            "cn": [
+                {
+                    "type": "Ext.toolbar.Toolbar",
+                    "reference": {
+                        "name": "dockedItems",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dock": "bottom",
+                        "height": 30,
+                        "id": "systemToolbar"
+                    },
+                    "designerId": "fd20f2a9-4a06-46d3-ba5f-8be905e395f4"
+                }
+            ]
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onViewportRender",
+                "implHandler": [
+                    "telepath.system.render(component);"
+                ],
+                "name": "render",
+                "scope": "me"
+            },
+            "designerId": "7d87c4f5-d8b2-4874-8d21-147171bb83bb"
+        }
+    ]
+}

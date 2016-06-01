@@ -1,0 +1,54 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "data": [
+            "[",
+            "{field:\"Seconds\"},",
+            "{field:\"Minutes\"},",
+            "{field:\"Hours\"}",
+            "]"
+        ],
+        "designer|userClassName": "b_riTime2_Pat",
+        "storeId": "b_riTime2_Pat"
+    },
+    "designerId": "7002dee7-fac9-4894-a2d5-7535671ad86e",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "68b30726-4079-470e-a405-3223329987bd",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "f3e2412d-1aba-4339-be96-f8e608127af0"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "field"
+            },
+            "designerId": "789f7459-14d1-448d-bc3f-de5002e294fc"
+        }
+    ]
+}

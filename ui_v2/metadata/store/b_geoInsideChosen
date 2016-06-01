@@ -1,0 +1,65 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "b_geoInsideChosen",
+        "storeId": "b_geoInsideChosen"
+    },
+    "designerId": "5ff2f92f-336b-4459-bbb4-1aaa8787c1b6",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "url": null
+            },
+            "designerId": "6ca0089c-3f48-48f6-9d5f-4379e108c78c",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "root": "countries"
+                    },
+                    "designerId": "455a3602-0d10-41e6-8f97-e1469a6ac1fa"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "Country"
+            },
+            "designerId": "1e4730a9-a74f-4ea2-83d4-0d8d2c85650b"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "Alias"
+            },
+            "designerId": "56952f43-39ab-4ec7-93e5-da631d061102"
+        }
+    ]
+}

@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="www.sport5.co.il" />
+<title>rules_extended</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">rules_extended</td></tr>
+</thead><tbody>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=#btn-behavioral</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#btn-behavioral</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=b_addRule-btnWrap</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=a.x-menu-item-link:contains('Rule')</td>
+	<td></td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>id=RW1_new_category_name-inputEl</td>
+	<td>Selenium Test Category</td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>id=RW1_f2-inputEl</td>
+	<td>Selenium Test Group</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=RulesWizard_category_next</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>RW1_f3-inputEl</td>
+	<td></td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>id=RW1_f3-inputEl</td>
+	<td>Selenium Test Group Description</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=RW1_f8-inputEl</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=RW1_f7-inputEl</td>
+	<td></td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>id=b_rwEmailField_field-inputEl</td>
+	<td>test@email.com</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=b_rwEmailField_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=#b_rwEmailField-body td:contains('test@email.com')</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#rw_rule_alerts_cont-innerCt a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=div[id^='apptreepanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=div[id^='apptreepanel'] div[id^='treeview'] tbody tr:first td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>doubleClick</td>
+	<td>css=div[id^='apptreepanel'] div[id^='treeview'] tbody tr:first td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td></td>
+	<td>500</td>
+</tr>
+<tr>
+	<td>doubleClick</td>
+	<td>css=div[id^='apptreepanel'] div[id^='treeview'] tbody *:contains('cookie')</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td></td>
+	<td>500</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=#rw_alert_params-body *:contains('cookie')</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=RW1_next</td>
+	<td></td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>css=#RW2_f1-inputEl</td>
+	<td>Selenium Test Rule</td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>css=#RW2_f2-inputEl</td>
+	<td>Selenium Test Rule Description</td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>css=#RW2_f3-inputEl</td>
+	<td>Selenium</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#RW2_f5_1-inputEl</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#RW2_f5_1_2-bodyEl .x-form-trigger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=li.x-boundlist-item:last</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#RW2_f5_2-inputEl</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=RW2_f5_add-btnIconEl</td>
+	<td></td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>ipConfig_segment_0_0-inputEl</td>
+	<td>127</td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>ipConfig_segment_0_1-inputEl</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>ipConfig_segment_0_2-inputEl</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>ipConfig_segment_0_3-inputEl</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#ipConfig-innerCt a:contains('Apply')</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#RW2_next</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#RWpar_f1_browse</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#RWpar_radio_2-inputEl</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#RWpar_post_cb-inputEl</td>
+	<td></td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>css=#RWpar_f9_2-inputEl</td>
+	<td>selenium</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#RWpar_f9_3-inputEl</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#RWpar_submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>css=#b_ruleInfoPanel-body</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=#b_riRuleEnabled.x-form-cb-checked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>css=#b_riName-inputEl</td>
+	<td>Selenium Test Rule</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>css=#b_riDesc-inputEl</td>
+	<td>Selenium Test Rule Description</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>css=#b_riOwner-inputEl</td>
+	<td>Selenium</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>css=#b_riRuleType-inputEl</td>
+	<td>Parameter Rule</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=#b_riAppCB.x-form-cb-checked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=#b_riIpCB.x-form-cb-checked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>css=#b_riIpField-inputEl</td>
+	<td>127.0.0.1</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=#b_par_radio_2.x-form-cb-checked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=#b_par_post_cb.x-form-cb-checked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>css=#b_riRegexField_P-inputEl</td>
+	<td>selenium</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=#b_riRegexNotCB_P.x-form-cb-checked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#b_ruleGroups-body span:contains('Selenium Test Group')</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=#b_rgiSyslogCB.x-form-cb-checked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=#b_rgiEmailCB.x-form-cb-checked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=#b_rgiEmailField-body div:contains('test@email.com')</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=#b_ri_alert_params-body div:contains('cookie')</td>
+	<td></td>
+</tr>
+<tr>
+	<td>contextMenu</td>
+	<td>css=#b_ruleGroups-body span:contains('Selenium Test Category')</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#b_delete_category</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=#DeleteRule</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#DeleteRule .x-btn:first</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>css=#b_ruleGroups-body span:contains('Selenium Test Category')</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

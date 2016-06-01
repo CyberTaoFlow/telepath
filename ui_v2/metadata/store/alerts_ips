@@ -1,0 +1,56 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "alerts_ips",
+        "sortOnFilter": false,
+        "sortOnLoad": false,
+        "storeId": "alerts_ips"
+    },
+    "designerId": "77218f18-9963-418d-8a2f-e20a43a3b177",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "extraParams": null,
+                "url": null
+            },
+            "designerId": "2a7c89a6-1654-4651-9ca9-e25cc0994237",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "root": "items"
+                    },
+                    "designerId": "34af818d-f579-44b7-a113-314b1a109b3b"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "IP"
+            },
+            "designerId": "2b48213c-6e1c-4704-b62b-93c269dd0969"
+        }
+    ]
+}

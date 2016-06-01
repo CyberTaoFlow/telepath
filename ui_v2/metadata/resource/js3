@@ -1,0 +1,13 @@
+{
+    "type": "jsresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "js3",
+        "url": "Htmls/BehavioralRules.js"
+    },
+    "designerId": "bbcc0f12-5e4e-437d-a614-842f6d26da66"
+}

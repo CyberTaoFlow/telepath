@@ -1,0 +1,60 @@
+{
+    "type": "Ext.data.Store",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "applicationsStore",
+        "storeId": "applicationsStore"
+    },
+    "designerId": "61e65a27-312a-43f6-b3bd-97270c67aa18",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Memory",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "644bd747-8754-41a8-93dc-5ece31401655"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "id"
+            },
+            "designerId": "999dd39d-2c41-485a-8ca2-6982557485af"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "domain"
+            },
+            "designerId": "750b96eb-e4ca-40a5-a91e-2b04e0b06c3a"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "display"
+            },
+            "designerId": "dc6093f3-0d4c-4c54-89a1-1a5171bcc410"
+        }
+    ]
+}

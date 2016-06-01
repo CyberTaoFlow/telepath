@@ -1,0 +1,58 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "data": [
+            "[",
+            "    {'type':'Now'},   ",
+            "    {'type':'Day'},   ",
+            "    {'type':'Week'},",
+            "    {'type':'Month'},",
+            "    {'type':'Year'},",
+            "    {'type':'Custom Range'}",
+            "",
+            "]"
+        ],
+        "designer|userClassName": "d_trendsScaleStore",
+        "storeId": "d_trendsScaleStore"
+    },
+    "designerId": "6f1c3421-8c65-4139-bbe9-ea8022846f90",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "b9cff14d-6612-40cc-9a43-888a890ed503",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "118edc4f-84d7-46d1-b333-4538ef662b0e"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "type"
+            },
+            "designerId": "217b8329-1a33-40de-9004-4245b49987c4"
+        }
+    ]
+}

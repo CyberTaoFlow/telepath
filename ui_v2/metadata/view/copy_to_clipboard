@@ -1,0 +1,99 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "closeAction": "hide",
+        "designer|snapToGrid": 10,
+        "designer|userClassName": "copy_to_clipboard",
+        "height": 171,
+        "id": "copy_to_clipboard",
+        "layout": "absolute",
+        "title": "Copy to Clipboard",
+        "width": 491
+    },
+    "designerId": "a0733335-08e8-488b-af9e-4f8bb73f3523",
+    "cn": [
+        {
+            "type": "Ext.form.field.TextArea",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fieldLabel": "",
+                "height": 120,
+                "id": "copy_to_clipboard_field",
+                "layout|x": 10,
+                "layout|y": 10,
+                "selectOnFocus": true,
+                "width": 460
+            },
+            "designerId": "f8f3a296-62c9-43f9-ab20-871abfcb81aa",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onCopy_to_clipboard_fieldChange",
+                        "implHandler": [
+                            "Ext.getCmp('copy_to_clipboard_field').focus(true);"
+                        ],
+                        "name": "change",
+                        "scope": "me"
+                    },
+                    "designerId": "3baa3e41-aae1-4280-9e60-f8801ecb427a"
+                }
+            ]
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onCopy_to_clipboardShow",
+                "implHandler": [
+                    "Ext.getCmp('copy_to_clipboard_field').focus(true);",
+                    "Ext.getCmp('main_panel').disable();"
+                ],
+                "name": "show",
+                "scope": "me"
+            },
+            "designerId": "f06659d6-825b-465f-9114-beba1dbb5c1e"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onCopy_to_clipboardHide",
+                "implHandler": [
+                    "var ra_window = Ext.getCmp('RequestAttributes');",
+                    "if (ra_window && ra_window.isVisible()){",
+                    "    Ext.getCmp('main_panel').disable();    ",
+                    "}",
+                    "else{",
+                    "    Ext.getCmp('main_panel').enable();    ",
+                    "}"
+                ],
+                "name": "hide",
+                "scope": "me"
+            },
+            "designerId": "d8b98fe1-30c3-4a7b-810b-87ec5e7a64e5"
+        }
+    ]
+}

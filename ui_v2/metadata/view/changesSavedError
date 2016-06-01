@@ -1,0 +1,75 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "closable": false,
+        "designer|snapToGrid": 10,
+        "designer|userClassName": "changesSavedError",
+        "draggable": false,
+        "height": 110,
+        "id": "changesSavedError",
+        "layout": "absolute",
+        "resizable": [
+            "false"
+        ],
+        "title": "",
+        "width": 280
+    },
+    "designerId": "54010fd5-f2d4-44ca-a402-a8ed41d607c0",
+    "cn": [
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 90,
+                "layout|y": 40,
+                "style": [
+                    "font-weight:bold"
+                ],
+                "text": "An Error Has Occurred"
+            },
+            "designerId": "7098dbb7-3e9b-49dd-8878-ea40f9c861e0"
+        },
+        {
+            "type": "Ext.Img",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "height": 50,
+                "layout|x": 20,
+                "layout|y": 20,
+                "src": "Htmls/images/error.gif",
+                "width": 50
+            },
+            "designerId": "b0a4d355-b9c2-4f61-a7e6-751a3041b283"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onChangesSavedErrorHide",
+                "implHandler": [
+                    "component.destroy();"
+                ],
+                "name": "hide",
+                "scope": "me"
+            },
+            "designerId": "ef2493c6-6134-4a4e-9a98-d540767fe4e0"
+        }
+    ]
+}

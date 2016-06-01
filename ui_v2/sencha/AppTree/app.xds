@@ -1,0 +1,121 @@
+{
+    "name": "app",
+    "settings": {
+        "urlPrefix": "http://localhost/sencha/main/",
+        "exportPath": "",
+        "spacesToIndent": 4,
+        "lineEnding": "CRLF",
+        "genTimestamps": false,
+        "cacheBust": false,
+        "buildShouldOverwriteIndex": true
+    },
+    "xdsVersion": "2.2.3",
+    "xdsBuild": 1044,
+    "schemaVersion": 1,
+    "upgradeVersion": 210000000503,
+    "framework": "ext42",
+    "topInstanceFileMap": {
+        "5944620a-07cb-422d-8666-cf5776a90b95": {
+            "paths": [
+                "metadata/resource/Library"
+            ],
+            "className": "Library"
+        },
+        "ddb37660-a8df-4f19-ba9c-4d1e1c66e9bf": {
+            "paths": [
+                "metadata/view/MyViewport",
+                "app/view/override/MyViewport.js",
+                "app/view/MyViewport.js"
+            ],
+            "className": "MyViewport"
+        },
+        "47487a72-8a27-4ca7-9062-d39a25a337ab": {
+            "paths": [
+                "metadata/store/MyArrayStore",
+                "app/store/override/MyArrayStore.js",
+                "app/store/MyArrayStore.js"
+            ],
+            "className": "MyArrayStore"
+        },
+        "962ce9de-e2cf-4eea-9629-f9aa2b3af695": {
+            "paths": [
+                "metadata/model/MyModel",
+                "app/model/override/MyModel.js",
+                "app/model/MyModel.js"
+            ],
+            "className": "MyModel"
+        },
+        "312e900c-0c31-44ff-97be-dcfdad15fa68": {
+            "paths": [
+                "metadata/store/AppTreeApps",
+                "app/store/override/AppTreeApps.js",
+                "app/store/AppTreeApps.js"
+            ],
+            "className": "AppTreeApps"
+        },
+        "e9d7d5b0-bb4d-4142-ae16-a25485cdd964": {
+            "paths": [
+                "metadata/view/AppTreePanel",
+                "app/view/override/AppTreePanel.js",
+                "app/view/AppTreePanel.js"
+            ],
+            "className": "AppTreePanel"
+        },
+        "87d2675d-0c1f-4094-9164-1dcef591099c": {
+            "paths": [
+                "metadata/view/AppTreeWindow",
+                "app/view/override/AppTreeWindow.js",
+                "app/view/AppTreeWindow.js"
+            ],
+            "className": "AppTreeWindow"
+        },
+        "edcf483a-43b1-4500-bb16-ceaa415c5b75": {
+            "paths": [
+                "metadata/store/AppTreeFlows",
+                "app/store/override/AppTreeFlows.js",
+                "app/store/AppTreeFlows.js"
+            ],
+            "className": "AppTreeFlows"
+        },
+        "f9afaa57-d346-4e07-ac17-eb22736fda56": {
+            "paths": [
+                "metadata/store/AppTreeStore",
+                "app/store/override/AppTreeStore.js",
+                "app/store/AppTreeStore.js"
+            ],
+            "className": "AppTreeStore"
+        },
+        "77cb7fe2-fdd3-45cf-9ef3-d98fe776c691": {
+            "paths": [
+                "metadata/store/AppTreeParams",
+                "app/store/override/AppTreeParams.js",
+                "app/store/AppTreeParams.js"
+            ],
+            "className": "AppTreeParams"
+        }
+    },
+    "viewOrderMap": {
+        "view": [
+            "ddb37660-a8df-4f19-ba9c-4d1e1c66e9bf",
+            "e9d7d5b0-bb4d-4142-ae16-a25485cdd964",
+            "87d2675d-0c1f-4094-9164-1dcef591099c"
+        ],
+        "store": [
+            "47487a72-8a27-4ca7-9062-d39a25a337ab",
+            "312e900c-0c31-44ff-97be-dcfdad15fa68",
+            "77cb7fe2-fdd3-45cf-9ef3-d98fe776c691",
+            "f9afaa57-d346-4e07-ac17-eb22736fda56",
+            "edcf483a-43b1-4500-bb16-ceaa415c5b75"
+        ],
+        "controller": [],
+        "model": [
+            "962ce9de-e2cf-4eea-9629-f9aa2b3af695"
+        ],
+        "resource": [
+            "5944620a-07cb-422d-8666-cf5776a90b95"
+        ],
+        "app": [
+            "application"
+        ]
+    }
+}

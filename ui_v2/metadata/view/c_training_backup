@@ -1,0 +1,210 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|snapToGrid": 10,
+        "designer|userClassName": "c_training_backup",
+        "height": 216,
+        "id": "c_training_backup",
+        "layout": "absolute",
+        "title": "",
+        "width": 343
+    },
+    "designerId": "53d46a3a-cb07-432d-9bd5-ddb68600d3d6",
+    "cn": [
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 20,
+                "layout|y": 30,
+                "text": "Please select one of the following:"
+            },
+            "designerId": "2cce1ebb-24fa-4d2e-81b0-22c855dbfb0f"
+        },
+        {
+            "type": "Ext.form.field.Radio",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "boxLabel": "Backup database (May take up to 30 mins)",
+                "checked": true,
+                "fieldLabel": "",
+                "id": "c_training_backup_backup",
+                "layout|x": 40,
+                "layout|y": 60
+            },
+            "designerId": "d9413129-cb5d-4783-8415-121e844cd889",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onC_training_backup_backupChange",
+                        "implHandler": [
+                            "if(newValue){",
+                            "    Ext.getCmp('c_training_backup_delete').setValue(false)",
+                            "}"
+                        ],
+                        "name": "change",
+                        "scope": "me"
+                    },
+                    "designerId": "823bbe3b-4fad-45dc-b339-12975a4a8eae"
+                }
+            ]
+        },
+        {
+            "type": "Ext.form.field.Radio",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "boxLabel": "Delete database",
+                "fieldLabel": "",
+                "id": "c_training_backup_delete",
+                "layout|x": 40,
+                "layout|y": 90
+            },
+            "designerId": "f89d8bae-1301-4efe-84b0-d0c64dafac39",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onC_training_backup_deleteChange",
+                        "implHandler": [
+                            "if(newValue){",
+                            "\tExt.getCmp('c_training_backup_backup').setValue(false)",
+                            "}"
+                        ],
+                        "name": "change",
+                        "scope": "me"
+                    },
+                    "designerId": "9715142c-3b94-48b9-8c87-c0e0f1ee335a"
+                }
+            ]
+        },
+        {
+            "type": "Ext.button.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 20,
+                "layout|y": 130,
+                "text": "Select"
+            },
+            "designerId": "3a0275e9-4837-4c9e-9b96-6fe8cdae2abd",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onButtonClick1",
+                        "implHandler": [
+                            "switch_to_training();"
+                        ],
+                        "name": "click",
+                        "scope": "me"
+                    },
+                    "designerId": "1cded13e-44c3-453b-bf55-4653510396c7"
+                }
+            ]
+        },
+        {
+            "type": "Ext.button.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 80,
+                "layout|y": 130,
+                "text": "Cancel"
+            },
+            "designerId": "45310d6a-dd69-47fb-9503-4fa91978ee0d",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onButtonClick",
+                        "implHandler": [
+                            "Ext.getCmp('c_training_backup').destroy();",
+                            "Ext.getCmp(\"c_Training\").setValue(false); "
+                        ],
+                        "name": "click",
+                        "scope": "me"
+                    },
+                    "designerId": "3af2847a-a483-4b00-a039-03d2560b852a"
+                }
+            ]
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onC_training_backupShow",
+                "implHandler": [
+                    "Ext.getCmp('main_panel').disable();"
+                ],
+                "name": "show",
+                "scope": "me"
+            },
+            "designerId": "2f4658d6-4fc8-4283-990a-274bb075f4b8"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onC_training_backupDestroy",
+                "implHandler": [
+                    "Ext.getCmp('main_panel').enable();"
+                ],
+                "name": "destroy",
+                "scope": "me"
+            },
+            "designerId": "75748aae-755c-47c8-b664-3e36245ed403"
+        }
+    ]
+}

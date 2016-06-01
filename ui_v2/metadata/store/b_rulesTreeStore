@@ -1,0 +1,105 @@
+{
+    "type": "Ext.data.TreeStore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "b_rulesTreeStore",
+        "root": [
+            " {",
+            "                expanded: false,",
+            "                text: 'No Rules or Groups Exist',",
+            "                leaf: true,",
+            "                children: [",
+            "",
+            "                ]",
+            "            }"
+        ],
+        "storeId": "b_rulesTreeStore"
+    },
+    "designerId": "534d44f4-e5f4-476a-9f80-8e992a9c0301",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "6d5f97af-72f8-44ea-8b01-87381bed2118",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "e0385581-55a1-422b-92ff-d8cb3e37bfd8"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "text"
+            },
+            "designerId": "82e23be4-17cf-4aa8-93b8-2b18944c6dc9"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "type"
+            },
+            "designerId": "6a8e25c9-840b-4d8f-812d-0333d5a2b47b"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "group_id"
+            },
+            "designerId": "cda16e08-ae77-44b7-9005-cffa71b1a09f"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "rule_id"
+            },
+            "designerId": "d2105685-31a4-429e-b260-b1880756c848"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "category_id"
+            },
+            "designerId": "3c3bb252-d9cd-4b40-b170-3109443fe9f4"
+        }
+    ]
+}

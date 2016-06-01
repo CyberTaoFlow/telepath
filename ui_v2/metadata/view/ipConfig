@@ -1,0 +1,467 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|snapToGrid": 10,
+        "designer|userClassName": "ipConfig",
+        "height": 212,
+        "id": "ipConfig",
+        "layout": "absolute",
+        "modal": true,
+        "title": "IP Configuration",
+        "width": 182
+    },
+    "designerId": "75dc2863-70d8-4e25-80a3-eaef48d61393",
+    "cn": [
+        {
+            "type": "Ext.form.field.ComboBox",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fieldLabel": null,
+                "id": "ipConfig_mode_switch",
+                "layout|x": 80,
+                "layout|y": 10,
+                "store": [
+                    "[ 'Single IP', 'IP Range' ]"
+                ],
+                "value": [
+                    "Single IP"
+                ],
+                "width": 80
+            },
+            "configAlternates": {
+                "store": "array"
+            },
+            "designerId": "211ccb0f-c987-4f34-b85a-5ee18cede8b0",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onIpConfig_mode_switchChange",
+                        "implHandler": [
+                            "telepath.ipconfig.modeSwitch(newValue);"
+                        ],
+                        "name": "change",
+                        "scope": "me"
+                    },
+                    "designerId": "628a1533-4a25-4da6-8fc2-741d4c9103c4"
+                }
+            ]
+        },
+        {
+            "type": "Ext.button.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 110,
+                "layout|y": 150,
+                "text": "Apply",
+                "width": 50
+            },
+            "designerId": "e9640f26-a925-44f0-bc97-0c841e208760",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onButtonClick1",
+                        "implHandler": [
+                            "telepath.ipconfig.applyClick();"
+                        ],
+                        "name": "click",
+                        "scope": "me"
+                    },
+                    "designerId": "ab40be4d-ad85-431d-827d-7a3c2eda3a21"
+                }
+            ]
+        },
+        {
+            "type": "Ext.button.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 50,
+                "layout|y": 150,
+                "text": "Cancel",
+                "width": 50
+            },
+            "designerId": "aeae0211-b8c1-498b-b5e1-8d0c586a95ec",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onButtonClick",
+                        "implHandler": [
+                            "telepath.ipconfig.cancelClick();"
+                        ],
+                        "name": "click",
+                        "scope": "me"
+                    },
+                    "designerId": "6fcb1e71-d871-41b7-96ad-4443e6cc1626"
+                }
+            ]
+        },
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "height": 20,
+                "id": "ipConfig_label_1",
+                "layout|x": 10,
+                "layout|y": 40,
+                "text": "Range From:",
+                "width": 150
+            },
+            "designerId": "549ada17-258d-4da5-90d1-b9bd8c7eeba7"
+        },
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "disabled": true,
+                "height": 20,
+                "id": "ipConfig_label_2",
+                "layout|x": 10,
+                "layout|y": 90,
+                "text": "Range End:",
+                "width": 150
+            },
+            "designerId": "aa92a48b-e88c-4e44-a31f-81386240e5ca"
+        },
+        {
+            "type": "Ext.container.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|snapToGrid": 10,
+                "height": 30,
+                "id": "ipConfig_range_start",
+                "layout": "absolute",
+                "layout|x": 10,
+                "layout|y": 60,
+                "width": 150
+            },
+            "designerId": "317a77c8-3322-4819-bd53-5cc5382551e3",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "fieldLabel": "",
+                        "id": "ipConfig_segment_0_0",
+                        "inputType": null,
+                        "layout|x": 0,
+                        "layout|y": 0,
+                        "tabIndex": 1,
+                        "width": 30
+                    },
+                    "designerId": "372c12b9-f16c-4270-af5f-96a84951f685"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "fieldLabel": "",
+                        "id": "ipConfig_segment_0_1",
+                        "layout|x": 40,
+                        "layout|y": 0,
+                        "tabIndex": 2,
+                        "width": 30
+                    },
+                    "designerId": "123e9adf-c821-4dc4-a31b-b6735564d0dd"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "fieldLabel": "",
+                        "id": "ipConfig_segment_0_2",
+                        "layout|x": 80,
+                        "layout|y": 0,
+                        "tabIndex": 3,
+                        "width": 30
+                    },
+                    "designerId": "7b85d4c3-9508-4b0a-9480-479d769b7c7a"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "fieldLabel": "",
+                        "id": "ipConfig_segment_0_3",
+                        "layout|x": 120,
+                        "layout|y": 0,
+                        "tabIndex": 4,
+                        "width": 30
+                    },
+                    "designerId": "f78da873-fd75-46f4-a463-b463b68fdaca"
+                },
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": 20,
+                        "layout|x": 32,
+                        "layout|y": 0,
+                        "style": [
+                            "font-size: 18px;"
+                        ],
+                        "text": ".",
+                        "width": 10
+                    },
+                    "designerId": "4f47d746-89f8-4a7f-907a-bdc8802d8c94"
+                },
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": 20,
+                        "layout|x": 112,
+                        "layout|y": 0,
+                        "style": [
+                            "font-size: 18px;"
+                        ],
+                        "text": ".",
+                        "width": 10
+                    },
+                    "designerId": "43b0eb0c-7c1f-4969-ab50-25a72fb274ec"
+                },
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": 20,
+                        "layout|x": 72,
+                        "layout|y": 0,
+                        "style": [
+                            "font-size: 18px;"
+                        ],
+                        "text": ".",
+                        "width": 10
+                    },
+                    "designerId": "6dff9c93-03bc-4cde-bf1a-0e63f9728d08"
+                }
+            ]
+        },
+        {
+            "type": "Ext.container.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|snapToGrid": 10,
+                "height": 30,
+                "id": "ipConfig_range_end",
+                "layout": "absolute",
+                "layout|x": 10,
+                "layout|y": 110,
+                "width": 150
+            },
+            "designerId": "c015bd1b-59fc-4e07-80e2-10cafb84ab12",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "fieldLabel": "",
+                        "id": "ipConfig_segment_1_0",
+                        "layout|x": 0,
+                        "layout|y": 0,
+                        "tabIndex": 5,
+                        "width": 30
+                    },
+                    "designerId": "b2b37f41-f721-42b9-a0c0-0f7fe1ec9486"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "fieldLabel": "",
+                        "id": "ipConfig_segment_1_1",
+                        "layout|x": 40,
+                        "layout|y": 0,
+                        "tabIndex": 6,
+                        "width": 30
+                    },
+                    "designerId": "efd7b27c-4214-42ea-b106-b771a8dddba6"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "fieldLabel": "",
+                        "id": "ipConfig_segment_1_2",
+                        "layout|x": 80,
+                        "layout|y": 0,
+                        "tabIndex": 7,
+                        "width": 30
+                    },
+                    "designerId": "8d7cbbfd-c47b-41ec-8cd2-9e5f43322936"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "fieldLabel": "",
+                        "id": "ipConfig_segment_1_3",
+                        "layout|x": 120,
+                        "layout|y": 0,
+                        "tabIndex": 8,
+                        "width": 30
+                    },
+                    "designerId": "25c66116-acf7-4c86-b423-e467b36f3557"
+                },
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": 20,
+                        "layout|x": 32,
+                        "layout|y": 0,
+                        "style": [
+                            "font-size: 18px;"
+                        ],
+                        "text": ".",
+                        "width": 10
+                    },
+                    "designerId": "e390e5e4-b23e-4242-b3c7-e8bf005e456f"
+                },
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": 20,
+                        "layout|x": 72,
+                        "layout|y": 0,
+                        "style": [
+                            "font-size: 18px;"
+                        ],
+                        "text": ".",
+                        "width": 10
+                    },
+                    "designerId": "d1aaefc0-69ec-4435-8e66-a9afa9e6207c"
+                },
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": 20,
+                        "layout|x": 112,
+                        "layout|y": 0,
+                        "style": [
+                            "font-size: 18px;"
+                        ],
+                        "text": ".",
+                        "width": 10
+                    },
+                    "designerId": "fed4a932-0528-4484-b366-74cd58c7ced2"
+                }
+            ]
+        }
+    ]
+}

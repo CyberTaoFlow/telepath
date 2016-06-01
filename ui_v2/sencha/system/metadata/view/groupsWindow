@@ -1,0 +1,153 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "closeAction": "hide",
+        "designer|userClassName": "groupsWindow",
+        "height": 434,
+        "id": "groupsWindow",
+        "layout": "fit",
+        "modal": true,
+        "title": "Telepath Groups",
+        "width": 561
+    },
+    "designerId": "0c038d83-7568-4652-96e0-8750b8b3065e",
+    "cn": [
+        {
+            "type": "Ext.grid.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "store": "groupsStore",
+                "title": null
+            },
+            "designerId": "1d532306-417b-42b3-b63b-63cbd9957be7",
+            "cn": [
+                {
+                    "type": "Ext.grid.column.Number",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "id",
+                        "defaultWidth": 50,
+                        "format": "0",
+                        "text": "ID",
+                        "width": 50
+                    },
+                    "designerId": "a5040f80-336d-4e4e-95c1-02230002a135"
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "name",
+                        "defaultWidth": 150,
+                        "text": "Group Name",
+                        "width": 150
+                    },
+                    "designerId": "a64188b1-9b99-4d63-aff0-45294f917d3f"
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "description",
+                        "flex": 1,
+                        "text": "Description"
+                    },
+                    "designerId": "4ee38408-5dea-4a95-9b17-11c9621eac9d"
+                },
+                {
+                    "type": "Ext.grid.View",
+                    "reference": {
+                        "name": "viewConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "be3877ea-5f69-423f-8939-3316599a154e"
+                },
+                {
+                    "type": "Ext.toolbar.Toolbar",
+                    "reference": {
+                        "name": "dockedItems",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dock": "top"
+                    },
+                    "designerId": "354fd1c4-51af-4475-90b2-7c9bda30ee18",
+                    "cn": [
+                        {
+                            "type": "Ext.button.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "layout|flex": null,
+                                "text": "Add Group"
+                            },
+                            "designerId": "7a7e56ff-b2a7-4955-a740-63c03511be6a",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onButtonClick",
+                                        "implHandler": [
+                                            "telepath.groups.create();"
+                                        ],
+                                        "name": "click",
+                                        "scope": "me"
+                                    },
+                                    "designerId": "4674de3d-61b0-4d0b-9832-a704caf4be18"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onGridpanelItemClick",
+                        "implHandler": [
+                            "telepath.groups.edit(record);"
+                        ],
+                        "name": "itemclick",
+                        "scope": "me"
+                    },
+                    "designerId": "64d31ff1-bfa4-4f97-98c5-d3567a232edf"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,200 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|snapToGrid": 10,
+        "designer|userClassName": "w_workflow_record",
+        "height": 242,
+        "id": "w_workflow_record",
+        "layout": "absolute",
+        "modal": true,
+        "shadow": null,
+        "title": "Business Action Recording",
+        "width": 503
+    },
+    "designerId": "81e100ac-3074-4eec-8d78-da7d856633dc",
+    "cn": [
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 20,
+                "layout|y": 110,
+                "style": null,
+                "text": "Note: In order to display all pages, please clean the browser's cache."
+            },
+            "designerId": "0c1b1b5a-42e1-4bf7-b3b9-4127727cfbe5"
+        },
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 20,
+                "layout|y": 60,
+                "text": "2. Click the link"
+            },
+            "designerId": "fc7564a5-4066-47eb-a216-91fdde76145c"
+        },
+        {
+            "type": "Ext.form.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "border": false,
+                "fieldLabel": null,
+                "fieldStyle": "",
+                "id": "w_record_url",
+                "layout|x": 20,
+                "layout|y": 80,
+                "readOnly": true,
+                "style": null,
+                "width": 450
+            },
+            "designerId": "34b5fc18-3cb7-47c6-a452-ec937cfe9609"
+        },
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 20,
+                "layout|y": 160,
+                "text": "3. Once the page above has finished loading, click 'Start'"
+            },
+            "designerId": "27194971-f74d-46e3-a945-69d235258e7a"
+        },
+        {
+            "type": "Ext.button.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "id": "w_record_start",
+                "layout|x": 20,
+                "layout|y": 180,
+                "text": "Start"
+            },
+            "designerId": "aef40435-3a7e-4171-8ea5-6246c6e31431"
+        },
+        {
+            "type": "Ext.ProgressBar",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "id": "w_detection_progress_bar",
+                "layout|x": 20,
+                "layout|y": 210,
+                "value": 0.4,
+                "width": 450
+            },
+            "designerId": "87d3fe0d-7139-40fe-b49e-9ce1ca1045b4"
+        },
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 20,
+                "layout|y": 10,
+                "text": "1. Name your action"
+            },
+            "designerId": "94ca89f2-18bd-4e56-866d-4b9edb9f8efa"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onW_workflow_recordShow",
+                "implHandler": [
+                    "Ext.getCmp('main_panel').disable()",
+                    "render_record_url()"
+                ],
+                "name": "show",
+                "scope": "me"
+            },
+            "designerId": "e022067b-876d-4b09-bb7f-bb3267686b22"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onW_workflow_recordDestroy",
+                "implHandler": [
+                    "Ext.getCmp('main_panel').enable();",
+                    "telepath.workflow.stopTracking();"
+                ],
+                "name": "destroy",
+                "scope": "me"
+            },
+            "designerId": "4fcbf331-0abe-40a8-ad55-857351583b7e"
+        },
+        {
+            "type": "Ext.form.field.Checkbox",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "boxLabel": "Track session using unique IP",
+                "fieldLabel": null,
+                "id": "w_ip_recording_mode",
+                "layout|x": 20,
+                "layout|y": 130
+            },
+            "designerId": "4cf9d744-482f-4e8e-9f63-156186a71644"
+        },
+        {
+            "type": "Ext.form.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "allowBlank": false,
+                "allowOnlyWhitespace": false,
+                "fieldLabel": null,
+                "id": "w_record_name",
+                "layout|x": 20,
+                "layout|y": 30,
+                "width": 150
+            },
+            "designerId": "f63e087b-c4e9-4703-a5e8-bd6ad3a96efb"
+        }
+    ]
+}

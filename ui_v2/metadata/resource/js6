@@ -1,0 +1,13 @@
+{
+    "type": "jsresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "js6",
+        "url": "Htmls/CountriesLookup.js"
+    },
+    "designerId": "d3ca938e-2314-4854-aa1f-b57391910b3c"
+}

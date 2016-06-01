@@ -1,0 +1,13 @@
+{
+    "type": "jsresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "js9",
+        "url": "Htmls/Workflow.js"
+    },
+    "designerId": "a42d1ae4-1835-4bf2-ace1-d04698ced605"
+}

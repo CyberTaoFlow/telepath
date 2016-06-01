@@ -1,0 +1,184 @@
+{
+    "type": "Ext.tab.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "activeTab": 0,
+        "border": 0,
+        "designer|initialView": true,
+        "designer|userClassName": "main_panel",
+        "height": null,
+        "id": "main_panel",
+        "manageHeight": false,
+        "maxTabWidth": null,
+        "style": null,
+        "width": 1024
+    },
+    "designerId": "925e0c8b-b80b-4731-a644-d7eec005fa1e",
+    "cn": [
+        {
+            "type": "linkedinstance",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "designerId": "46cce848-dcc8-4e53-aed7-289e26848ee6",
+            "masterInstanceId": "c3b5cb05-d0d8-421c-a991-e11e95fce2c2",
+            "cn": [
+                {
+                    "type": "Ext.tab.Tab",
+                    "reference": {
+                        "name": "tabConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "ffbd63c4-4fca-4423-9dd1-6ba4530602b9"
+                }
+            ]
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onMain_panelRender",
+                "implHandler": [
+                    "//new Ext.LoadMask(component,{ msg:\"Loading Data...\",id:\"main_panel_mask\"});"
+                ],
+                "name": "render",
+                "scope": "me"
+            },
+            "designerId": "87ee5582-a983-4c10-9168-252d4b5931d5"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onMain_panelTabChange",
+                "implHandler": [
+                    "// In Init.js",
+                    "main_panel_tab_change(tabPanel, newCard, oldCard, eOpts);"
+                ],
+                "name": "tabchange",
+                "scope": "me"
+            },
+            "designerId": "ccc1690c-5859-448e-b3f1-d40096be0199"
+        },
+        {
+            "type": "linkedinstance",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "designerId": "ea513ff8-ffd7-48c1-b4a7-1cafe38fd947",
+            "masterInstanceId": "9c562470-b206-4820-a2b4-e029027ae65c",
+            "cn": [
+                {
+                    "type": "Ext.tab.Tab",
+                    "reference": {
+                        "name": "tabConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "737eb201-583b-4700-bc24-7566742c8a12"
+                }
+            ]
+        },
+        {
+            "type": "linkedinstance",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "designerId": "458dd7af-954e-4192-890a-6f73d2c59009",
+            "masterInstanceId": "4dce2877-e526-4232-b61c-000eb9e7c738",
+            "cn": [
+                {
+                    "type": "Ext.tab.Tab",
+                    "reference": {
+                        "name": "tabConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "942952b3-fb66-4c54-9353-c338bf0169d9"
+                }
+            ]
+        },
+        {
+            "type": "linkedinstance",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "designerId": "a6204602-0fc6-4551-ae42-b2b0be621b06",
+            "masterInstanceId": "5eab9329-162f-4b54-8aed-df51cd8ec395",
+            "cn": [
+                {
+                    "type": "Ext.tab.Tab",
+                    "reference": {
+                        "name": "tabConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "2305560d-f32e-4266-8f56-8196d9feee1c"
+                }
+            ]
+        },
+        {
+            "type": "linkedinstance",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "designerId": "a75e5cdb-1f73-4f71-b189-74e5eef74c18",
+            "masterInstanceId": "1a93c2ed-e3b8-48df-8966-aa104078c2a2",
+            "cn": [
+                {
+                    "type": "Ext.tab.Tab",
+                    "reference": {
+                        "name": "tabConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "05d41832-54a7-4ad3-a356-189a261e8d4e"
+                }
+            ]
+        },
+        {
+            "type": "linkedinstance",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "designerId": "510359d4-fdab-411c-9c3a-3a468444515e",
+            "masterInstanceId": "7c72d0bf-1c92-47a1-9fe9-5a1fa39d097d",
+            "cn": [
+                {
+                    "type": "Ext.tab.Tab",
+                    "reference": {
+                        "name": "tabConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "b84d16ea-6fad-4525-b754-16602353591f"
+                }
+            ]
+        }
+    ]
+}

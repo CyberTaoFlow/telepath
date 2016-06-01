@@ -1,0 +1,50 @@
+{
+    "type": "Ext.data.Store",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "RequestScores",
+        "storeId": "MyStore"
+    },
+    "designerId": "f0d24134-8f78-43a2-944b-4aa491bc13f3",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Memory",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "2aa9f3a5-84b5-4a48-a2f7-aa9e003f9eef"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "key"
+            },
+            "designerId": "49b364f3-dad9-4576-9053-3d67fd5cc239"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "value",
+                "sortType": "asInt",
+                "type": "int"
+            },
+            "designerId": "a7af8a82-9d82-46a2-a0c6-83b2470d4df5"
+        }
+    ]
+}

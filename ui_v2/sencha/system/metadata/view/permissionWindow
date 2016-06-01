@@ -1,0 +1,252 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|snapToGrid": 10,
+        "designer|userClassName": "permissionWindow",
+        "height": 329,
+        "id": "permissionWindow",
+        "layout": "absolute",
+        "modal": true,
+        "title": "Permission Editor",
+        "width": 512
+    },
+    "designerId": "64f20b3a-707f-4c83-a1f3-669bf66dbd35",
+    "cn": [
+        {
+            "type": "Ext.toolbar.Toolbar",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dock": "top"
+            },
+            "designerId": "84b98e1b-3908-405e-8630-e903f1845e01",
+            "cn": [
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": null,
+                        "text": "Save Permission"
+                    },
+                    "designerId": "c0640168-b5cf-4294-83b5-8c198dad66e3",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onButtonClick",
+                                "implHandler": [
+                                    "telepath.permissions.save();"
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "designerId": "25df9471-ffd8-4bf7-8484-95914b291c3e"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "id": "perm_delete",
+                        "layout|flex": null,
+                        "text": "Delete Permission"
+                    },
+                    "designerId": "502c791d-5c87-4e17-bf12-f7e2fbd17381",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onPermission_deleteClick",
+                                "implHandler": [
+                                    "telepath.permissions.deleteClick();"
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "designerId": "80892222-2574-43bf-8305-bff11d08943c"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "id": "perm_activity",
+                        "layout|flex": null,
+                        "text": "View Activity"
+                    },
+                    "designerId": "6eb36824-9979-403d-a524-e02d481a9ca7"
+                }
+            ]
+        },
+        {
+            "type": "Ext.form.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fieldLabel": "Class",
+                "id": "perm_class",
+                "layout|x": 10,
+                "layout|y": 10,
+                "width": 240
+            },
+            "designerId": "c833bcca-fd67-41b8-b37d-481d308a1589"
+        },
+        {
+            "type": "Ext.form.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fieldLabel": "Function",
+                "id": "perm_function",
+                "layout|x": 10,
+                "layout|y": 40,
+                "width": 240
+            },
+            "designerId": "9956205e-61f9-464b-82d8-63546448f668"
+        },
+        {
+            "type": "Ext.form.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fieldLabel": "Alias",
+                "id": "perm_alias",
+                "layout|x": 10,
+                "layout|y": 70,
+                "width": 240
+            },
+            "designerId": "11e916a4-9a63-4312-b427-3e4d53af6d3e"
+        },
+        {
+            "type": "Ext.grid.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "height": 220,
+                "id": "perm_applications",
+                "layout|x": 260,
+                "layout|y": 10,
+                "store": "applicationsStore",
+                "title": "Application Selection",
+                "width": 230
+            },
+            "designerId": "1ea34ef8-df14-4eed-a0d5-d0bb8da2cec1",
+            "cn": [
+                {
+                    "type": "Ext.grid.View",
+                    "reference": {
+                        "name": "viewConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "4c38c8d8-1688-488e-9bd1-0db2f89dd30c"
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "domain",
+                        "flex": 1,
+                        "text": "Application"
+                    },
+                    "designerId": "3d28074f-1dfb-4ba8-a054-3be882cd9bbd"
+                },
+                {
+                    "type": "Ext.selection.CheckboxModel",
+                    "reference": {
+                        "name": "selModel",
+                        "type": "object"
+                    },
+                    "codeClass": "Ext.selection.CheckboxModel",
+                    "userConfig": {
+                        "checkOnly": true
+                    },
+                    "designerId": "cabd7577-50ae-4286-b2bd-2a997fbea9f9"
+                }
+            ]
+        },
+        {
+            "type": "Ext.form.field.TextArea",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fieldLabel": "Description",
+                "height": 126,
+                "id": "perm_description",
+                "labelAlign": "top",
+                "layout|x": 10,
+                "layout|y": 100,
+                "width": 240
+            },
+            "designerId": "fd1c2c8c-4b3d-436d-bff2-7d883d3a1642"
+        },
+        {
+            "type": "Ext.form.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fieldLabel": "Additional Parameters",
+                "id": "perm_params",
+                "labelWidth": 150,
+                "layout|x": 10,
+                "layout|y": 240,
+                "width": 480
+            },
+            "designerId": "679f40da-7794-41f4-862e-27d9852dbc52"
+        }
+    ]
+}

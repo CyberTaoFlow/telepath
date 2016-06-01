@@ -1,0 +1,47 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "c_SanitizedStore",
+        "storeId": "c_SanitizedStore"
+    },
+    "designerId": "1b20499e-f958-4dbc-bff3-c6ded88b1bc6",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "8a7a92c5-350f-4336-8936-6a920eee1f91",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "de53f42f-d658-418f-b1b1-b71b45187785"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "exp"
+            },
+            "designerId": "444135a4-b15e-4f8d-877b-5971084bd320"
+        }
+    ]
+}

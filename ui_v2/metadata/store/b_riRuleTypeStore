@@ -1,0 +1,56 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "data": [
+            "[",
+            "{type:\"Parameter\"},",
+            "{type:\"Behavior\"},",
+            "{type:\"Pattern\"},",
+            "{type:\"Geographic\"},",
+            "{type:\"Bot-Intelligence\"}",
+            "]"
+        ],
+        "designer|userClassName": "b_riRuleTypeStore",
+        "storeId": "b_riRuleTypeStore"
+    },
+    "designerId": "3c28418b-808b-495a-bffc-0f38a85e4240",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "845e7d89-951a-433e-bd17-06c162faec2f",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "b9521f83-8225-4144-8d64-ebe11e2d434c"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "type"
+            },
+            "designerId": "2efb27ea-1e12-49a6-ace7-374a138fee89"
+        }
+    ]
+}

@@ -1,0 +1,208 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "closeAction": "hide",
+        "designer|snapToGrid": 10,
+        "designer|userClassName": "ProfileSave",
+        "height": 149,
+        "id": "ProfileSave",
+        "layout": "absolute",
+        "resizable": [
+            "false"
+        ],
+        "title": "Save Profile",
+        "width": 400
+    },
+    "designerId": "7b306c27-4345-44bd-b3ed-2936fdfc8a78",
+    "cn": [
+        {
+            "type": "Ext.form.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "enableKeyEvents": true,
+                "fieldLabel": "Profile Name",
+                "id": "profileName",
+                "labelSeparator": " ",
+                "layout|x": 50,
+                "layout|y": 30
+            },
+            "designerId": "8dfcf622-64a1-438e-9adc-e39a30b0354a",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onProfileNameChange",
+                        "implHandler": [
+                            "if (newValue.length>0 & newValue.charAt(0)!=\" \") ",
+                            "    Ext.getCmp(\"saveProfile\").enable();",
+                            "else",
+                            "    Ext.getCmp(\"saveProfile\").disable();"
+                        ],
+                        "name": "change",
+                        "scope": "me"
+                    },
+                    "designerId": "3da5e2ea-61de-45eb-87a5-bf97dc1e7e70"
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onProfileNameKeypress",
+                        "implHandler": [
+                            "if (e.keyCode!=13)",
+                            "return;",
+                            "",
+                            "Ext.WindowManager.get('ProfileSave').hide();",
+                            "SaveProfile();"
+                        ],
+                        "name": "keypress",
+                        "scope": "me"
+                    },
+                    "designerId": "05bf0248-2b7e-4ffb-8056-4385ac0be273"
+                }
+            ]
+        },
+        {
+            "type": "Ext.button.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "disabled": true,
+                "icon": "Htmls/images/save.gif",
+                "id": "saveProfile",
+                "layout|x": 170,
+                "layout|y": 70,
+                "text": "Save"
+            },
+            "designerId": "572946d3-c2b1-48a8-a41d-dbd67ca97a8d",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onButtonClick1",
+                        "implHandler": [
+                            "",
+                            "Ext.WindowManager.get('ProfileSave').hide();",
+                            "SaveProfile();"
+                        ],
+                        "name": "click",
+                        "scope": "me"
+                    },
+                    "designerId": "fe81100f-c143-4956-a4b2-867ed069082a"
+                }
+            ]
+        },
+        {
+            "type": "Ext.button.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "icon": "Htmls/images/x.gif",
+                "layout|x": 230,
+                "layout|y": 70,
+                "text": "Cancel"
+            },
+            "designerId": "3ee1fc0e-fda0-4508-b8bd-7a4030a2c426",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onButtonClick",
+                        "implHandler": [
+                            "Ext.getCmp('profileName').setValue(\"\");",
+                            "Ext.WindowManager.get('ProfileSave').hide();"
+                        ],
+                        "name": "click",
+                        "scope": "me"
+                    },
+                    "designerId": "6816bec7-7b60-4cea-815b-3f3369e5e5a3"
+                }
+            ]
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onProfileSaveDestroy",
+                "implHandler": [
+                    "Ext.getCmp('main_panel').enable()"
+                ],
+                "name": "destroy",
+                "scope": "me"
+            },
+            "designerId": "46dea716-2a82-4c68-b4f9-8ab972c4fb19"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onProfileSaveShow",
+                "implHandler": [
+                    "Ext.getCmp('main_panel').disable()"
+                ],
+                "name": "show",
+                "scope": "me"
+            },
+            "designerId": "61e49ca5-5d7e-4f0c-8b5b-6a66773f99c3"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onProfileSaveHide",
+                "implHandler": [
+                    "Ext.getCmp('main_panel').enable()"
+                ],
+                "name": "hide",
+                "scope": "me"
+            },
+            "designerId": "c7db1ee8-9e8b-4260-a0f2-2052a9812ea9"
+        }
+    ]
+}

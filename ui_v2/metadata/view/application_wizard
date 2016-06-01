@@ -1,0 +1,2895 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "bodyPadding": 10,
+        "designer|userClassName": "application_wizard",
+        "height": 710,
+        "id": "application_wizard",
+        "itemId": null,
+        "layout": "anchor",
+        "padding": null,
+        "resizable": [
+            "false"
+        ],
+        "title": "Add Application",
+        "width": 627
+    },
+    "designerId": "fce663c0-ca07-4334-bc69-f19eab9f383a",
+    "cn": [
+        {
+            "type": "Ext.form.field.Hidden",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fieldLabel": "Label",
+                "id": "app_wizard_app_id_to_add",
+                "layout|anchor": "100%"
+            },
+            "designerId": "25d7ec46-3e46-43d5-b441-a3fee35b6e70"
+        },
+        {
+            "type": "Ext.panel.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|snapToGrid": 10,
+                "height": 610,
+                "id": "app_wizard_general",
+                "layout": "absolute",
+                "style": null,
+                "title": "General",
+                "width": 595
+            },
+            "designerId": "a40c159d-0e57-4006-a769-155dad039942",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "enableKeyEvents": true,
+                        "fieldLabel": "Display Name",
+                        "id": "app_wizard_general_display_name",
+                        "labelSeparator": " ",
+                        "labelWidth": 150,
+                        "layout|x": 10,
+                        "layout|y": 30,
+                        "name": "test",
+                        "regex": null,
+                        "regexText": null,
+                        "style": null,
+                        "width": 350
+                    },
+                    "designerId": "f42d477b-de2b-4885-af8a-a72bd86cdc40",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onApp_wizard_general_display_nameKeypress",
+                                "implHandler": [
+                                    "if (e.keyCode!=13)",
+                                    "return;",
+                                    "Ext.getCmp('app_wizard_save_button').fireEvent('click');"
+                                ],
+                                "name": "keypress",
+                                "scope": "me"
+                            },
+                            "designerId": "451c9133-8193-449b-811c-0a1214ac8dec"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "enableKeyEvents": true,
+                        "fieldLabel": "Application Domain",
+                        "id": "app_wizard_general_application_domain",
+                        "labelSeparator": " ",
+                        "labelWidth": 150,
+                        "layout|x": 10,
+                        "layout|y": 70,
+                        "regex": null,
+                        "regexText": null,
+                        "style": null,
+                        "width": 350
+                    },
+                    "designerId": "95275ec3-1179-4da6-995e-04827cc213ef",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onApp_wizard_general_application_domainKeypress",
+                                "implHandler": [
+                                    "if (e.keyCode!=13)",
+                                    "return;",
+                                    "Ext.getCmp('app_wizard_save_button').fireEvent('click');"
+                                ],
+                                "name": "keypress",
+                                "scope": "me"
+                            },
+                            "designerId": "99a87995-c9d6-4a56-a8a3-617f9e3ed265"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|x": 10,
+                        "layout|y": 110,
+                        "style": [
+                            "background-color:#EEE;",
+                            "font-weight:bold;"
+                        ],
+                        "text": "Application Cookies",
+                        "width": 570
+                    },
+                    "designerId": "b3504b32-fa71-4ca7-bec2-c036b5920d9c"
+                },
+                {
+                    "type": "Ext.form.field.ComboBox",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "displayField": "cookie",
+                        "enableKeyEvents": true,
+                        "fieldLabel": "Cookie Name",
+                        "id": "app_wizard_general_cookie_name",
+                        "labelSeparator": " ",
+                        "labelWidth": 150,
+                        "layout|x": 10,
+                        "layout|y": 140,
+                        "queryMode": "local",
+                        "regex": null,
+                        "regexText": null,
+                        "store": "app_wizard_cookieStore",
+                        "style": null,
+                        "width": 310
+                    },
+                    "designerId": "654c2ed3-a233-471b-ad20-e086df0261b0",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onApp_wizard_general_cookie_nameKeypress",
+                                "implHandler": [
+                                    "if (e.keyCode!=13)",
+                                    "return;",
+                                    "var field = Ext.getCmp('app_wizard_general_cookie_name');",
+                                    "var new_cookie = field.getValue();",
+                                    "if (check_for_duplicates(field,Ext.getCmp('app_wizard_general_add_cookie_list').getStore())){ ",
+                                    "    field.reset();",
+                                    "    return;",
+                                    "}",
+                                    "if (field.isValid()){",
+                                    "    Ext.getCmp('app_wizard_general_add_cookie_list').getStore().add({cookie:new_cookie});",
+                                    "    field.reset();",
+                                    "}",
+                                    ""
+                                ],
+                                "name": "keypress",
+                                "scope": "me"
+                            },
+                            "designerId": "9280c30d-922d-42d8-9476-c330d23d1996"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "id": "app_wizard_general_add_cookie_button",
+                        "layout|x": 330,
+                        "layout|y": 140,
+                        "text": "Add"
+                    },
+                    "designerId": "77bef3db-f46a-4b6b-91a6-61f45b2f88c7",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onButtonClick11",
+                                "implHandler": [
+                                    "var field = Ext.getCmp('app_wizard_general_cookie_name');",
+                                    "var new_cookie = field.getValue();",
+                                    "if (check_for_duplicates(field,Ext.getCmp('app_wizard_general_add_cookie_list').getStore())){ ",
+                                    "    field.reset();",
+                                    "    return;",
+                                    "}",
+                                    "if (field.isValid()){",
+                                    "    Ext.getCmp('app_wizard_general_add_cookie_list').getStore().add({cookie:new_cookie});",
+                                    "    field.reset();",
+                                    "}",
+                                    ""
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "designerId": "e589e4bb-4b43-4ef0-a804-a4a9ac80b98e"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.grid.Panel",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "enableColumnHide": false,
+                        "enableColumnMove": false,
+                        "forceFit": true,
+                        "height": 150,
+                        "id": "app_wizard_general_add_cookie_list",
+                        "layout|x": 165,
+                        "layout|y": 170,
+                        "store": "app_wizard_cookie_list_store",
+                        "title": "",
+                        "width": 200
+                    },
+                    "designerId": "c1c3292e-0c5d-4b9c-ab14-4d424185c258",
+                    "cn": [
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "cookie",
+                                "text": null,
+                                "width": 300
+                            },
+                            "designerId": "93790ade-c4d0-49eb-b638-9a072e337c80",
+                            "cn": [
+                                {
+                                    "type": "Ext.form.field.Text",
+                                    "reference": {
+                                        "name": "editor",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "allowBlank": false,
+                                        "regex": null,
+                                        "regexText": null
+                                    },
+                                    "designerId": "bba474e3-0f2e-42a7-a1f2-e437615c57a4"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.View",
+                            "reference": {
+                                "name": "viewConfig",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "designerId": "96e7ed99-d4fc-4962-af5e-646d0f7a823c"
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "maxWidth": 60,
+                                "text": ""
+                            },
+                            "designerId": "cd88be07-b53c-49d4-8205-2a71b6a040ee",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "value",
+                                            "metaData",
+                                            "record",
+                                            "rowIndex",
+                                            "colIndex",
+                                            "store",
+                                            "view"
+                                        ],
+                                        "fn": "renderer",
+                                        "implHandler": [
+                                            "return '<div><img src=\"Htmls/images/edit.gif\" onclick=\"Ext.getCmp(\\'app_wizard_general_add_cookie_list\\').getPlugin(\\'ip_cell_edit\\').startEdit('+rowIndex+',Ext.getCmp(\\'app_wizard_general_add_cookie_list\\').columns[0])\" align=\"center\"></div>'; "
+                                        ]
+                                    },
+                                    "designerId": "06a470ec-e9ea-4bb3-8d76-b9d7ccc8e577"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "maxWidth": 60,
+                                "text": "",
+                                "width": 111
+                            },
+                            "designerId": "2aedb01e-f068-4cc1-aa73-1515853f2917",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "value",
+                                            "metaData",
+                                            "record",
+                                            "rowIndex",
+                                            "colIndex",
+                                            "store",
+                                            "view"
+                                        ],
+                                        "fn": "renderer",
+                                        "implHandler": [
+                                            "return '<div><img src=\"Htmls/images/delete.gif\" onclick=\"remove_item_from_table(\\''+record.internalId+'\\',\\'app_wizard_general_add_cookie_list\\')\" align=\"center\"></div>'; "
+                                        ]
+                                    },
+                                    "designerId": "a80a0a39-7244-479a-ac11-f0179b4572bb"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.plugin.CellEditing",
+                            "reference": {
+                                "name": "plugins",
+                                "type": "array"
+                            },
+                            "codeClass": "Ext.grid.plugin.CellEditing",
+                            "userConfig": {
+                                "pluginId": "ip_cell_edit"
+                            },
+                            "designerId": "699b6abc-ea28-4289-ad4f-366b209c74eb",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onCellEditingValidateedit",
+                                        "implHandler": [
+                                            "return validate_edition(editor,e)"
+                                        ],
+                                        "name": "validateedit",
+                                        "scope": "me"
+                                    },
+                                    "designerId": "b923d22d-5e5a-454f-8a48-95f04b977cac"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|x": 10,
+                        "layout|y": 340,
+                        "style": [
+                            "background-color:#EEE;",
+                            "font-weight:bold;"
+                        ],
+                        "text": "Application IP Addresses",
+                        "width": 570
+                    },
+                    "designerId": "528b5308-f589-4e61-aaee-9abbfdedf70a"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "enableKeyEvents": true,
+                        "fieldLabel": "Add New IP",
+                        "id": "app_wizard_general_add_ip_field",
+                        "labelSeparator": " ",
+                        "labelWidth": 150,
+                        "layout|x": 10,
+                        "layout|y": 370,
+                        "regex": "/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/",
+                        "regexText": "Illegal IP Address",
+                        "width": 310
+                    },
+                    "designerId": "5d025937-558d-4787-84b0-8eb353000fd7",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onC_appAdd_ssl_ipKeypress",
+                                "implHandler": [
+                                    "if (e.keyCode!=13)",
+                                    "return;",
+                                    "var field = Ext.getCmp('app_wizard_general_add_ip_field');",
+                                    "var new_ip = field.getValue();",
+                                    "if (check_for_duplicates(field,Ext.getCmp('app_wizard_general_add_ip_list').getStore())){ ",
+                                    "    field.reset();",
+                                    "    return;",
+                                    "}",
+                                    "if (field.isValid()){",
+                                    "    Ext.getCmp('app_wizard_general_add_ip_list').getStore().add({ip:new_ip});",
+                                    "    field.reset();",
+                                    "}",
+                                    ""
+                                ],
+                                "name": "keypress",
+                                "scope": "me"
+                            },
+                            "designerId": "0857ef69-1bec-4f87-9182-1c1f2395579a"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "id": "app_wizard_general_add_ip_button",
+                        "layout|x": 330,
+                        "layout|y": 370,
+                        "text": "Add"
+                    },
+                    "designerId": "2e12885b-65d6-4c79-98ec-34cabb41cfdd",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onButtonClick1",
+                                "implHandler": [
+                                    "var field = Ext.getCmp('app_wizard_general_add_ip_field');",
+                                    "var new_ip = field.getValue();",
+                                    "if (check_for_duplicates(field,Ext.getCmp('app_wizard_general_add_ip_list').getStore())){ ",
+                                    "    field.reset();",
+                                    "    return;",
+                                    "}",
+                                    "if (field.isValid()){",
+                                    "    Ext.getCmp('app_wizard_general_add_ip_list').getStore().add({ip:new_ip});",
+                                    "    field.reset();",
+                                    "}",
+                                    ""
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "designerId": "79c3e1c5-b556-4894-8b56-ba295e98ea66"
+                        }
+                    ]
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onApp_wizard_generalShow",
+                        "implHandler": [
+                            "Ext.getCmp('app_wizard_authentication').hide()",
+                            "Ext.getCmp('app_wizard_ssl').hide()",
+                            "Ext.getCmp('app_wizard_advanced').hide()",
+                            "Ext.getCmp('app_wizard_general_display_name').focus(true)"
+                        ],
+                        "name": "show",
+                        "scope": "me"
+                    },
+                    "designerId": "f6f4644a-9300-43f0-b3bc-2e8cccbe8dae"
+                },
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "hidden": true,
+                        "id": "app_wizard_general_add_ip_list_alert",
+                        "layout|x": 400,
+                        "layout|y": 370,
+                        "style": [
+                            "{",
+                            "    color:'red'   ",
+                            "}"
+                        ],
+                        "text": "Please insert at least one IP address"
+                    },
+                    "designerId": "500e1463-0428-4c8d-8fbd-8927b005762f"
+                },
+                {
+                    "type": "Ext.grid.Panel",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "enableColumnHide": false,
+                        "enableColumnMove": false,
+                        "forceFit": true,
+                        "height": 150,
+                        "id": "app_wizard_general_add_ip_list",
+                        "layout|x": 165,
+                        "layout|y": 400,
+                        "store": "appAdd_ssl_server_ip_store",
+                        "title": "",
+                        "width": 200
+                    },
+                    "designerId": "0c2d7ebe-1259-4115-bab4-31d0ae57a739",
+                    "cn": [
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "ip",
+                                "text": null,
+                                "width": 300
+                            },
+                            "designerId": "72471972-459f-4c34-a006-7bad68e108e1",
+                            "cn": [
+                                {
+                                    "type": "Ext.form.field.Text",
+                                    "reference": {
+                                        "name": "editor",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "regex": "/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/",
+                                        "regexText": "Illegal IP Adrees"
+                                    },
+                                    "designerId": "fa8e93fd-a47b-46e7-b01e-55be32bd2d00"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.View",
+                            "reference": {
+                                "name": "viewConfig",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "designerId": "5bdddccd-5168-40b2-bf32-2b50c12c5e1a"
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "maxWidth": 60,
+                                "text": ""
+                            },
+                            "designerId": "885a2769-5567-4839-b333-2c37fc7f01b8",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "value",
+                                            "metaData",
+                                            "record",
+                                            "rowIndex",
+                                            "colIndex",
+                                            "store",
+                                            "view"
+                                        ],
+                                        "fn": "renderer",
+                                        "implHandler": [
+                                            "return '<div><img src=\"Htmls/images/edit.gif\" onclick=\"Ext.getCmp(\\'app_wizard_general_add_ip_list\\').getPlugin(\\'ip_cell_edit\\').startEdit('+rowIndex+',Ext.getCmp(\\'app_wizard_general_add_ip_list\\').columns[0])\" align=\"center\"></div>'; "
+                                        ]
+                                    },
+                                    "designerId": "91bec0c5-ef26-409a-bccf-f567eba34de9"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "maxWidth": 60,
+                                "text": "",
+                                "width": 111
+                            },
+                            "designerId": "be48fc82-8516-4143-bebe-0c0873405193",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "value",
+                                            "metaData",
+                                            "record",
+                                            "rowIndex",
+                                            "colIndex",
+                                            "store",
+                                            "view"
+                                        ],
+                                        "fn": "renderer",
+                                        "implHandler": [
+                                            "return '<div><img src=\"Htmls/images/delete.gif\" onclick=\"remove_item_from_table(\\''+record.internalId+'\\',\\'app_wizard_general_add_ip_list\\')\" align=\"center\"></div>'; "
+                                        ]
+                                    },
+                                    "designerId": "8a796942-1b93-4d12-84b9-44eaa352b122"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.plugin.CellEditing",
+                            "reference": {
+                                "name": "plugins",
+                                "type": "array"
+                            },
+                            "codeClass": "Ext.grid.plugin.CellEditing",
+                            "userConfig": {
+                                "pluginId": "ip_cell_edit"
+                            },
+                            "designerId": "8deeb67f-8bcc-4d63-b510-fec7cf4548c5",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onCellEditingValidateedit1",
+                                        "implHandler": [
+                                            "return validate_edition(editor,e)"
+                                        ],
+                                        "name": "validateedit",
+                                        "scope": "me"
+                                    },
+                                    "designerId": "b00e5203-ecbd-4629-9f4a-7eddf27cae3f"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "basicfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "isValid",
+                                "implHandler": [
+                                    "if(!Ext.getCmp('app_wizard_general_add_ip_list').getStore().getCount()){",
+                                    "    Ext.getCmp('app_wizard_general_add_ip_list_alert').show();",
+                                    "    return false;",
+                                    "}",
+                                    "",
+                                    "else{",
+                                    "    Ext.getCmp('app_wizard_general_add_ip_list_alert').hide();",
+                                    "    return true;",
+                                    "}"
+                                ]
+                            },
+                            "designerId": "c23c465e-e6aa-4374-9317-12a3210fc9d0"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onAddApplicationDestroy",
+                "implHandler": [
+                    "Ext.getCmp('main_panel').enable();"
+                ],
+                "name": "destroy",
+                "scope": "me"
+            },
+            "designerId": "17043652-db6d-49aa-99af-19d6f6d90103"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onAddApplicationHide",
+                "implHandler": [
+                    "Ext.getCmp('main_panel').enable();",
+                    "Ext.getCmp('app_wizard_general_add_cookie_list').getStore().removeAll();",
+                    "Ext.getCmp('app_wizard_general_add_ip_list').getStore().removeAll();",
+                    "Ext.getCmp('app_wizard_advanced_global_pages_list').getStore().removeAll();",
+                    "component.destroy();"
+                ],
+                "name": "hide",
+                "scope": "me"
+            },
+            "designerId": "041ef345-f935-472a-acfe-c3b709e32970"
+        },
+        {
+            "type": "Ext.panel.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|snapToGrid": 10,
+                "height": 610,
+                "hidden": true,
+                "id": "app_wizard_authentication",
+                "layout": "absolute",
+                "title": "Authentication",
+                "width": 594
+            },
+            "designerId": "d093d90f-74ed-4821-95af-19d49629887d",
+            "cn": [
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|x": 10,
+                        "layout|y": 20,
+                        "style": [
+                            "background-color:#EEE;",
+                            "font-weight:bold;"
+                        ],
+                        "text": "User Identification",
+                        "width": 570
+                    },
+                    "designerId": "de6945bf-2b21-4b0e-ba48-49a02c7067e6"
+                },
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|x": 10,
+                        "layout|y": 200,
+                        "style": [
+                            "background-color:#EEE;",
+                            "font-weight:bold;"
+                        ],
+                        "text": "Success Criteria",
+                        "width": 570
+                    },
+                    "designerId": "a19df3f2-15bd-474b-a97e-e946a726e9e7"
+                },
+                {
+                    "type": "Ext.form.field.Radio",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "boxLabel": "Automatic",
+                        "checked": true,
+                        "fieldLabel": "",
+                        "id": "app_wizard_authentication_automatic_cb",
+                        "layout|x": 10,
+                        "layout|y": 50
+                    },
+                    "designerId": "a6757df6-56ce-4e8c-bc1b-e98b35488d59",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onApp_wizard_authentication_automatic_cbChange",
+                                "implHandler": [
+                                    "if(newValue){",
+                                    "    //Ext.getCmp('app_wizard_authentication_automatic_cb').setValue(false);",
+                                    "\tExt.getCmp('app_wizard_authentication_form_cb').setValue(false);",
+                                    "    Ext.getCmp('app_wizard_authentication_basic_cb').setValue(false);",
+                                    "    Ext.getCmp('app_wizard_authentication_digest_cb').setValue(false);",
+                                    "    Ext.getCmp('app_wizard_authentication_ntlm_cb').setValue(false);    ",
+                                    "}"
+                                ],
+                                "name": "change",
+                                "scope": "me"
+                            },
+                            "designerId": "9b15545f-ceee-4f93-b62e-3cd68488a243"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.field.Radio",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "boxLabel": "Form",
+                        "disabled": true,
+                        "fieldLabel": "",
+                        "id": "app_wizard_authentication_form_cb",
+                        "layout|x": 10,
+                        "layout|y": 80
+                    },
+                    "designerId": "09860619-7343-4ffb-8fb1-742e08582c12",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onApp_wizard_authentication_form_cbChange",
+                                "implHandler": [
+                                    "if (newValue){",
+                                    "    Ext.getCmp('app_wizard_authentication_form_parameter').show()",
+                                    "    Ext.getCmp('app_wizard_authentication_form_parameter_browse').show()",
+                                    "}",
+                                    "else{",
+                                    "    Ext.getCmp('app_wizard_authentication_form_parameter').hide()",
+                                    "    Ext.getCmp('app_wizard_authentication_form_parameter_browse').hide()    ",
+                                    "}",
+                                    "",
+                                    "if(newValue){",
+                                    "    Ext.getCmp('app_wizard_authentication_automatic_cb').setValue(false);",
+                                    "\t//Ext.getCmp('app_wizard_authentication_form_cb').setValue(false);",
+                                    "    Ext.getCmp('app_wizard_authentication_basic_cb').setValue(false);",
+                                    "    Ext.getCmp('app_wizard_authentication_digest_cb').setValue(false);",
+                                    "    Ext.getCmp('app_wizard_authentication_ntlm_cb').setValue(false);    ",
+                                    "}"
+                                ],
+                                "name": "change",
+                                "scope": "me"
+                            },
+                            "designerId": "81fa0620-e89e-4917-bb6b-5004411e5863"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "fieldLabel": "Username Parameter",
+                        "hidden": true,
+                        "id": "app_wizard_authentication_form_parameter",
+                        "labelSeparator": " ",
+                        "labelWidth": 150,
+                        "layout|x": 110,
+                        "layout|y": 80,
+                        "width": 290
+                    },
+                    "designerId": "afbf7ac2-a21d-4491-a38f-ae3d8149d0d3"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "fieldLabel": "Label",
+                        "hidden": true,
+                        "id": "app_wizard_authentication_form_parameter_id",
+                        "layout|x": 80,
+                        "layout|y": 50,
+                        "value": [
+                            "Display Field"
+                        ]
+                    },
+                    "designerId": "c5517376-3fec-4922-8063-75efcdd5f020"
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "hidden": true,
+                        "id": "app_wizard_authentication_form_parameter_browse",
+                        "layout|x": 430,
+                        "layout|y": 80,
+                        "text": "Browse"
+                    },
+                    "designerId": "178a21f0-3c86-49e9-aaa4-b69180e9341a"
+                },
+                {
+                    "type": "Ext.form.field.Radio",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "boxLabel": "Basic",
+                        "fieldLabel": "",
+                        "id": "app_wizard_authentication_basic_cb",
+                        "layout|x": 10,
+                        "layout|y": 110
+                    },
+                    "designerId": "dacb1437-c956-438e-9dbf-5d2301111f7c",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onApp_wizard_authentication_basic_cbChange",
+                                "implHandler": [
+                                    "if(newValue){",
+                                    "    Ext.getCmp('app_wizard_authentication_automatic_cb').setValue(false);",
+                                    "\tExt.getCmp('app_wizard_authentication_form_cb').setValue(false);",
+                                    "    //Ext.getCmp('app_wizard_authentication_basic_cb').setValue(false);",
+                                    "    Ext.getCmp('app_wizard_authentication_digest_cb').setValue(false);",
+                                    "    Ext.getCmp('app_wizard_authentication_ntlm_cb').setValue(false);    ",
+                                    "}"
+                                ],
+                                "name": "change",
+                                "scope": "me"
+                            },
+                            "designerId": "508542a9-9d76-465f-bbd4-9e30b24e3e5c"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.field.Radio",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "boxLabel": "Digest",
+                        "fieldLabel": "",
+                        "id": "app_wizard_authentication_digest_cb",
+                        "layout|x": 10,
+                        "layout|y": 140
+                    },
+                    "designerId": "0bb61630-a9a6-4177-bc4e-e2634b1cb0ad",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onApp_wizard_authentication_digest_cbChange",
+                                "implHandler": [
+                                    "if(newValue){",
+                                    "    Ext.getCmp('app_wizard_authentication_automatic_cb').setValue(false);",
+                                    "\tExt.getCmp('app_wizard_authentication_form_cb').setValue(false);",
+                                    "    Ext.getCmp('app_wizard_authentication_basic_cb').setValue(false);",
+                                    "    //Ext.getCmp('app_wizard_authentication_digest_cb').setValue(false);",
+                                    "    Ext.getCmp('app_wizard_authentication_ntlm_cb').setValue(false);    ",
+                                    "}"
+                                ],
+                                "name": "change",
+                                "scope": "me"
+                            },
+                            "designerId": "29e65058-e2ad-4760-bbcc-c33642dcc0c7"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.field.Radio",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "boxLabel": "NTLM",
+                        "fieldLabel": "",
+                        "id": "app_wizard_authentication_ntlm_cb",
+                        "layout|x": 10,
+                        "layout|y": 170
+                    },
+                    "designerId": "03ed005f-c94d-4218-b35d-2967b2d0063b",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onApp_wizard_authentication_ntlm_cbChange",
+                                "implHandler": [
+                                    "if(newValue){",
+                                    "    Ext.getCmp('app_wizard_authentication_automatic_cb').setValue(false);",
+                                    "\tExt.getCmp('app_wizard_authentication_form_cb').setValue(false);",
+                                    "    Ext.getCmp('app_wizard_authentication_basic_cb').setValue(false);",
+                                    "    Ext.getCmp('app_wizard_authentication_digest_cb').setValue(false);",
+                                    "   // Ext.getCmp('app_wizard_authentication_ntlm_cb').setValue(false);    ",
+                                    "}"
+                                ],
+                                "name": "change",
+                                "scope": "me"
+                            },
+                            "designerId": "3e3bc9d9-74b3-4efb-bc56-1ce05c95b2ab"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.RadioGroup",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Form Authentication",
+                        "labelSeparator": " ",
+                        "labelWidth": 150,
+                        "layout|x": 10,
+                        "layout|y": 240,
+                        "width": 400
+                    },
+                    "designerId": "3b1b61a5-a408-41d4-9d2b-9c1a76ded763",
+                    "cn": [
+                        {
+                            "type": "Ext.form.field.Radio",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "boxLabel": "On",
+                                "checked": true,
+                                "fieldLabel": null,
+                                "id": "app_wizard_authentication_form_authentication_on"
+                            },
+                            "designerId": "96c20610-3074-4db2-9442-6d28654fbab8",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onApp_wizard_authentication_form_authentication_onChange",
+                                        "implHandler": [
+                                            "if (newValue){",
+                                            "    Ext.getCmp('app_wizard_authentication_form_authentication_off').setValue(false);    ",
+                                            "    Ext.getCmp('app_wizard_authentication_success_cookie_cb').enable()",
+                                            "    if (Ext.getCmp('app_wizard_authentication_success_cookie_cb').getValue()){",
+                                            "        Ext.getCmp('app_wizard_authentication_success_cookie_name').enable()",
+                                            "        Ext.getCmp('app_wizard_authentication_success_cookie_value').enable()",
+                                            "        Ext.getCmp('app_wizard_authentication_success_cookie_missing').enable()",
+                                            "        Ext.getCmp('app_wizard_authentication_success_cookie_appears').enable()",
+                                            "    }",
+                                            "    Ext.getCmp('app_wizard_authentication_success_redirect_cb').enable()",
+                                            "    if (Ext.getCmp('app_wizard_authentication_success_redirect_cb').getValue()){",
+                                            "        Ext.getCmp('app_wizard_authentication_success_redirect_page').enable()",
+                                            "        Ext.getCmp('app_wizard_authentication_success_redirect_page_browse').enable()",
+                                            "        Ext.getCmp('app_wizard_authentication_success_redirect_response_1').enable()",
+                                            "        Ext.getCmp('app_wizard_authentication_success_redirect_response_2').enable()",
+                                            "    }",
+                                            "    Ext.getCmp('app_wizard_authentication_success_body_value_cb').enable()",
+                                            "    if (Ext.getCmp('app_wizard_authentication_success_body_value_cb').getValue()){",
+                                            "        Ext.getCmp('app_wizard_authentication_success_body_value_value').enable()",
+                                            "    }",
+                                            "}",
+                                            ""
+                                        ],
+                                        "name": "change",
+                                        "scope": "me"
+                                    },
+                                    "designerId": "ddbd678b-eeee-4f30-a292-e22957df92ef"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.form.field.Radio",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "boxLabel": "Off",
+                                "fieldLabel": null,
+                                "id": "app_wizard_authentication_form_authentication_off"
+                            },
+                            "designerId": "63430226-f605-4850-8e2d-c2bad3af7b3e",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onApp_wizard_authentication_form_authentication_offChange",
+                                        "implHandler": [
+                                            "if (newValue){",
+                                            "    Ext.getCmp('app_wizard_authentication_form_authentication_on').setValue(false);",
+                                            "    Ext.getCmp('app_wizard_authentication_success_cookie_cb').disable()",
+                                            "    Ext.getCmp('app_wizard_authentication_success_cookie_name').disable()",
+                                            "    Ext.getCmp('app_wizard_authentication_success_cookie_value').disable()",
+                                            "    Ext.getCmp('app_wizard_authentication_success_cookie_missing').disable()",
+                                            "    Ext.getCmp('app_wizard_authentication_success_cookie_appears').disable()",
+                                            "    Ext.getCmp('app_wizard_authentication_success_redirect_cb').disable()",
+                                            "    Ext.getCmp('app_wizard_authentication_success_redirect_page').disable()",
+                                            "    Ext.getCmp('app_wizard_authentication_success_redirect_page_browse').disable()",
+                                            "    Ext.getCmp('app_wizard_authentication_success_redirect_response_1').disable()",
+                                            "    Ext.getCmp('app_wizard_authentication_success_redirect_response_2').disable()",
+                                            "    Ext.getCmp('app_wizard_authentication_success_body_value_cb').disable()",
+                                            "    Ext.getCmp('app_wizard_authentication_success_body_value_value').disable()     ",
+                                            "}"
+                                        ],
+                                        "name": "change",
+                                        "scope": "me"
+                                    },
+                                    "designerId": "69c0eab0-aa4f-4586-8525-a8a1fa2f0836"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.field.Checkbox",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "boxLabel": "Cookie",
+                        "fieldLabel": "",
+                        "id": "app_wizard_authentication_success_cookie_cb",
+                        "layout|x": 10,
+                        "layout|y": 300
+                    },
+                    "designerId": "11358bff-fb00-48b4-ae10-10ba9f74820e",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onApp_wizard_authentication_success_cookie_cbChange",
+                                "implHandler": [
+                                    "if (newValue){",
+                                    "    Ext.getCmp('app_wizard_authentication_success_cookie_name').enable();",
+                                    "    Ext.getCmp('app_wizard_authentication_success_cookie_value').enable();",
+                                    "    Ext.getCmp('app_wizard_authentication_success_cookie_missing').enable();",
+                                    "    Ext.getCmp('app_wizard_authentication_success_cookie_appears').enable();",
+                                    "}",
+                                    "else{",
+                                    "    Ext.getCmp('app_wizard_authentication_success_cookie_name').disable();",
+                                    "    Ext.getCmp('app_wizard_authentication_success_cookie_value').disable();",
+                                    "    Ext.getCmp('app_wizard_authentication_success_cookie_missing').disable();",
+                                    "    Ext.getCmp('app_wizard_authentication_success_cookie_appears').disable();    ",
+                                    "}"
+                                ],
+                                "name": "change",
+                                "scope": "me"
+                            },
+                            "designerId": "8fb38e37-b179-472b-80e0-6ccf5cc46158"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.field.ComboBox",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "disabled": true,
+                        "displayField": "cookie",
+                        "fieldLabel": "Name",
+                        "id": "app_wizard_authentication_success_cookie_name",
+                        "labelSeparator": " ",
+                        "labelWidth": 50,
+                        "layout|x": 120,
+                        "layout|y": 300,
+                        "queryMode": "local",
+                        "store": "c_app_cookieStore"
+                    },
+                    "designerId": "65bcb549-a6d7-41a6-a3fe-0c4644956b60"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "disabled": true,
+                        "fieldLabel": "Value",
+                        "id": "app_wizard_authentication_success_cookie_value",
+                        "labelSeparator": " ",
+                        "labelWidth": 50,
+                        "layout|x": 380,
+                        "layout|y": 300,
+                        "width": 200
+                    },
+                    "designerId": "764fa871-88af-49a8-a664-0ce78c6ccc94"
+                },
+                {
+                    "type": "Ext.form.field.Radio",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "boxLabel": "Above value is missing ",
+                        "checked": true,
+                        "disabled": true,
+                        "fieldLabel": "",
+                        "id": "app_wizard_authentication_success_cookie_missing",
+                        "layout|x": 120,
+                        "layout|y": 340
+                    },
+                    "designerId": "9df31972-3218-4b3d-baf6-f73c8bf6e203"
+                },
+                {
+                    "type": "Ext.form.field.Radio",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "boxLabel": "Above value appears",
+                        "disabled": true,
+                        "fieldLabel": "",
+                        "id": "app_wizard_authentication_success_cookie_appears",
+                        "layout|x": 380,
+                        "layout|y": 340
+                    },
+                    "designerId": "0af3bef0-29aa-4ac9-830f-da2e9f926019"
+                },
+                {
+                    "type": "Ext.container.Container",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": 20,
+                        "layout|x": 10,
+                        "layout|y": 280,
+                        "style": [
+                            "border-top-width: 1px;",
+                            "border-top-style: solid;",
+                            "border-top-color: black"
+                        ],
+                        "width": 570
+                    },
+                    "designerId": "3ee5142f-fc8d-419e-86ca-12c231f45c6e"
+                },
+                {
+                    "type": "Ext.container.Container",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": 20,
+                        "layout|x": 10,
+                        "layout|y": 390,
+                        "style": [
+                            "border-top-width: 1px;",
+                            "border-top-style: solid;",
+                            "border-top-color: black"
+                        ],
+                        "width": 570
+                    },
+                    "designerId": "66cf1370-59dd-4f32-a990-f4d801f3caca"
+                },
+                {
+                    "type": "Ext.container.Container",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": 20,
+                        "layout|x": 10,
+                        "layout|y": 520,
+                        "style": [
+                            "border-top-width: 1px;",
+                            "border-top-style: solid;",
+                            "border-top-color: black"
+                        ],
+                        "width": 570
+                    },
+                    "designerId": "5735f1ea-dabd-4b83-96d4-41ddd251eda8"
+                },
+                {
+                    "type": "Ext.form.field.Checkbox",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "boxLabel": "Redirect",
+                        "disabled": true,
+                        "fieldLabel": "",
+                        "id": "app_wizard_authentication_success_redirect_cb",
+                        "layout|x": 10,
+                        "layout|y": 430
+                    },
+                    "designerId": "9563cf52-68f9-4d44-9dd0-ff9a0b1c9a23",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onApp_wizard_authentication_success_redirect_cbChange",
+                                "implHandler": [
+                                    "if (newValue){",
+                                    "    Ext.getCmp('app_wizard_authentication_success_redirect_page').enable();",
+                                    "    Ext.getCmp('app_wizard_authentication_success_redirect_page_id').enable();",
+                                    "    Ext.getCmp('app_wizard_authentication_success_redirect_page_browse').enable();",
+                                    "    Ext.getCmp('app_wizard_authentication_success_redirect_response_1').enable();",
+                                    "    Ext.getCmp('app_wizard_authentication_success_redirect_response_2').enable();",
+                                    "}",
+                                    "else{",
+                                    "    Ext.getCmp('app_wizard_authentication_success_redirect_page').disable();",
+                                    "    Ext.getCmp('app_wizard_authentication_success_redirect_page_id').disable();",
+                                    "    Ext.getCmp('app_wizard_authentication_success_redirect_page_browse').disable();",
+                                    "    Ext.getCmp('app_wizard_authentication_success_redirect_response_1').disable();    ",
+                                    "    Ext.getCmp('app_wizard_authentication_success_redirect_response_2').disable();    ",
+                                    "}"
+                                ],
+                                "name": "change",
+                                "scope": "me"
+                            },
+                            "designerId": "228ab291-0c9f-4a4a-abea-2bd861cbb2fa"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "disabled": true,
+                        "fieldLabel": "Page",
+                        "id": "app_wizard_authentication_success_redirect_page",
+                        "labelSeparator": " ",
+                        "labelWidth": 60,
+                        "layout|x": 120,
+                        "layout|y": 430
+                    },
+                    "designerId": "dc3b82d9-231f-4460-b11c-f4d54ad349f9"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "disabled": true,
+                        "fieldLabel": "Label",
+                        "hidden": true,
+                        "id": "app_wizard_authentication_success_redirect_page_id",
+                        "layout|x": 120,
+                        "layout|y": 410
+                    },
+                    "designerId": "173348ff-237f-4314-8771-72791d40d9df"
+                },
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|x": 10,
+                        "layout|y": 410,
+                        "style": [
+                            "   ",
+                            "\tfont-weight:bold;",
+                            ""
+                        ],
+                        "text": "Note: Redirect Page can only be selected after the application has been created",
+                        "width": 570
+                    },
+                    "designerId": "3d54f8e8-d659-4fff-a96a-afbfac12b0ee"
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "disabled": true,
+                        "id": "app_wizard_authentication_success_redirect_page_browse",
+                        "layout|x": 350,
+                        "layout|y": 430,
+                        "text": "Browse"
+                    },
+                    "designerId": "7a79558e-b76a-436f-8b10-a0108ef276d7",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onApp_wizard_authentication_success_redirect_page_browseClick",
+                                "implHandler": [
+                                    "telepath.config.openParameters(\"app_wizard_redirect_page\");"
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "designerId": "34dd4c28-6e66-4050-859a-5f977f7adde5"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.field.Number",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "allowDecimals": false,
+                        "disabled": true,
+                        "fieldLabel": "Response Status is between",
+                        "id": "app_wizard_authentication_success_redirect_response_1",
+                        "labelSeparator": " ",
+                        "labelWidth": 180,
+                        "layout|x": 120,
+                        "layout|y": 480,
+                        "maxValue": 599,
+                        "minValue": 200,
+                        "width": 250
+                    },
+                    "designerId": "ec266dbd-d4a2-4b83-8154-e69aee406fdb"
+                },
+                {
+                    "type": "Ext.form.field.Number",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "allowDecimals": false,
+                        "disabled": true,
+                        "fieldLabel": "and",
+                        "id": "app_wizard_authentication_success_redirect_response_2",
+                        "labelSeparator": " ",
+                        "labelWidth": 30,
+                        "layout|x": 380,
+                        "layout|y": 480,
+                        "maxValue": 599,
+                        "minValue": 200,
+                        "width": 100
+                    },
+                    "designerId": "b6c5e5c9-400f-4f05-a91c-c183f1819247"
+                },
+                {
+                    "type": "Ext.form.field.Checkbox",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "boxLabel": "Body Value",
+                        "fieldLabel": "",
+                        "id": "app_wizard_authentication_success_body_value_cb",
+                        "layout|x": 10,
+                        "layout|y": 540
+                    },
+                    "designerId": "5f685c88-7ff8-4902-847c-e9bdf73336a3",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onApp_wizard_authentication_success_body_value_cbChange",
+                                "implHandler": [
+                                    "if (newValue){",
+                                    "    Ext.getCmp('app_wizard_authentication_success_body_value_value').enable();",
+                                    "}",
+                                    "else{",
+                                    "    Ext.getCmp('app_wizard_authentication_success_body_value_value').disable();",
+                                    "}"
+                                ],
+                                "name": "change",
+                                "scope": "me"
+                            },
+                            "designerId": "c1d7012c-ae29-4a7e-940f-b2c038fdc293"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "disabled": true,
+                        "fieldLabel": "Value to search in HTML body",
+                        "id": "app_wizard_authentication_success_body_value_value",
+                        "labelSeparator": " ",
+                        "labelWidth": 200,
+                        "layout|x": 120,
+                        "layout|y": 540,
+                        "width": 460
+                    },
+                    "designerId": "d7b3b164-7351-4473-9104-b0663e6edbd8"
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onApp_wizard_authenticationShow1",
+                        "implHandler": [
+                            "Ext.getCmp('app_wizard_general').hide()",
+                            "Ext.getCmp('app_wizard_ssl').hide()",
+                            "Ext.getCmp('app_wizard_advanced').hide()    "
+                        ],
+                        "name": "show",
+                        "scope": "me"
+                    },
+                    "designerId": "3e198061-8faa-428d-8f7c-df47fb49f203"
+                }
+            ]
+        },
+        {
+            "type": "Ext.panel.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|snapToGrid": 10,
+                "height": 610,
+                "hidden": true,
+                "id": "app_wizard_ssl",
+                "layout": "absolute",
+                "title": "SSL"
+            },
+            "designerId": "fd3509b7-8b33-41f7-bbf2-5b998bc919b8",
+            "cn": [
+                {
+                    "type": "Ext.form.CheckboxGroup",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "SSL",
+                        "id": "app_wizard_ssl_cbs",
+                        "labelSeparator": " ",
+                        "labelWidth": 150,
+                        "layout|x": 20,
+                        "layout|y": 50,
+                        "width": 330
+                    },
+                    "designerId": "95806db8-cdc8-4e41-944a-8f5f5ddf0677",
+                    "cn": [
+                        {
+                            "type": "Ext.form.field.Radio",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "boxLabel": "On",
+                                "fieldLabel": null,
+                                "id": "app_wizard_ssl_on"
+                            },
+                            "designerId": "ae2e0f41-7fc5-474d-a0fe-7503af97c5d2",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onC_appAdd_ssl_onChange11",
+                                        "implHandler": [
+                                            "if (newValue){",
+                                            "    Ext.getCmp('app_wizard_upload_certificate_form').enable();",
+                                            "    Ext.getCmp('app_wizard_upload_private_key_form').enable();",
+                                            "    Ext.getCmp('app_wizard_ssl_port').enable();   ",
+                                            "    Ext.getCmp('app_wizard_ssl_password').enable();",
+                                            "    Ext.getCmp('app_wizard_ssl_off').setValue(false)",
+                                            "}",
+                                            "",
+                                            ""
+                                        ],
+                                        "name": "change",
+                                        "scope": "me"
+                                    },
+                                    "designerId": "4c689ca8-16c5-44dd-a866-2043fd62a68c"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.form.field.Radio",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "boxLabel": "Off",
+                                "checked": true,
+                                "fieldLabel": null,
+                                "id": "app_wizard_ssl_off"
+                            },
+                            "designerId": "1afc086d-1a0b-49bd-8921-6cc0c2ff35c8",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onC_appAdd_ssl_offChange11",
+                                        "implHandler": [
+                                            "if (newValue){",
+                                            "    Ext.getCmp('app_wizard_upload_certificate_form').disable();",
+                                            "    Ext.getCmp('app_wizard_upload_private_key_form').disable();",
+                                            "    Ext.getCmp('app_wizard_ssl_port').disable();",
+                                            "    Ext.getCmp('app_wizard_ssl_password').disable();",
+                                            "    Ext.getCmp('app_wizard_ssl_on').setValue(false)",
+                                            "    Ext.getCmp('app_wizard_general_add_ip_list_alert').hide();",
+                                            "}"
+                                        ],
+                                        "name": "change",
+                                        "scope": "me"
+                                    },
+                                    "designerId": "7deed8a4-0811-4013-be30-211a42a29e42"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.Panel",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "baseCls": "x-component",
+                        "bodyPadding": null,
+                        "designer|snapToGrid": 10,
+                        "id": "app_wizard_upload_certificate",
+                        "layout": "absolute",
+                        "layout|x": 20,
+                        "layout|y": 90,
+                        "title": "",
+                        "width": 330
+                    },
+                    "designerId": "4c81602e-7d88-42d6-ad1a-1d0f3d97be34",
+                    "cn": [
+                        {
+                            "type": "Ext.form.field.File",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "allowBlank": false,
+                                "disabled": true,
+                                "fieldLabel": "Certificate",
+                                "id": "app_wizard_upload_certificate_form",
+                                "labelSeparator": " ",
+                                "labelWidth": null,
+                                "layout|x": null,
+                                "layout|y": 10,
+                                "name": "file",
+                                "width": 330
+                            },
+                            "designerId": "84cd054c-a37b-4c0f-8b0b-646a238b0284"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.Panel",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "baseCls": "x-component",
+                        "bodyPadding": "",
+                        "id": "app_wizard_upload_private_key",
+                        "layout|x": 20,
+                        "layout|y": 140,
+                        "title": "",
+                        "width": 330
+                    },
+                    "designerId": "47da7855-e69a-4eef-add6-81eb5b3c439e",
+                    "cn": [
+                        {
+                            "type": "Ext.form.field.File",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "allowBlank": false,
+                                "disabled": true,
+                                "fieldLabel": "Private Key",
+                                "id": "app_wizard_upload_private_key_form",
+                                "labelSeparator": " ",
+                                "labelWidth": null,
+                                "name": "file",
+                                "width": 329
+                            },
+                            "designerId": "70b061d4-cc19-4402-a526-12a7886469f7"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.field.Number",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "allowDecimals": false,
+                        "disabled": true,
+                        "enforceMaxLength": true,
+                        "fieldLabel": "Server Port",
+                        "id": "app_wizard_ssl_port",
+                        "labelSeparator": " ",
+                        "layout|x": 20,
+                        "layout|y": 180,
+                        "maxLength": 4,
+                        "maxValue": 9999,
+                        "minValue": 0,
+                        "value": [
+                            "443"
+                        ],
+                        "width": 200
+                    },
+                    "designerId": "660f9c5e-86cc-473b-a703-12ca3659bc37"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "disabled": true,
+                        "enableKeyEvents": true,
+                        "fieldLabel": "Certificate Password",
+                        "id": "app_wizard_ssl_password",
+                        "inputType": "password",
+                        "labelSeparator": " ",
+                        "layout|x": 20,
+                        "layout|y": 215,
+                        "width": 280
+                    },
+                    "designerId": "1652dc82-73a0-4285-8414-aca45fd4f34e",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onApp_wizard_ssl_passwordKeypress",
+                                "implHandler": [
+                                    "if (e.keyCode!=13)",
+                                    "return;",
+                                    "Ext.getCmp('app_wizard_save_button').fireEvent('click');"
+                                ],
+                                "name": "keypress",
+                                "scope": "me"
+                            },
+                            "designerId": "a446efb8-d6b9-42d8-bb82-4369e480ed11"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "hidden": true,
+                        "icon": "Htmls/images/add.gif",
+                        "id": null,
+                        "itemId": null,
+                        "layout|x": 130,
+                        "layout|y": 410,
+                        "style": [
+                            "margin-left:16%;",
+                            "margin-top:5%;"
+                        ],
+                        "text": "Add",
+                        "width": 60
+                    },
+                    "designerId": "df6cd1a8-acf8-471c-bd74-81d2813b9c3e",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onC_appAdd_addClick",
+                                "implHandler": [
+                                    "var ip_list_valid;",
+                                    "if (Ext.getCmp('c_appAdd_ssl_ip_list').getStore().getCount()>0){",
+                                    "    ip_list_valid = true",
+                                    "}",
+                                    "else{",
+                                    "    ip_list_valid = false    ",
+                                    "}   ",
+                                    "if (Ext.getCmp('c_appAdd_ssl_on').getValue() &&",
+                                    "Ext.getCmp('c_appAdd_upload_certificate_form').isValid() &",
+                                    "Ext.getCmp('c_appAdd_upload_private_key_form').isValid() &",
+                                    "Ext.getCmp('c_appAdd_ssl_port').isValid() &",
+                                    "Ext.getCmp('c_appAdd_ssl_ip').isValid() &",
+                                    "Ext.getCmp('c_appAdd_ssl_password').isValid() &",
+                                    "ip_list_valid    ",
+                                    ")",
+                                    "{",
+                                    "    add_new_app();    ",
+                                    "}",
+                                    "else if(!Ext.getCmp('c_appAdd_ssl_on').getValue()){",
+                                    "    add_new_app();",
+                                    "}",
+                                    "else if (!ip_list_valid)",
+                                    "Ext.Msg.alert(\"Error\",\"Please add at least one IP address for the SSL server\")",
+                                    "else",
+                                    "return;",
+                                    ""
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "designerId": "fa036ae1-b622-4f7f-acae-bdeafcf36b44"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|x": 10,
+                        "layout|y": 20,
+                        "style": [
+                            "background-color:#EEE;",
+                            "font-weight:bold;"
+                        ],
+                        "text": "SSL",
+                        "width": 570
+                    },
+                    "designerId": "3cfcf5d4-d256-4329-824c-c60119c5fc6a"
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onApp_wizard_authenticationShow",
+                        "implHandler": [
+                            "Ext.getCmp('app_wizard_authentication').hide()",
+                            "Ext.getCmp('app_wizard_general').hide()",
+                            "Ext.getCmp('app_wizard_advanced').hide()    "
+                        ],
+                        "name": "show",
+                        "scope": "me"
+                    },
+                    "designerId": "27ba99f7-6e82-4853-99df-039a7c08ec60"
+                }
+            ]
+        },
+        {
+            "type": "Ext.panel.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|snapToGrid": 10,
+                "height": 610,
+                "hidden": true,
+                "id": "app_wizard_advanced",
+                "layout": "absolute",
+                "title": "Advanced"
+            },
+            "designerId": "0160c56d-563d-4351-b54b-3462fb2bf12f",
+            "cn": [
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|x": 10,
+                        "layout|y": 20,
+                        "style": [
+                            "background-color:#EEE;",
+                            "font-weight:bold;"
+                        ],
+                        "text": "Application Global Pages",
+                        "width": 570
+                    },
+                    "designerId": "77cafa27-02cf-4525-81e2-107ddf2cb2fb"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "enableKeyEvents": true,
+                        "fieldLabel": "Page Description",
+                        "hidden": true,
+                        "id": "app_wizard_advanced_global_pages_description",
+                        "labelSeparator": " ",
+                        "labelWidth": 150,
+                        "layout|x": 10,
+                        "layout|y": 60,
+                        "width": 520
+                    },
+                    "designerId": "b4bfe974-6523-4e28-a8df-58d121b51101",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onApp_wizard_advanced_global_pages_descriptionKeypress",
+                                "implHandler": [
+                                    "if (e.keyCode!=13)",
+                                    "return;",
+                                    "var desc_field = Ext.getCmp('app_wizard_advanced_global_pages_description')",
+                                    "var regex_field = Ext.getCmp('app_wizard_advanced_global_pages_regex')    ",
+                                    "var store = Ext.getCmp('app_wizard_advanced_global_pages_list').getStore();",
+                                    "if (check_for_duplicates(field,Ext.getCmp('app_wizard_advanced_global_pages_list').getStore())){ ",
+                                    "    field.reset();",
+                                    "    return;",
+                                    "}",
+                                    "if (regex_field.isValid() & desc_field.isValid()){",
+                                    "    store.add({page:regex_field.getValue(),",
+                                    "    desc:desc_field.getValue() });",
+                                    "    regex_field.reset();",
+                                    "    desc_field.reset();",
+                                    "}"
+                                ],
+                                "name": "keypress",
+                                "scope": "me"
+                            },
+                            "designerId": "8400f18d-8ad2-4731-8bd3-1ab1fa6b539b"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "enableKeyEvents": true,
+                        "fieldLabel": "Regular Expression",
+                        "id": "app_wizard_advanced_global_pages_regex",
+                        "labelSeparator": " ",
+                        "labelWidth": 150,
+                        "layout|x": 10,
+                        "layout|y": 100,
+                        "width": 520
+                    },
+                    "designerId": "da3d4e5d-e3dc-4182-b7ec-5876733c5e46",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onC_appAdd_global_headerKeypress",
+                                "implHandler": [
+                                    "if (e.keyCode!=13)",
+                                    "return;",
+                                    "var desc_field = Ext.getCmp('app_wizard_advanced_global_pages_description')",
+                                    "var regex_field = Ext.getCmp('app_wizard_advanced_global_pages_regex')    ",
+                                    "var store = Ext.getCmp('app_wizard_advanced_global_pages_list').getStore();",
+                                    "if (check_for_duplicates(field,Ext.getCmp('app_wizard_advanced_global_pages_list').getStore())){ ",
+                                    "    field.reset();",
+                                    "    return;",
+                                    "}",
+                                    "if (regex_field.isValid() & desc_field.isValid()){",
+                                    "    store.add({page:regex_field.getValue(),",
+                                    "    desc:desc_field.getValue() });",
+                                    "    regex_field.reset();",
+                                    "    desc_field.reset();",
+                                    "}",
+                                    ""
+                                ],
+                                "name": "keypress",
+                                "scope": "me"
+                            },
+                            "designerId": "6f060d55-be2c-498f-a519-6ce28abec9f7"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|x": 540,
+                        "layout|y": 100,
+                        "text": "Add"
+                    },
+                    "designerId": "74a262e6-03e7-4834-9979-bd4edc28fbf5",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onButtonClick2",
+                                "implHandler": [
+                                    "var desc_field = Ext.getCmp('app_wizard_advanced_global_pages_description')",
+                                    "var regex_field = Ext.getCmp('app_wizard_advanced_global_pages_regex')    ",
+                                    "var store = Ext.getCmp('app_wizard_advanced_global_pages_list').getStore();",
+                                    "if (check_for_duplicates(regex_field,Ext.getCmp('app_wizard_advanced_global_pages_list').getStore())){ ",
+                                    "    regex_field.reset();",
+                                    "    return;",
+                                    "}",
+                                    "if (regex_field.isValid()) { //& desc_field.isValid()",
+                                    "    store.add({page:regex_field.getValue(),",
+                                    "    desc:desc_field.getValue() });",
+                                    "    regex_field.reset();",
+                                    "    desc_field.reset();",
+                                    "}"
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "designerId": "0b9a3645-cf3a-4e2b-9e2e-d391d1453528"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.grid.Panel",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "enableColumnHide": false,
+                        "enableColumnMove": false,
+                        "forceFit": true,
+                        "height": 170,
+                        "id": "app_wizard_advanced_global_pages_list",
+                        "layout|x": 10,
+                        "layout|y": 140,
+                        "store": "app_wizard_global_pages_store",
+                        "title": "",
+                        "width": 570
+                    },
+                    "designerId": "55cc7273-9eee-4a19-ba25-e119d9844d7f",
+                    "cn": [
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "desc",
+                                "hidden": true,
+                                "text": "Description"
+                            },
+                            "designerId": "67e0f7b8-2f2f-48cd-a081-770dbc57e51f",
+                            "cn": [
+                                {
+                                    "type": "Ext.form.field.Text",
+                                    "reference": {
+                                        "name": "editor",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "designerId": "02dfe334-e950-4cc2-8b21-1a4eb2ecaaf6"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "page",
+                                "designer|displayName": null,
+                                "text": "Regular Expression",
+                                "width": 319
+                            },
+                            "designerId": "158e7835-184a-4e9b-a207-78c2dab488b4",
+                            "cn": [
+                                {
+                                    "type": "Ext.form.field.Text",
+                                    "reference": {
+                                        "name": "editor",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "allowBlank": false
+                                    },
+                                    "designerId": "8951a81b-1880-4b32-b902-15c3eb7038c4"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.View",
+                            "reference": {
+                                "name": "viewConfig",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "designerId": "ebe6262a-7e2a-4dff-976f-0b535a8a24de"
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "edit",
+                                "maxWidth": 50,
+                                "text": ""
+                            },
+                            "designerId": "c9d58e37-ea1f-45ff-b4a5-d7593ddec646",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "value",
+                                            "metaData",
+                                            "record",
+                                            "rowIndex",
+                                            "colIndex",
+                                            "store",
+                                            "view"
+                                        ],
+                                        "fn": "renderer",
+                                        "implHandler": [
+                                            "return '<div><img src=\"Htmls/images/edit.gif\" onclick=\"edit_global_pages(\\'app_wizard_advanced_global_pages_list\\',\\'c_appAdd_global_pages_list_edit\\',\\''+record.get('page')+'\\')\" align=\"center\"></div>'; "
+                                        ]
+                                    },
+                                    "designerId": "d0636256-adf5-47f8-bccf-c73da341a19d"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "delete",
+                                "maxWidth": 50,
+                                "text": ""
+                            },
+                            "designerId": "d8b10192-d927-4faf-bb13-cdac3350c7ea",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "value",
+                                            "metaData",
+                                            "record",
+                                            "rowIndex",
+                                            "colIndex",
+                                            "store",
+                                            "view"
+                                        ],
+                                        "fn": "renderer",
+                                        "implHandler": [
+                                            "return '<div><img src=\"Htmls/images/delete.gif\" onclick=\"remove_item_from_table(\\''+record.internalId+'\\',\\'app_wizard_advanced_global_pages_list\\')\" align=\"center\"></div>'; "
+                                        ]
+                                    },
+                                    "designerId": "f35dc21f-1802-4842-8b87-9a74e84ffdca"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.plugin.RowEditing",
+                            "reference": {
+                                "name": "plugins",
+                                "type": "array"
+                            },
+                            "codeClass": "Ext.grid.plugin.RowEditing",
+                            "userConfig": {
+                                "pluginId": "c_appAdd_global_pages_list_edit"
+                            },
+                            "designerId": "5469d0c2-01b8-4f0a-84b9-bda7ebde7111",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onRowEditingValidateedit",
+                                        "implHandler": [
+                                            "return validate_edition(editor,e)"
+                                        ],
+                                        "name": "validateedit",
+                                        "scope": "me"
+                                    },
+                                    "designerId": "1b8e42fe-abbf-4531-a55d-4d639d17ab7d"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Injected Header Name",
+                        "id": "app_wizard_advanced_injected_header_name",
+                        "labelSeparator": " ",
+                        "labelWidth": 170,
+                        "layout|x": 10,
+                        "layout|y": 380,
+                        "width": 350
+                    },
+                    "designerId": "103a08ff-f710-4d63-9b7b-11042cf904e3"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Session Clear Cookie Name",
+                        "id": "app_wizard_advanced_session_clear_name",
+                        "labelSeparator": " ",
+                        "labelWidth": 170,
+                        "layout|x": 10,
+                        "layout|y": 430,
+                        "regex": null,
+                        "regexText": null,
+                        "style": null,
+                        "width": 350
+                    },
+                    "designerId": "22ffb3e8-a67c-4c35-b38d-23687e8d8831"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Session Clear Cookie Value",
+                        "id": "app_wizard_advanced_session_clear_value",
+                        "labelSeparator": " ",
+                        "labelWidth": 170,
+                        "layout|x": 10,
+                        "layout|y": 480,
+                        "regex": null,
+                        "regexText": null,
+                        "style": null,
+                        "width": 350
+                    },
+                    "designerId": "516aa007-4b26-417c-937d-7a12706af2d9"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Global Pages",
+                        "hidden": true,
+                        "id": "c_appAdd_globalPages",
+                        "labelSeparator": " ",
+                        "labelWidth": 150,
+                        "layout|x": 10,
+                        "layout|y": 10,
+                        "regex": null,
+                        "regexText": null,
+                        "style": null,
+                        "width": 350
+                    },
+                    "designerId": "ac5432c8-a8e4-4ea2-bd3f-dcc3cab8786a"
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onApp_wizard_advancedShow",
+                        "implHandler": [
+                            "Ext.getCmp('app_wizard_authentication').hide()",
+                            "Ext.getCmp('app_wizard_general').hide()",
+                            "Ext.getCmp('app_wizard_ssl').hide()    "
+                        ],
+                        "name": "show",
+                        "scope": "me"
+                    },
+                    "designerId": "71752da4-8de3-4099-942a-567ac92c6ac4"
+                },
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|x": 10,
+                        "layout|y": 340,
+                        "style": [
+                            "background-color:#EEE;",
+                            "font-weight:bold;"
+                        ],
+                        "text": "API Settings",
+                        "width": 570
+                    },
+                    "designerId": "4d42416e-8c08-42c9-81da-f4bc2132c608"
+                }
+            ]
+        },
+        {
+            "type": "Ext.panel.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|displayName": "buttons_panel",
+                "designer|snapToGrid": 10,
+                "height": 45,
+                "layout": "absolute",
+                "style": null,
+                "title": "",
+                "width": 595
+            },
+            "designerId": "739d9d84-7cbd-4fd8-925a-a19500064079",
+            "cn": [
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dock": null,
+                        "icon": "Htmls/images/save.gif",
+                        "id": "app_wizard_save_button",
+                        "layout|x": 10,
+                        "layout|y": 10,
+                        "text": "Save",
+                        "width": 60
+                    },
+                    "designerId": "ab7d3ed2-51f1-4953-ad69-84cca1965395",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onButtonClick",
+                                "implHandler": [
+                                    "add_new_app();"
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "designerId": "8040b4fc-4238-4aad-919d-0677bdde0943"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowDepress": false,
+                        "enableToggle": true,
+                        "icon": "Htmls/images/user.gif",
+                        "id": "app_wizard_authentication_button",
+                        "layout|x": 200,
+                        "layout|y": 10,
+                        "text": "Authentication"
+                    },
+                    "designerId": "75859bc2-795d-49e6-8b95-ca2686565e16",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onButtonClick3",
+                                "implHandler": [
+                                    "Ext.getCmp('app_wizard_authentication').show()",
+                                    "if (Ext.getCmp('app_wizard_ssl_button').pressed)",
+                                    "Ext.getCmp('app_wizard_ssl_button').toggle();    ",
+                                    "if (Ext.getCmp('app_wizard_general_button').pressed)",
+                                    "Ext.getCmp('app_wizard_general_button').toggle();    ",
+                                    "if (Ext.getCmp('app_wizard_advanced_button').pressed)",
+                                    "Ext.getCmp('app_wizard_advanced_button').toggle();    "
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "designerId": "706d8d6c-d194-4027-adb6-86b0bcaeb923"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowDepress": false,
+                        "enableToggle": true,
+                        "icon": "Htmls/images/ssl.gif",
+                        "id": "app_wizard_ssl_button",
+                        "layout|x": 330,
+                        "layout|y": 10,
+                        "text": "SSL"
+                    },
+                    "designerId": "346f61bd-580b-4199-9bff-97078214ff8a",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onButtonClick4",
+                                "implHandler": [
+                                    "Ext.getCmp('app_wizard_ssl').show()",
+                                    "if (Ext.getCmp('app_wizard_authentication_button').pressed)",
+                                    "Ext.getCmp('app_wizard_authentication_button').toggle(); ",
+                                    "if (Ext.getCmp('app_wizard_general_button').pressed)",
+                                    "Ext.getCmp('app_wizard_general_button').toggle();    ",
+                                    "if (Ext.getCmp('app_wizard_advanced_button').pressed)",
+                                    "Ext.getCmp('app_wizard_advanced_button').toggle();    "
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "designerId": "59097c60-ced1-4ab8-8b28-24b4849b12be"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowDepress": false,
+                        "enableToggle": true,
+                        "hidden": true,
+                        "icon": "Htmls/images/edit.gif",
+                        "id": "app_wizard_advanced_button",
+                        "layout|x": 410,
+                        "layout|y": 10,
+                        "text": "Advanced"
+                    },
+                    "designerId": "3279de7f-6eee-49c6-8d52-1fa9a63d77e1",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onApp_wizard_advanced_buttonClick",
+                                "implHandler": [
+                                    "Ext.getCmp('app_wizard_advanced').show();",
+                                    "if (Ext.getCmp('app_wizard_ssl_button').pressed)",
+                                    "Ext.getCmp('app_wizard_ssl_button').toggle();    ",
+                                    "if (Ext.getCmp('app_wizard_general_button').pressed)",
+                                    "Ext.getCmp('app_wizard_general_button').toggle();    ",
+                                    "if (Ext.getCmp('app_wizard_authentication_button').pressed)",
+                                    "Ext.getCmp('app_wizard_advanced_button').toggle();"
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "designerId": "40f97368-d414-42c1-89d8-7464ce29d209"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowDepress": false,
+                        "enableToggle": true,
+                        "icon": "Htmls/images/exclamation.gif",
+                        "id": "app_wizard_general_button",
+                        "layout|x": 100,
+                        "layout|y": 10,
+                        "pressed": true,
+                        "text": "General"
+                    },
+                    "designerId": "7328ada5-5d32-493f-998a-35060171a9cf",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onButtonClick5",
+                                "implHandler": [
+                                    "Ext.getCmp('app_wizard_general').show()",
+                                    "if (Ext.getCmp('app_wizard_ssl_button').pressed)",
+                                    "Ext.getCmp('app_wizard_ssl_button').toggle();    ",
+                                    "if (Ext.getCmp('app_wizard_advanced_button').pressed)",
+                                    "Ext.getCmp('app_wizard_advanced_button').toggle();    ",
+                                    "if (Ext.getCmp('app_wizard_authentication_button').pressed)",
+                                    "Ext.getCmp('app_wizard_authentication_button').toggle();"
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "designerId": "91103c98-01b2-46c3-857e-cc68349bd126"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "icon": "Htmls/images/x.gif",
+                        "layout|x": 520,
+                        "layout|y": 10,
+                        "text": "Cancel"
+                    },
+                    "designerId": "00aa1342-9eb2-496a-9cdc-f0c7268f5723",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onButtonClick231",
+                                "implHandler": [
+                                    "Ext.getCmp('application_wizard').destroy();",
+                                    "Ext.getCmp('main_panel').enable();"
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "designerId": "9a7aa134-ccd2-4b5b-8764-ca86aa36cbc2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onAddApplicationShow",
+                "implHandler": [
+                    "Ext.getCmp('main_panel').disable();",
+                    "get_next_app_id();"
+                ],
+                "name": "show",
+                "scope": "me"
+            },
+            "designerId": "8d10cc99-d150-4add-b664-8ecc8f8ec202"
+        }
+    ]
+}

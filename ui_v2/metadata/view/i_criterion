@@ -1,0 +1,365 @@
+{
+    "type": "Ext.container.Container",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|snapToGrid": 10,
+        "designer|userClassName": "i_criterion",
+        "height": 48,
+        "id": "i_criterion",
+        "layout": "absolute",
+        "width": 628
+    },
+    "designerId": "8a824203-b721-4b93-911b-0e3d143cf414",
+    "cn": [
+        {
+            "type": "Ext.form.field.ComboBox",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "displayField": "type",
+                "editable": false,
+                "fieldLabel": "",
+                "id": "i_andOr",
+                "layout|x": 470,
+                "layout|y": 0,
+                "queryMode": "local",
+                "store": "i_andOrStore",
+                "value": [
+                    "And"
+                ],
+                "width": 60
+            },
+            "designerId": "7047712d-59c8-4dc7-9010-2745e7b13a77",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onI_andOrChange",
+                        "implHandler": [
+                            "updateCriteriaOnHUB();"
+                        ],
+                        "name": "change",
+                        "scope": "me"
+                    },
+                    "designerId": "49153538-f466-4ecf-a09d-9d5948489b59"
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onI_andOrAfterRender",
+                        "implHandler": [
+                            "updateCriteriaOnHUB();"
+                        ],
+                        "name": "afterrender",
+                        "scope": "me"
+                    },
+                    "designerId": "988fc867-5b51-44b2-89c4-b02868044e51"
+                }
+            ]
+        },
+        {
+            "type": "Ext.form.field.ComboBox",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "displayField": "field",
+                "editable": false,
+                "fieldLabel": "",
+                "id": "i_filterAvgTot",
+                "layout|x": 10,
+                "layout|y": 20,
+                "queryMode": "local",
+                "store": "i_filterscoreTypeStore",
+                "value": [
+                    "Average"
+                ],
+                "width": 113
+            },
+            "designerId": "d8916d8d-86c9-4d7d-b515-69a6c344a653",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onI_filterAvgTotChange",
+                        "implHandler": [
+                            "updateCriteriaOnHUB();"
+                        ],
+                        "name": "change",
+                        "scope": "me"
+                    },
+                    "designerId": "a945135b-9c1b-49c1-bb15-f4de7b92c3d5"
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onI_filterAvgTotAfterRender",
+                        "implHandler": [
+                            "updateCriteriaOnHUB();"
+                        ],
+                        "name": "afterrender",
+                        "scope": "me"
+                    },
+                    "designerId": "1f99fa38-1390-4133-bfa1-840558584625"
+                }
+            ]
+        },
+        {
+            "type": "Ext.form.field.ComboBox",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "displayField": "field",
+                "editable": false,
+                "fieldLabel": null,
+                "id": "i_filterComparator",
+                "layout|x": 130,
+                "layout|y": 20,
+                "queryMode": "local",
+                "store": "i_filterComparatorStore",
+                "value": [
+                    "At Least",
+                    ""
+                ],
+                "width": 150
+            },
+            "designerId": "438586c2-1c4c-4d55-97cb-3caa37a5999a",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onI_filterComparatorChange",
+                        "implHandler": [
+                            "updateCriteriaOnHUB();"
+                        ],
+                        "name": "change",
+                        "scope": "me"
+                    },
+                    "designerId": "6fe9341c-6472-4fb1-868e-d16755e40fe0"
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onI_filterComparatorAfterRender",
+                        "implHandler": [
+                            "updateCriteriaOnHUB();"
+                        ],
+                        "name": "afterrender",
+                        "scope": "me"
+                    },
+                    "designerId": "a7c60d3e-2438-407f-abac-972edbaa1e93"
+                }
+            ]
+        },
+        {
+            "type": "Ext.form.field.Number",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fieldLabel": "",
+                "id": "i_filterScore",
+                "layout|x": 290,
+                "layout|y": 20,
+                "maxValue": 100,
+                "minValue": 0,
+                "size": null,
+                "step": 5,
+                "value": [
+                    "70",
+                    ""
+                ],
+                "width": 80
+            },
+            "designerId": "3f66c190-f8ca-4547-b608-11165ed7e6f4",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onI_filterScoreChange",
+                        "implHandler": [
+                            "updateCriteriaOnHUB();"
+                        ],
+                        "name": "change",
+                        "scope": "me"
+                    },
+                    "designerId": "37c68dcf-60be-4c34-8c60-fb8e81a1dd41"
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onI_filterScoreAfterRender",
+                        "implHandler": [
+                            "updateCriteriaOnHUB();"
+                        ],
+                        "name": "afterrender",
+                        "scope": "me"
+                    },
+                    "designerId": "a97b1d18-2a30-46bc-9145-743871085cf5"
+                }
+            ]
+        },
+        {
+            "type": "Ext.Img",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "height": 20,
+                "hidden": true,
+                "id": null,
+                "layout|x": 460,
+                "layout|y": 20,
+                "src": "Htmls/images/close.gif",
+                "width": 20
+            },
+            "designerId": "52eeca88-019b-4e5d-8d13-3c0900dc7fce",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onImageRender",
+                        "implHandler": [
+                            "component.getEl().addListener(",
+                            "    'click',",
+                            "    function(){",
+                            "            removeSearchCriterion(component);",
+                            "    }",
+                            "",
+                            ");"
+                        ],
+                        "name": "render",
+                        "scope": "me"
+                    },
+                    "designerId": "d20de1e7-fbf3-46db-b603-a4c10b55e828"
+                }
+            ]
+        },
+        {
+            "type": "Ext.button.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "id": "i_closeCri",
+                "layout|x": 580,
+                "layout|y": 20,
+                "text": "x"
+            },
+            "designerId": "8b6ce58f-ae42-4807-a9e9-2aed9a253110",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onButtonClick",
+                        "implHandler": [
+                            "    removeSearchCriterion(button);"
+                        ],
+                        "name": "click",
+                        "scope": "me"
+                    },
+                    "designerId": "0c118735-43ac-4e21-b51e-aee85d33ce02"
+                }
+            ]
+        },
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 390,
+                "layout|y": 22,
+                "text": "Percent"
+            },
+            "designerId": "73373250-f321-4639-aed8-a52b5515b04f"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onI_criterionDestroy",
+                "implHandler": [
+                    "updateCriteriaOnHUB();"
+                ],
+                "name": "destroy",
+                "scope": "me"
+            },
+            "designerId": "a46924e2-6b2c-4bcb-93dc-eba6051bfd30"
+        }
+    ]
+}

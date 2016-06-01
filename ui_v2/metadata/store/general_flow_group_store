@@ -1,0 +1,96 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "autoLoad": false,
+        "designer|userClassName": "general_flow_group_store",
+        "storeId": "general_flow_group_store"
+    },
+    "designerId": "2bc8898c-eed9-4e4f-a47a-5be5bad3b467",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "extraParams": [
+                    "{",
+                    "    'mode' : 'get_groups_combobox_general',",
+                    "    'sort' : '[{\"property\":\"td1\",\"direction\":\"ASC\"}]'",
+                    "}"
+                ],
+                "url": ""
+            },
+            "designerId": "882bd70d-390e-48f6-a154-ae9a8e438ef3",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "root": "items"
+                    },
+                    "designerId": "adf31ab0-bf66-43bc-9d0c-327dce1f8e2d"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "group"
+            },
+            "designerId": "7f01cb87-ade4-46da-b869-70e10372d231"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "id"
+            },
+            "designerId": "616ff5bf-fc12-4995-89b4-5bf43a6a2a1d"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "app_id"
+            },
+            "designerId": "1f921833-5a50-4168-90e7-cf943b4be96c"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "app_name"
+            },
+            "designerId": "aba5b400-32c5-4e2f-8ec0-2ed51a6ddc52"
+        }
+    ]
+}

@@ -1,0 +1,47 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "c_exHeadersStore",
+        "storeId": "c_exHeadersStore"
+    },
+    "designerId": "a636e3aa-e8da-4d68-9e58-23c882d3a5fc",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "809f814c-bf75-4e82-8792-67c0663be819",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "1deb6748-b444-48ff-8c42-666daa5ef25d"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "header"
+            },
+            "designerId": "fcf60d66-d2c4-43c9-83f5-c68af441f2cf"
+        }
+    ]
+}

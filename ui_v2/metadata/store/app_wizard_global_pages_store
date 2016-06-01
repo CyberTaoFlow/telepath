@@ -1,0 +1,59 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "app_wizard_global_pages_store",
+        "storeId": "MyJsonStore1"
+    },
+    "designerId": "68c8e995-8250-436c-a988-336f2669c90e",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "679f9642-094d-4e4a-a23e-729aea4c82a7",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "101e47c0-0f6d-4411-be31-2cabd4a832b5"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "page"
+            },
+            "designerId": "7c89023d-c9d9-44a4-8105-6fcff287126a"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "desc"
+            },
+            "designerId": "35f76f98-5c52-4c10-a47f-ac93043a60d3"
+        }
+    ]
+}

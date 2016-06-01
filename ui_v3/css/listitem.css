@@ -1,0 +1,281 @@
+
+.tele-list {
+	padding: 0px 20px;
+}
+.tele-listitem {
+	clear: both;
+	width: 100%;
+}
+
+.tele-listitem .tele-title-2 {
+	margin: -8px 0px 0px 20px;
+	font-size: 12px;
+	float: left;
+	color: red;
+	clear: none;
+	min-width: 60%;
+}
+
+.tele-rounded-box,
+.tele-listitem-inner {
+	background-color: white;
+	border-radius: 50px;
+	float: left;
+	margin-bottom: 5px;
+	padding: 10px;
+	height: 38px;
+	position: relative;
+	margin-top: 5px;
+}
+
+.tele-rounded-box.hover,
+.tele-listitem .tele-listitem-inner.hover {
+	background-color: #BBB;
+	cursor: pointer;
+}
+
+.tele-rounded-box.selected,
+.tele-listitem .tele-listitem-inner.selected {
+	background-color: #999;
+	cursor: pointer;
+}
+
+.tele-listitem-icon {
+	float: left;
+	background: #555555;
+	height: 30px;
+	width: 30px;
+	border-radius: 20px;
+	margin-top: 4px;
+	margin-left: 4px;
+	
+}
+.tele-listitem-count {
+	float: left;
+	padding: 5px;
+	border-radius: 20px;
+	background-color: #ff5f5f;
+	color: white;
+	margin-left: -10px;
+	margin-top: -10px;
+	position: absolute;
+	top: 10px;
+	left: 36px;
+	font-size: 14px;
+	min-width: 18px;
+	text-align: center;
+}
+.tele-listitem-count2 {
+	float: right;
+	padding: 5px;
+	border-radius: 20px;
+	background-color: #ff5f5f;
+	color: white;
+	margin-right: -47px;
+	margin-top: -10px;
+	/*position: absolute;*/
+	/*top: 10px;*/
+	/*left: 37px;*/
+	font-size: 14px;
+	min-width: 18px;
+	text-align: center;
+}
+.tele-dashboard-block .tele-listitem-count2 {
+	float: right;
+	padding: 5px;
+	border-radius: 20px;
+	background-color: #ff5f5f;
+	color: white;
+	margin-left: 402px;
+	margin-top: -10px;
+	position: absolute;
+	/*top: 10px;*/
+	/*left: 37px;*/
+	font-size: 14px;
+	min-width: 18px;
+	text-align: center;
+}
+.tele-listitem-title {
+	float: left;
+	margin-left: 15px;
+	min-width: 60%;
+	max-width: 60%;
+	font-size: 18px;
+	margin-bottom: 10px;
+	margin-top: -4px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	height: 20px;
+	font-family: 'Roboto Condensed Regular';
+}
+.tele-listitem-updating {
+	float: right;
+	/* margin-left: 34px; */
+	min-width: 60%;
+	max-width: 60%;
+	font-size: 18px;
+	margin-bottom: 10px;
+	margin-top: -4px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	height: 20px;
+	font-family: 'Roboto Condensed Regular';
+}
+.tele-listitem-info {
+	float: left;
+	margin-left: 22px;
+	min-width: 60%;
+	font-family: Arial, sans-serif;
+}
+.tele-listitem-info.no-title {
+	margin-top: 10px;
+}
+
+.tele-listitem-info .flag {
+	margin-top: -4px;
+}
+
+.tele-listitem-user-name{
+	background-image: url("../img/icon_map.png");
+	background-position: -330px -2200px;
+	float: left;
+	height: 20px;
+	width: 20px;
+	border-radius: 50%;
+	margin-top: -4px;
+	margin-left: 2px;
+
+}
+
+.tele-listitem-time {
+	float: right;
+	position: absolute;
+	right: 30px;
+	top: 10px;
+	font-size: 11px;
+	color: #999;
+	font-family: Arial, sans-serif;
+}
+
+ul.tele-listitem-info {
+	position: absolute;
+	margin-left: 50px;
+	margin-top: 23px;
+}
+ul.tele-listitem-info li {
+	float: left;
+	margin-right: 5px;
+	color: #555555;
+	/*min-width: 100px;*/
+	padding-right: 10px;
+	height: 15px;
+	border-right: 1px solid #999;
+}
+ul.tele-listitem-info li:last-child {
+	border-right: none;
+}
+ul.tele-listitem-info li b {
+	color: #333333;
+	font-weight: bold;
+}
+ul.tele-listitem-info .flag {
+	float: left;
+	margin-right: 10px;
+}
+
+.tele-listitem-progbar {
+	border-radius: 10px;
+	height: 7px;
+	padding: 1px;
+	background: #efefef;
+	position: absolute;
+	bottom: 5px;
+	right: 20px;
+	width: 100px;
+}
+
+.tele-listitem-bigprogbar {
+	border-radius: 10px;
+	height: 10px;
+	padding: 2px;
+	background: #efefef;
+	float: right;
+	width: 220px;
+	margin: 25px 10px 0px 25px;
+}
+
+.tele-listitem-progbar-inner {
+	border-radius: 10px;
+	height: 7px;
+	background: #ff5f5f;
+}
+
+.tele-listitem-bigprogbar .tele-listitem-progbar-inner {
+	height: 10px;
+}
+
+/* Listitem Checkbox */
+.tele-listitem .tele-checkbox {
+	margin-right: 15px;
+	margin-top: 15px;
+}
+.tele-panel-subtitle .tele-checkbox {
+	margin-left: 20px;
+	margin-top: 6px;
+}
+/* Listitem Favorite */
+
+.tele-config-user-row .tele-listitem-inner {
+	height: 30px;
+	margin-bottom: 5px;
+}
+.tele-config-user-row .tele-listitem-info,
+.tele-config-user-row .tele-listitem-title {
+	width: 250px;
+	min-width: 250px;
+	margin-top: 5px;
+}
+.tele-config-user-row .tele-listitem-time,
+.tele-config-user-row .tele-listitem-info {
+	margin-top: 10px;
+}
+.tele-config-user-row .tele-listitem-info {
+	width: 400px;
+}
+.tele-config-user-row .tele-listitem-title {
+	font-size: 18px;
+	color: #333333;
+}
+.tele-listitem-time label {
+	float: left;
+	margin-right: 15px;
+}
+
+ul.tele-listitem-info li.tele-listitem-alerts-count,
+ul.tele-listitem-info li.tele-listitem-actions-count,
+ul.tele-listitem-info li.tele-listitem-cases-count{
+	position: relative;
+	float: right;
+	padding-right: 15%;
+	top: -9px;
+	border-right: none;
+}
+
+.tele-panel-alerts ul.tele-listitem-info li.tele-listitem-alerts-count,
+.tele-panel-alerts ul.tele-listitem-info li.tele-listitem-actions-count,
+.tele-panel-alerts ul.tele-listitem-info li.tele-listitem-cases-count,
+.tele-panel-search ul.tele-listitem-info li.tele-listitem-alerts-count,
+.tele-panel-search ul.tele-listitem-info li.tele-listitem-actions-count,
+.tele-panel-search ul.tele-listitem-info li.tele-listitem-cases-count
+{
+	top: -22px;
+}
+
+
+ul.tele-listitem-info li.tele-listitem-alerts-count .tele-listitem-count,
+ul.tele-listitem-info li.tele-listitem-actions-count .tele-listitem-count,
+ul.tele-listitem-info li.tele-listitem-cases-count .tele-listitem-count{
+	top: 0px;
+	left: 25px;
+}
+

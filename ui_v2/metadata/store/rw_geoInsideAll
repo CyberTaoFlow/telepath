@@ -1,0 +1,93 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "autoLoad": false,
+        "data": null,
+        "designer|userClassName": "rw_geoInsideAll",
+        "storeId": "rw_geoInsideAll"
+    },
+    "designerId": "99adccbe-8b4c-468a-a0a6-9eafcc985898",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "extraParams": null,
+                "url": "/js/countries.json"
+            },
+            "designerId": "85daf8ea-d3db-4c6a-abda-7b1f9e0120a4",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "root": "countries"
+                    },
+                    "designerId": "27a2d254-a401-4579-a53a-d1e3d008c652"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "Country",
+                "sortType": "asText"
+            },
+            "designerId": "bc653fe9-effa-4d80-b987-966e382791d6"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "Alias"
+            },
+            "designerId": "71642080-cd81-4dd4-b1c2-2ba546de696f"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onJsonstoreLoad",
+                "implHandler": [
+                    "var chosen_store = Ext.getStore('rw_geoInsideChosen');",
+                    "chosen_store.each(",
+                    "    function(record){",
+                    "        var rec = store.findRecord('Country',record.get('Country'))",
+                    "        if (rec)",
+                    "            store.remove(rec)",
+                    "    }",
+                    ");"
+                ],
+                "name": "load",
+                "scope": "me"
+            },
+            "designerId": "9ed700ec-80b9-4939-af5d-7a0d825ae442"
+        }
+    ]
+}

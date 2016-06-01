@@ -1,0 +1,54 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "data": [
+            "[",
+            "{time:'Minutes'},",
+            "{time:'Hours'},",
+            "{time:'Days'}",
+            "]"
+        ],
+        "designer|userClassName": "c_reportTime",
+        "storeId": "c_reportTime"
+    },
+    "designerId": "6cb9116c-e70a-49d4-942e-adb105d3c176",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "4b0663cf-a7ac-4c26-b371-e8def29d5c0c",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "de6fc59b-0425-480e-a5d5-114d6c8b0c3f"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "time"
+            },
+            "designerId": "a2045870-f4da-4620-8f70-40a05d01dc6d"
+        }
+    ]
+}

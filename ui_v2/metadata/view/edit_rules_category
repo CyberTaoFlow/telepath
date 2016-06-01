@@ -1,0 +1,149 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|snapToGrid": 10,
+        "designer|userClassName": "edit_rules_category",
+        "height": 151,
+        "id": "edit_rules_category",
+        "layout": "absolute",
+        "modal": true,
+        "title": "Edit Category",
+        "width": 400
+    },
+    "designerId": "52b81604-22b5-4e6f-b498-c9adf8331de0",
+    "cn": [
+        {
+            "type": "Ext.form.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "allowBlank": false,
+                "enableKeyEvents": true,
+                "fieldLabel": "Category Name",
+                "id": "edit_rules_category_field",
+                "labelSeparator": " ",
+                "layout|x": 20,
+                "layout|y": 30,
+                "width": 340
+            },
+            "designerId": "6407a6bc-f7f7-4152-94b4-6801971ecd52",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onEdit_rules_criterion_fieldKeypress",
+                        "implHandler": [
+                            "if (e.keyCode==13)",
+                            "Ext.getCmp('edit_rules_category_button').fireEvent('click')"
+                        ],
+                        "name": "keypress",
+                        "scope": "me"
+                    },
+                    "designerId": "e8123be0-65f1-4317-9004-2ce6669949c7"
+                }
+            ]
+        },
+        {
+            "type": "Ext.button.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "id": "edit_rules_category_button",
+                "layout|x": 180,
+                "layout|y": 70,
+                "text": "Update"
+            },
+            "designerId": "9f54a50f-e07f-433a-8ffa-7b1254e69b2a",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onEdit_rules_criterion_buttonClick",
+                        "implHandler": [
+                            "var value = Ext.getCmp('edit_rules_category_field').getValue()",
+                            "var id = Ext.getCmp('edit_rules_category_id').getValue()",
+                            "if (Ext.getCmp('edit_rules_category_field').isValid()){",
+                            "    edit_category(value,id)",
+                            "    Ext.WindowManager.get('edit_rules_category').destroy()",
+                            "}"
+                        ],
+                        "name": "click",
+                        "scope": "me"
+                    },
+                    "designerId": "a3a18e99-4f81-44b3-9b06-9b56d3b076ea"
+                }
+            ]
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onEdit_rules_criterionDestroy",
+                "implHandler": [
+                    "Ext.getCmp('main_panel').enable()"
+                ],
+                "name": "destroy",
+                "scope": "me"
+            },
+            "designerId": "77f4b9be-de0a-4902-95d4-f8806e076134"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onEdit_rules_criterionShow",
+                "implHandler": [
+                    "Ext.getCmp('main_panel').disable()",
+                    "var record = Ext.getCmp('b_ruleGroups').getSelectionModel().getSelection()[0]",
+                    "Ext.getCmp('edit_rules_category_id').setValue(record.get('category_id'))",
+                    "Ext.getCmp('edit_rules_category_field').setValue(record.get('text'))"
+                ],
+                "name": "show",
+                "scope": "me"
+            },
+            "designerId": "b8884d0a-0d2c-4d70-a63e-3105532c7731"
+        },
+        {
+            "type": "Ext.form.field.Hidden",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fieldLabel": "Label",
+                "id": "edit_rules_category_id"
+            },
+            "designerId": "7cb9201c-e111-4e19-ba26-696bb91e09ac"
+        }
+    ]
+}

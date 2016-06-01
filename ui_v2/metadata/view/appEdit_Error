@@ -1,0 +1,55 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "closable": false,
+        "designer|snapToGrid": 10,
+        "designer|userClassName": "appEdit_Error",
+        "draggable": false,
+        "height": 125,
+        "id": "appEdit_Error",
+        "layout": "absolute",
+        "resizable": [
+            "false"
+        ],
+        "title": "Error",
+        "width": 336
+    },
+    "designerId": "0d0f4048-66a4-4b02-ab6a-6930a9816c3c",
+    "cn": [
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 100,
+                "layout|y": 35,
+                "text": "Please Select One Application to Edit"
+            },
+            "designerId": "6761b300-43fa-4ae7-a11a-82feccfb3811"
+        },
+        {
+            "type": "Ext.Img",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "height": 50,
+                "layout|x": 30,
+                "layout|y": 20,
+                "src": "Htmls/images/error.gif",
+                "width": 50
+            },
+            "designerId": "3efef092-c93b-4abc-8f46-f38c137b3199"
+        }
+    ]
+}

@@ -1,0 +1,75 @@
+{
+    "name": "app",
+    "settings": {
+        "urlPrefix": "http://localhost/",
+        "exportPath": "",
+        "spacesToIndent": 4,
+        "lineEnding": "CRLF",
+        "genTimestamps": false,
+        "cacheBust": false,
+        "buildShouldOverwriteIndex": true
+    },
+    "xdsVersion": "2.2.3",
+    "xdsBuild": 1044,
+    "schemaVersion": 1,
+    "upgradeVersion": 210000000503,
+    "framework": "ext42",
+    "topInstanceFileMap": {
+        "5944620a-07cb-422d-8666-cf5776a90b95": {
+            "paths": [
+                "metadata/resource/Library"
+            ],
+            "className": "Library"
+        },
+        "928192c8-7682-4c75-ab3b-4127a25589ea": {
+            "paths": [
+                "metadata/view/Login",
+                "app/view/override/Login.js",
+                "app/view/Login.js"
+            ],
+            "className": "Login"
+        },
+        "ddb37660-a8df-4f19-ba9c-4d1e1c66e9bf": {
+            "paths": [
+                "metadata/view/MyViewport",
+                "app/view/override/MyViewport.js",
+                "app/view/MyViewport.js",
+                "app/view/Viewport.js"
+            ],
+            "className": "MyViewport"
+        },
+        "3bb4e3d5-3ff4-4c37-8d09-a62b86623b0b": {
+            "paths": [
+                "metadata/view/trial_ended",
+                "app/view/override/trial_ended.js",
+                "app/view/trial_ended.js"
+            ],
+            "className": "trial_ended"
+        },
+        "3173f834-8d76-4a42-8725-3f8249287e93": {
+            "paths": [
+                "metadata/view/LicenseWindow",
+                "app/view/override/LicenseWindow.js",
+                "app/view/LicenseWindow.js"
+            ],
+            "className": "LicenseWindow"
+        }
+    },
+    "viewOrderMap": {
+        "view": [
+            "3bb4e3d5-3ff4-4c37-8d09-a62b86623b0b",
+            "3173f834-8d76-4a42-8725-3f8249287e93",
+            "928192c8-7682-4c75-ab3b-4127a25589ea",
+            "ddb37660-a8df-4f19-ba9c-4d1e1c66e9bf"
+        ],
+        "store": [],
+        "controller": [],
+        "model": [],
+        "resource": [
+            "5944620a-07cb-422d-8666-cf5776a90b95"
+        ],
+        "app": [
+            "application"
+        ]
+    }
+}

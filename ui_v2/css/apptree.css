@@ -1,0 +1,115 @@
+.tele-rootdomain {
+	background: #cecece;
+}
+
+body .x-grid-tree-node-expanded .tree-icon-application,
+body .tree-icon-application {
+	background-image: url("../images/tree-icon-application.png");
+}
+body .tree-icon-loading {
+	background-image: url("../images/tree-icon-loading.gif");
+}
+body .x-grid-tree-node-expanded .tree-icon-page,
+body .tree-icon-page {
+	background-image: url("../images/tree-icon-page.gif");
+}
+
+
+body .x-grid-tree-node-expanded .tree-icon-Spree,
+body .tree-icon-application-Spree {
+	background-image: url("../images/frameworks/spree_small.png") !important;
+}
+
+body .x-grid-tree-node-expanded .tree-icon-Drupal,
+body .tree-icon-application-Drupal {
+	background-image: url("../images/frameworks/drupal_small.png") !important;
+}
+
+body .x-grid-tree-node-expanded .tree-icon-Wordpress,
+body .tree-icon-application-Wordpress {
+	background-image: url("../images/frameworks/wordpress_small.png") !important;
+}
+
+.context-menu-record,
+body .x-grid-tree-node-expanded .tree-icon-record,
+body .tree-icon-record {
+	background-image: url("../images/tree-icon-record.png");
+}
+body .tree-icon-stop {
+	background-image: url("../images/tree-icon-stop.png");
+}
+
+body .x-grid-tree-node-expanded .tree-icon-flow,
+body .tree-icon-flow {
+	background-image: url("../images/tree-icon-flow.png");
+}
+
+body .tree-icon-attributeG {
+	background-image: url("../images/tree-icon-get.gif");
+}
+body .tree-icon-attributeP {
+	background-image: url("../images/tree-icon-post.gif");
+}
+body .tree-icon-attributeX {
+	background-image: url("../images/tree-icon-xml.gif");
+}
+body .tree-icon-attributeJ {
+	background-image: url("../images/tree-icon-json.gif");
+}
+
+.icon-cut {
+	background-image: url("../images/icon-cut.png");
+}
+.icon-paste {
+	background-image: url("../images/icon-paste.png");
+}
+
+.icon-add {
+	background-image: url("../images/icon-add.gif");
+}
+
+.context-menu-save {
+	background-image: url("../images/menu-save.gif");
+}
+.context-menu-select {
+	background-image: url("../images/menu-select.png");
+}
+.context-menu-aliasAdd {
+	background-image: url("../images/menu-aliasAdd.png");
+}
+.context-menu-aliasRemove {
+	background-image: url("../images/menu-aliasRemove.png");
+}
+
+.icon-edit,
+.context-menu-edit,
+.context-menu-aliasEdit {
+	background-image: url("../images/icon-edit.png");
+}
+.context-menu-applicationEdit {
+	background-image: url("../images/menu-aliasEdit.png");
+}
+.context-menu-applicationAdd {
+	background-image: url("../images/menu-appAdd.gif");
+}
+
+.context-menu-remove,
+.icon-remove,
+.context-menu-applicationRemove {
+	background-image: url("../images/menu-appRemove.png");
+}
+.context-menu-applicationLogs {
+	background-image: url("../images/menu-appLogs.png");
+}
+.context-menu-paramMask,
+.context-menu-paramUnMask {
+	background-image: url("../images/menu-paramMask.png");
+}
+
+.icon-search {
+	background-image: url("../images/icon-search.png");
+}
+
+.icon-refresh {
+	background-image: url("../images/icon-refresh.gif");
+}

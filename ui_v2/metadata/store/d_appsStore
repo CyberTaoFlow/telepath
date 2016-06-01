@@ -1,0 +1,86 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "autoLoad": false,
+        "data": null,
+        "designer|userClassName": "d_appsStore",
+        "sortOnLoad": false,
+        "storeId": "d_appsStore"
+    },
+    "designerId": "148d3840-559a-4726-83c4-4f0e0430f6e9",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "extraParams": [
+                    "{",
+                    "    'mode' : 'get_apps_combobox_general',",
+                    "    'sort' : '[{\"property\":\"td1\",\"direction\":\"ASC\"}]'",
+                    "}"
+                ],
+                "url": null
+            },
+            "designerId": "ae8f4104-05c3-4fe2-908f-4107cd070698",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "root": "items"
+                    },
+                    "designerId": "b7385b11-c783-4fc3-8ebb-a085676ee8e1"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "app"
+            },
+            "designerId": "8bfb2170-ab39-4f42-8f34-f8e4548edaef"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "id"
+            },
+            "designerId": "62b8ee7c-f7e0-49c1-8e1a-a532f42eb036"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "ssl"
+            },
+            "designerId": "507d5e61-9497-40de-8b37-7d3aef14c43a"
+        }
+    ]
+}

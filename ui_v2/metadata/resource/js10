@@ -1,0 +1,13 @@
+{
+    "type": "jsresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "js10",
+        "url": "Htmls/Alerts.js"
+    },
+    "designerId": "0c51cd2a-3839-4ff1-936d-c19418db5320"
+}

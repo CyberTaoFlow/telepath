@@ -1,0 +1,53 @@
+{
+    "type": "arraystore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "data": [
+            "[",
+            "{type:\"And\"},",
+            "{type:\"Or\"}",
+            "]"
+        ],
+        "designer|userClassName": "i_andOrStore",
+        "storeId": "i_andOrStore"
+    },
+    "designerId": "f1d323ff-c795-4846-81a8-2ea2d9234ba3",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "a7c47fdb-b321-44c1-af93-b28790e0d741",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Array",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "4b21d866-3555-4e55-86de-14fcc2a384c6"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "type"
+            },
+            "designerId": "1112483b-8039-413a-929c-515195e84eb1"
+        }
+    ]
+}

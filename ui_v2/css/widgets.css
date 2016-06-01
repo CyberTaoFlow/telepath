@@ -1,0 +1,100 @@
+/* TODO:: Move */
+
+.tele-multi-input .x-trigger {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	border: 1px solid #b5b8c8;
+	border-top: 0px;
+}
+
+#d_settings .tele-multi {
+	position: absolute;
+	top: 40px;
+	left: 260px;
+	z-index: 100;
+	width: 330px;
+}
+#alertFilters .tele-multi {
+	position: absolute;
+	top: 70px;
+	left: 10px;
+	z-index: 100;
+	width: 310px;
+}
+
+#i_searchPanel .tele-multi {
+	position: absolute;
+	top: 40px;
+	left: 700px;
+	z-index: 100;
+	width: 270px;
+}
+
+#i_searchPanel .tele-multi-value input {
+	width: 160px;
+}
+
+#i_searchPanel .tele-multi-value {
+	width: 190px;
+}
+
+.tele-multi {
+	width: 320px;
+}
+.tele-multi-value input {
+	color: black;
+	padding: 1px 3px 2px 3px;
+	background: white repeat-x 0 0;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #b5b8c8;
+	height: 22px;
+	line-height: 17px;
+	width: 200px;
+}
+.tele-multi-input {
+	float: left;
+	position: relative;
+}
+.tele-multi-control {
+	float: right;
+	margin-top: 2px;
+}
+/* Don't allow multiple selects @ dashboard yet */
+#dashboardPanel .tele-multi-control { display: none; }
+
+.tele-multi-value {
+	width: 235px;
+	margin-bottom: 5px;
+	float: right;
+	height: 25px;
+}
+
+.tele-autocomplete-select {
+	z-index: 999;
+	background: white;
+	border: 1px solid #b5b8c8;
+	max-height: 200px;
+	overflow: auto;
+}
+.tele-autocomplete-item {
+	padding: 4px;
+	cursor: pointer;
+}
+.tele-autocomplete-item.hover {
+	background: #e7f4f9;
+}
+
+.tele-label {
+	width: 70px;
+	color: black;
+	font: normal 12px/14px tahoma,arial,verdana,sans-serif;
+	margin-top: 4px;
+	margin-right: 5px;
+	float: left;
+}
+
+/* ********************************************** */
+
+.tele-icon { height: 24px; width: 24px; margin: -2px 0px; }

@@ -1,0 +1,132 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|snapToGrid": 10,
+        "designer|userClassName": "add_new_rules_category",
+        "height": 151,
+        "id": "add_new_rules_category",
+        "layout": "absolute",
+        "modal": true,
+        "title": "New Category",
+        "width": 400
+    },
+    "designerId": "70d65bca-33a3-473b-bdbf-7ad6651f2fa3",
+    "cn": [
+        {
+            "type": "Ext.form.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "allowBlank": false,
+                "enableKeyEvents": true,
+                "fieldLabel": "Category Name",
+                "id": "add_new_rules_category_field",
+                "labelSeparator": " ",
+                "layout|x": 20,
+                "layout|y": 30,
+                "width": 340
+            },
+            "designerId": "1832e337-c530-467f-a5be-3f116114034a",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onAdd_new_rules_criterion_fieldKeypress",
+                        "implHandler": [
+                            "if (e.keyCode==13)",
+                            "    Ext.getCmp('add_new_rules_category_button').fireEvent('click')"
+                        ],
+                        "name": "keypress",
+                        "scope": "me"
+                    },
+                    "designerId": "bbee4598-f66e-47eb-9f11-34426bc38a58"
+                }
+            ]
+        },
+        {
+            "type": "Ext.button.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "id": "add_new_rules_category_button",
+                "layout|x": 180,
+                "layout|y": 70,
+                "text": "Create"
+            },
+            "designerId": "38615bf4-26a4-4875-b690-da75662ec700",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onAdd_new_rules_criterion_buttonClick",
+                        "implHandler": [
+                            "var value = Ext.getCmp('add_new_rules_category_field').getValue()",
+                            "if (Ext.getCmp('add_new_rules_category_field').isValid()){",
+                            "    create_new_category(value)",
+                            "    Ext.WindowManager.get('add_new_rules_category').destroy()",
+                            "}"
+                        ],
+                        "name": "click",
+                        "scope": "me"
+                    },
+                    "designerId": "93b98fe1-55e1-433f-aaf5-e50713caf760"
+                }
+            ]
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onAdd_new_rules_criterionDestroy",
+                "implHandler": [
+                    "Ext.getCmp('main_panel').enable()"
+                ],
+                "name": "destroy",
+                "scope": "me"
+            },
+            "designerId": "083ef1f9-1c85-44bd-b09b-13cf110ba77b"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onAdd_new_rules_criterionShow",
+                "implHandler": [
+                    "Ext.getCmp('main_panel').disable()"
+                ],
+                "name": "show",
+                "scope": "me"
+            },
+            "designerId": "3e6edcfe-ff19-4014-95d0-37ff527a5997"
+        }
+    ]
+}

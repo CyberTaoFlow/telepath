@@ -1,0 +1,49 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "data": null,
+        "designer|userClassName": "c_app_cookie_list_store",
+        "storeId": "c_app_cookie_list_store"
+    },
+    "designerId": "a09757d4-877d-41dd-9b9f-cd7d2b229499",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "e9b79dd9-a55c-4a55-bc2d-c8c157ff1341",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "1cf4c6e7-926d-46d1-a6c6-e2ab5db391b4"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|displayName": null,
+                "name": "cookie"
+            },
+            "designerId": "87928fe1-7ab7-4201-81da-57de5fc53ab7"
+        }
+    ]
+}

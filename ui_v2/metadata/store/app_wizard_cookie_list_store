@@ -1,0 +1,50 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "data": null,
+        "designer|userAlias": "app_wizard_cookie_list_store",
+        "designer|userClassName": "app_wizard_cookie_list_store",
+        "storeId": "app_wizard_cookie_list_store"
+    },
+    "designerId": "cc9a0ec1-1870-4cbf-9dee-5b0148f05f9d",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "dc9e276b-ca58-49ca-84fb-d95cdb3b9bb3",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "099d4ecb-06c6-4b66-b84f-9885482d0e01"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|displayName": null,
+                "name": "cookie"
+            },
+            "designerId": "f4034a3a-ed74-4fea-9af6-5ed67d29a55b"
+        }
+    ]
+}

@@ -1,0 +1,380 @@
+/* Main Class */
+.tele-control:hover,
+.tele-control.hover {
+	background-color: #ddd;
+}
+.tele-control {
+	height: 15px;
+	width: 15px;
+	border-radius: 20px;
+	background-color: #999999;
+	margin: 2px 5px 0 0;
+	float: left;
+	text-align: center;
+	padding: 5px;
+}
+.tele-control-record div {
+	height: 15px;
+	width: 15px;
+	border-radius: 10px;
+	background-color: #FF0000;
+}
+.tele-control-stop div {
+	background-color: #FFFFFF;
+    height: 15px;
+    width: 15px;
+}
+.tele-control-pause div {
+	height: 15px;
+    width: 15px;
+	background-color: transparent;
+	border-left: 5px solid #FFFFFF;
+    border-right: 5px solid #FFFFFF;
+    height: 15px;
+    margin-left: 1px;
+    width: 3px;
+}
+
+.tele-listitem-icon {
+	background-image: url("../img/icon_map.png");
+}
+
+.jstree-themeicon-custom,
+.tele-icon {
+	float: left;
+	height: 32px;
+	width: 32px;
+	margin-right: 10px;
+	background: transparent url("../img/icon_map.png") no-repeat scroll 0 0;
+}
+
+body .vakata-context i.tele-icon-alias_add,
+body .vakata-context i.tele-icon-alias_edit {
+	background-position: -366px -999px;
+}
+body .vakata-context i.tele-icon-alias_remove {
+	background-position: -366px -1039px;
+}
+body .vakata-context i.tele-icon-delete {
+	background-position: -366px -1119px;
+}
+
+.jstree-themeicon-custom {
+	display: block;
+}
+body .tele-browser .jstree-default .jstree-icon.jstree-themeicon-custom,
+body .tele-browser .jstree-default .jstree-icon.jstree-themeicon-custom:empty {
+	border-radius: 0px;
+	height: 22px;
+	width: 22px;
+	display: block;
+}
+
+body .tele-browser .jstree-default .jstree-themeicon-custom.tele-icon-subdomain,
+body .tele-browser .jstree-default .jstree-themeicon-custom.tele-icon-app {
+	background-position: -510px -510px;
+}
+body .tele-browser .jstree-default .jstree-themeicon-custom.tele-icon-global {
+	background-position: -538px -510px;
+}
+body .tele-browser .jstree-default .jstree-themeicon-custom.tele-icon-dir {
+	background-position: -419px -510px;
+}
+body .tele-browser .jstree-default .jstree-themeicon-custom.tele-icon-page {
+	background-position: -449px -510px;
+}
+body .tele-browser .jstree-default .jstree-themeicon-custom.tele-icon-param {
+	background-position: -479px -510px;
+}
+
+.tele-icon-editRule {
+	background-position: -326px -388px;
+}
+.tele-icon-editRule.hover {
+	background-position: -363px -388px;
+	
+}
+
+.tele-icon-loader {
+	background: transparent url("../img/loader_small.gif") no-repeat scroll 0px 7px;
+}
+
+.tele-icon-ring{
+	background: transparent url("../img/ring.gif") no-repeat scroll 148px -2px;
+}
+.tele-icon-search {
+	background-position: -315px -573px;
+}
+.tele-icon-search.hover {
+	background-position: -353px -573px;
+}
+
+.tele-icon-rule-edit {
+	background-position: -211px -542px;
+}
+
+.tele-icon-case-edit {
+	background-position: -128px -64px;
+}
+
+.tele-icon-plus,
+.tele-icon-minus {
+	height: 25px;
+	width: 25px;
+	border-radius: 20px;
+	margin-top: 8px;
+}
+
+.tele-limit-ranges-group .tele-ip-group-wrap .tele-ip-remove.tele-icon{
+	margin-top: 2px;
+}
+
+.tele-limit-ranges-group .tele-ip-group-wrap .tele-ip-add.tele-icon.tele-icon-plus{
+	margin-top: 2px;	
+}
+
+.tele-panel-topbar .tele-icon-plus,
+.tele-config-bar .tele-icon-plus,
+.tele-config-bar .tele-icon-minus {
+	margin-top: 6px;
+}
+
+.tele-panel-topbar .tele-icon-plus,
+.tele-config-bar .tele-icon-plus {
+	/*Checked*/
+	/*background-position: -420px -0px;*/
+	border-radius: 0px;
+	margin-top: 7px;
+}
+
+/*Checked*/
+.tele-icon-plus { background-position: -418px -420px; }
+.tele-icon-plus.hover { background-position: -448px -420px; }
+
+.tele-icon-minus { background-position: -418px -447px; }
+.tele-icon-minus.hover { background-position: -449px -447px; }
+
+.tele-icon-cases {
+	background-position: -164px -87px;
+}
+
+.tele-icon-inactive,
+.tele-icon-active {
+	background-color: #b9e1a5;
+    border-radius: 12px;
+    display: block;
+    float: left;
+    height: 15px;
+    margin-right: 15px;
+    margin-top: 0;
+    width: 15px;
+}
+.tele-icon-inactive {
+	background-color: #CCCCCC;
+}
+
+/*Checked*/
+.tele-icon-application { background-position: -295px -53px; }
+.tele-icon-application.hover { background-position: -325px -53px; }
+
+.tele-icon-user { background-position:-415px -116px; }
+
+.tele-condition-select.tele-dropdown .tele-icon-new { background-position: -55px -580px; }
+.tele-condition-select.tele-dropdown .tele-dropdown-value { color: #555; }
+.tele-condition-select.tele-dropdown .tele-dropdown-arrow { background-position: -394px -908px; }
+
+/*.tele-icon-new { background-position: 5px -580px; }*/
+.tele-icon-new.hover { background-position: -25px -580px; }
+.tele-icon-new.active { background-position: -85px -580px; }
+
+
+/*Checked*/
+.tele-icon-import { background-position: -415px -324px; }
+.tele-icon-import.hover { background-position: -445px -324px; }
+.tele-icon-import.active { background-position: -475px -324px; }
+
+/* Tree Specific */
+
+/*Checked*/
+.tele-panel-subtitle .tele-icon-delete {	background-position: -290px -262px; }
+.tele-panel-subtitle .tele-icon-delete.hover { background-position: -320px -262px; }
+
+.tele-icon-logout 	       { background-position: -565px -55px; float: left; margin-left: 0px; margin-top: 0px; }
+.tele-icon-logout.hover { background-position: -595px -55px; }
+
+/*Checked*/
+.tele-icon-edit { background-position: -445px -353px }
+.tele-icon-edit.hover { background-position: -475px -353px }
+
+/*Checked*/
+.tele-icon-delete {	background-position: -325px -263px; }
+.tele-icon-delete.hover { background-position: -355px -263px; }
+
+/* Config Tab Icons */
+/*Checked*/
+.tele-icon-accounts { background-position: -412px -110px; }
+.tele-icon-accounts.hover { background-position: -442px -110px; }
+.tele-icon-accounts.active { background-position: -502px -110px; }
+
+/*Checked*/
+.tele-icon-notifications { background-position: -412px -142px; }
+.tele-icon-notifications.hover  { background-position: -442px -142px; }
+.tele-icon-notifications.active { background-position: -502px -142px; }
+
+/*Checked*/
+.tele-icon-applications { background-position: -414px -172px; }
+.tele-icon-applications.hover  { background-position: -444px -172px; }
+.tele-icon-applications.active { background-position: -504px -172px; }
+
+/*Checked*/
+.tele-icon-rules { background-position: -412px -202px; }
+.tele-icon-rules.hover  { background-position: -442px -202px; }
+.tele-icon-rules.active { background-position: -502px -202px; }
+
+/*Checked*/
+.tele-icon-actions { background-position: -412px -232px; }
+.tele-icon-actions.hover  { background-position: -442px -232px; }
+.tele-icon-actions.active { background-position: -502px -232px; }
+
+/*Checked*/
+.tele-icon-users { background-position: -412px -262px; }
+.tele-icon-users.hover  { background-position: -442px -262px; }
+.tele-icon-users.active { background-position: -502px -262px; }
+
+/*Checked*/
+.tele-icon-system { background-position: -412px -292px; }
+.tele-icon-system.hover  { background-position: -442px -292px; }
+.tele-icon-system.active { background-position: -502px -292px; }
+
+/*Checked*/
+.tele-icon-config { background-position: -295px -565px; }
+.tele-icon-config.hover { background-position: -325px -565px; }
+.tele-icon-config.hover.active { background-position: -355px -565px; }
+.tele-icon-config.active { background-position: -355px -565px; }
+
+.tele-icon-prev { background-position: -418px -22px; }
+.tele-icon-next { background-position: -403px -52px; }
+.tele-icon-close 	     { background-position: -415px -620px; }
+.tele-icon-close.hover { background-position: -445px -620px; }
+
+/* List icons */
+.tele-icon-user { background-position: -415px -116px; }
+.tele-icon-case { background-position: -300px -0px; }
+
+.tele-icon-request { background-position: -270px 0px; }
+.tele-icon-alert { background-position: -360px 0px; }
+.tele-icon-alert2 { background-position: -438px -16px; }
+
+/*Checked*/
+.tele-icon-suspect { background-position: -330px 0px; }
+
+.tele-icon-suspect_red { 
+	background-position: -363px -16px; 
+	background-color: #fc3d3d;
+}
+
+
+/* Anomaly score icons */
+/*Checked*/
+.tele-icon-speed        { background-position: -80px -400px; }
+.tele-icon-query        { background-position: -240px -400px; }
+.tele-icon-location   { background-position: -233px -480px; }
+.tele-icon-direction { background-position: -80px -480px; }
+/*Checked*/
+.tele-icon-speed.active        { background-position: 0px -400px; }
+.tele-icon-query.active        { background-position: -160px -400px; }
+.tele-icon-location.active   { background-position: -153px -480px; }
+.tele-icon-direction.active { background-position: 0px -480px; }
+
+/* Other icons */
+/*Checked*/
+.tele-icon-harmful { background-position: -295px -473px; }
+.tele-icon-harmful.hover { background-position: -325px -473px; }
+
+/*Checked*/
+.tele-icon-safe { background-position: -295px -503px; }
+.tele-icon-safe.hover { background-position: -325px -503px; }
+
+.tele-icon-facebook { background-position: -324px -952px; }
+.tele-icon-twitter   { background-position: -363px -952px; }
+.tele-icon-linkedin { background-position: -400px -952px; }
+
+.tele-icon-daterange { background-position: -295px -88px; }
+.tele-icon-daterange.hover { background-position: -325px -88px; }
+
+/*Checked*/
+.tele-icon-archive { background-position: -295px -113px; }
+.tele-icon-archive.hover { background-position: -325px -113px; }
+
+/*Checked*/
+.tele-icon-time { background-position: -325px -173px; }
+.tele-icon-time.hover { background-position: -295px -173px; }
+.tele-icon-time.selected { background-position: -295px -173px; }
+
+/*Checked*/
+.tele-icon-bars { background-position: -325px -204px; }
+.tele-icon-bars.hover { background-position: -295px -204px; }
+.tele-icon-bars.selected { background-position: -295px -204px; }
+
+/*Checked*/
+.tele-icon-alerts { background-position: -325px -234px; }
+.tele-icon-alerts.hover { background-position: -295px -234px; }
+.tele-icon-alerts.selected { background-position: -295px -234px; }
+
+/*Checked*/
+.tele-icon-arrow { background-position: -325px -143px; }
+.tele-icon-arrow.hover { background-position: -295px -143px; }
+.tele-icon-arrow.selected { background-position: -295px -143px; }
+
+.tele-icon-caseConfig { background-position: -325px -293px; }
+.tele-icon-caseConfig.hover { background-position: -295px -293px; }
+
+.tele-icon-caseArchive { background-position: -326px -388px; }
+.tele-icon-caseArchive.hover { background-position: -363px -388px; }
+
+.tele-icon-snooze { background-position: -326px -423px; }
+.tele-icon-snooze.hover { background-position: -363px -423px; }
+
+.tele-icon-moveTo { background-position: -326px -198px; }
+.tele-icon-moveTo.hover { background-position: -363px -198px; }
+
+/* NAVIGATION ICONS */
+
+.tele-nav-icon {
+	height: 60px;
+	width: 60px;
+	background: transparent url('../img/icons.png') 0 0 no-repeat;
+	display: block;
+	margin-bottom: 2px;
+}
+
+/* Top icons */
+/*Checked*/
+.tele-nav li.tele-nav-dashboard a .tele-nav-icon { background-position: 0px 0px; }
+.tele-nav li.tele-nav-dashboard a:hover .tele-nav-icon { background-position: -122px 0px; }
+.tele-nav li.tele-nav-dashboard a.active .tele-nav-icon { background-position: -182px 0px; }
+
+.tele-nav li.tele-nav-cases a .tele-nav-icon        { background-position: 0px -60px; }
+.tele-nav li.tele-nav-cases a:hover .tele-nav-icon        { background-position: -122px -60px; }
+.tele-nav li.tele-nav-cases a.active .tele-nav-icon        { background-position: -182px -60px; }
+
+.tele-nav li.tele-nav-alerts a .tele-nav-icon      { background-position: 0px -120px; }
+.tele-nav li.tele-nav-alerts a:hover .tele-nav-icon      { background-position: -122px -120px; }
+.tele-nav li.tele-nav-alerts a.active .tele-nav-icon      { background-position: -182px -120px; }
+
+.tele-nav li.tele-nav-suspects a .tele-nav-icon  { background-position: 0px -180px; }
+.tele-nav li.tele-nav-suspects a:hover .tele-nav-icon  { background-position: -122px -180px; }
+.tele-nav li.tele-nav-suspects a.active .tele-nav-icon  { background-position: -182px -180px; }
+
+.tele-nav li.tele-nav-reports a .tele-nav-icon    { background-position: 0px -240px; }
+.tele-nav li.tele-nav-reports a:hover .tele-nav-icon    { background-position: -122px -240px; }
+.tele-nav li.tele-nav-reports a.active .tele-nav-icon    { background-position: -182px -240px; }
+
+/* Rule Editor Icons */
+.tele-icon-parameter-rule    { background-position: -61px -520px; }
+.tele-icon-pattern-rule        { background-position: -8px -520px; }
+.tele-icon-behaviour-rule    { background-position: -95px -520px; }
+.tele-icon-geographic-rule  { background-position: -163px -516px; }
+
+.tele-icon-bot-rule,
+.tele-icon-aspect-rule  	      { background-position: -129px -518px; }

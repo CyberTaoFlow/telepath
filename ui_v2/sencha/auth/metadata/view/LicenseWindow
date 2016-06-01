@@ -1,0 +1,140 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|snapToGrid": 10,
+        "height": 278,
+        "id": "productKey",
+        "width": 392,
+        "designer|userClassName": "LicenseWindow",
+        "layout": "absolute",
+        "closable": false,
+        "titleCollapse": true
+    },
+    "designerId": "3173f834-8d76-4a42-8725-3f8249287e93",
+    "cn": [
+        {
+            "type": "Ext.Img",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 60,
+                "layout|y": 20,
+                "height": 90,
+                "width": 260,
+                "src": "images/logo.png"
+            },
+            "designerId": "48765eda-b7b7-42da-87e9-bc2fdb08cc6b"
+        },
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 10,
+                "layout|y": 130,
+                "height": 20,
+                "width": 360,
+                "text": "Please enter your Hybrid Telepath license key"
+            },
+            "designerId": "bf18e896-2d00-4b09-a43d-6ccace1b750d"
+        },
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 10,
+                "layout|y": 150,
+                "text": "Your key was sent to your email account upon site registration"
+            },
+            "designerId": "6cc3cc96-9fac-4b72-a83a-d1d8b2176cdc"
+        },
+        {
+            "type": "Ext.form.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 10,
+                "layout|y": 180,
+                "id": "LicenseKey_input",
+                "width": 360,
+                "fieldLabel": "License Key",
+                "allowBlank": false,
+                "emptyText": "XXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+                "maxLength": 36,
+                "maxLengthText": "License key should be 36 characters long",
+                "minLength": 36,
+                "minLengthText": "License key should be 36 characters long"
+            },
+            "designerId": "91cf1a11-50a9-44b2-8697-1cc29590ba9d"
+        },
+        {
+            "type": "Ext.button.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 330,
+                "layout|y": 210,
+                "width": 40,
+                "text": "Go"
+            },
+            "designerId": "79badbf7-0a45-49cd-8715-9b9fdab3aee4",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onButtonClick",
+                        "implHandler": [
+                            "telepath.license.go();"
+                        ],
+                        "name": "click",
+                        "scope": "me"
+                    },
+                    "designerId": "9e32edce-accb-47d3-887b-6189f0a18c23"
+                }
+            ]
+        },
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 10,
+                "layout|y": 210,
+                "height": 30,
+                "id": "LicenceKey_label",
+                "width": 310,
+                "text": ""
+            },
+            "designerId": "7b0a9ac7-4d14-4f13-83c0-38207d5ce6c6"
+        }
+    ]
+}

@@ -1,0 +1,440 @@
+/* Generic Overlay Definitions */
+
+.tele-overlay-mask {
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 999;
+	background-color: black;
+	opacity: 0.5;
+	
+}
+.tele-overlay .tele-listitem {
+	min-height: 65px;
+}
+.tele-overlay {
+	font-family: 'Roboto Condensed', sans-serif;
+	height: 500px;
+	width: 1400px;
+	z-index: 1000;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -700px;
+	margin-top: -250px;
+	background-color: #E6E6E6;
+	border-radius: 10px;
+}
+.tele-overlay-dialog {
+	height: 200px;
+	width: 400px;
+	margin-left: -200px;
+	margin-top: -200px;
+}
+.tele-overlay-dialog .tele-overlay-header {
+	border-top-left-radius: 10px;
+}
+.tele-overlay-dialog .tele-overlay-title {
+	margin-left: 15px;
+}
+.tele-dialog-text {
+	padding: 15px 15px 0px 15px;
+}
+
+.tele-overlay-icon {
+	position: absolute;
+	margin-top: -35px;
+	margin-left: -35px;
+	border: 5px solid #333;
+	border-radius: 48px;
+	width: 60px;
+	height: 60px;
+	background-color: #555;
+}
+
+.tele-overlay-icon.tele-icon-alerts {
+	background-position: 0px -447px;
+}
+
+.tele-overlay-header {
+	height: 40px;
+	background-color: #333333;
+	border-top-right-radius: 10px;
+	cursor: pointer;
+}
+.tele-overlay-title {
+	color: white;
+	margin-left: 50px;
+	float: left;
+	font-size: 21px;
+	line-height: 40px;
+	margin-right: 50px;
+	
+	max-width: 50%;
+    white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	
+}
+
+.tele-alert-details-info-title {
+
+	max-width: 80%;
+    white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 22px
+
+}
+
+.tele-overlay-close {
+	float: right;
+	margin-right: 10px;
+}
+
+.tele-overlay .loader {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -28px;
+	margin-top: -28px;
+}
+
+.tele-overlay-header .tele-pagination {
+	color: white;
+	margin: 3px 5px 0px 5px;
+	float: left;
+}
+
+.tele-overlay-header .tele-button {
+	color: white;
+	margin: 5px 15px 0px 15px;
+	float: left;
+}
+.tele-overlay-header .tele-dropdown {
+	color: white;
+	margin: 4px 15px 0px 15px;
+	float: left;
+}
+
+.tele-overlay .tele-alert-actions {
+	clear: left;
+	width: 400px;
+	height: 335px;
+	float: left;
+	display: block;
+}
+.tele-overlay .tele-listitem-inner {
+	margin-bottom: 5px;
+}
+
+.tele-alert-action {
+	background-color: #555;
+	position: relative;
+	margin: 20px;
+	padding-bottom: 30px;
+	border-radius: 20px;
+	width: 360px;
+	margin-bottom: 30px;
+}
+.tele-alert-action-icon {
+	position: absolute;
+	top: -10px;
+	left: -10px;
+	background-color: #555;
+	border-radius: 19px;
+	height: 30px;
+	width: 30px;
+}
+.tele-alert-action-title {
+	color: white;
+	font-size: 20px;
+	display: block;
+	float: left;
+	padding: 15px 30px 5px 30px;
+}
+
+/* Per view overlay styles */
+/* Alert View */
+.tele-alert-stats {
+	clear: left;
+	height: 30px;
+	width: 400px;
+	margin: 0px 0px 10px 15px;
+	float: left;
+}
+.tele-alert-stat {
+	float: left;
+	margin: 0px 10px 0px 0px;
+}
+.tele-alert-stat-key {
+	font-size: 22px;
+	color: #555;
+	float: left;
+	line-height: 32px;
+	cursor: pointer;
+	text-decoration: underline;
+}
+.tele-alert-stat-key.active {
+	color: #ff850b;
+}
+
+.tele-alert-stat-value {
+	font-size: 26px;
+	color: #333;
+	float: left;
+	margin-left: 7px;
+	font-weight: bold;
+	margin-top: 1px;
+}
+.tele-alert-duration {
+	float: left;
+	width: 400px;
+	clear: left;
+	margin: 0px 0px 20px 15px;
+}
+.tele-alert-duration-start,
+.tele-alert-duration-end {
+	float: left;
+	width: 200px;
+}
+.tele-alert-duration-lbl {
+	font-size: 12px;
+	line-height: 18px;
+	color: #555;
+	float: left;
+}
+.tele-alert-duration-val {
+	font-size: 16px;
+	line-height: 16px;
+	color: #333;
+	float: left;
+	margin-left: 5px;
+}
+.tele-alert-details {
+	display: block;
+	padding: 0px;
+}
+.tele-alert-details table {
+	width: 100%;
+}
+.tele-alert-details table td {
+	padding: 5px;
+}
+.tele-alert-details .tele-param-name {
+	width: 120px;
+}
+.tele-alert-details .tele-param-data {
+	width: 230px;
+	max-width: 230px;
+	word-wrap: break-word;
+	overflow: hidden;
+}
+.tele-param-data {
+	word-wrap: break-word;
+	overflow: hidden;
+	width: auto;
+}
+
+.tele-alert-details .tele-param-score {
+	width: 30px;
+}
+.tele-alert-filters {
+	height: 35px;
+	background-color: #CCCCCC;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	padding: 10px;
+	overflow: hidden;
+}
+.tele-alert-filters .tele-checkbox {
+	/* width: 100px; */
+	margin-bottom: 0px;
+	height: 45px;
+}
+.tele-alert-filters .tele-checkbox .tele-input-label {
+	margin-left: 7px;
+	/* width: 50px; */
+	width:auto;
+	margin-right: 7px;
+}
+
+.tele-alert-params-table-wrap {
+	max-height: 250px;
+	max-width: auto;
+	/*overflow-y: scroll;*/
+	padding: 10px;
+}
+.tele-alert-params-table {
+	font-size: 14px;
+	width: 100%;
+	table-layout: fixed;
+}
+
+.tele-box-left {
+	float: left;
+	width: 400px;
+	margin-top: 15px;
+}
+.tele-box-mid {
+	float: left;
+	/*margin-top: 20px;*/
+	height: 100%;
+	margin-left: 20px;
+}
+.tele-box-right {
+	float: left;
+	width: 380px;
+	margin-top: 20px;
+	margin-left: 20px;
+	position: relative;
+	max-height: 100%;
+	overflow: hidden;
+}
+
+.tele-requests-list {
+	float: left;
+	clear: both;
+	height: 500px;
+}
+
+.tele-box-mid .tele-request-details.tele-popup {
+	width: auto;
+	display: block;
+	position: relative;
+}
+
+/* Alert Details */
+
+.tele-alert-details {
+	padding: 10px;
+}
+.tele-alert-details-info {
+	height: 77px;
+	padding: 10px;
+}
+.tele-alert-details-info-title {
+	font-size: 18px;
+	color: #333333;
+}
+.tele-alert-details-info-time-wrap, .tele-alert-details-info-response-wrap {
+	margin-top: 10px;
+}
+.tele-alert-details-info-time-label, .tele-alert-details-info-response-label {
+	color: #555555;
+	float: left;
+	width: 120px;
+}
+.tele-alert-details-info-time, .tele-alert-details-info-response {
+	color: #333333;
+}
+.tele-alert-severity-wrap {
+	float: right;
+}
+.tele-alert-severity-label {
+	font-size: 17px;
+	color: #333333;
+	margin-top: 7px;
+	float: left;
+}
+.tele-alert-severity-percent {
+	font-size: 28px;
+	color: #555555;
+	float: left;
+	margin-left: 5px;
+	font-weight: bold;
+}
+
+.tele-alert-severity-progbar {
+	border-radius: 10px;
+	height: 10px;
+	padding: 1px;
+	background: #efefef;
+	width: 100px;
+	clear: both;
+}
+
+.tele-alert-severity-progbar-value {
+	border-radius: 10px;
+	height: 10px;
+	background: #ff5f5f;
+}
+
+/* Alert Info */
+
+.tele-alert-info {
+	
+	margin: 13px;
+
+}
+
+.tele-alert-info-title {
+	color: #555;
+	font-size: 28px;
+	font-weight: bold;
+}
+.tele-alert-info-label {
+	color: #555;
+	font-size: 22px;
+}
+.tele-alert-info-description {
+	font-size: 16px;
+	color: #999;
+}
+.tele-alert-info-table {
+	padding: 10px;
+}
+.tele-alert-info-table td {
+	padding: 5px;
+}
+.tele-alert-info-value .flag {
+	float: left;
+	margin-right: 10px;
+}
+
+.tele-param-name {
+  width: 125px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow:    ellipsis;
+  padding: 5px;
+  cursor: pointer;
+  
+}
+.tele-param-score {
+	width: 32px;
+	padding-top: 5px;
+}
+
+.tele-overlay-content{
+	overflow: hidden;
+}
+
+.tele-overlay-dialog .tele-overlay-content{
+	overflow: inherit;
+}
+
+.tele-overlay-rule-edit .tele-overlay-content,
+.tele-overlay-case-edit .tele-overlay-content {
+	padding: 20px;
+}
+
+.tele-similarities-list {
+	margin-top: 10px;
+}
+
+.tele-similarities-list .tele-block-title,
+.tele-similarities-list .tele-list {
+	padding: 0px;
+	margin-left: 20px;
+}
+.tele-similarities-list .tele-block-title {
+	margin-bottom: 10px;
+}
+
+.tele-similarities-list .tele-list{
+	max-height: 600px;
+}

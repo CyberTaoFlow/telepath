@@ -1,0 +1,64 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "c_lb_headers_store",
+        "storeId": "c_lb_headers_store"
+    },
+    "designerId": "000d201e-5728-4095-9265-c61e365af995",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "0c7d6f6e-c73d-4783-8004-01d4767198c3",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "1d5da4d2-2abc-4d5f-acd3-b45426d4d50a"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "header"
+            },
+            "designerId": "6561da34-2d9d-42c5-b53f-293b3c3b05f7"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onJsonstoreAdd",
+                "implHandler": [
+                    "Ext.getCmp(\"c_lb_headers_field\").clearInvalid();"
+                ],
+                "name": "add",
+                "scope": "me"
+            },
+            "designerId": "86db821a-3f8a-4712-8f5e-c4a57c8b3361"
+        }
+    ]
+}

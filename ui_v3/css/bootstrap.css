@@ -1,0 +1,424 @@
+/*!
+ * Bootstrap v2.3.2
+ *
+ * Copyright 2013 Twitter, Inc
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Designed and built with all the love in the world @twitter by @mdo and @fat.
+ */
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.clearfix:after {
+  clear: both;
+}
+.hide-text {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+.input-block-level {
+  display: block;
+  width: 100%;
+  min-height: 30px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.tooltip {
+  position: absolute;
+  z-index: 1030;
+  display: block;
+  visibility: visible;
+  font-size: 11px;
+  line-height: 1.4;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.tooltip.in {
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+}
+.tooltip.top {
+  margin-top: -3px;
+  padding: 5px 0;
+}
+.tooltip.right {
+  margin-left: 3px;
+  padding: 0 5px;
+}
+.tooltip.bottom {
+  margin-top: 3px;
+  padding: 5px 0;
+}
+.tooltip.left {
+  margin-left: -3px;
+  padding: 0 5px;
+}
+.tooltip-inner {
+  max-width: 200px;
+  padding: 8px;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  background-color: #000000;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.tooltip-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+.tooltip.top .tooltip-arrow {
+  bottom: 0;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px 5px 0;
+  border-top-color: #000000;
+}
+.tooltip.right .tooltip-arrow {
+  top: 50%;
+  left: 0;
+  margin-top: -5px;
+  border-width: 5px 5px 5px 0;
+  border-right-color: #000000;
+}
+.tooltip.left .tooltip-arrow {
+  top: 50%;
+  right: 0;
+  margin-top: -5px;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #000000;
+}
+.tooltip.bottom .tooltip-arrow {
+  top: 0;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 0 5px 5px;
+  border-bottom-color: #000000;
+}
+/*
+.popover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1010;
+  display: none;
+  max-width: 276px;
+  padding: 1px;
+  text-align: left;
+  background-color: #ffffff;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  border: 5px solid #ccc;
+  border: 5px solid rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  white-space: normal;
+}
+.popover.top {
+  margin-top: -10px;
+}
+.popover.right {
+  margin-left: 10px;
+}
+.popover.bottom {
+  margin-top: 10px;
+}
+.popover.left {
+  margin-left: -10px;
+}
+
+.popover .arrow,
+.popover .arrow:after {
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+.popover .arrow {
+  border-width: 21px;
+}
+.popover .arrow:after {
+  border-width: 20px;
+  content: "";
+}
+.popover.top .arrow {
+  left: 50%;
+  margin-left: -11px;
+  border-bottom-width: 0;
+  border-top-color: #999;
+  border-top-color: rgba(0, 0, 0, 0.25);
+  bottom: -11px;
+}
+.popover.top .arrow:after {
+  bottom: 1px;
+  margin-left: -10px;
+  border-bottom-width: 0;
+  border-top-color: #ffffff;
+}
+.popover.right .arrow {
+  top: 50%;
+  left: -21px;
+  margin: 0px;
+  margin-top: -21px;
+  border-left-width: 0;
+  border-right-color: #999;
+  border-right-color: rgba(0, 0, 0, 0.25);
+}
+.popover.right .arrow:after {
+  left: 1px;
+  bottom: -10px;
+  border-left-width: 0;
+  border-right-color: #ffffff;
+}
+.popover.bottom .arrow {
+  left: 50%;
+  margin-left: -11px;
+  border-top-width: 0;
+  border-bottom-color: #999;
+  border-bottom-color: rgba(0, 0, 0, 0.25);
+  top: -11px;
+}
+.popover.bottom .arrow:after {
+  top: 1px;
+  margin-left: -10px;
+  border-top-width: 0;
+  border-bottom-color: #ffffff;
+}
+.popover.left .arrow {
+  top: 50%;
+  right: -11px;
+  margin-top: -11px;
+  border-right-width: 0;
+  border-left-color: #999;
+  border-left-color: rgba(0, 0, 0, 0.25);
+}
+.popover.left .arrow:after {
+  right: 1px;
+  border-right-width: 0;
+  border-left-color: #ffffff;
+  bottom: -10px;
+}
+*/
+
+.popover .arrow {
+	display: none;
+}
+
+.popover {
+
+	background: #ffffff;
+	border: 5px solid rgba(0,0,0,0.3);
+	
+	min-height: 160px;
+	min-width: 310px;
+	
+	 position: absolute;
+	  top: 0;
+	  left: 0;
+	  z-index: 1010;
+	  display: none;
+	  max-width: 276px;
+	  padding: 1px;
+	  text-align: left;
+	  background-color: #ffffff;
+	  -webkit-background-clip: padding-box;
+	  -moz-background-clip: padding;
+	  background-clip: padding-box;
+	  
+	  -webkit-border-radius: 15px;
+	  -moz-border-radius: 15px;
+	  border-radius: 15px;
+	  
+	  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	  
+	  white-space: normal;
+	
+}
+
+.popover-title {
+  margin: 0;
+  padding: 8px 14px 8px 15px;
+  font-size: 18px;
+  font-weight: normal;
+  line-height: 30px;
+  background-color: #DDD;
+  color: #333333;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.popover-title.not-round {
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+}
+
+.popover-title:empty {
+  display: none;
+}
+.popover-content {
+  padding: 9px 14px;
+}
+
+.popover:after, .popover:before {
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+
+.popover.right:after {
+    right: 100%;
+    border-color: rgba(255, 255, 255, 0);
+	border-right-color: #ffffff;
+	border-width: 15px;
+	margin-top: -15px;
+}
+.popover.right:before {
+    right: 100%;
+    border-color: rgba(0, 0, 0, 0);
+	border-right-color: rgba(0,0,0,0.3);
+	border-width: 17px;
+	margin-top: -17px;
+	margin-right: 5px;
+}
+
+.popover.left:after {
+    right: -9%;
+    border-color: rgba(255, 255, 255, 0);
+    border-left-color: #ffffff;
+	border-width: 15px;
+	margin-top: -15px;
+}
+.popover.left:before {
+    right: -9%;
+	border-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0,0,0,0.3);
+	border-width: 17px;
+	margin-top: -17px;
+	margin-right: -8px;
+}
+
+
+
+.popover .loader {
+	position: relative;
+	top: 50%;
+	left: 50%;
+	margin-left: -30px;
+}
+
+
+/*
+Document   : jquery.pnotify.default.css
+Created on : Nov 23, 2009, 3:14:10 PM
+Author     : Hunter Perrin
+Version    : 1.2.0
+Link       : http://pinesframework.org/pnotify/
+Description:
+	Default styling for Pines Notify jQuery plugin.
+*/
+/* -- Notice */
+.ui-pnotify {
+margin-top: 85px;
+margin-right: 98px;
+top: 0px;
+right: 25px;
+position: absolute;
+padding: 10px;
+/*height: 60px;*/
+background-color: #EFEFEF;
+border-radius: 5px;
+/* Ensures notices are above everything */
+z-index: 9999;
+
+font-family: sans-serif;
+font-family: 'Roboto Condensed', sans-serif;
+font-size: 14px;
+color: #333333;
+
+}
+.ui-pnotify .ui-pnotify-shadow {
+/*-webkit-box-shadow: 0px 2px 10px rgba(50, 50, 50, 0.5);
+-moz-box-shadow: 0px 2px 10px rgba(50, 50, 50, 0.5);
+box-shadow: 0px 2px 10px rgba(50, 50, 50, 0.5);
+*/
+}
+.ui-pnotify-container {
+background-position: 0 0;
+padding: 0px;
+/*height: 70px;*/
+margin: 0;
+}
+.ui-pnotify-closer, .ui-pnotify-sticker {
+float: right;
+margin-left: .2em;
+}
+.ui-pnotify-title {
+display: block;
+font-family: 'Roboto Condensed';
+font-weight: bold;
+font-size: 20px;
+margin-bottom: 10px;
+}
+.ui-pnotify-text {
+display: block;
+clear: both;
+padding-top: 12px;
+}
+.ui-pnotify-text a {
+	color: blue;
+	cursor: pointer;
+	text-decoration: underline;
+}
+.ui-pnotify-icon .tele-icon {
+	float: left;
+	background-color: #555555;
+	height: 38px;
+	width: 38px;
+	border-radius: 19px;
+}
+.ui-pnotify-icon .tele-icon-config {
+	background-position: -322px -725px;
+}
+.ui-pnotify-icon .tele-icon-application {
+	background-position: -320px -84px;
+}
+.ui-pnotify-history-container {
+	display: none;
+}
+
+
+
+.ui-pnotify-icon, .ui-pnotify-icon span {
+display: block;
+float: left;
+margin-right: .3em;
+}

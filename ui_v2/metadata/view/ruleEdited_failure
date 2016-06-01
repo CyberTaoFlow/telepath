@@ -1,0 +1,70 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|snapToGrid": 10,
+        "designer|userClassName": "ruleEdited_failure",
+        "height": 156,
+        "id": "ruleEdited_failure",
+        "layout": "absolute",
+        "title": "Info",
+        "width": 320
+    },
+    "designerId": "36f48e86-df0f-4a86-8963-178c98426f9f",
+    "cn": [
+        {
+            "type": "Ext.Img",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "height": 60,
+                "layout|x": 40,
+                "layout|y": 20,
+                "src": "Htmls/images/error.gif",
+                "width": 60
+            },
+            "designerId": "2a4fc7fa-9fcb-42c2-aa29-24896eeb9795"
+        },
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 130,
+                "layout|y": 40,
+                "style": [
+                    "font-weight:bold;"
+                ],
+                "text": "An Error Has Occured"
+            },
+            "designerId": "6dfe85e6-c8b0-4d6a-839b-67e26b307002"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onRuleEdited_failureHide",
+                "implHandler": [
+                    "component.destroy();"
+                ],
+                "name": "hide",
+                "scope": "me"
+            },
+            "designerId": "c9e79af2-efef-418f-835a-2117753569a5"
+        }
+    ]
+}

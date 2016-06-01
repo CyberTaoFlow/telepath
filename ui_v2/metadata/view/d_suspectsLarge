@@ -1,0 +1,453 @@
+{
+    "type": "Ext.grid.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "closable": true,
+        "closeAction": "hide",
+        "designer|userClassName": "d_suspectsLarge",
+        "draggable": true,
+        "floating": true,
+        "forceFit": true,
+        "height": null,
+        "id": "d_suspectsLarge",
+        "maxHeight": 400,
+        "store": "d_suspectsStore",
+        "style": [
+            "height:100%;",
+            "width:100%;"
+        ],
+        "title": "Top Suspects",
+        "width": null
+    },
+    "designerId": "884b9047-bfec-427e-9c08-3edd39cce46e",
+    "cn": [
+        {
+            "type": "Ext.grid.column.Column",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "td0",
+                "text": "Date"
+            },
+            "designerId": "d019c24b-7469-4116-b6d3-046f2270c3f8",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onGridcolumnRender1",
+                        "implHandler": [
+                            "var tip = Ext.create('Ext.tip.ToolTip', {",
+                            "    target: component.getEl(),",
+                            "    html: 'Double click on a date to investigate'",
+                            "});"
+                        ],
+                        "name": "render",
+                        "scope": "me"
+                    },
+                    "designerId": "a3cd41ab-f9a7-4d2e-9142-6b71e3509dc7"
+                },
+                {
+                    "type": "fixedfunction",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|params": [
+                            "value",
+                            "metaData",
+                            "record",
+                            "rowIndex",
+                            "colIndex",
+                            "store",
+                            "view"
+                        ],
+                        "fn": "renderer",
+                        "implHandler": [
+                            "return date_format('d/m/y H:i:s', value);"
+                        ]
+                    },
+                    "designerId": "76d380e9-e2be-4dcf-87f1-5d4f69b65ec3"
+                }
+            ]
+        },
+        {
+            "type": "Ext.grid.column.Column",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "td1",
+                "text": "User"
+            },
+            "designerId": "79d25f49-e6f8-43b2-87b8-8ab7cf6a1801",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "editor",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false
+                    },
+                    "designerId": "43c1f363-4bf8-4ed9-a47c-bbb04281bd83"
+                }
+            ]
+        },
+        {
+            "type": "Ext.grid.column.Column",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "td2",
+                "text": "IP"
+            },
+            "designerId": "31ddd4d9-3960-4dfc-b7f4-94ac50008066",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "editor",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false
+                    },
+                    "designerId": "fe266daa-5ef2-4355-a2cc-976c9bee32d8"
+                }
+            ]
+        },
+        {
+            "type": "Ext.grid.column.Column",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "td3",
+                "text": "City"
+            },
+            "designerId": "ebf8c39b-3d0a-4135-a57c-2c96883a6a55",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "editor",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false
+                    },
+                    "designerId": "54d577bd-8caf-4b9d-aae3-3d476842222e"
+                }
+            ]
+        },
+        {
+            "type": "Ext.grid.column.Column",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "td4",
+                "text": "Country"
+            },
+            "designerId": "67866e26-ef66-4410-ab1c-187d025b747c",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "editor",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false
+                    },
+                    "designerId": "aaa2e8d0-8b15-4089-b205-e938488648c5"
+                },
+                {
+                    "type": "fixedfunction",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|params": [
+                            "value",
+                            "metaData",
+                            "record",
+                            "rowIndex",
+                            "colIndex",
+                            "store",
+                            "view"
+                        ],
+                        "fn": "renderer",
+                        "implHandler": [
+                            "return '<span class=\"flag flag-' + value + '\"></span>&nbsp;&nbsp;'+ aliasToName[value];"
+                        ]
+                    },
+                    "designerId": "74c5cc1d-171a-460a-a0a5-e3fe49b41ce5"
+                }
+            ]
+        },
+        {
+            "type": "Ext.grid.column.Column",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "td12",
+                "text": "Average Score"
+            },
+            "designerId": "1a6a0297-dd9a-4d10-a45a-224e8027c52b"
+        },
+        {
+            "type": "Ext.grid.column.Column",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "td5",
+                "text": "Query"
+            },
+            "designerId": "7dc2107c-92e9-4f69-a2ce-97f13064db4b"
+        },
+        {
+            "type": "Ext.grid.column.Column",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "td7",
+                "text": "Path"
+            },
+            "designerId": "03a23635-1837-44b6-900d-63e072e5da3a"
+        },
+        {
+            "type": "Ext.grid.column.Column",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "td8",
+                "text": "Speed"
+            },
+            "designerId": "75413974-23ba-445d-beca-065631a5dc32"
+        },
+        {
+            "type": "Ext.grid.column.Column",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "td9",
+                "text": "Location"
+            },
+            "designerId": "c7484710-043e-483c-a6da-4f989ba9b975"
+        },
+        {
+            "type": "Ext.grid.column.Column",
+            "reference": {
+                "name": "columns",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dataIndex": "td13",
+                "hidden": true,
+                "text": "SID"
+            },
+            "designerId": "d9f79d7b-63c7-46f5-b5d4-279083f06cc1"
+        },
+        {
+            "type": "Ext.grid.View",
+            "reference": {
+                "name": "viewConfig",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "d44b61d3-8d12-418b-ba1b-6f6ad7651dce"
+        },
+        {
+            "type": "Ext.selection.CellModel",
+            "reference": {
+                "name": "selModel",
+                "type": "object"
+            },
+            "codeClass": "Ext.selection.CellModel",
+            "designerId": "903a63b0-f67b-4aea-94c5-c93fa062fd65",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onCellselectionmodelSelect",
+                        "implHandler": [
+                            "if (column==1)",
+                            "Ext.getCmp('d_suspects_menu1').disable();",
+                            "else",
+                            "Ext.getCmp('d_suspects_menu1').enable();\t\t\t",
+                            "d_suspects_selected_cell = [record,column];//.get('td'+column);"
+                        ],
+                        "name": "select",
+                        "scope": "me"
+                    },
+                    "designerId": "52c5f98a-d0d2-4c06-a0c2-7d8d97efd2e8"
+                }
+            ]
+        },
+        {
+            "type": "Ext.grid.plugin.CellEditing",
+            "reference": {
+                "name": "plugins",
+                "type": "array"
+            },
+            "codeClass": "Ext.grid.plugin.CellEditing",
+            "userConfig": {
+                "pluginId": "d_edit"
+            },
+            "designerId": "7ad4bfec-1173-4876-b199-02fe75162920",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onGridcelleditingpluginEdit3",
+                        "implHandler": [
+                            "e.record.set(e.field,e.originalValue);"
+                        ],
+                        "name": "edit",
+                        "scope": "me"
+                    },
+                    "designerId": "839ac3e0-ed78-41bd-986c-5bc0ab642b38"
+                }
+            ]
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onD_suspectsLargeShow",
+                "implHandler": [
+                    "Ext.getCmp('main_panel').disable();",
+                    "var win = Ext.getCmp('d_suspectsLarge');",
+                    "var width = $(document).width();",
+                    "var height = $(document).height();",
+                    "win.setPosition(width*0.13,40);",
+                    "win.setHeight(height*0.66);",
+                    "win.setWidth(width*0.66);",
+                    ""
+                ],
+                "name": "show",
+                "scope": "me"
+            },
+            "designerId": "25939041-319b-45f1-ab72-2f7bd35c8454"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onD_suspectsLargeHide",
+                "implHandler": [
+                    "Ext.getCmp('main_panel').enable();"
+                ],
+                "name": "hide",
+                "scope": "me"
+            },
+            "designerId": "3c9c1800-0a43-4b4e-b7f5-099c2c98d68e"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onD_suspectsLargeItemDblClick",
+                "implHandler": [
+                    "Ext.WindowManager.get('d_suspectsLarge').hide();",
+                    "if (d_suspects_selected_cell[1]!=0)",
+                    "return;",
+                    "Ext.getCmp('investigatePanel').show();",
+                    "var params={}",
+                    "params['SID'] =d_suspects_selected_cell[0].get(\"td13\");",
+                    "window.parent.investigate_main(0, params);",
+                    "Ext.getCmp('i_filterSession').setValue(d_suspects_selected_cell[0].get(\"td13\"));"
+                ],
+                "name": "itemdblclick",
+                "scope": "me"
+            },
+            "designerId": "c68c7d07-601f-4ead-aaa2-142bfa41253a"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onD_suspectsLargeItemContextMenu",
+                "implHandler": [
+                    "d_suspectsPanel_rightclick(dataview,record,item,index,e,eOpts);"
+                ],
+                "name": "itemcontextmenu",
+                "scope": "me"
+            },
+            "designerId": "dde8ad3d-dee4-4079-826a-261ab242108f"
+        }
+    ]
+}

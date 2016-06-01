@@ -1,0 +1,198 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|snapToGrid": 10,
+        "designer|userClassName": "add_new_rules_group",
+        "height": 191,
+        "id": "add_new_rules_group",
+        "layout": "absolute",
+        "modal": true,
+        "title": "New Rule",
+        "width": 400
+    },
+    "designerId": "6f842b3c-2869-402c-b292-b719cc934074",
+    "cn": [
+        {
+            "type": "Ext.form.field.ComboBox",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "allowBlank": false,
+                "displayField": "category",
+                "editable": false,
+                "emptyText": "Please select a category",
+                "enableKeyEvents": true,
+                "fieldLabel": "Category",
+                "id": "add_new_rules_group_category",
+                "labelSeparator": " ",
+                "layout|x": 20,
+                "layout|y": 30,
+                "queryCaching": false,
+                "store": "general_rule_group_categories_store",
+                "style": null,
+                "width": 340
+            },
+            "designerId": "da0982c1-73de-4288-b4dd-7e59f48e5e5c",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onRW1_f13Keyup1",
+                        "implHandler": [
+                            "var combo = textfield;",
+                            "var event = e;",
+                            "var key = String.fromCharCode(event.getKey()),",
+                            "    boundList = combo.getPicker(),",
+                            "    store = boundList.getStore(),",
+                            "    record = store.findRecord(combo.displayField, key);",
+                            "",
+                            "if (record) {",
+                            "    boundList.highlightItem(boundList.getNode(record));",
+                            "}"
+                        ],
+                        "name": "keyup",
+                        "scope": "me"
+                    },
+                    "designerId": "f169f73f-5862-49db-a7a9-c80a23358e9c"
+                }
+            ]
+        },
+        {
+            "type": "Ext.form.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "allowBlank": false,
+                "emptyText": "Please enter a name",
+                "enableKeyEvents": true,
+                "fieldLabel": "Rule Name",
+                "id": "add_new_rules_group_field",
+                "labelSeparator": " ",
+                "layout|x": 20,
+                "layout|y": 70,
+                "width": 340
+            },
+            "designerId": "44788e63-638d-4cc6-abbd-542c78575ed8",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onAdd_new_rules_group_fieldKeypress",
+                        "implHandler": [
+                            "if (e.keyCode==13)",
+                            "Ext.getCmp('add_new_rules_group_button').fireEvent('click')"
+                        ],
+                        "name": "keypress",
+                        "scope": "me"
+                    },
+                    "designerId": "05585731-3a0a-48b0-8fff-bfa50d4dd192"
+                }
+            ]
+        },
+        {
+            "type": "Ext.button.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "id": "add_new_rules_group_button",
+                "layout|x": 180,
+                "layout|y": 120,
+                "text": "Create"
+            },
+            "designerId": "21d3544e-8138-4c4e-90dd-7df2a0d29526",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onAdd_new_rules_group_buttonClick",
+                        "implHandler": [
+                            "var value = Ext.getCmp('add_new_rules_group_field').getValue()",
+                            "if (Ext.getCmp('add_new_rules_group_field').isValid() & Ext.getCmp('add_new_rules_group_category').isValid() ){",
+                            "    var category = Ext.getCmp('add_new_rules_group_category').valueModels[0].raw.id",
+                            "    create_new_group(value,category);    ",
+                            "}"
+                        ],
+                        "name": "click",
+                        "scope": "me"
+                    },
+                    "designerId": "8907166a-df7f-4561-839b-3b6db3932233"
+                }
+            ]
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onAdd_new_rules_groupDestroy",
+                "implHandler": [
+                    "Ext.getCmp('main_panel').enable()"
+                ],
+                "name": "destroy",
+                "scope": "me"
+            },
+            "designerId": "2b4c0e57-d3d8-4e99-959a-4375c5b97ed6"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onAdd_new_rules_groupShow",
+                "implHandler": [
+                    "Ext.getCmp('main_panel').disable()",
+                    "var field = Ext.getCmp('add_new_rules_group_category');",
+                    "//field.getStore().load();",
+                    "var selected = Ext.getCmp('b_ruleGroups').getSelectionModel().getSelection();",
+                    "if (selected.length>0){",
+                    "    var node = selected[0]",
+                    "        if (node.data.type=='category'){",
+                    "            var record = field.getStore().findRecord('category',node.data.text,false,true,true)",
+                    "            if(record){",
+                    "                Ext.getCmp('add_new_rules_group_category').setValue(record)",
+                    "            }",
+                    "        }",
+                    "}"
+                ],
+                "name": "show",
+                "scope": "me"
+            },
+            "designerId": "a9705ed2-9136-462c-a5a0-94163ccb2a72"
+        }
+    ]
+}

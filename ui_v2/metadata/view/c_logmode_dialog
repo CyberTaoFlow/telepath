@@ -1,0 +1,227 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|snapToGrid": 10,
+        "designer|userClassName": "c_logmode_dialog",
+        "height": 531,
+        "id": "c_logmode_dialog",
+        "layout": "absolute",
+        "title": "",
+        "width": 560
+    },
+    "designerId": "f9933fd9-ce55-4c97-9e23-d50490f87fef",
+    "cn": [
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 10,
+                "layout|y": 370,
+                "text": "Uploading:"
+            },
+            "designerId": "e9e83e3c-2568-47f6-adef-6aa74e0fe609"
+        },
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 10,
+                "layout|y": 420,
+                "text": "Processing:"
+            },
+            "designerId": "be2bdd84-c250-4a7b-a681-3da302609c08"
+        },
+        {
+            "type": "Ext.button.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "id": "c_logmode_cancel",
+                "layout|x": 460,
+                "layout|y": 470,
+                "text": "Cancel",
+                "width": 50
+            },
+            "designerId": "4c3b0723-accc-4553-ae53-fc1e73ab9372",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onButtonClick",
+                        "implHandler": [
+                            "Ext.getCmp('c_logmode_dialog').destroy();"
+                        ],
+                        "name": "click",
+                        "scope": "me"
+                    },
+                    "designerId": "5355d4c1-b5e3-4672-97d9-95407b908f0c"
+                }
+            ]
+        },
+        {
+            "type": "Ext.button.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "height": 20,
+                "id": "c_logmode_start",
+                "layout|x": 380,
+                "layout|y": 470,
+                "text": "Start",
+                "width": 70
+            },
+            "designerId": "bc1bea3e-515c-4c52-9bb7-c23cefbf10df",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onButtonClick1",
+                        "implHandler": [
+                            "logmode_start();"
+                        ],
+                        "name": "click",
+                        "scope": "me"
+                    },
+                    "designerId": "1989814d-f8f5-4939-954f-058354de5ade"
+                }
+            ]
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onC_training_backupShow",
+                "implHandler": [
+                    "Ext.getCmp('main_panel').disable();"
+                ],
+                "name": "show",
+                "scope": "me"
+            },
+            "designerId": "81d35540-1d52-4365-95fb-393af2c0ab9d"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onC_training_backupDestroy",
+                "implHandler": [
+                    "Ext.getCmp('main_panel').enable();"
+                ],
+                "name": "destroy",
+                "scope": "me"
+            },
+            "designerId": "9097d560-629f-4a3b-b092-a460c64aab3e"
+        },
+        {
+            "type": "Ext.ProgressBar",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "id": "c_logmode_progress_upload",
+                "layout|x": 10,
+                "layout|y": 390,
+                "width": 500
+            },
+            "designerId": "018f0023-03e3-4ee7-befb-6b75eea46ce6"
+        },
+        {
+            "type": "Ext.ProgressBar",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "id": "c_logmode_progress_engine",
+                "layout|x": 10,
+                "layout|y": 440,
+                "width": 500
+            },
+            "designerId": "5122bd20-3671-4a7b-b5be-ebfaf05b39b4"
+        },
+        {
+            "type": "Ext.container.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "border": "",
+                "designer|snapToGrid": 10,
+                "height": 30,
+                "id": "c_logmode_droparea",
+                "layout": "absolute",
+                "layout|x": 10,
+                "layout|y": 30,
+                "width": 300
+            },
+            "designerId": "830017db-a488-4dd9-9ba4-2f36bc412e98"
+        },
+        {
+            "type": "Ext.form.field.ComboBox",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fieldLabel": "Log Type",
+                "id": "c_logmode_type",
+                "layout|x": 10,
+                "layout|y": 470,
+                "store": [
+                    "[\"IIS\", \"Apache\"]",
+                    ""
+                ],
+                "value": [
+                    "Apache"
+                ]
+            },
+            "configAlternates": {
+                "store": "array"
+            },
+            "designerId": "1911c140-00e8-42e3-ac4f-299fc8b3b0c8"
+        }
+    ]
+}

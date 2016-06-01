@@ -1,0 +1,179 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "closeAction": "hide",
+        "designer|userClassName": "permissionsWindow",
+        "height": 361,
+        "id": "permissionsWindow",
+        "layout": "fit",
+        "modal": true,
+        "title": "Telepath Permissions",
+        "width": 684
+    },
+    "designerId": "ddf296d1-2809-412c-b528-82abc5f2edb6",
+    "cn": [
+        {
+            "type": "Ext.grid.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "store": "permissionsStore",
+                "title": null
+            },
+            "designerId": "2df291c3-edd4-4343-adb4-07e6afe3c418",
+            "cn": [
+                {
+                    "type": "Ext.grid.column.Number",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "id",
+                        "defaultWidth": 50,
+                        "format": "0",
+                        "text": "ID",
+                        "width": 50
+                    },
+                    "designerId": "e49d4429-1051-42c3-a703-21065751dda8"
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "class",
+                        "text": "Class"
+                    },
+                    "designerId": "8729ef1e-85a7-44b8-9385-307d05f5c360"
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "function",
+                        "text": "Function"
+                    },
+                    "designerId": "757ac867-26f8-410d-80d4-0f1fcdbfc6cc"
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "alias",
+                        "defaultWidth": 150,
+                        "text": "Alias",
+                        "width": 150
+                    },
+                    "designerId": "ff81978f-5b65-43b3-bf20-383427526337"
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "description",
+                        "flex": 1,
+                        "text": "Description"
+                    },
+                    "designerId": "10044309-059c-4d0d-a527-35685a0c7697"
+                },
+                {
+                    "type": "Ext.grid.View",
+                    "reference": {
+                        "name": "viewConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "9886be1b-6032-429d-a2ea-0043687c34e1"
+                },
+                {
+                    "type": "Ext.toolbar.Toolbar",
+                    "reference": {
+                        "name": "dockedItems",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dock": "top"
+                    },
+                    "designerId": "c164a5d5-5d42-4e4f-9747-ed6c47d1da52",
+                    "cn": [
+                        {
+                            "type": "Ext.button.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "layout|flex": null,
+                                "text": "Add Permission"
+                            },
+                            "designerId": "27d7c258-633d-4c75-8e29-4c009caa698b",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onButtonClick",
+                                        "implHandler": [
+                                            "telepath.permissions.create();"
+                                        ],
+                                        "name": "click",
+                                        "scope": "me"
+                                    },
+                                    "designerId": "8cef5535-7b43-4e44-b985-df2f5a111398"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onGridpanelItemClick",
+                        "implHandler": [
+                            "telepath.permissions.edit(record);"
+                        ],
+                        "name": "itemclick",
+                        "scope": "me"
+                    },
+                    "designerId": "80af6df4-8f97-44b8-8b54-4584f2c9879b"
+                }
+            ]
+        }
+    ]
+}

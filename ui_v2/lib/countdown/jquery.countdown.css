@@ -1,0 +1,52 @@
+.countdownHolder{
+	font: 11px 'Open Sans Condensed',sans-serif;
+	letter-spacing:-3px;
+	float: left;
+	margin-left: 4px;
+}
+
+.position{
+	display: inline-block;
+	height: 20px;
+	overflow: hidden;
+	position: relative;
+	width: 10px;
+	
+}
+
+.digit{
+	position:absolute;
+	display:block;
+	width:9px;
+	text-align:center;
+	color:#04408;
+	letter-spacing:-1px;
+	background-color: transparent;
+}
+
+.digit.static { color:black; }
+
+.countDiv{
+	display:inline-block;
+	width:7px;
+	height:23px;
+	position:relative;
+}
+
+.countDiv:before,
+.countDiv:after{
+	position:absolute;
+	width:2px;
+	height:2px;
+	background-color:#444;
+	border-radius:50%;
+	left:50%;
+	margin-left:-2px;
+	top:0.5em;
+	box-shadow:1px 1px 1px rgba(4, 4, 4, 0.5);
+	content:'';
+}
+
+.countDiv:after{
+	top:0.9em;
+}

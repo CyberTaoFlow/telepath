@@ -1,0 +1,66 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "ssl_server_ip_store",
+        "storeId": "ssl_server_ip_store"
+    },
+    "designerId": "a5274c9f-b9d1-45f8-81ac-9a1fce5ec977",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "4cacd77a-f6f6-4edd-a679-9101ba5f2bd0",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "4fdd3a47-d3be-4b24-9057-c18ac015aaf0"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "ip"
+            },
+            "designerId": "7786831e-6f29-47dd-9c27-3f424035e51e"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onJsonstoreAdd",
+                "implHandler": [
+                    "if (records.length){",
+                    "\tExt.getCmp('c_app_general_add_ip_list_alert').hide();    ",
+                    "}"
+                ],
+                "name": "add",
+                "scope": "me"
+            },
+            "designerId": "15f44ecf-eec8-445c-9849-ac64c4d7978d"
+        }
+    ]
+}

@@ -1,0 +1,75 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "closable": false,
+        "designer|snapToGrid": 10,
+        "designer|userClassName": "ruleEdited_success",
+        "draggable": false,
+        "height": 146,
+        "id": "ruleEdited_success",
+        "layout": "absolute",
+        "resizable": [
+            "false"
+        ],
+        "title": "Information",
+        "width": 354
+    },
+    "designerId": "345b6137-45fd-40fe-9b23-94f06b9840be",
+    "cn": [
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 110,
+                "layout|y": 40,
+                "style": [
+                    "font-weight:bold;"
+                ],
+                "text": "Criterion was successfuly saved"
+            },
+            "designerId": "9b004c3f-dc14-411a-802a-40143d326a5b"
+        },
+        {
+            "type": "Ext.Img",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "height": 50,
+                "layout|x": 40,
+                "layout|y": 20,
+                "src": "Htmls/images/success.gif",
+                "width": 50
+            },
+            "designerId": "e594860f-9c76-4230-a303-f5e1d9925466"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onRuleEdited_successHide",
+                "implHandler": [
+                    "component.destroy();"
+                ],
+                "name": "hide",
+                "scope": "me"
+            },
+            "designerId": "0753164f-2a9e-4cf2-879f-2050f221a29d"
+        }
+    ]
+}

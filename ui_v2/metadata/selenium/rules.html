@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="www.sport5.co.il" />
+<title>rules</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">rules</td></tr>
+</thead><tbody>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=telepath-main</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=btn-behavioral</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=btn-behavioral</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td></td>
+	<td>1000</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//html/body/div[1]/div[2]/div[2]/div[3]/div/div/div[1]/div[4]/div/table/tbody/tr[1]/td/div/img[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td></td>
+	<td>1000</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//html/body/div[1]/div[2]/div[2]/div[3]/div/div/div[1]/div[4]/div/table/tbody/tr[2]/td/div/img[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td></td>
+	<td>1000</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//html/body/div[1]/div[2]/div[2]/div[3]/div/div/div[1]/div[4]/div/table/tbody/tr[3]/td/div/img[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td></td>
+	<td>1000</td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>id=b_riDesc-inputEl</td>
+	<td>${KEY_BACKSPACE}${KEY_BACKSPACE}${KEY_BACKSPACE}${KEY_BACKSPACE}${KEY_BACKSPACE}${KEY_BACKSPACE}${KEY_BACKSPACE}${KEY_BACKSPACE}${KEY_BACKSPACE}${KEY_BACKSPACE}${KEY_BACKSPACE}${KEY_BACKSPACE}${KEY_BACKSPACE}${KEY_BACKSPACE}${KEY_BACKSPACE}${KEY_BACKSPACE}${KEY_BACKSPACE}${KEY_BACKSPACE}${KEY_BACKSPACE}${KEY_BACKSPACE}${KEY_BACKSPACE}</td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>id=b_riDesc-inputEl</td>
+	<td>Sample Description</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=b_saveRule</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=ruleEdited_success</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>id=b_riDesc-inputEl</td>
+	<td>Sample Description</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

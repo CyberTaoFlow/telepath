@@ -1,0 +1,55 @@
+{
+    "type": "Ext.container.Viewport",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|snapToGrid": 10,
+        "padding": "",
+        "designer|userClassName": "MyViewport",
+        "designer|initialView": true,
+        "layout": "absolute"
+    },
+    "designerId": "ddb37660-a8df-4f19-ba9c-4d1e1c66e9bf",
+    "cn": [
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onViewportRender",
+                "implHandler": [
+                    "login = new MyApp.view.Login();\r",
+                    "login.resizable = false;\r",
+                    "login.show();"
+                ],
+                "name": "render",
+                "scope": "me"
+            },
+            "designerId": "2af68b83-e5ac-42c3-9576-a22fb1fa26c1"
+        },
+        {
+            "type": "Ext.container.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|x": 30,
+                "layout|y": 40,
+                "height": 184,
+                "html": [
+                    "<img src='img/logo.jpg'>"
+                ],
+                "width": 174
+            },
+            "designerId": "35e9e21f-c4b6-4219-98d1-600cbf9a14d8"
+        }
+    ]
+}

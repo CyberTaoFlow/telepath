@@ -1,0 +1,60 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "data": [
+            "[",
+            "    {cookie:'PHPSESSID'},",
+            "    {cookie:'PHPSESSIONID'},",
+            "    {cookie:'JSESSIONID'},",
+            "    {cookie:'ASPSESSIONID'},",
+            "    {cookie:'ASP.NET_SessionId'},",
+            "    {cookie:'VisitorID'},",
+            "    {cookie:'SESS'}",
+            "]"
+        ],
+        "designer|userAlias": "app_wizard_cookieStore",
+        "designer|userClassName": "app_wizard_cookieStore",
+        "storeId": "MyJsonStore3"
+    },
+    "designerId": "9f735d80-b137-4b08-bcea-8ddc0ed05e23",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "7a4197d9-6610-4229-81eb-40423b8f6859",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "1a73a689-c0a5-4218-a127-5106110890e5"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|displayName": null,
+                "name": "cookie"
+            },
+            "designerId": "c128fa02-1679-4e26-8004-dd781705dd0a"
+        }
+    ]
+}

@@ -1,0 +1,1 @@
+redis = require "resty.redis"

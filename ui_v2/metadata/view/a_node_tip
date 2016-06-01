@@ -1,0 +1,68 @@
+{
+    "type": "Ext.grid.property.Grid",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "a_node_tip",
+        "enableColumnHide": false,
+        "floating": true,
+        "height": 250,
+        "hideHeaders": true,
+        "id": "a_node_tip",
+        "resizable": [
+            "true"
+        ],
+        "scroll": "horizontal",
+        "source": [
+            "{",
+            "}"
+        ],
+        "title": null,
+        "titleCollapse": true,
+        "width": 400
+    },
+    "designerId": "22675d9c-f6cd-4e9c-afb5-f3a55872c27a",
+    "cn": [
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onA_node_tipContainerMouseOut",
+                "implHandler": [
+                    "Ext.getCmp('a_node_tip').hide();"
+                ],
+                "name": "containermouseout",
+                "scope": "me"
+            },
+            "designerId": "7c14a18a-802f-410f-8ff9-c744f77d6947"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onA_node_tipRender",
+                "implHandler": [
+                    "Ext.getCmp('a_node_tip').getEl().addListener('mouseleave',",
+                    "function(){",
+                    "",
+                    "    component.hide();",
+                    "});"
+                ],
+                "name": "render",
+                "scope": "me"
+            },
+            "designerId": "26a457e0-dec1-4fbf-8b2a-422aa3098176"
+        }
+    ]
+}

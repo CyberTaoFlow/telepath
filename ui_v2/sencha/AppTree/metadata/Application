@@ -1,0 +1,25 @@
+{
+    "type": "Ext.app.Application",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "models": [
+            "MyModel"
+        ],
+        "stores": [
+            "AppTreeApps",
+            "AppTreeFlows",
+            "AppTreeStore",
+            "AppTreeParams"
+        ],
+        "views": [
+            "AppTreePanel",
+            "AppTreeWindow"
+        ],
+        "name": "MyApp"
+    },
+    "designerId": "application"
+}

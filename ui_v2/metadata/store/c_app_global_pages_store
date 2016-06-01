@@ -1,0 +1,59 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "c_app_global_pages_store",
+        "storeId": "c_appAdd_global_pages_store"
+    },
+    "designerId": "55550dbc-3f5d-4927-bc6f-ff82073888a8",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "d070bc5a-aeb6-4593-b6a1-7962b148e5fa",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "c89d4eb7-2b29-4b8b-a529-736a6ebf25a3"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "page"
+            },
+            "designerId": "9fb47cc0-d84d-438f-9bc9-353fd8b9f4df"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "desc"
+            },
+            "designerId": "9e0bcaf0-a413-4a24-9e34-4d2d94bc1a8c"
+        }
+    ]
+}
