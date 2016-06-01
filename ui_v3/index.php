@@ -29,6 +29,9 @@ function disable_ob() {
         apache_setenv('dont-vary', '1');
     }
 }
+
+
+
 disable_ob();
 
 
