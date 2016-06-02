@@ -153,12 +153,12 @@ telepath.sessionflow = {
 					
 					table.append(getRow('Time:', date_format('d/m/y | H:i:s', similarity.ts)));
 					//table.append(getRow('Severity:', this.getSeverity(alert.numeric_score)));
-					table.append(getRow('Applications:', escapeHtml(similarity.host)));
+					table.append(getRow('Application:', escapeHtml(similarity.host)));
 					table.append(getRow('IP:', similarity.ip_orig));
 					table.append(getRow('Location:', '<span class="flag flag-' + similarity.country_code + '"></span>' + 
 										'<span class="tele-country">' + telepath.countries.a2n(similarity.country_code) + '</span>'));
 					if(similarity.username){
-						table.append(getRow('User:', escapeHtml(decodeURIComponent(similarity.username))));
+						table.append(getRow('User:', escapeHtml(similarity.username)));
 					}
 					
 					table.append(getRow('Similarity:', similarity._score + '%'));
@@ -677,7 +677,8 @@ telepath.sessionflow = {
 		
 		// Sometimes its malformed
 		try {
-			result.title = decodeURIComponent(item.title ? item.title : item.uri);
+			//result.title = decodeURIComponent(item.title ? item.title : item.uri);
+			result.title = item.title ? item.title : item.uri;
 		} catch(e) {
 			result.title = '';
 		}
