@@ -4,6 +4,7 @@
 #include <vector>
 #include <boost/unordered_set.hpp>
 
+
 using namespace std;
 
 class rule_core{
