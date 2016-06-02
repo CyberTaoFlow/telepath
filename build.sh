@@ -2,7 +2,8 @@
 
 #source compiled.list
 
-VER=`svn info | grep Revision | sed  's/Revision: //'`
+#VER=`svn info | grep Revision | sed  's/Revision: //'`
+VER=`git rev-parse HEAD | grep ... | sed -e 's/^\(.\{8\}\).*/\1/'`
 BUILD_VER="1"
 OS=
 OS_VER=
@@ -406,12 +407,12 @@ create_tarball() {
 # UPDATE SVN
 
 cd ..
-svn up
-git pull
+#svn up
+#git pull
 cd trunk
 
-VER=`svn info | grep Revision | sed  's/Revision: //'`
-
+#VER=`svn info | grep Revision | sed  's/Revision: //'`
+VER=`git rev-parse HEAD | grep ... | sed -e 's/^\(.\{8\}\).*/\1/'`
 # REMOVE BUILDS
 
 #clear_binaries
