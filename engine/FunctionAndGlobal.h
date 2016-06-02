@@ -1722,12 +1722,18 @@ void generalRules(Rule & rule,Session & s,string & src_ip,long long RID,unsigned
 	switch ( rule.final_type ){
 		//-----Bot Intelligence rule for IP--------
 		case 'B':					// B = Bot Intelligence.
-			itBotIntelligence = mBotIntelligenceIP.find(src_ip);
-			if( itBotIntelligence != mBotIntelligenceIP.end() ){ //IP was found.
-				if ( rule.str_match[0] == itBotIntelligence->second.name[0] ){
+			if(rule.str_match[0]=='t'){
+				if(sTorIntelligenceIP.count(src_ip) != 0){//IP was found.
 					insert_alert(rule,RID,src_ip,resp_ip,cookie,hostname);
 				}
 			}
+
+			if(rule.str_match[0]=='k'){
+				if(sBotIntelligenceIP.count(src_ip) != 0){//IP was found.
+					insert_alert(rule,RID,src_ip,resp_ip,cookie,hostname);
+				}
+			}
+
 			break;
 		//----Bot Intelligence rule for IP End-----
 

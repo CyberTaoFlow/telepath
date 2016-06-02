@@ -691,7 +691,7 @@ void *thread_sid_per_min(void *threadid)
 		syslog(LOG_NOTICE,"TC->setPageIndex.size(): %u\n", (unsigned int)TC->setPageIndex.size() );
 		syslog(LOG_NOTICE,"mSession.size(): %u\n", (unsigned int)mSession.size() );
 		syslog(LOG_NOTICE,"mAttAvg.size(): %u\n", (unsigned int)mAttAvg.size() );
-		syslog(LOG_NOTICE,"mBotIntelligenceIP.size(): %u\n", (unsigned int)mBotIntelligenceIP.size() );
+		syslog(LOG_NOTICE,"sTorIntelligenceIP.size(): %u\n", (unsigned int)sTorIntelligenceIP.size() );
 		syslog(LOG_NOTICE,"mQuery.size(): %u\n", (unsigned int)mQuery.size() );
 		syslog(LOG_NOTICE,"mQueryUser.size(): %u\n", (unsigned int)mQueryUser.size() );
 		syslog(LOG_NOTICE,"rules.capacity(): %u\n", (unsigned int)rules.capacity() );

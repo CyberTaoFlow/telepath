@@ -667,14 +667,16 @@ open_geoIP_database();		// This function is defined at geoip.h .
 
 TC = new TeleCache;
 
-initBotIntelligence();		// This function is defined at LoadConf.h .
 load_config();
 rules_table_was_changed=1;
 business_flow_was_changed=1;
+bot_intelligence=1;
 
 loadActions();			/*This function is defined at LoadConfig.h .*/ syslog(LOG_NOTICE,"%u Actions Were Loaded",(unsigned)businessFlowVec.size());
 loadRules();			/*This function is defined at LoadConfig.h .*/ syslog(LOG_NOTICE,"%u Rules Were Loaded",(unsigned)rules.size());
-//loadCases();			//This function is defined at LoadConfig.h .
+loadBotIntelligence();		/*This function is defined at LoadConfig.h .*/ 
+	syslog(LOG_NOTICE,"%u Tor IPs Were Loaded",(unsigned)sTorIntelligenceIP.size());
+	syslog(LOG_NOTICE,"%u Bot IPs Were Loaded",(unsigned)sBotIntelligenceIP.size());
 
 initMonths();			// This function is defined at enginetypes.h .
 initMethod();			// This function is defined at enginetypes.h .
@@ -732,7 +734,6 @@ while(globalEngine){ // while engine learning - run the engine every time we get
 		#ifdef DEBUG    
 			syslog(LOG_NOTICE,"Loading BotIntelligence");
 		#endif
-		loadBotIntelligence();
 	}
 	cycleLearning++;
 	#ifdef DEBUG

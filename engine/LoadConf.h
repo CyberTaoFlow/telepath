@@ -442,7 +442,6 @@ void loadRules(){ // Load rule_groups from database.
 
 	}
 	pthread_mutex_unlock(&mutexAddRules);
-
 }
 
 void parseActionsJson(Json::Value & root,string & preKey,vector <Action> & businessFlowVec,Action & bf,ActionPages & pf,string & fullpage,string & data){
@@ -1068,8 +1067,115 @@ void loadCases(){ // Load business logic from database.
 
 */
 
-void initBotIntelligence(){ // Load bot intelligence from database in the first time.
-	es_insert("http://localhost:9200/telepath-config/config/bot_intelligence_id","{\"value\":\"1\"}");
+void parseBotIDsJson(Json::Value & root,vector <string> & ids){
+        Json::Value::iterator it;
+        unsigned int i,j;
+        string key,val;
+
+        it=root.begin();
+        for (i=0; i < root.size() ; i++) {
+		if( !(*it).isObject() ){
+                        key = it.key().asString();
+                }
+                if( (*it).isObject() ){
+                        parseBotIDsJson((*it),ids);
+		}
+                else if( (*it).isArray() ){
+                        Json::Value array = (*it);
+                        for (j=0; j < array.size(); j++) {
+                                if( array[j].isObject() ){
+                                        parseBotIDsJson(array[j],ids);
+                                }else{
+                                }
+                        }
+            
+                }else{
+                        if ( (*it).isString() ){
+                                val = (*it).asString();
+                        }else{
+                                val = (*it).toStyledString();
+                        }
+                        
+			if(key == "_id"){
+				ids.push_back(val);
+                        }
+
+                }
+                it++;
+        }
+
+}
+
+void getTorIPs(char *ptr)
+{
+	CURL *curl;
+	vector <string> ids;
+	string bot_json;
+
+	Json::Value root;
+	Json::Reader reader;
+	bool parsed;
+	unsigned int i;
+
+	ids.clear();
+
+	if(ptr>0){
+		if(ptr != NULL){
+			bot_json = string(ptr);
+			parsed = reader.parse(bot_json, root, false);
+
+			if(!parsed){
+				return;
+			}
+
+			parseBotIDsJson(root,ids);
+		}
+	}
+
+	if(ids.size()==0){
+		noBotsToLoad = true;
+		return;
+	}
+
+	for(i=0;i<ids.size();i++){
+		sTorIntelligenceIP.insert(ids[i]); 
+	}
+}
+
+void getBotIPs(char *ptr)
+{
+        CURL *curl;
+        vector <string> ids;
+        string bot_json;
+
+        Json::Value root;
+        Json::Reader reader;
+        bool parsed;
+        unsigned int i;
+
+        ids.clear();
+
+        if(ptr>0){
+                if(ptr != NULL){
+                        bot_json = string(ptr);
+                        parsed = reader.parse(bot_json, root, false);
+
+                        if(!parsed){
+                                return;
+                        }
+
+                        parseBotIDsJson(root,ids);
+                }
+        }
+
+        if(ids.size()==0){
+                noBotsToLoad = true;
+                return;
+        }
+
+        for(i=0;i<ids.size();i++){
+                sBotIntelligenceIP.insert(ids[i]);
+        }
 }
 
 void loadBotIntelligence(){ // Load bot intelligence from database.
@@ -1079,12 +1185,48 @@ void loadBotIntelligence(){ // Load bot intelligence from database.
 		bot_intelligence=0;
 		es_insert("http://localhost:9200/telepath-config/config/bot_intelligence_id","{\"value\":\"0\"}");
 	}
-	mBotIntelligenceIP.clear();
+	sTorIntelligenceIP.clear();
 
-	/*static const char * buff2 = "SELECT ip_addr,name,description FROM bad_ips;";
- 	static const char * buff3 = "SELECT domain,name,description FROM bad_domains;";
-	*/
+        //---------------------------------
+        
+	CURL *curl;
+	char postfields[100];
+	unsigned int from=0;
+	while(1){
+		sprintf(postfields,"{\"size\":%u,\"from\":%u}",LOAD_BOTS_BULK,from);
+		from += LOAD_BOTS_BULK;
 
+		curl = curl_easy_init();
+		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST,"POST");
+		curl_easy_setopt(curl, CURLOPT_URL, "localhost:9200/telepath-tor-ips/tor/_search?filter_path=hits.hits._id");
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDS,postfields);
+		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, getTorIPs);
+		curl_easy_perform(curl);
+		curl_easy_cleanup(curl);
 
+		if(noBotsToLoad == true){
+			noBotsToLoad = false;
+			break;
+		}
+	}
+	
+	from=0;
+	while(1){
+		sprintf(postfields,"{\"size\":%u,\"from\":%u}",LOAD_BOTS_BULK,from);
+		from += LOAD_BOTS_BULK;
+
+		curl = curl_easy_init();
+		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST,"POST");
+		curl_easy_setopt(curl, CURLOPT_URL, "localhost:9200/telepath-bad-ips/bad/_search?filter_path=hits.hits._id");
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDS,postfields);
+		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, getBotIPs);
+		curl_easy_perform(curl);
+		curl_easy_cleanup(curl);
+
+		if(noBotsToLoad == true){
+			noBotsToLoad = false;
+			break;
+		}
+	}
 }
 
