@@ -65,6 +65,7 @@ class M_Requests extends CI_Model {
 		$params['index'] = 'telepath-20*';
 		$params['type'] = 'http';
 		$params['body'] = [
+			'size' => 5,
 			'query' => [
 				'bool' => [
 					'must' => [

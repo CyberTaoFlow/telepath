@@ -380,21 +380,21 @@ telepath.sessionflow = {
 		// --------------------------------------------------- 
 		
 			
-		// Print duration
-		// ---------------------------------------------------
-		var durationEl = $('<div>').addClass('tele-alert-duration')
-					.append($('<div>').addClass('tele-alert-duration-start')
-					.append($('<div>').addClass('tele-alert-duration-lbl').html('Started:'), 
-						$('<div>').addClass('tele-alert-duration-val').html(
-							date_format('d/m/y | H:i A', this.session.stats.session_start))
-						))
-					.append($('<div>').addClass('tele-alert-duration-end')
-					.append($('<div>').addClass('tele-alert-duration-lbl').html('Ended:'), 
-						$('<div>').addClass('tele-alert-duration-val').html(
-							date_format('d/m/y | H:i A', this.session.stats.session_end))));
-		this.boxLeft.append(durationEl);
-		// ---------------------------------------------------
-		
+		//// Print duration
+		//// ---------------------------------------------------
+		//var durationEl = $('<div>').addClass('tele-alert-duration')
+		//			.append($('<div>').addClass('tele-alert-duration-start')
+		//			.append($('<div>').addClass('tele-alert-duration-lbl').html('Started:'),
+		//				$('<div>').addClass('tele-alert-duration-val').html(
+		//					date_format('d/m/y | H:i A', this.session.stats.session_start))
+		//				))
+		//			.append($('<div>').addClass('tele-alert-duration-end')
+		//			.append($('<div>').addClass('tele-alert-duration-lbl').html('Ended:'),
+		//				$('<div>').addClass('tele-alert-duration-val').html(
+		//					date_format('d/m/y | H:i A', this.session.stats.session_end))));
+		//this.boxLeft.append(durationEl);
+		//// ---------------------------------------------------
+		//
 		
 		
 		// Sort out list
@@ -415,7 +415,7 @@ telepath.sessionflow = {
 			that.appendItem(req);
 			
 		}
-		var height = this.container.height() - statsEl.height() - durationEl.height() - 100;
+		var height = this.container.height() - statsEl.height() /*- durationEl.height()*/ - 100;
 		// Infinitely load additional alerts
 		$(this.actionsContainer).css({ 'height': height }); // Stats and times offset
 		
@@ -946,14 +946,16 @@ telepath.sessionflow = {
 		// Fill table data
 		var table = this.alertInfoTable;
 		
-		table.append(getRow('Time:', date_format('m/d/y | H:i:s', this.requestInfo.ts)));
+	//	table.append(getRow('Time:', date_format('d/m/y | H:i:s', this.requestInfo.ts)));
+		table.append(getRow('Session Start:', date_format('d/m/y | H:i:s', this.session.stats.session_start)));
+		table.append(getRow('Session End:', date_format('d/m/y | H:i:s', this.session.stats.session_end)));
 		//table.append(getRow('Severity:', this.getSeverity(alert.numeric_score)));
-		table.append(getRow('Applications:', escapeHtml(this.requestInfo.host)));
+		table.append(getRow('Application:', escapeHtml(this.requestInfo.host)));
 		table.append(getRow('IP:', this.requestInfo.ip_orig));
-		table.append(getRow('Location:', '<span class="flag flag-' + this.requestInfo.country_code + '"></span>' + 
+		table.append(getRow('Location:', (this.requestInfo.country_code!='00'?'<span class="flag flag-' + this.requestInfo.country_code + '"></span>':'') +
 							'<span class="tele-country">' + telepath.countries.a2n(this.requestInfo.country_code) + '</span>'));
 		if(this.requestInfo.username){
-			table.append(getRow('User:', escapeHtml(decodeURIComponent(this.requestInfo.username))));
+			table.append(getRow('User:', escapeHtml(this.requestInfo.username)));
 		}
 
 
