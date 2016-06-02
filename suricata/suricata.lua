@@ -221,8 +221,7 @@ function log(args)
 	    end
 	end
 
-	rq_body = unescape(rq_body)
-	-- rq_body = string.lower(rq_body)  --Lowercasing http request body.
+	rq_body = unescape(rq_body) --url decoding for response body(POST parameters).
 
 	a, o, e = HttpGetResponseBody(); --http response body.
 	if a then
@@ -248,8 +247,8 @@ function log(args)
 		return
 	end
 
-	local uri = HttpGetRequestUriRaw() --uri.
-	uri = unescape(uri)
+	local uri = HttpGetRequestUriRaw()
+	uri = unescape(uri) --url decoding for uri & GET parameters.
 	
 	-- uri = string.lower(uri)			
 	query = ""
@@ -287,7 +286,6 @@ function log(args)
 		TP = "HTTP",			--Protocol.
 		TM = method,			--Method.
 		TQ = query,			--GET parameters.
-
 		RI = dstip,			--Response IP.
 		RB = rs_body,			--Response body.
 		RC = status			--Status code.
@@ -300,7 +298,6 @@ function log(args)
 	rqh = HttpGetRequestHeaders()
 	for k, v in pairs(rqh) do
 		k = string.lower(k)
-		--v = string.lower(v)
 
 		if load_balancer_headers[k] == k then
 			for key, value in pairs(load_balancer_ips) do
@@ -329,10 +326,9 @@ function log(args)
 
 	rsh = HttpGetResponseHeaders()
 	for k, v in pairs(rsh) do
-		k = unescape(k)
-		v = unescape(i)
-		k = string.lower(k)
-		--v = string.lower(v)
+		k = unescape(k) --url decoding for header names.
+		v = unescape(i) --url decoding for header values.
+		k = string.lower(k) --lowercasing for header names.
 
 		if type(v) == "table" then
 			request["RH_" .. k] = table.concat(v, "|&|")
