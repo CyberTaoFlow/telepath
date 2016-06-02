@@ -217,7 +217,7 @@ telepath.config.applications = {
 			}
 		});
 
-		var rightPanel=$('<div>').css('float','right').append(sortRadios);
+		var rightPanel=$('<div>').attr('id', 'sort-radio').css('float','right').append(sortRadios);
 		$('.tele-panel-topbar').append(rightPanel);
 
 		// Search
