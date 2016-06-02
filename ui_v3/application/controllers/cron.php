@@ -281,7 +281,86 @@ class Cron extends Tele_Controller
         $bots = 0;
         $tors = 0;
 
-        $insert_data = array();
+        // Delete existing index to save only relevant data
+        $params = ['index' => 'telepath-bad-ips'];
+        $this->elasticClient->indices()->delete($params);
+
+        $params['type'] = 'bad';
+        $params ['body'] = [];
+
+        foreach ($bot_list as $line) {
+            preg_match('/(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/', $line, $m);
+            if (!empty($m)) {
+                $bots++;
+
+                $params['body'][] = [
+                    'index' => [
+                        '_id' => $m[0]
+                    ]
+                ];
+
+                $params['body'][] = [];
+
+                // Every 1000 documents stop and send the bulk request
+                if ($bots % 1000 == 0) {
+                    $responses = $this->elasticClient->bulk($params);
+
+                    // erase the old bulk request
+                    $params ['body'] = [];
+
+                    // unset the bulk response when you are done to save memory
+                    unset($responses);
+                }
+            }
+        }
+
+        // Send the last batch if it exists
+        if (!empty($params['body'])) {
+            $this->elasticClient->bulk($params);
+        }
+
+
+        $params = ['index' => 'telepath-tor-ips'];
+        $this->elasticClient->indices()->delete($params);
+
+        $params['type'] = 'tor';
+        $params ['body'] = [];
+
+        foreach ($tor_list as $line) {
+            preg_match('/(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/', $line, $m);
+            if (!empty($m)) {
+                $tors++;
+
+                $params['body'][] = [
+                    'index' => [
+                        '_id' => $m[0]
+                    ]
+                ];
+
+                $params['body'][] = [];
+
+                // Every 1000 documents stop and send the bulk request
+                if ($tors % 1000 == 0) {
+                    $responses = $this->elasticClient->bulk($params);
+
+                    // erase the old bulk request
+                    $params ['body'] = [];
+
+                    // unset the bulk response when you are done to save memory
+                    unset($responses);
+                }
+            }
+        }
+
+        // Send the last batch if it exists
+        if (!empty($params['body'])) {
+            $this->elasticClient->bulk($params);
+        }
+
+
+        echo 'Telepath Updated :: KB :: ' . $bots . ' :: TOR :: ' . $tors . "\n";
+
+        //      $insert_data = array();
 
         /*foreach ($bot_list as $line) {
             preg_match('/(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/', $line, $m);
@@ -299,42 +378,43 @@ class Cron extends Tele_Controller
             }
         }*/
 
-        foreach ($bot_list as $line) {
-            preg_match('/(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/', $line, $m);
-            if (!empty($m)) {
-                $insert_data[] = array('from' => $m[0], 'to' => $m[1]);
-                $bots++;
-            }
-        }
-        foreach ($tor_list as $line) {
-            preg_match('/(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/', $line, $m);
-            if (!empty($m)) {
-                $insert_data[] = array('from' => $m[0], 'to' => $m[1]);
-                $tors++;
-            }
-        }
-
-        echo 'Telepath Update :: KB :: ' . $bots . ' :: TOR :: ' . $tors . "\n";
-
-        echo 'Updating DB Start';
-
-        $params = [
-            'index' => 'telepath-config',
-            'type' => 'ips',
-            'id' => 'bad_ips',
-            'body' => [
-                'doc' => [
-                    'ips' => $insert_data
-                ],
-                'doc_as_upsert' => true
-            ]
-        ];
-
-        $this->elasticClient->update($params);
-       /* $this->db->query('TRUNCATE TABLE bad_ips');
-        $this->db->insert_batch('bad_ips', $insert_data);
-        $this->db->query("UPDATE config SET value='1' WHERE action_code=71");*/
-        echo 'Updating DB End';
+//        foreach ($bot_list as $line) {
+//            preg_match('/(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/', $line, $m);
+//            if (!empty($m)) {
+//                $insert_data[] = array('from' => $m[0], 'to' => $m[1]);
+//                $bots++;
+//            }
+//        }
+//        foreach ($tor_list as $line) {
+//            preg_match('/(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/', $line, $m);
+//            if (!empty($m)) {
+//                $insert_data[] = array('from' => $m[0], 'to' => $m[1]);
+//                $tors++;
+//            }
+//        }
+//
+//        echo 'Telepath Update :: KB :: ' . $bots . ' :: TOR :: ' . $tors . "\n";
+//
+//        echo 'Updating DB Start';
+//
+//        $params = [
+//            'index' => 'telepath-config',
+//            'type' => 'ips',
+//            'id' => 'bad_ips',
+//            'body' => [
+//                'doc' => [
+//                    'ips' => $insert_data
+//                ],
+//                'doc_as_upsert' => true
+//            ]
+//        ];
+//
+//
+//        $this->elasticClient->update($params);
+//       /* $this->db->query('TRUNCATE TABLE bad_ips');
+//        $this->db->insert_batch('bad_ips', $insert_data);
+//        $this->db->query("UPDATE config SET value='1' WHERE action_code=71");*/
+//        echo 'Updating DB End';
 
     }
 
