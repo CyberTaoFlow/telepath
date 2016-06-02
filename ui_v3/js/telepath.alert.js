@@ -554,7 +554,7 @@ telepath.alert = {
 		// Time
 		this.alertDetailsTimeWrap   = $('<div>').addClass('tele-alert-details-info-time-wrap');
 		this.alertDetailsTimeLabel  = $('<div>').addClass('tele-alert-details-info-time-label').text('Request time:');
-		this.alertDetailsTime  		= $('<div>').addClass('tele-alert-details-info-time').text(date_format('m/d/y | H:i:s', this.requestInfo.date));
+		this.alertDetailsTime  		= $('<div>').addClass('tele-alert-details-info-time').text(date_format('d/m/y | H:i:s', this.requestInfo.date));
 		this.alertDetailsTimeWrap.append(this.alertDetailsTimeLabel).append(this.alertDetailsTime);
 		
 		// Severity
@@ -599,7 +599,7 @@ telepath.alert = {
 		// Fill table data
 		var table = this.alertInfoTable;
 		
-		table.append(getRow('Time:', date_format('m/d/y | H:i:s', alert.date)));
+		table.append(getRow('Time:', date_format('d/m/y | H:i:s', alert.date)));
 		table.append(getRow('Severity:', this.getSeverity(alert.numeric_score)));
 		table.append(getRow('Applications:', this.requestInfo.app_domain));
 		table.append(getRow('IP:', alert.ip));
