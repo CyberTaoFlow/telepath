@@ -69,6 +69,7 @@ Rule::Rule(){
 	this->action_id=0;
 	this->action_name.clear();
 	this->validReg=false;
+	this->db_save=true;
 	this->threshold = 0;
 	this->cmds.clear();
 	this->criteria_count=0;
@@ -111,6 +112,7 @@ void Rule::clean(){
 	this->action_name.clear();
 	this->enable=true;
 	this->validReg=false;
+	this->db_save=true;
 	this->mCardinal_IP_att.clear();
 	this->mCardinal_SID_att.clear();
 	this->mCardinal_IP_pid.clear();

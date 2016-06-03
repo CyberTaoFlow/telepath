@@ -56,6 +56,7 @@ public:
 	bool enable;
 	pcre *pcreRegex;
 	bool validReg;
+	bool db_save;
 	vector <string> cmds;
 	unsigned short criteria_count;
 
