@@ -60,6 +60,7 @@ telepath.config = {
 				// Cleanup container
 				that.container.empty();
 				$("#file-upload").hide();
+				$('#sort-radio').remove();
 				
 				// Pass container and shared layout function
 				telepath.config[id].container  = that.container;
