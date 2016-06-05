@@ -297,7 +297,9 @@ function log(args)
 
 	rqh = HttpGetRequestHeaders()
 	for k, v in pairs(rqh) do
-		k = string.lower(k)
+		k = unescape(k) --url decoding for header names.
+		v = unescape(v) --url decoding for header values.
+		k = string.lower(k) --lowercasing for header names.
 
 		if load_balancer_headers[k] == k then
 			for key, value in pairs(load_balancer_ips) do
