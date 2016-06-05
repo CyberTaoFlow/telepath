@@ -92,6 +92,9 @@ void initElasticSearchData(){
 	es_insert("http://localhost:9200/telepath-tor-ips","");
 	es_insert("http://localhost:9200/telepath-bad-ips","");
 
+	es_insert("http://localhost:9200/telepath-tor-ips/_settings","{\"index\":{\"max_result_window\":100000}}");
+	es_insert("http://localhost:9200/telepath-bad-ips/_settings","{\"index\":{\"max_result_window\":400000}}");
+
 	es_mapping("http://localhost:9200/telepath-config/config/_mapping","{\"config\":{\"properties\":{\"value\":{\"type\":\"string\",\"store\":true,\"index\":\"not_analyzed\"}}}}");
 	es_mapping("http://localhost:9200/telepath-config/ips/_mapping","{\"ips\":{\"properties\":{\"ips\":{\"properties\":{\"from\":{\"type\":\"string\",\"store\":true,\"index\":\"not_analyzed\"},\"to\":{\"type\":\"string\",\"store\":true,\"index\":\"not_analyzed\"}}}}}}");
 	es_mapping("http://localhost:9200/telepath-config/filter_extensions/_mapping","{\"filter_extensions\":{\"properties\":{\"filter_extensions\":{\"type\":\"string\",\"store\":true,\"index\":\"not_analyzed\"}}}}");

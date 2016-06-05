@@ -11,6 +11,7 @@
 #define NUM_OF_COOKIE_SUGGESTIONS 10
 #define	COEFFICIENT 0.0007
 #define LOAD_RULES_BULK 150
+#define LOAD_BOTS_BULK 575
 
 using namespace std;
 
@@ -183,6 +184,7 @@ boost::unordered_set <unsigned int> setHashRules;
 boost::unordered_set <unsigned int> setHashMasks;
 bool noRulesToLoad=false;
 bool noAppsToLoad=false;
+bool noBotsToLoad=false;
 vector <Action> businessFlowVec;
 
 
@@ -195,8 +197,10 @@ boost::unordered_map <string,AppMode> mAppMode;
 
 boost::unordered_map <long long,ElasticAtt> mRidAtts;// save all Session data.
 boost::unordered_map <long long,ElasticData> mRidAlertAndAction;// save all Session data.
-boost::unordered_map <string,BotIntelligence> mBotIntelligenceIP; // BotIntelligence For IPs
-boost::unordered_map <string,BotIntelligence>::iterator itBotIntelligence;
+//boost::unordered_map <string,BotIntelligence> mBotIntelligenceIP; // BotIntelligence For IPs
+boost::unordered_set <string> sTorIntelligenceIP;
+boost::unordered_set <string> sBotIntelligenceIP;
+//boost::unordered_map <string,BotIntelligence>::iterator itBotIntelligence;
 boost::unordered_map <unsigned int,boost::unordered_map <string,UserReputation> > mReputationUsers;
 boost::unordered_map <unsigned int,Reputation> mReputationIPs;
 map<unsigned int,Path> mPathPerGroup; // Path to any suspicious group.

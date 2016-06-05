@@ -188,7 +188,8 @@ void insert_alert(Rule & c_r,long long RID,string & src_ip,string & resp_ip,stri
 	char alertfields[300];
 	boost::unordered_map <long long,ElasticData>::iterator itRidAlertAndAction;
 
-	pthread_mutex_lock(&mutexRidAlertAndBusiness);
+	if(c_r.db_save==true){
+		pthread_mutex_lock(&mutexRidAlertAndBusiness);
 		itRidAlertAndAction = mRidAlertAndAction.find(RID);
 		if( itRidAlertAndAction != mRidAlertAndAction.end() ){
 			boost::unordered_map<string,boost::unordered_set<unsigned int> >::iterator itRuleName = itRidAlertAndAction->second.rule_names.find(c_r.rule_name);
@@ -250,8 +251,8 @@ void insert_alert(Rule & c_r,long long RID,string & src_ip,string & resp_ip,stri
 				pthread_mutex_unlock(&mutexAppMode);
 			}
 		}
-	pthread_mutex_unlock(&mutexRidAlertAndBusiness);
-
+		pthread_mutex_unlock(&mutexRidAlertAndBusiness);
+	}
 
 	for(unsigned int i=0 ; i<c_r.cmds.size() ; i++){
 		if(c_r.cmds[i] == "captcha"){
@@ -287,7 +288,8 @@ void insert_alert(Rule & c_r,long long RID,string & src_ip,double score,string &
 	char alertfields[300];
 	boost::unordered_map <long long,ElasticData>::iterator itRidAlertAndAction;
 
-	pthread_mutex_lock(&mutexRidAlertAndBusiness);
+	if(c_r.db_save==true){
+		pthread_mutex_lock(&mutexRidAlertAndBusiness);
 		itRidAlertAndAction = mRidAlertAndAction.find(RID);
 		if( itRidAlertAndAction != mRidAlertAndAction.end() ){
 			boost::unordered_map<string,boost::unordered_set<unsigned int> >::iterator itRuleName = itRidAlertAndAction->second.rule_names.find(c_r.rule_name);
@@ -347,8 +349,8 @@ void insert_alert(Rule & c_r,long long RID,string & src_ip,double score,string &
 				pthread_mutex_unlock(&mutexAppMode);
 			}
 		}
-	pthread_mutex_unlock(&mutexRidAlertAndBusiness);
-
+		pthread_mutex_unlock(&mutexRidAlertAndBusiness);
+	}
 
 	for(unsigned int i=0 ; i<c_r.cmds.size() ; i++){
 		if(c_r.cmds[i] == "captcha"){
@@ -1722,12 +1724,18 @@ void generalRules(Rule & rule,Session & s,string & src_ip,long long RID,unsigned
 	switch ( rule.final_type ){
 		//-----Bot Intelligence rule for IP--------
 		case 'B':					// B = Bot Intelligence.
-			itBotIntelligence = mBotIntelligenceIP.find(src_ip);
-			if( itBotIntelligence != mBotIntelligenceIP.end() ){ //IP was found.
-				if ( rule.str_match[0] == itBotIntelligence->second.name[0] ){
+			if(rule.str_match[0]=='t'){
+				if(sTorIntelligenceIP.count(src_ip) != 0){//IP was found.
 					insert_alert(rule,RID,src_ip,resp_ip,cookie,hostname);
 				}
 			}
+
+			if(rule.str_match[0]=='k'){
+				if(sBotIntelligenceIP.count(src_ip) != 0){//IP was found.
+					insert_alert(rule,RID,src_ip,resp_ip,cookie,hostname);
+				}
+			}
+
 			break;
 		//----Bot Intelligence rule for IP End-----
 
