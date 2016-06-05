@@ -327,7 +327,7 @@ function log(args)
 	rsh = HttpGetResponseHeaders()
 	for k, v in pairs(rsh) do
 		k = unescape(k) --url decoding for header names.
-		v = unescape(i) --url decoding for header values.
+		v = unescape(v) --url decoding for header values.
 		k = string.lower(k) --lowercasing for header names.
 
 		if type(v) == "table" then
