@@ -188,7 +188,7 @@ void insert_alert(Rule & c_r,long long RID,string & src_ip,string & resp_ip,stri
 	char alertfields[300];
 	boost::unordered_map <long long,ElasticData>::iterator itRidAlertAndAction;
 
-	if(c_r.db_save==true){
+	if(c_r.disable_db_save==false){
 		pthread_mutex_lock(&mutexRidAlertAndBusiness);
 		itRidAlertAndAction = mRidAlertAndAction.find(RID);
 		if( itRidAlertAndAction != mRidAlertAndAction.end() ){
@@ -288,7 +288,7 @@ void insert_alert(Rule & c_r,long long RID,string & src_ip,double score,string &
 	char alertfields[300];
 	boost::unordered_map <long long,ElasticData>::iterator itRidAlertAndAction;
 
-	if(c_r.db_save==true){
+	if(c_r.disable_db_save==false){
 		pthread_mutex_lock(&mutexRidAlertAndBusiness);
 		itRidAlertAndAction = mRidAlertAndAction.find(RID);
 		if( itRidAlertAndAction != mRidAlertAndAction.end() ){

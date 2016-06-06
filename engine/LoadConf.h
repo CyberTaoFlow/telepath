@@ -63,11 +63,11 @@ void parseRulesJson(Json::Value & root,string & preKey,map <string,rule_group_da
 			if(preKey=="criteria"){
 				switch(key[0]){
 					case 'd':
-						if(key=="db_save"){
+						if(key=="disable_db_save"){
 							if(val[0]=='f'){
-								rule.db_save=false;
+								rule.disable_db_save=false;
 							}else{
-								rule.db_save=true;
+								rule.disable_db_save=true;
 							}
 						}
 						break;
