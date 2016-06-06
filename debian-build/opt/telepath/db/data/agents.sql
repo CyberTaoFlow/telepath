@@ -1,0 +1,2 @@
+INSERT IGNORE INTO `agents` (`idx`, `newConfig`, `agent_id`, `time`, `status`, `agent_ip`, `FilterExpression`, `agent_alias`, `agent_type`, `pipe_file`, `ATMSPort`, `MaxHeadersLength`, `MaxGetParamsLength`, `MaxPostLength`, `StatusInterval`, `CookieExpireTime`, `ConcurrentSessions`, `MessagesQueueSize`, `owner_user`, `owner_group`, `msg_id`, `NetworkInterface`, `fingerprint_headers`) VALUES
+(4, 0, 'sniffer108', 1341480814, 'alive', '', 'tcp port 80 or port 443', '', '', '', '4444', '10000', '10000', '2048', 70, 60, '10', '20000', '', '', 0, 'eth0', 'Accept,Accept-Language');

@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS `rule_group_categories` (
+	`id` INT( 11 ) NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR( 100 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL NOT NULL ,
+	PRIMARY KEY ( `id` )
+) ENGINE = MYISAM ;

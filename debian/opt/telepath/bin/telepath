@@ -1,0 +1,194 @@
+#!/bin/sh
+
+name_telewatchdog="telewatchdog"
+name_engine="engine"
+
+x=2000000
+g="g"
+phymem=$(free|awk '/^Mem:/{print $2}')
+phymem=$((phymem / x))
+phymem=$phymem$g
+case $1 in # $1 - this is first parameter of command line
+
+	--help)
+	echo ""
+	echo "Usage: telepath [OPTION] ... [FILE/DIR] [COMMAND]"
+	echo "Optional arguments"
+	echo "  -f, --file=FILE           load tcpdump file"
+	echo "  Example:                  telepath --file /tmp/dump.cap "
+	echo "  -r, --recursive-dir=DIR           load all tcpdump in the directory"
+	echo "  Example:                  telepath --recursive-dir /tmp/dump/ "
+	echo ""
+	echo "Optional commands"
+	echo "  start                     start telepath"
+	echo "  stop                      stop telepath"
+	echo "  restart                   stop/start telepath"
+	echo ""
+
+	;;
+
+	start)
+	gdb /proc/${PPID}/exe ${PPID} << END > /dev/null 2>&1 || true
+	call setenv("ES_HEAP_SIZE", "$phymem", 1)
+	call setenv("LD_LIBRARY_PATH","/usr/local/lib:$LD_LIBRARY_PATH",1)
+END
+
+	pid=`ps -e | grep $name_telewatchdog`
+	if [ "$pid" = "" ]
+	then
+		echo "telepath start/running, process $pidtele"
+		/opt/telepath/bin/telewatchdog
+		pidtele=`ps -A | grep $name_telewatchdog | awk '{print $1}'`
+	else
+		echo "start: Job is already running: telepath"
+		exit 0
+	fi
+	;;
+	
+	check)
+		/opt/telepath/bin/engine -c
+	;;
+
+	stop)
+	kill $(pidof $name_telewatchdog) > /dev/null 2>&1 || true
+	kill -9 $(ps -A | grep Suricata | awk '{ print $1 }') > /dev/null 2>&1 || true
+	kill -9 $(ps -aux | grep [/opt/]telepath/db/elasticsearch | awk '{ print $2 }') > /dev/null 2>&1 || true
+
+	kill $(pidof $name_engine) > /dev/null 2>&1 || true
+
+	sleep 3
+	echo "telepath stop/waiting"
+
+	;;
+
+
+	restart)
+
+	kill $(pidof $name_telewatchdog) > /dev/null 2>&1 || true
+	kill -9 $(ps -A | grep Suricata | awk '{ print $1 }') > /dev/null 2>&1 || true
+	kill -9 $(ps -aux | grep [/opt/]telepath/db/elasticsearch | awk '{ print $2 }') > /dev/null 2>&1 || true
+	kill $(pidof $name_engine) > /dev/null 2>&1 || true
+
+	gdb /proc/${PPID}/exe ${PPID} << END > /dev/null 2>&1 || true
+	call setenv("ES_HEAP_SIZE", "$phymem", 1)
+	call setenv("LD_LIBRARY_PATH","/usr/local/lib:$LD_LIBRARY_PATH",1)
+END
+
+	echo "telepath stop/waiting"
+	sleep 2
+	echo "telepath start/running, process $pidtele"
+
+	/opt/telepath/bin/telewatchdog
+	pidtele=`ps -A | grep $name_telewatchdog | awk '{print $1}'`
+
+	;;
+
+	-f)
+	gdb /proc/${PPID}/exe ${PPID} << END > /dev/null 2>&1 || true
+	call setenv("ES_HEAP_SIZE", "$phymem", 1)
+	call setenv("LD_LIBRARY_PATH","/usr/local/lib:$LD_LIBRARY_PATH",1)
+END
+
+	kill $(pidof $name_telewatchdog) > /dev/null 2>&1 || true
+	kill -9 $(ps -A | grep Suricata | awk '{ print $1 }') > /dev/null 2>&1 || true
+	kill -9 $(ps -aux | grep [/opt/]telepath/db/elasticsearch | awk '{ print $2 }') > /dev/null 2>&1 || true
+	kill $(pidof $name_engine) > /dev/null 2>&1 || true
+
+	sleep 2
+	echo "telepath stop/waiting"
+	sleep 2
+	echo "telepath start/running, process --file telepath"
+	/opt/telepath/bin/telewatchdog --pcap-file $2
+	pidtele=`ps -A | grep $name_telewatchdog | awk '{print $1}'`
+
+	;;
+
+	--file)
+	gdb /proc/${PPID}/exe ${PPID} << END > /dev/null 2>&1 || true
+	call setenv("ES_HEAP_SIZE", "$phymem", 1)
+	call setenv("LD_LIBRARY_PATH","/usr/local/lib:$LD_LIBRARY_PATH",1)
+END
+
+	kill $(pidof $name_telewatchdog) > /dev/null 2>&1 || true
+	kill -9 $(ps -A | grep Suricata | awk '{ print $1 }') > /dev/null 2>&1 || true
+	kill -9 $(ps -aux | grep [/opt/]telepath/db/elasticsearch | awk '{ print $2 }') > /dev/null 2>&1 || true
+	kill $(pidof $name_engine) > /dev/null 2>&1 || true
+
+
+	sleep 2
+	echo "telepath stop/waiting"
+	sleep 2
+	echo "telepath start/running, process --recursive-dir telepath"
+	/opt/telepath/bin/telewatchdog --pcap-file $2
+	pidtele=`ps -A | grep $name_telewatchdog | awk '{print $1}'`
+
+	;;
+
+	-r)
+	gdb /proc/${PPID}/exe ${PPID} << END > /dev/null 2>&1 || true
+	call setenv("ES_HEAP_SIZE", "$phymem", 1)
+	call setenv("LD_LIBRARY_PATH","/usr/local/lib:$LD_LIBRARY_PATH",1)
+END
+
+	kill $(pidof $name_telewatchdog) > /dev/null 2>&1 || true
+	kill -9 $(ps -A | grep Suricata | awk '{ print $1 }') > /dev/null 2>&1 || true
+	kill -9 $(ps -aux | grep [/opt/]telepath/db/elasticsearch | awk '{ print $2 }') > /dev/null 2>&1 || true
+	kill $(pidof $name_engine) > /dev/null 2>&1 || true
+
+
+	sleep 2
+	echo "telepath stop/waiting"
+	sleep 2
+	echo "telepath start/running, process --recursive-dir telepath"
+	/opt/telepath/bin/telewatchdog --pcap-dir $2
+	pidtele=`ps -A | grep $name_telewatchdog | awk '{print $1}'`
+
+	;;
+
+	--recursive-dir)
+	gdb /proc/${PPID}/exe ${PPID} << END > /dev/null 2>&1 || true
+	call setenv("ES_HEAP_SIZE", "$phymem", 1)
+	call setenv("LD_LIBRARY_PATH","/usr/local/lib:$LD_LIBRARY_PATH",1)
+END
+
+	kill $(pidof $name_telewatchdog) > /dev/null 2>&1 || true
+	kill -9 $(ps -A | grep Suricata | awk '{ print $1 }') > /dev/null 2>&1 || true
+	kill -9 $(ps -aux | grep [/opt/]telepath/db/elasticsearch | awk '{ print $2 }') > /dev/null 2>&1 || true
+	kill $(pidof $name_engine) > /dev/null 2>&1 || true
+
+	sleep 2
+	echo "telepath stop/waiting"
+	sleep 2
+	echo "telepath start/running, process --recursive-dir telepath"
+	/opt/telepath/bin/telewatchdog --pcap-dir $2
+	pidtele=`ps -A | grep $name_telewatchdog | awk '{print $1}'`
+
+	;;
+
+
+	-v)
+		/opt/telepath/bin/telewatchdog -v 
+	;;
+
+	--version)
+		/opt/telepath/bin/telewatchdog -v 
+	;;
+
+
+	update)
+
+        rm -rf /tmp/ui_update
+        mkdir /tmp/ui_update
+        mv /opt/telepath/ui/html/files/ui_update_${2}.tar /tmp/ui_update/
+        tar -xf /tmp/ui_update/ui_update_${2}.tar -C /tmp/ui_update/
+        mv /opt/telepath/ui/html /opt/telepath/ui/html_old
+        mv /tmp/ui_update/ui_v${3} /opt/telepath/ui/html
+        chmod -R 777 /opt/telepath/ui/html/files
+
+        ;;
+
+esac
+#echo "script end"
+exit 0
+
+

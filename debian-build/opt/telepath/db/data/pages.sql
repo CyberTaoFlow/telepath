@@ -1,0 +1,1 @@
+INSERT INTO `pages` (`app_id`, `page_id`, `path`, `display_path`, `title`, `is_entrypoint`, `learning_data`, `dirty`) VALUES ('0', '0', '404 not found', '404 not found', '404 not found', '1', '1', '1');

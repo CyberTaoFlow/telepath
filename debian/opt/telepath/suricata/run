@@ -1,0 +1,21 @@
+#!/bin/bash
+
+echo "Hybrid Telepath Suricata Loader"
+
+CONF="/opt/telepath/conf/atms.conf"
+
+echo "Attempting to stop Suricata instances (if present)"
+killall Suricata-Main
+
+echo "Reading Config"
+source $CONF
+echo "Interface: " $gulp_network_interface
+echo "Filter:    " $gulp_pcap_filter
+
+echo "Launching"
+
+# For some reason centos isnt catching up properly
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+
+#/opt/telepath/suricata/suricata -v -s /opt/telepath/suricata/signatures.rules -c /opt/telepath/suricata/suricata.yaml --pfring-int=$gulp_network_interface "$gulp_pcap_filter"
+/opt/telepath/suricata/suricata -v -c /opt/telepath/suricata/suricata.yaml --af-packet=$gulp_network_interface $gulp_pcap_filter

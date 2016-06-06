@@ -1,0 +1,39 @@
+#!/bin/sh
+
+set -e
+
+# When apt-get remove telepath is used.  
+# The Ubuntu remove the telepath package and This script removing all the symbolic links. 
+rm -rf /usr/lib/cgi-bin/hybrid > /dev/null 2>&1 || true
+rm -rf /etc/apache2/conf.d/apache-telepath.conf > /dev/null 2>&1 || true
+rm -rf /etc/init.d/telepath.d > /dev/null 2>&1 || true
+
+killall gulp atms engine telewatchdog > /dev/null 2>&1 || true
+sleep 1
+killall gulp atms engine telewatchdog > /dev/null 2>&1 || true
+sleep 1
+killall -9 gulp atms engine telewatchdog > /dev/null 2>&1 || true
+
+
+exit
+
+case "$1" in
+  purge)
+    cleanup
+  ;;
+  remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+    ldconfig > /dev/null 2>&1
+  ;;
+  *)
+    echo "postrm called with unknown argument '$1'" >&2
+  ;;
+esac
+
+#echo end
+exit
+#DEBHELPER#
+
+#[ -e /usr/share/debconf/confmodule ] && db_stop
+
+# vim:set et ts=2:
+
