@@ -1,1 +1,8 @@
 ui_v3/
+engine/objects/*.o
+engine/*.gz
+engine/*.a
+engine/watchdog/*.a
+engine/watchdog/*.gz
+engine/watchdog/*.o
+
