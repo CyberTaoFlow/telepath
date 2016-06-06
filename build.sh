@@ -52,7 +52,6 @@ if [ -f "/etc/redhat-release" ]; then
 	OS_VER=$OS_MAJOR_VERSION.$OS_MINOR_VERSION
 	BUILD_DIR="./build_tmp"
 	echo "CENTOS Detected"
-
 fi
 
 # Check for ubuntu
@@ -406,10 +405,10 @@ create_tarball() {
 
 # UPDATE SVN
 
-cd ..
+#cd ..
 #svn up
 #git pull
-cd trunk
+#cd trunk
 
 #VER=`svn info | grep Revision | sed  's/Revision: //'`
 VER=`git rev-parse HEAD | grep ... | sed -e 's/^\(.\{8\}\).*/\1/'`
@@ -470,7 +469,7 @@ fi
 # BUILD / RSYNC .DEB
 if [ $OS == "UBUNTU" ]; then
 
-	sed -e "s/Version: 3.0/Version: "$VERSION"."$VER"ubuntu"$OS_VER"/" debian/control > ./debian/DEBIAN/control
+	sed -e "s/Version: 3.0/Version: "$VERSION"_"$VER"_ubuntu"$OS_VER"/" debian/control > ./debian/DEBIAN/control
 
 	cp ./debian/postrm ./debian/DEBIAN
 	chmod 755 ./debian/DEBIAN/postrm
@@ -481,7 +480,7 @@ if [ $OS == "UBUNTU" ]; then
 	rsync --exclude .svn -a debian/ debian-build
 	rm -rf debian-build/control
 	dpkg-deb --build debian-build > /dev/null 2>&1
-	mv debian-build.deb "telepath_amd64_"$VERSION"."$VER"ubuntu"$OS_VER".deb"
+	mv debian-build.deb "telepath_amd64_"$VERSION"_"$VER"_ubuntu"$OS_VER".deb"
 	#rm -rf debian-build
 
 	if [ "$ARG" == "v3" ]; then
