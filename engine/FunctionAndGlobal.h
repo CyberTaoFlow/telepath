@@ -282,6 +282,10 @@ void insert_alert(Rule & c_r,long long RID,string & src_ip,string & resp_ip,stri
 			sem_post(&sem_command);
 		}
 	}
+
+	if(c_r.disable_db_save==true){
+		resp_ip.clear();
+	}
 }
 
 void insert_alert(Rule & c_r,long long RID,string & src_ip,double score,string & resp_ip,string cookie,string & hostname){
@@ -379,6 +383,10 @@ void insert_alert(Rule & c_r,long long RID,string & src_ip,double score,string &
 			pthread_mutex_unlock(&mutexCommand);
 			sem_post(&sem_command);
 		}
+	}
+
+	if(c_r.disable_db_save==true){
+		resp_ip.clear();
 	}
 }
 
