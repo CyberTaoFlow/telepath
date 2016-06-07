@@ -284,7 +284,7 @@ void insert_alert(Rule & c_r,long long RID,string & src_ip,string & resp_ip,stri
 	}
 
 	if(c_r.disable_db_save==true){
-		resp_ip.clear()
+		resp_ip.clear();
 	}
 }
 
