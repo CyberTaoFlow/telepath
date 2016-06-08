@@ -200,6 +200,7 @@ boost::unordered_map <long long,ElasticData> mRidAlertAndAction;// save all Sess
 //boost::unordered_map <string,BotIntelligence> mBotIntelligenceIP; // BotIntelligence For IPs
 boost::unordered_set <string> sTorIntelligenceIP;
 boost::unordered_set <string> sBotIntelligenceIP;
+boost::unordered_set <long long> sRidSaveDB;
 //boost::unordered_map <string,BotIntelligence>::iterator itBotIntelligence;
 boost::unordered_map <unsigned int,boost::unordered_map <string,UserReputation> > mReputationUsers;
 boost::unordered_map <unsigned int,Reputation> mReputationIPs;

@@ -51,6 +51,12 @@ public:
 				totalExp = s.totalExp;
 				goto label_m;
 			}
+			
+			if(sRidSaveDB.count(s.vRequest[i].RID)!=0){
+				totalExp = s.totalExp;
+				sRidSaveDB.erase(s.vRequest[i].RID);
+				goto label_m;
+			}
 
 			if(learn_or_pro!=1){	// production or hybrid mode.
 				//------------------------------Location-------------------------------
@@ -124,7 +130,7 @@ public:
 				}
 
 //---------------------------------------------------------------Insert Requests to scores--------------------------------------------------------------------
-				if(host_user_or_group==0 && s.vRequest[i].resp_ip.size()>0){ // Per application.
+				if(host_user_or_group==0){ // Per application.
 					reqVal.init(s.vRequest[i].user,s.vRequest[i].RID,s.sid,s.vRequest[i].index,s.vRequest[i].page_name,s.vRequest[i].host_name,s.vRequest[i].ts,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,flow_score,query_score,geo_normal,landing_normal,s.vRequest[i].status_code,country,city,s.status,s.vRequest[i].protocol,s.vRequest[i].method,coordinate,s.decimalIP,s.vRequest[i].shard,s.vRequest[i].title,s.vRequest[i].presence,s.vRequest[i].canonical_url,learn_or_pro);
 
 					pthread_mutex_lock(&mutexScoreData);		
@@ -143,7 +149,7 @@ public:
 
 			}else{ // The Page wasn't found or the Page is tainted.
 //---------------------------------------------------------------Insert Requests to scores--------------------------------------------------------------------
-				if(host_user_or_group==0 && s.vRequest[i].resp_ip.size()>0){
+				if(host_user_or_group==0){
 					reqVal.init(s.vRequest[i].user,s.vRequest[i].RID,s.sid,s.vRequest[i].index,s.vRequest[i].page_name,s.vRequest[i].host_name,s.vRequest[i].ts,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,1,query_score,geo_normal,1,s.vRequest[i].status_code,country,city,s.status,s.vRequest[i].protocol,s.vRequest[i].method,coordinate,s.decimalIP,s.vRequest[i].shard,s.vRequest[i].title,s.vRequest[i].presence,s.vRequest[i].canonical_url,learn_or_pro);
 
 					pthread_mutex_lock(&mutexInsertReq);
