@@ -252,6 +252,8 @@ void insert_alert(Rule & c_r,long long RID,string & src_ip,string & resp_ip,stri
 			}
 		}
 		pthread_mutex_unlock(&mutexRidAlertAndBusiness);
+	}else{
+		sRidSaveDB.insert(RID);
 	}
 
 	for(unsigned int i=0 ; i<c_r.cmds.size() ; i++){
@@ -281,10 +283,6 @@ void insert_alert(Rule & c_r,long long RID,string & src_ip,string & resp_ip,stri
 			pthread_mutex_unlock(&mutexCommand);
 			sem_post(&sem_command);
 		}
-	}
-
-	if(c_r.disable_db_save==true){
-		resp_ip.clear();
 	}
 }
 
@@ -354,6 +352,8 @@ void insert_alert(Rule & c_r,long long RID,string & src_ip,double score,string &
 			}
 		}
 		pthread_mutex_unlock(&mutexRidAlertAndBusiness);
+	}else{
+		sRidSaveDB.insert(RID);
 	}
 
 	for(unsigned int i=0 ; i<c_r.cmds.size() ; i++){
@@ -383,10 +383,6 @@ void insert_alert(Rule & c_r,long long RID,string & src_ip,double score,string &
 			pthread_mutex_unlock(&mutexCommand);
 			sem_post(&sem_command);
 		}
-	}
-
-	if(c_r.disable_db_save==true){
-		resp_ip.clear();
 	}
 }
 
