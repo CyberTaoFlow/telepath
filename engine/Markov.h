@@ -51,12 +51,15 @@ public:
 				totalExp = s.totalExp;
 				goto label_m;
 			}
-			
+
+			pthread_mutex_lock(&mutexRidAlertAndBusiness);
 			if(sRidSaveDB.count(s.vRequest[i].RID)!=0){
 				totalExp = s.totalExp;
 				sRidSaveDB.erase(s.vRequest[i].RID);
+				mRidAlertAndAction.erase(s.vRequest[i].RID);
 				goto label_m;
 			}
+			pthread_mutex_unlock(&mutexRidAlertAndBusiness);
 
 			if(learn_or_pro!=1){	// production or hybrid mode.
 				//------------------------------Location-------------------------------

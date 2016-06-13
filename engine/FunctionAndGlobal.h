@@ -253,7 +253,9 @@ void insert_alert(Rule & c_r,long long RID,string & src_ip,string & resp_ip,stri
 		}
 		pthread_mutex_unlock(&mutexRidAlertAndBusiness);
 	}else{
+		pthread_mutex_lock(&mutexRidAlertAndBusiness);
 		sRidSaveDB.insert(RID);
+		pthread_mutex_unlock(&mutexRidAlertAndBusiness);
 	}
 
 	for(unsigned int i=0 ; i<c_r.cmds.size() ; i++){
@@ -353,7 +355,9 @@ void insert_alert(Rule & c_r,long long RID,string & src_ip,double score,string &
 		}
 		pthread_mutex_unlock(&mutexRidAlertAndBusiness);
 	}else{
+		pthread_mutex_lock(&mutexRidAlertAndBusiness);
 		sRidSaveDB.insert(RID);
+		pthread_mutex_unlock(&mutexRidAlertAndBusiness);
 	}
 
 	for(unsigned int i=0 ; i<c_r.cmds.size() ; i++){

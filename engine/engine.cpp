@@ -672,6 +672,7 @@ rules_table_was_changed=1;
 business_flow_was_changed=1;
 bot_intelligence=1;
 
+sleep(3);
 loadActions();			/*This function is defined at LoadConfig.h .*/ syslog(LOG_NOTICE,"%u Actions Were Loaded",(unsigned)businessFlowVec.size());
 loadRules();			/*This function is defined at LoadConfig.h .*/ syslog(LOG_NOTICE,"%u Rules Were Loaded",(unsigned)rules.size());
 loadBotIntelligence();		/*This function is defined at LoadConfig.h .*/ 
