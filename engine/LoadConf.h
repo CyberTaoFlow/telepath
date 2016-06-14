@@ -437,7 +437,7 @@ void loadRules(){ // Load rule_groups from database.
 
 		curl = curl_easy_init();
 		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST,"POST");
-		curl_easy_setopt(curl, CURLOPT_URL, "localhost:9200/telepath-rules/rules/_search");
+		curl_easy_setopt(curl, CURLOPT_URL, "localhost:9200/telepath-rules/rules/_search?filter_path=hits.hits.fields,hits.hits._id");
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS,postfields);
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, getRulesIDs);
 		curl_easy_perform(curl);
@@ -674,7 +674,7 @@ void loadActions(){ // Load business logic from database.
 
 		curl = curl_easy_init();
 		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST,"POST");
-		curl_easy_setopt(curl, CURLOPT_URL, "localhost:9200/telepath-actions/actions/_search");
+		curl_easy_setopt(curl, CURLOPT_URL, "localhost:9200/telepath-actions/actions/_search?filter_path=hits.hits._id");
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS,postfields);
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, getActionIDs);
 		curl_easy_perform(curl);
@@ -934,7 +934,7 @@ void loadApps(){ // Load business logic from database.
 
 		curl = curl_easy_init();
 		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST,"POST");
-		curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:9200/telepath-domains/domains/_search?_source=false");
+		curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:9200/telepath-domains/domains/_search?filter_path=hits.hits._id");
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS,postfields);
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, getAppIDs);
 		curl_easy_perform(curl);
