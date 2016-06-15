@@ -385,11 +385,8 @@ void *thread_insert_req(void *threadid)
 			tmp.user_name.clear();
 		}
 
-		if(tmp.op_mode==1){
-			tmp.flow_score=0;
-			tmp.landing_normal=0;
-			tmp.avg_normal=0;
-			tmp.geo_normal=0;
+		if(tmp.op_mode==1){// Zero anomaly scores for learning mode.
+			tmp.flow_score=0;tmp.landing_normal=0;tmp.avg_normal=0;tmp.geo_normal=0;
 		}
 
 		pthread_mutex_lock(&mutexRidAtts);

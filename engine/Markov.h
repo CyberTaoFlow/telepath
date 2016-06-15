@@ -57,6 +57,7 @@ public:
 				totalExp = s.totalExp;
 				sRidSaveDB.erase(s.vRequest[i].RID);
 				mRidAlertAndAction.erase(s.vRequest[i].RID);
+				pthread_mutex_unlock(&mutexRidAlertAndBusiness);
 				goto label_m;
 			}
 			pthread_mutex_unlock(&mutexRidAlertAndBusiness);
