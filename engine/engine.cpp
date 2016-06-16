@@ -579,7 +579,7 @@ void startThreads(){
 
 void showSvnVersion(char * mode){
 	if( strcmp("-v",mode) == 0 ){
-		cout <<"Version:"<< SVN_REV <<endl;
+		cout <<"Version:"<< GIT_REV <<endl;
 		exit(1);
 	}
 }

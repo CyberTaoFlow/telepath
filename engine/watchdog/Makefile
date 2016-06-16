@@ -1,6 +1,6 @@
 
-SVNDEV := -D'SVN_REV="$(shell svnversion -n .)"'
-SVNFLAG := $(SVNDEV)
+GITDEV := -D'GIT_REV="$(shell git rev-parse HEAD | grep ... | sed -e 's/^\(.\{8\}\).*/\1/')"'
+GITFLAG := $(GITDEV)
 MONTH := 2678400
 T1 := -D'EPOCH=$(shell date +%s)+$(MONTH)'
 TIME := $(T1)
@@ -89,7 +89,7 @@ telewatchdog: telewatchdog.o  json.a
 	g++ -g -o telewatchdog telewatchdog.o -L./ -pthread -static-libgcc $(LIBSTDC) $(PCAP) $(CRYPTO) $(ZLIB) $(PCRE) json.a -ldl -lcurl $(Redis)
 
 telewatchdog.o: telewatchdog.cpp 
-	g++ -g  $(SVNFLAG) $(TIME) $(TIME2) -c -o telewatchdog.o -DREDIS telewatchdog.cpp
+	g++ -g  $(GITFLAG) $(TIME) $(TIME2) -c -o telewatchdog.o -DREDIS telewatchdog.cpp
 
 
 
