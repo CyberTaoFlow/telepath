@@ -278,6 +278,12 @@ void insert_alert(Rule & c_r,long long RID,string & src_ip,string & resp_ip,stri
 			if(cookie.size()==0){
 				cookie="null";
 			}
+
+			// ---Command Execution---
+			//
+			// Runs a script with 4 arguments.
+			// Syntax :
+			// 	/tmp/my_script <source IP> <destination IP> <Cookie> <hostname> 
 			sprintf(alertfields,"%s %s %s %s %s",(char*)c_r.cmds[i].c_str(),(char*)src_ip.c_str(),(char*)resp_ip.c_str(),(char*)cookie.c_str(),(char*)hostname.c_str());
 
 			pthread_mutex_lock(&mutexCommand);
@@ -380,6 +386,12 @@ void insert_alert(Rule & c_r,long long RID,string & src_ip,double score,string &
 			if(cookie.size()==0){
 				cookie="null";
 			}
+
+			// ---Command Execution---
+			//
+			// Runs a script with 4 arguments.
+			// Syntax :
+			//	/tmp/my_script <source IP> <destination IP> <Cookie> <hostname> 
 			sprintf(alertfields,"%s %s %s %s %s",(char*)c_r.cmds[i].c_str(),(char*)src_ip.c_str(),(char*)resp_ip.c_str(),(char*)cookie.c_str(),(char*)hostname.c_str());
 
 			pthread_mutex_lock(&mutexCommand);
