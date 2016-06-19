@@ -167,11 +167,11 @@ END
 
 
 	-v)
-		/opt/telepath/bin/telewatchdog -v 
+		/opt/telepath/bin/telewatchdog -v
 	;;
 
 	--version)
-		/opt/telepath/bin/telewatchdog -v 
+		/opt/telepath/bin/telewatchdog -v
 	;;
 
 

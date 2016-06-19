@@ -731,7 +731,7 @@ int main(int argc, char *argv[])
 	openlog ("Telewatchdog", LOG_CONS | LOG_PID | LOG_NDELAY, LOG_LOCAL1);
 
 	if( argc > 1 &&  strcmp("-v",argv[1]) == 0 ){
-		cout <<"Version:"<< SVN_REV <<endl;
+		cout <<"Version:"<< GIT_REV <<endl;
 		exit(1);
 	}
 
