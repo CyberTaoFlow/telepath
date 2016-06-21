@@ -548,7 +548,6 @@ void *thread_insert_logins(void *threadid)
 		loginQueue.pop();
 		pthread_mutex_unlock(&mutexLogin);
 
-//syslog(LOG_NOTICE,"1)action:%s|password=%s|username=%s|host=%s|uri:%s|",login.action.c_str(),login.password.c_str(),login.username.c_str(),login.host.c_str(),login.orig_uri.c_str());
 		if(login.action.size() != 0){
 			parseAction(login.action,login.orig_uri,login.host);
 		}
@@ -897,19 +896,16 @@ void *getAtt_thread(void *threadarg)
 
 			pthread_mutex_lock(&mutexBusinessLogic);
 			if( itSession.first != mSession.end() ){
-//cout<<"Yes session:"<<c_SID<<endl;
 				for(i_flow=0;i_flow<businessFlowVec.size();i_flow++){
 					itRIDsPerFlow = itSession.first->second.RIDsPerFlow.find(businessFlowVec[i_flow].action_id);
 					if( itRIDsPerFlow != itSession.first->second.RIDsPerFlow.end() ){
 						if(c_PageID == businessFlowVec[i_flow].pages[itRIDsPerFlow->second.rids.size()].pageID ){
-//cout<<"Y pid:"<<c_PageID<<"  params.size():"<<businessFlowVec[i_flow].pages[itRIDsPerFlow->second.rids.size()].params.size()<<"   action_id:"<<businessFlowVec[i_flow].action_id <<"rids_size:"<<itRIDsPerFlow->second.rids.size()<<endl;
 							ActionParams aa(businessFlowVec[i_flow].pages[itRIDsPerFlow->second.rids.size()].params,businessFlowVec[i_flow].action_id,businessFlowVec[i_flow].action_name,businessFlowVec[i_flow].pages.size(),businessFlowVec[i_flow].logout);
 							tmpAttributesVec.push_back(aa);
 						}
 					}else{
 						if(businessFlowVec[i_flow].pages.size()>0 ){
 							if(c_PageID == businessFlowVec[i_flow].pages[0].pageID){
-//cout<<"No rid  pid:"<<c_PageID<<"  params.size():"<<businessFlowVec[i_flow].pages[0].params.size()<<"   action_id:"<<businessFlowVec[i_flow].action_id <<"   RID:"<<c_RID<<endl;
 								ActionParams aa(businessFlowVec[i_flow].pages[0].params,businessFlowVec[i_flow].action_id,businessFlowVec[i_flow].action_name,businessFlowVec[i_flow].pages.size(),businessFlowVec[i_flow].logout);
 								tmpAttributesVec.push_back(aa);
 							}
@@ -952,8 +948,6 @@ void *getAtt_thread(void *threadarg)
 						}else{
 							itRIDsPerFlow2.first->second.end_ts = c_TimeStamp;
 						}
-
-//cout<<"rids.size():"<<itRIDsPerFlow2.first->second.rids.size() << "   numOfPages:" <<  tmpAttributesVec[i_flow].numOfPages<<endl;
 
 						if(itRIDsPerFlow2.first->second.rids.size() == tmpAttributesVec[i_flow].numOfPages){
 							ActionState fs(itSession.first->second.sid,tmpAttributesVec[i_flow].action_id,tmpAttributesVec[i_flow].action_name);
@@ -1286,8 +1280,6 @@ void *getAtt_thread_pro(void *threadarg)
 					itRIDsPerFlow = itSession.first->second.RIDsPerFlow.find(businessFlowVec[i_flow].action_id);
 					if( itRIDsPerFlow != itSession.first->second.RIDsPerFlow.end() ){
 						if(c_PageID == businessFlowVec[i_flow].pages[itRIDsPerFlow->second.rids.size()].pageID){
-//cout<<"Y pid:"<<c_PageID<<"  params.size():"<<businessFlowVec[i_flow].pages[itRIDsPerFlow->second.rids.size()].params.size()<<"   action_id:"<<businessFlowVec[i_flow].action_id <<"   rids_size:"<<itRIDsPerFlow->second.rids.size()<<endl;
-
 							ActionParams aa(businessFlowVec[i_flow].pages[itRIDsPerFlow->second.rids.size()].params,businessFlowVec[i_flow].action_id,businessFlowVec[i_flow].action_name,businessFlowVec[i_flow].pages.size(),businessFlowVec[i_flow].logout);
 
 							tmpAttributesVec.push_back(aa);
@@ -1295,8 +1287,6 @@ void *getAtt_thread_pro(void *threadarg)
 					}else{
 						if(businessFlowVec[i_flow].pages.size()>0 ){
 							if(c_PageID == businessFlowVec[i_flow].pages[0].pageID ){
-//cout<<"No rid  pid:"<<c_PageID<<"  params.size():"<<businessFlowVec[i_flow].pages[0].params.size()<<"   action_id:"<<businessFlowVec[i_flow].action_id <<"   RID:"<<c_RID<<endl;
-
 								ActionParams aa(businessFlowVec[i_flow].pages[0].params,businessFlowVec[i_flow].action_id,businessFlowVec[i_flow].action_name,businessFlowVec[i_flow].pages.size(),businessFlowVec[i_flow].logout);
 
 								tmpAttributesVec.push_back(aa);
@@ -1317,19 +1307,13 @@ void *getAtt_thread_pro(void *threadarg)
 
 				for(i_flow=0; i_flow<tmpAttributesVec.size() ;i_flow++) {
 					itTmpAtts = tmpAttributesVec[i_flow].params.find(tmp_att.hash);
-//cout<<"i_flow:"<<i_flow<<"        tmp_att.hash:"<<tmp_att.hash<<endl;
 					if(itTmpAtts != tmpAttributesVec[i_flow].params.end() ){
-//cout<<"1)tmpAttributesVec  attid:"<<tmp_att.hash<<"        itTmpAtts->second:"<<itTmpAtts->second<<" == "<< itAttr->second.value<<endl;
 						if(itTmpAtts->second == "*" || itTmpAtts->second.compare(tmp_att.value) == 0 ){
-
 							tmpAttributesVec[i_flow].params.erase(tmp_att.hash);
-//cout<<"2)tmpAttributesVec  attid:"<<tmp_att.hash<<"        counter:"<<tmpAttributesVec[i_flow].params.size()<<endl;
 						}
 					}
 
 					if(tmpAttributesVec[i_flow].params.size()==0){
-//cout<<"tmpAttributesVec  c_RID:"<<c_RID<<endl;
-
 						if(tmpAttributesVec[i_flow].logout == true && itSession.first->second.logout == false){
 							itSession.first->second.logout = true;
 							itSession.first->second.logout_counter++;
@@ -1340,8 +1324,6 @@ void *getAtt_thread_pro(void *threadarg)
 						if( itRIDsPerFlow2.first == itSession.first->second.RIDsPerFlow.end() ){
 							itRIDsPerFlow2 = itSession.first->second.RIDsPerFlow.insert(pair<unsigned int,alert>(tmpAttributesVec[i_flow].action_id,a));
 						}
-
-//cout<<"rids.size():"<<itRIDsPerFlow2.first->second.rids.size() << "   numOfPages:" <<  tmpAttributesVec[i_flow].numOfPages<<endl;
 
 						itRIDsPerFlow2.first->second.rids.insert(c_RID);
 						if(itRIDsPerFlow2.first->second.rids.size() == tmpAttributesVec[i_flow].numOfPages){
