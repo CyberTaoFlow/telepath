@@ -62,37 +62,6 @@ void parseRulesJson(Json::Value & root,string & preKey,map <string,rule_group_da
 
 			if(preKey=="criteria"){
 				switch(key[0]){
-					case 'd':
-						if(key=="disable_db_save"){
-							if(val[0]=='f'){
-								rule.disable_db_save=false;
-							}else{
-								rule.disable_db_save=true;
-							}
-						}
-						break;
-					case 'n':
-						rule_name = val;
-						break;
-					case 's':
-						rule.threshold = (unsigned short)atoi(&val[0]);
-						if(rule.enable==true){
-							rule_orders.push_back((unsigned int)rules.size());
-							rules.push_back(rule);
-						}
-
-						for(k=0;k<rule_orders.size();k++){
-							rules[rule_orders[k]].threshold = rule.threshold;
-							rules[rule_orders[k]].criteria_count = (unsigned short)rule_orders.size();
-							rules[rule_orders[k]].rule_name = rule_name;
-						}
-						rule_orders.clear();
-						rule.clean();
-						break;
-				}
-			}
-			else if(preKey=="_sourcecriteria"){
-				switch(key[0]){
 					case 'a':
 						if(key=="aggregate"){
 							rule.aggregate = (unsigned short)atoi(&val[0]);
@@ -120,13 +89,21 @@ void parseRulesJson(Json::Value & root,string & preKey,map <string,rule_group_da
 						else if(key=="distance"){
 							rule.distance = (unsigned short)atoi(&val[0]);
 						}
-						//distance
+						else if(key=="disable_db_save"){
+							if(val[0]=='f'){
+								rule.disable_db_save=false;
+							}else{
+								rule.disable_db_save=true;
+							}
+						}
 						break;
 					case 'e':
-						if(val[0]=='t'){
-							rule.enable = true;
-						}else{
-							rule.enable = false;
+						if(key=="enable"){
+							if(val[0]=='t'){
+								rule.enable = true;
+							}else{
+								rule.enable = false;
+							}
 						}
 						break;
 					case 'k':
@@ -148,10 +125,15 @@ void parseRulesJson(Json::Value & root,string & preKey,map <string,rule_group_da
 						getAttType(rule.method,rule.att_types);
 						break;
 					case 'n':
-						if(val[0]=='t'){
-							rule.negate = true;
-						}else{
-							rule.negate = false;
+						if(key=="negate"){
+							if(val[0]=='t'){
+								rule.negate = true;
+							}else{
+								rule.negate = false;
+							}
+						}
+						else if(key=="name"){
+							rule_name = val;
 						}
 						break;
 					case 'p':
@@ -181,8 +163,25 @@ void parseRulesJson(Json::Value & root,string & preKey,map <string,rule_group_da
 									rule.str_match[i_lower]+=32;
 								}
 							}
-						}else if(key=="subtype"){
+						}
+						else if(key=="subtype"){
 							rule.subtype = val;
+						}
+						else if(key=="score"){
+							rule.threshold = (unsigned short)atoi(&val[0]);
+							if(rule.enable==true){
+								rule_orders.push_back((unsigned int)rules.size());
+								rules.push_back(rule);
+
+
+								for(k=0;k<rule_orders.size();k++){
+									rules[rule_orders[k]].threshold = rule.threshold;
+									rules[rule_orders[k]].criteria_count = (unsigned short)rule_orders.size();
+									rules[rule_orders[k]].rule_name = rule_name;
+								}
+								rule_orders.clear();
+								rule.clean();
+							}
 						}
 						break;
 					case 't':
@@ -199,7 +198,7 @@ void parseRulesJson(Json::Value & root,string & preKey,map <string,rule_group_da
 				}
 			}
 
-			else if(preKey=="_sourcecriteriaspecific"){
+			else if(preKey=="criteriaspecific"){
 				if(key=="domain"){
 					rule.subdomain_name = val;
 				}
@@ -211,11 +210,11 @@ void parseRulesJson(Json::Value & root,string & preKey,map <string,rule_group_da
 				}
 			}
 
-			else if(preKey=="_sourcecriteriainclusive"){
+			else if(preKey=="criteriainclusive"){
 				rule.att_name = val;
 			}
 
-			else if(preKey=="_sourcecriteriaOther"){
+			else if(preKey=="criteriaOther"){
 				if(key=="domain"){
 					rule.anchor_app = val;
 				}
@@ -322,7 +321,7 @@ void addRules()
 	unsigned int i,size;
 
 	for(i=0;i<addRulesIDs.size();i++){
-		sprintf(url,"localhost:9200/telepath-rules/rules/X%u",addRulesIDs[i]);
+		sprintf(url,"localhost:9200/telepath-rules/rules/X%u/_source",addRulesIDs[i]);
 
 		curl = curl_easy_init();
 		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST,"GET");
@@ -374,7 +373,7 @@ void getRulesIDs(char *ptr)
 	}
 
 	for(i=0;i<ids.size();i++){
-		sprintf(url,"localhost:9200/telepath-rules/rules/%s",ids[i].c_str());
+		sprintf(url,"localhost:9200/telepath-rules/rules/%s/_source",ids[i].c_str());
 		curl = curl_easy_init();
 		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST,"GET");
 		curl_easy_setopt(curl, CURLOPT_URL,url);
