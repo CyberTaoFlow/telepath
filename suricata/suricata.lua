@@ -174,7 +174,6 @@ function setup (args)
         --        print (kk .. "=====" .. vv)
         --end
 
-
 end
 
 local hex_to_char = function(x)
@@ -339,8 +338,21 @@ function log(args)
 		end
 	end
 
+	hybrid_record = os.getenv("HYBRID_RECORD")
+        express_flag = false
+
+	if (string.len(hybrid_record) > 0) then 
+		if ( hybrid_record == srcip ) then
+			express_flag = true;
+		end
+	end
+
 	-- Pushing the request to redis.
-	redis:lpush("Q",  msgpack.pack(request)  )
+	if (express_flag) then
+		redis:lpush("R",  msgpack.pack(request)  )
+	else
+		redis:lpush("Q",  msgpack.pack(request)  )
+	end
 	
 end
 
