@@ -3,7 +3,7 @@
 #source compiled.list
 
 #VER=`svn info | grep Revision | sed  's/Revision: //'`
-VER=`git rev-parse HEAD | grep ... | sed -e 's/^\(.\{8\}\).*/\1/'`
+VER=`git rev-parse HEAD | grep ... | sed -e 's/^\(.\{4\}\).*/\1/'`
 BUILD_VER="1"
 OS=
 OS_VER=
@@ -411,7 +411,7 @@ create_tarball() {
 #cd trunk
 
 #VER=`svn info | grep Revision | sed  's/Revision: //'`
-VER=`git rev-parse HEAD | grep ... | sed -e 's/^\(.\{8\}\).*/\1/'`
+VER=`git rev-parse HEAD | grep ... | sed -e 's/^\(.\{4\}\).*/\1/'`
 # REMOVE BUILDS
 
 #clear_binaries
@@ -510,6 +510,7 @@ if [ $OS == "UBUNTU" ]; then
 			echo "ENJOY YOUR NEW BUILD!!!"
 		fi
 	fi
+
 
 	if [ "$ARG" == "v2" ]; then
 		# VERSION 2 STAGING
