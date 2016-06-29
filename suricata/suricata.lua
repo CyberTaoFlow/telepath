@@ -24,6 +24,7 @@ function init (args)
 	return needs 
 end
 
+fingerprint = "0"
 setting_counter = 0
 block_extensions = {}
 whitelist_ips = {}
@@ -229,7 +230,6 @@ function log(args)
 	    end
 	end
 
-
 	local requestline = HttpGetRequestLine()
 	if requestline then
 		local tmp = string.find(requestline, " ")
@@ -299,6 +299,12 @@ function log(args)
 		k = unescape(k) --url decoding for header names.
 		v = unescape(v) --url decoding for header values.
 		k = string.lower(k) --lowercasing for header names.
+		
+		if (k == "user-agent") then
+			fp_ua = v
+		elseif (k == "host") then
+			fp_host = v
+		end
 
 		if load_balancer_headers[k] == k then
 			for key, value in pairs(load_balancer_ips) do
@@ -341,10 +347,24 @@ function log(args)
 	hybrid_record = os.getenv("HYBRID_RECORD")
         express_flag = false
 
-	if (string.len(hybrid_record) > 0) then 
+	if (hybrid_record) then 
 		if ( hybrid_record == srcip ) then
 			express_flag = true;
+		else
+			record_url_tmp = "hybridrecord=" .. hybrid_record
+			record_url_flag = string.find(query,record_url_tmp)
+			if(record_url_flag) then
+				express_flag = true;
+				fingerprint = srcip .. fp_ua .. fp_host
+			else
+				fp_tmp = srcip .. fp_ua .. fp_host
+				if (fp_tmp == fingerprint) then
+					express_flag = true;
+				end
+			end
 		end
+	else
+		fingerprint="0"
 	end
 
 	-- Pushing the request to redis.
