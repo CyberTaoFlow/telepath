@@ -551,7 +551,7 @@ void *thread_check_disk_space(void *threadid)
 	double long free_space_ratio;
 
 	while(1){
-		sleep(60);
+		sleep(10);
 
 		if (statvfs("/", &vfs) < 0)
 			exit(-1);
