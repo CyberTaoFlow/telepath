@@ -825,7 +825,7 @@ int main(int argc, char *argv[])
 
 	pthread_t thread_suricata;
 	unsigned long rc,empty=0;
-	syslog (LOG_NOTICE, "Starting Suricate[!!!]");
+	syslog (LOG_NOTICE, "Starting Suricata[!!!]");
 
 	rc = pthread_create(&thread_suricata, NULL,thread_init_suricata, (void *)empty);// select info from user_groups table.
 	if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc);}
