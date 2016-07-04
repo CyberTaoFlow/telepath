@@ -208,6 +208,18 @@ function log(args)
 	   setting_counter = setting_counter + 1
 	end
 
+	--hr_url = "http://localhost:9200/telepath-config/config/hybrid_record_id/_source"
+	--c = cURL.easy{
+	--	url            = hr_url,
+	--	ssl_verifypeer = false,
+	--	ssl_verifyhost = false,
+	--	writefunction  = function(str)
+	--		local tmp = string.find(str, '}')
+	--		hybrid_record = string.sub(str, 11, tmp-2)
+	--	end
+	--}
+	--c:perform()
+
 	-- Read it!
 	ipver, srcip, dstip, proto, sp, dp = SCFlowTuple()
 	
@@ -299,7 +311,7 @@ function log(args)
 		k = unescape(k) --url decoding for header names.
 		v = unescape(v) --url decoding for header values.
 		k = string.lower(k) --lowercasing for header names.
-		
+
 		if (k == "user-agent") then
 			fp_ua = v
 		elseif (k == "host") then
@@ -344,24 +356,27 @@ function log(args)
 		end
 	end
 
-	hybrid_record = os.getenv("HYBRID_RECORD")
         express_flag = false
 
-	if (hybrid_record) then 
-		if ( hybrid_record == srcip ) then
-			express_flag = true;
-		else
-			record_url_tmp = "hybridrecord=" .. hybrid_record
-			record_url_flag = string.find(query,record_url_tmp)
-			if(record_url_flag) then
-				express_flag = true;
-				fingerprint = srcip .. fp_ua .. fp_host
+	if (hybrid_record) then
+		if (hybrid_record ~= "0") then
+			if ( hybrid_record == srcip ) then
+				express_flag = true
 			else
-				fp_tmp = srcip .. fp_ua .. fp_host
-				if (fp_tmp == fingerprint) then
-					express_flag = true;
+				local record_url_tmp = "hybridrecord=" .. hybrid_record
+				local record_url_flag = string.find(query,record_url_tmp)
+				if(record_url_flag) then
+					express_flag = true
+					fingerprint = srcip .. fp_ua .. fp_host
+				else
+					local fp_tmp = srcip .. fp_ua .. fp_host
+					if (fp_tmp == fingerprint) then
+						express_flag = true
+					end
 				end
 			end
+		else
+			fingerprint="0"
 		end
 	else
 		fingerprint="0"
