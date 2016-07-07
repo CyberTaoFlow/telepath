@@ -359,8 +359,11 @@ void delete_oldest()
 
         syslog(LOG_NOTICE,"curl -XDELETE %s", url);
 
-	FILE* ppipe_delete = popen("rm /var/lib/redis/dump.rdb > /dev/null 2>&1", "w");
+	FILE* ppipe_logs_delete = popen("rm /opt/telepath/db/elasticsearch/logs/* > /dev/null 2>&1", "w");
 	pclose(ppipe_delete);
+	FILE* ppipe_redis_delete = popen("rm /var/lib/redis/dump.rdb > /dev/null 2>&1", "w");
+	pclose(ppipe_redis_delete);
+
 }
 
 unsigned int get_ls_content(string & dir_name,string & content){
