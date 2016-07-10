@@ -33,6 +33,7 @@ using namespace std;
 
 struct statvfs vfs;
 unsigned int minShard;
+string minShardString;
 int stopflag=0;
 unsigned int engine_mode,reverse_proxy_mode,sniffer_mode;
 queue <string> files_queue;
@@ -315,6 +316,9 @@ void setMinShard(char *ptr)
 			ptr += 9;
 			strncpy(tmp,ptr,8);
 			tmp[8] = '\0';
+			minShardString = string(tmp);
+			minShardString.insert(4,1,'-');
+			minShardString.insert(7,1,'-');
 			tmp_min = (unsigned int)atoi(tmp);
 			if(tmp_min != 0){
 				if(min_shard == 0){
@@ -352,15 +356,15 @@ void delete_oldest()
 	}
 
 	sprintf(url,"http://localhost:9200/telepath-%u",minShard);
-
 	curl_easy_setopt(curl,CURLOPT_CUSTOMREQUEST,"DELETE"); 
 	curl_easy_setopt(curl, CURLOPT_URL,url);
 	curl_easy_perform(curl);
-
         syslog(LOG_NOTICE,"curl -XDELETE %s", url);
 
-	FILE* ppipe_logs_delete = popen("rm /opt/telepath/db/elasticsearch/logs/* > /dev/null 2>&1", "w");
+	sprintf(url,"rm /opt/telepath/db/elasticsearch/logs/*%s > /dev/null 2>&1",minShardString.c_str());
+	FILE* ppipe_logs_delete = popen(url, "w");
 	pclose(ppipe_logs_delete);
+	syslog(LOG_NOTICE,"%s",url);
 	FILE* ppipe_redis_delete = popen("rm /var/lib/redis/dump.rdb > /dev/null 2>&1", "w");
 	pclose(ppipe_redis_delete);
 
