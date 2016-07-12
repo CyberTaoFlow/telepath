@@ -171,21 +171,21 @@ function setup (args)
 	c:perform()	
 
 	--Debug Printings
-        for kk, vv in pairs(whitelist_ips) do
-                print (kk .. "=====" .. vv)
-        end
+	--for kk, vv in pairs(whitelist_ips) do
+	--	print (kk .. "=====" .. vv)
+	--end
 
-	for kk, vv in pairs(block_extensions) do
-		print (kk .. "=====" .. vv)
-	end
+	--for kk, vv in pairs(block_extensions) do
+	--	print (kk .. "=====" .. vv)
+	--end
 
-        for kk, vv in pairs(load_balancer_headers) do
-                print (kk .. "=====" .. vv)
-        end
+	--for kk, vv in pairs(load_balancer_headers) do
+	--	print (kk .. "=====" .. vv)
+	--end
 
-        for kk, vv in pairs(load_balancer_ips) do
-                print (kk .. "=====" .. vv)
-        end
+	--for kk, vv in pairs(load_balancer_ips) do
+	--	print (kk .. "=====" .. vv)
+	--end
 
 end
 
