@@ -42,8 +42,20 @@ function setup (args)
 	load_balancer_ips = {}
 	load_balancer_headers = {}
 
+	file = io.open("/opt/telepath/db/elasticsearch/config/connect.conf", "r")
+	if (file) then
+		io.input(file)
+		es_location = (io.read())
+		io.close(file)
+	else
+		es_location = "http://localhost:9200"
+	end
+
+	print (es_location)
 	-- Loading filter extensions --
-	login_url = "http://localhost:9200/telepath-config/filter_extensions/extensions_id/_source"
+	login_url = es_location .. "/telepath-config/filter_extensions/extensions_id/_source"
+
+	print (login_url)
 	c = cURL.easy{
 		url            = login_url,
 		ssl_verifypeer = false,
@@ -62,7 +74,7 @@ function setup (args)
 	c:perform()
 
 	-- Loading whitelist ips --
-	login_url = "http://localhost:9200/telepath-config/ips/whitelist_id/_source"
+	login_url = es_location .. "/telepath-config/ips/whitelist_id/_source"
 	c = cURL.easy{
 		url            = login_url,
 		ssl_verifypeer = false,
@@ -95,7 +107,7 @@ function setup (args)
 	c:perform()
 
 	-- Loading loadbalancer ips --
-	login_url = "http://localhost:9200/telepath-config/ips/loadbalancerips_id/_source"
+	login_url = es_location .. "/telepath-config/ips/loadbalancerips_id/_source"
 	c = cURL.easy{
 		url            = login_url,
 		ssl_verifypeer = false,
@@ -130,7 +142,7 @@ function setup (args)
 	c:perform()
 
 	-- Loading loadbalancer headers --
-	login_url = "http://localhost:9200/telepath-config/headers/loadbalancerheaders_id/_source"
+	login_url = es_location .. "/telepath-config/headers/loadbalancerheaders_id/_source"
 	c = cURL.easy{
 		url            = login_url,
 		ssl_verifypeer = false,
@@ -149,7 +161,7 @@ function setup (args)
 	c:perform()
 	----------------------------------
 	
-	login_url = "http://localhost:9200/telepath-config/config/config_was_changed_id"
+	login_url = es_location .. "/telepath-config/config/config_was_changed_id"
 	c = cURL.easy{
 		url            = login_url,
 		ssl_verifypeer = false,
@@ -159,21 +171,21 @@ function setup (args)
 	c:perform()	
 
 	--Debug Printings
-        --for kk, vv in pairs(whitelist_ips) do
-        --        print (kk .. "=====" .. vv)
-        --end
+        for kk, vv in pairs(whitelist_ips) do
+                print (kk .. "=====" .. vv)
+        end
 
-	--for kk, vv in pairs(block_extensions) do
-	--	print (kk .. "=====" .. vv)
-	--end
+	for kk, vv in pairs(block_extensions) do
+		print (kk .. "=====" .. vv)
+	end
 
-        --for kk, vv in pairs(load_balancer_headers) do
-        --        print (kk .. "=====" .. vv)
-        --end
+        for kk, vv in pairs(load_balancer_headers) do
+                print (kk .. "=====" .. vv)
+        end
 
-        --for kk, vv in pairs(load_balancer_ips) do
-        --        print (kk .. "=====" .. vv)
-        --end
+        for kk, vv in pairs(load_balancer_ips) do
+                print (kk .. "=====" .. vv)
+        end
 
 end
 
@@ -190,7 +202,7 @@ end
 function log(args)
 	-- Checking if the configuration was changed. 
 	if setting_counter == 100 then
-		login_url = "http://localhost:9200/telepath-config/config/config_was_changed_id/_source"
+		login_url = es_location .. "/telepath-config/config/config_was_changed_id/_source"
 		c = cURL.easy{
 			url            = login_url,
 			ssl_verifypeer = false,
@@ -208,7 +220,7 @@ function log(args)
 	   setting_counter = setting_counter + 1
 	end
 
-	hr_url = "http://localhost:9200/telepath-config/config/hybrid_record_id/_source"
+	hr_url = es_location .. "/telepath-config/config/hybrid_record_id/_source"
 	c = cURL.easy{
 		url            = hr_url,
 		ssl_verifypeer = false,
