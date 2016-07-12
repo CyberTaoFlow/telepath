@@ -208,17 +208,17 @@ function log(args)
 	   setting_counter = setting_counter + 1
 	end
 
-	--hr_url = "http://localhost:9200/telepath-config/config/hybrid_record_id/_source"
-	--c = cURL.easy{
-	--	url            = hr_url,
-	--	ssl_verifypeer = false,
-	--	ssl_verifyhost = false,
-	--	writefunction  = function(str)
-	--		local tmp = string.find(str, '}')
-	--		hybrid_record = string.sub(str, 11, tmp-2)
-	--	end
-	--}
-	--c:perform()
+	hr_url = "http://localhost:9200/telepath-config/config/hybrid_record_id/_source"
+	c = cURL.easy{
+		url            = hr_url,
+		ssl_verifypeer = false,
+		ssl_verifyhost = false,
+		writefunction  = function(str)
+			local tmp = string.find(str, '}')
+			hybrid_record = string.sub(str, 11, tmp-2)
+		end
+	}
+	c:perform()
 
 	-- Read it!
 	ipver, srcip, dstip, proto, sp, dp = SCFlowTuple()
