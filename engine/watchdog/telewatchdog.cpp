@@ -19,6 +19,7 @@
 #include <netdb.h>
 #include <dirent.h>
 #include <hiredis/hiredis.h>
+#include <fstream>
 
 #include "../ElasticSearch.h"
 #include "../jsoncpp/json.h"
@@ -253,18 +254,18 @@ void *thread_init_suricata(void *threadid){
 		if(sniffer_mode==1){
 			if( (get_ps("Suricata-Main")==0) ){
 				if( files_queue.empty() ){
-					es_get_config("http://localhost:9200/telepath-config/interfaces/interface_id/_source",output);
+					es_get_config("/telepath-config/interfaces/interface_id/_source",output);
 					get_pcap_filter(output);
 
 					syslog(LOG_NOTICE, "No more files to upload ... Reload Suricata");
 					sprintf( suricata_cmd,"/opt/telepath/suricata/suricata -D -c /opt/telepath/suricata/suricata.yaml --af-packet %s > /dev/null 2>&1",output.c_str());
-					es_insert("http://localhost:9200/telepath-config/config/file_loader_mode_id","{\"value\":\"0\"}");
+					es_insert("/telepath-config/config/file_loader_mode_id","{\"value\":\"0\"}");
 				}else{
 					string pcap_file = files_queue.front();
 					syslog(LOG_NOTICE, "Next file to upload: %s", (char*)pcap_file.c_str() );
 					files_queue.pop();		
 					sprintf( suricata_cmd,"/opt/telepath/suricata/suricata -r %s -c /opt/telepath/suricata/suricata.yaml > /dev/null 2>&1",(char*)pcap_file.c_str() );
-					es_insert("http://localhost:9200/telepath-config/config/file_loader_mode_id","{\"value\":\"1\"}");
+					es_insert("/telepath-config/config/file_loader_mode_id","{\"value\":\"1\"}");
 				}
 
 				while(1){
@@ -346,8 +347,8 @@ void delete_oldest()
 
         syslog(LOG_NOTICE,"No Disk Space, Clean Old data" );
         // we need to delete the oldest shard
-
-	curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:9200/_settings");
+	sprintf(url,"%s/_settings",es_connect.c_str());
+	curl_easy_setopt(curl, CURLOPT_URL,url);
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, setMinShard);
 	curl_easy_perform(curl);
 
@@ -355,7 +356,7 @@ void delete_oldest()
 		return;
 	}
 
-	sprintf(url,"http://localhost:9200/telepath-%u",minShard);
+	sprintf(url,"%s/telepath-%u",es_connect.c_str(),minShard);
 	curl_easy_setopt(curl,CURLOPT_CUSTOMREQUEST,"DELETE"); 
 	curl_easy_setopt(curl, CURLOPT_URL,url);
 	curl_easy_perform(curl);
@@ -505,7 +506,8 @@ void getprocessinfo(){
 void *thread_check_elasticsearch(void *threadid){
 	CURL *curl;
 	curl = curl_easy_init();
-	static const char * check_es = "http://localhost:9200/telepath-rules/_search";
+	char check_es[200];
+	sprintf(check_es,"%s/telepath-rules/_search",es_connect.c_str());
 	sleep(60);
 	while(1){
 		sleep(30);
@@ -596,11 +598,11 @@ void *thread_php_script2(void *threadid)
 
 void loadInputMode(){
 	string output;
-	es_get_config("http://localhost:9200/telepath-config/config/engine_mode_id/_source",output);
+	es_get_config("/telepath-config/config/engine_mode_id/_source",output);
 	engine_mode = (unsigned int)atoi(output.c_str());
-	es_get_config("http://localhost:9200/telepath-config/config/reverse_proxy_mode_id/_source",output);
+	es_get_config("/telepath-config/config/reverse_proxy_mode_id/_source",output);
 	reverse_proxy_mode = (unsigned int)atoi(output.c_str());
-	es_get_config("http://localhost:9200/telepath-config/config/sniffer_mode_id/_source",output);
+	es_get_config("/telepath-config/config/sniffer_mode_id/_source",output);
 	sniffer_mode = (unsigned int)atoi(output.c_str());
 }
 
@@ -695,12 +697,12 @@ bool validKey(string & key,unsigned int & epoch){
 bool checkLicenseKey(){
 	string license_key;
 	unsigned int check_time,epoch;
-	es_get_config("http://localhost:9200/telepath-config/config/license_key_id/_source",license_key);
+	es_get_config("/telepath-config/config/license_key_id/_source",license_key);
 
 	check_time = (unsigned int)time(NULL);
 	if( validKey(license_key,epoch) == true ){
 		if(check_time > 2678400 + epoch){
-			es_insert("http://localhost:9200/telepath-config/config/license_mode_id","{\"value\":\"EXPIRED\"}");
+			es_insert("/telepath-config/config/license_mode_id","{\"value\":\"EXPIRED\"}");
 
 			char open_elastic[300];
 			sprintf(open_elastic,"/opt/telepath/db/elasticsearch/bin/elasticsearch -d -Des.insecure.allow.root=true");
@@ -713,11 +715,11 @@ bool checkLicenseKey(){
 			cout <<"[!] Trial Version Expired ... Telepath Cannot Start."<<endl;
 			exit(1);
 		}else{
-			es_insert("http://localhost:9200/telepath-config/config/license_mode_id","{\"value\":\"VALID\"}");
+			es_insert("/telepath-config/config/license_mode_id","{\"value\":\"VALID\"}");
 			return true;
 		}
 	}else{
-		es_insert("http://localhost:9200/telepath-config/config/license_mode_id","{\"value\":\"INVALID\"}");
+		es_insert("/telepath-config/config/license_mode_id","{\"value\":\"INVALID\"}");
 
 		syslog(LOG_NOTICE,"***Invalid License***");
 		syslog(LOG_NOTICE,"Waiting 10 seconds before checking the license key again ...");
@@ -758,6 +760,7 @@ int main(int argc, char *argv[])
 	signal(SIGCHLD,sighandler);
 	signal(SIGUSR1,sighandler);
 
+	read_connect_conf_file();
 	// Suricata is reading from a tcpdump file.
 	if( (argc == 3) ){
 		if(strcmp("--pcap-file",argv[1]) == 0){
@@ -786,7 +789,7 @@ int main(int argc, char *argv[])
 		//	sprintf(open_elastic,"/opt/telepath/db/elasticsearch/bin/elasticsearch -d -Xmx%ug -Xms%ug",half_of_mem,half_of_mem);
 		//}
 
-		syslog (LOG_NOTICE,"Starting Elasticsearch[!!!]");
+		syslog (LOG_NOTICE,"Starting Elasticsearch[!!!] --file=%s",es_connect.c_str());
 		syslog (LOG_NOTICE, "%s",open_elastic);
 
 		FILE* ppipe_elastic = popen(open_elastic, "w");

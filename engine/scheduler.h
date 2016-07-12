@@ -124,7 +124,7 @@ void *thread_scheduler(void* threadid)
                         syslog(LOG_NOTICE,"Day=%s   Hour=%u",day.c_str(),hour);
                 #endif
 
-                sprintf(buffer,"http://localhost:9200/telepath-scheduler/times/%s/_source",day.c_str());
+                sprintf(buffer,"/telepath-scheduler/times/%s/_source",day.c_str());
                 es_get_config(string(buffer),output);
 
                 #ifdef DEBUG
@@ -159,7 +159,7 @@ void *thread_scheduler(void* threadid)
 			pthread_mutex_unlock(&mutexAppMode);
 
 			for(unsigned int i=0;i<tmpAppMode.size();i++){
-				sprintf(buffer,"http://localhost:9200/telepath-domains/domains/%s/_update",tmpAppMode[i].c_str());
+				sprintf(buffer,"/telepath-domains/domains/%s/_update",tmpAppMode[i].c_str());
 				es_mapping(buffer,"{\"doc\":{\"operation_mode\":\"3\"}}");
 				#ifdef DEBUG
 					syslog(LOG_NOTICE,"[ElasticSearch]: Move To Hybrid");
@@ -179,7 +179,7 @@ void *thread_scheduler(void* threadid)
 			pthread_mutex_unlock(&mutexAppMode);
 
 			for(unsigned int i=0;i<tmpAppMode.size();i++){
-				sprintf(buffer,"http://localhost:9200/telepath-domains/domains/%s/_update",tmpAppMode[i].c_str());
+				sprintf(buffer,"/telepath-domains/domains/%s/_update",tmpAppMode[i].c_str());
 				es_mapping(buffer,"{\"doc\":{\"operation_mode\":\"2\"}}");
 				#ifdef DEBUG
 					syslog(LOG_NOTICE,"[ElasticSearch]: Move To Production");

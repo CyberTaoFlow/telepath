@@ -345,7 +345,7 @@ void saver(){
 			syslog(LOG_NOTICE,"----------------");
 		#endif
 		
-		snprintf(url,sizeof(url)-1,"http://localhost:9200/telepath-domains/domains/%s/_update",itPath->first.c_str());
+		snprintf(url,sizeof(url)-1,"/telepath-domains/domains/%s/_update",itPath->first.c_str());
 		sprintf(postfields,"{\"doc\":{\"clusters\":[%s]}}",str_cluster.c_str());
 		es_mapping(url,postfields);
 		writeB4(itPath->second,itPath->first);

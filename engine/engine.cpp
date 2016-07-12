@@ -123,29 +123,29 @@ void load_config(){
 
 	string output;
 
-	es_get_config("http://localhost:9200/telepath-config/config/move_to_production_id/_source",output);
+	es_get_config("/telepath-config/config/move_to_production_id/_source",output);
 	moveToProductionAfter = (unsigned int)atoi(output.c_str());
-	//es_get_config("http://localhost:9200/telepath-config/config/max_session_id/_source",output);
+	//es_get_config("/telepath-config/config/max_session_id/_source",output);
 	//loadMaxSession((unsigned int)atoi(output.c_str()));
-	es_get_config("http://localhost:9200/telepath-config/config/max_distance_id/_source",output);
+	es_get_config("/telepath-config/config/max_distance_id/_source",output);
 	max_dist = ( (double)atof(output.c_str()) ) / 100;
-	es_get_config("http://localhost:9200/telepath-config/config/noise_percent_id/_source",output);
+	es_get_config("/telepath-config/config/noise_percent_id/_source",output);
 	noisePercent = ( (float)atof(output.c_str())/100 );
 	opClusterPercent = ( (float)atof(output.c_str())/200 );
 	operationPercent = ( (float)atof(output.c_str())/1000 );
-	es_get_config("http://localhost:9200/telepath-config/config/landing_speed_id/_source",output);
+	es_get_config("/telepath-config/config/landing_speed_id/_source",output);
 	slowOrFastLanding = (unsigned short)atoi(output.c_str());
-	es_get_config("http://localhost:9200/telepath-config/config/bot_intelligence_id/_source",output);
+	es_get_config("/telepath-config/config/bot_intelligence_id/_source",output);
 	bot_intelligence = (unsigned short)atoi(output.c_str());
-	es_get_config("http://localhost:9200/telepath-config/config/license_key_id/_source",output);
+	es_get_config("/telepath-config/config/license_key_id/_source",output);
 	license_key = output;
-	es_get_config("http://localhost:9200/telepath-config/config/write_to_syslog_id/_source",output);
+	es_get_config("/telepath-config/config/write_to_syslog_id/_source",output);
 	write_to_syslog = (unsigned short)atoi(output.c_str());
-	es_get_config("http://localhost:9200/telepath-config/config/enable_weight_id/_source",output);
+	es_get_config("/telepath-config/config/enable_weight_id/_source",output);
 	enable_weight = (unsigned short)atoi(output.c_str());
-	es_get_config("http://localhost:9200/telepath-config/config/password_masking_id/_source",output);
+	es_get_config("/telepath-config/config/password_masking_id/_source",output);
 	password_masking = (unsigned short)atoi(output.c_str());
-	es_get_config("http://localhost:9200/telepath-config/config/cc_masking_id/_source",output);
+	es_get_config("/telepath-config/config/cc_masking_id/_source",output);
 	cc_masking = (unsigned short)atoi(output.c_str());
 }
 
@@ -304,14 +304,14 @@ void findAppID(string & appName,string & appid){
 			find_flag=true;
 
 			if(itAppMode->second.subdomains.size() == 0){
-				snprintf(url,sizeof(url)-1,"http://localhost:9200/telepath-domains/domains/%s/_update",itAppMode->first.c_str());
+				snprintf(url,sizeof(url)-1,"/telepath-domains/domains/%s/_update",itAppMode->first.c_str());
 				snprintf(buffer,sizeof(buffer)-1,"{\"doc\":{\"subdomains\":[\"%s\"]}}",appName.c_str());
 				es_mapping(string(url),string(buffer) );
 				itAppMode->second.subdomains.insert(appName);
 			}
 			else if(itAppMode->second.subdomains.size() <= 300){
 				if(itAppMode->second.subdomains.count(appName) == 0){ // Attribute name was not found.
-					snprintf(url,sizeof(url)-1,"http://localhost:9200/telepath-domains/domains/%s/_update",itAppMode->first.c_str());
+					snprintf(url,sizeof(url)-1,"/telepath-domains/domains/%s/_update",itAppMode->first.c_str());
 					snprintf(buffer,sizeof(buffer)-1,"{\"script\":\"ctx._source.subdomains+=sub\",\"params\":{\"sub\":\"%s\"}}",appName.c_str());
 					es_mapping(string(url),string(buffer) );
 					itAppMode->second.subdomains.insert(appName);
@@ -338,7 +338,7 @@ void findAppID(string & appName,string & appid){
 			pthread_mutex_unlock(&mutexAppMode);
 			appid = appName;
 
-			snprintf(url,sizeof(url)-1,"http://localhost:9200/telepath-domains/domains/%s/_create",appName.c_str());
+			snprintf(url,sizeof(url)-1,"/telepath-domains/domains/%s/_create",appName.c_str());
 			snprintf(buffer,sizeof(buffer)-1,"{\"host\":\"%s\",\"operation_mode\":\"1\",\"learning_so_far\":1,\"move_to_production\":1000000,\"eta\":\"1d 0h 0m\",\"redirect_mode\":\"0\",\"redirect_page\":\"\",\"body_value_mode\":\"0\",\"body_value_html\":\"\",\"form_param_name\":\"\",\"cookie_mode\":\"0\",\"cookie_name\":\"\",\"cookie_value\":\"\",\"cookie_value_appearance\":\"0\",\"top_level_domain\":\"0\",\"subdomains\":[]}",appName.c_str() );
 			es_insert(url,buffer );
 		}
@@ -587,18 +587,18 @@ void showSvnVersion(char * mode){
 void createLicenseKey(int argc,char* array[]){
 	if(argc > 1){
 		if( strcmp("-c",array[1]) == 0 ){
-			es_get_config("http://localhost:9200/telepath-config/config/license_key_id/_source",license_key);
+			es_get_config("/telepath-config/config/license_key_id/_source",license_key);
 
 			unsigned int epoch,check_time = (unsigned int)time(NULL);
 
 			if( validKey(license_key,epoch) == true ){
 				if(check_time > 2678400 + epoch){
-					es_insert("http://localhost:9200/telepath-config/config/license_mode_id","{\"value\":\"EXPIRED\"}");
+					es_insert("/telepath-config/config/license_mode_id","{\"value\":\"EXPIRED\"}");
 				}else{
-					es_insert("http://localhost:9200/telepath-config/config/license_mode_id","{\"value\":\"VALID\"}");
+					es_insert("/telepath-config/config/license_mode_id","{\"value\":\"VALID\"}");
 				}
 			}else{
-				es_insert("http://localhost:9200/telepath-config/config/license_mode_id","{\"value\":\"INVALID\"}");
+				es_insert("/telepath-config/config/license_mode_id","{\"value\":\"INVALID\"}");
 			}
 
 			exit(1);
@@ -665,6 +665,7 @@ initAttType();			// This function is defined at enginetypes.h .
 initSyslog();
 open_geoIP_database();		// This function is defined at geoip.h .
 
+read_connect_conf_file();
 TC = new TeleCache;
 
 load_config();
@@ -779,7 +780,7 @@ while(globalEngine){ // while engine learning - run the engine every time we get
 
 					production_vec.push_back(teleobj);
 
-					snprintf(url_mode,sizeof(url_mode)-1,"http://localhost:9200/telepath-domains/domains/%s/_update",teleobj.mParams['g'/*AppID*/].c_str());
+					snprintf(url_mode,sizeof(url_mode)-1,"/telepath-domains/domains/%s/_update",teleobj.mParams['g'/*AppID*/].c_str());
 					sprintf(postfields_mode,"{\"doc\":{\"operation_mode\":\"2\",\"learning_so_far\":%u,\"eta\":\"0d 0h 0m\"}}",itAppMode->second.counter);
 					es_mapping(url_mode,postfields_mode);
 					#ifdef DEBUG
@@ -807,7 +808,7 @@ while(globalEngine){ // while engine learning - run the engine every time we get
 							sprintf(eta ,"%ud %uh %um",days,hours,mins );
 						}
 
-						snprintf(url_mode,sizeof(url_mode)-1,"http://localhost:9200/telepath-domains/domains/%s/_update",teleobj.mParams['g'/*AppID*/].c_str());
+						snprintf(url_mode,sizeof(url_mode)-1,"/telepath-domains/domains/%s/_update",teleobj.mParams['g'/*AppID*/].c_str());
 						sprintf(postfields_mode,"{\"doc\":{\"learning_so_far\":%u,\"eta\":\"%s\"}}",itAppMode->second.counter,eta);
 						es_mapping(url_mode,postfields_mode);
 						#ifdef DEBUG
@@ -817,7 +818,7 @@ while(globalEngine){ // while engine learning - run the engine every time we get
 						itAppMode->second.timer = current_time;
 					}
 					else if(itAppMode->second.counter<=5){
-						snprintf(url_mode,sizeof(url_mode)-1,"http://localhost:9200/telepath-domains/domains/%s/_update",teleobj.mParams['g'/*AppID*/].c_str());
+						snprintf(url_mode,sizeof(url_mode)-1,"/telepath-domains/domains/%s/_update",teleobj.mParams['g'/*AppID*/].c_str());
 						sprintf(postfields_mode,"{\"doc\":{\"learning_so_far\":%u}}",itAppMode->second.counter);
 						es_mapping(url_mode,postfields_mode);
 					}
@@ -825,7 +826,7 @@ while(globalEngine){ // while engine learning - run the engine every time we get
 				}
 			}else{
 				if( (itAppMode->second.counter % 1000) == 0 ){
-					snprintf(url_mode,sizeof(url_mode)-1,"http://localhost:9200/telepath-domains/domains/%s/_update",teleobj.mParams['g'/*AppID*/].c_str());
+					snprintf(url_mode,sizeof(url_mode)-1,"/telepath-domains/domains/%s/_update",teleobj.mParams['g'/*AppID*/].c_str());
 					sprintf(postfields_mode,"{\"doc\":{\"learning_so_far\":%u}}",itAppMode->second.counter);
 					es_mapping(url_mode,postfields_mode);
 					#ifdef DEBUG

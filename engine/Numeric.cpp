@@ -238,10 +238,10 @@ void Numeric::print_syslog(){
 void Numeric::print_elastic(string & att_name){
 	char url[1000],postfields[1000];
 	unsigned int epoch = (unsigned int)time(NULL);
-	sprintf(url,"http://localhost:9200/telepath-debug/debug/%s/_create",att_name.c_str());
+	sprintf(url,"/telepath-debug/debug/%s/_create",att_name.c_str());
 	es_insert(url,"{}");
 
-	sprintf(url,"http://localhost:9200/telepath-debug/debug/%s/_update",att_name.c_str());
+	sprintf(url,"/telepath-debug/debug/%s/_update",att_name.c_str());
 	sprintf(postfields,"{\"doc\":{%u:{\"mean\":%f,\"stddev\":%f,\"size\":%u}}}",epoch,this->mean,this->stddev,this->size);
 	es_mapping(url,postfields);
 }
