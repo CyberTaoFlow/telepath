@@ -1,4 +1,5 @@
 #include <curl/curl.h>
+#include <stdexcept>
 
 using namespace std;
 
@@ -60,7 +61,13 @@ void es_get_config(string url,string & output){
 	curl_easy_perform(curl);
 
 	tmp = chunk.memory+10;
-	output.assign(tmp.begin(),tmp.end()-2);
+	try{
+		output.assign(tmp.begin(),tmp.end()-2);
+	}
+	catch (const std::length_error& le) {
+		syslog(LOG_NOTICE,"Cannot Connent to Elasticsearch[!!!] - Please Check That The Address \"%s\" Is Correct.",es_connect.c_str());
+		exit(1);
+	}
 
 	free(chunk.memory);
 	curl_easy_cleanup(curl);
