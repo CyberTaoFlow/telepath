@@ -10,10 +10,7 @@ GITDEV := -D'GIT_REV="$(shell git rev-parse HEAD | grep ... | sed -e 's/^\(.\{8\
 GITFLAG := $(GITDEV)
 TIME2 := -D'COMPILATION_TIME=$(shell date +%s)'
 
-
-PCAP=/usr/lib/libpcap.a
 CRYPTO=/usr/lib/libcrypto.a
-ZLIB=/usr/lib/libz.a
 PCRE=/usr/lib/libpcre.a 
 
 LIBSTDC=/usr/lib/gcc/x86_64-redhat-linux/4.8.2/libstdc++.so
@@ -38,18 +35,6 @@ ifeq ($(wildcard $(GeoIP) ),)
         GeoIP = /usr/lib64/libGeoIP.so
 endif
 
-ifeq ($(wildcard $(PCAP) ),) 
-	PCAP = /usr/lib/x86_64-linux-gnu/libpcap.a
-endif
-
-ifeq ($(wildcard $(PCAP) ),) 
-        PCAP = /usr/lib64/libpcap.a
-endif
-
-ifeq ($(wildcard $(PCAP) ),)
-        PCAP = /usr/lib64/libpcap.so
-endif
-
 ifeq ($(wildcard $(PCRE) ),) 
 	PCRE = /usr/lib/x86_64-linux-gnu/libpcre.a
 endif
@@ -62,32 +47,8 @@ ifeq ($(wildcard $(PCRE) ),)
         PCRE = /usr/lib64/libpcre.so
 endif
 
-ifeq ($(wildcard $(ZLIB) ),) 
-	ZLIB = /usr/lib/x86_64-linux-gnu/libz.a
-endif
-
-ifeq ($(wildcard $(ZLIB) ),) 
-	ZLIB = /usr/lib64/libz.a
-endif
-
-ifeq ($(wildcard $(ZLIB) ),)
-        ZLIB = /usr/lib64/libz.so
-endif
-
-ifeq ($(wildcard $(Redis) ),)
-        Redis = /usr/lib64/libhiredis.a
-endif
-
-ifeq ($(wildcard $(Redis) ),)
-        Redis = /usr/lib/x86_64-linux-gnu/libhiredis.a
-endif
-
-ifeq ($(wildcard $(Redis) ),)
-        Redis = /usr/lib64/libhiredis.so
-endif
-
 ifeq ($(wildcard $(CRYPTO) ),) 
-	CRYPTO = /usr/lib/x86_64-linux-gnu/libcrypto.a
+       CRYPTO = /usr/lib/x86_64-linux-gnu/libcrypto.a
 endif
 
 ifeq ($(wildcard $(CRYPTO) ),)
@@ -100,6 +61,18 @@ endif
 
 ifeq ($(wildcard $(CRYPTO) ),)
         CRYPTO = /usr/lib64/libcrypto.so
+endif
+
+ifeq ($(wildcard $(Redis) ),)
+        Redis = /usr/lib64/libhiredis.a
+endif
+
+ifeq ($(wildcard $(Redis) ),)
+        Redis = /usr/lib/x86_64-linux-gnu/libhiredis.a
+endif
+
+ifeq ($(wildcard $(Redis) ),)
+        Redis = /usr/lib64/libhiredis.so
 endif
 
 ifeq ($(wildcard $(BOOST_SERIAL) ),) 
@@ -252,7 +225,7 @@ Engine_v3.a: objects/teletypes.o objects/teleobject.o objects/Syslog.o objects/N
 
 
 engine_v3: objects/teleindex_v3.o Engine_v3.a objects/engine_v3.o json.a mXML.a
-	g++ -o engine objects/engine_v3.o -L./ -pthread -static-libgcc $(LIBSTDC) $(PCAP) $(CRYPTO) $(ZLIB) -ldl $(BOOST_SERIAL) objects/teleindex_v3.o Engine_v3.a json.a mXML.a $(PCRE) -lcurl -lrt $(GeoIP) $(Redis)
+	g++ -o engine objects/engine_v3.o -L./ -pthread -static-libgcc $(LIBSTDC) $(CRYPTO) -ldl $(BOOST_SERIAL) objects/teleindex_v3.o Engine_v3.a json.a mXML.a $(PCRE) -lcurl -lrt $(GeoIP) $(Redis)
 
 objects/engine_v3.o: engine.cpp 
 	g++ $(GITFLAG) $(TIME2) -g -Wall -O -c -o objects/engine_v3.o -DREDIS -DVERSION3 $(MSGPACK) engine.cpp $(Unordered) 
@@ -262,7 +235,7 @@ objects/engine_v3.o: engine.cpp
 
 
 engine_trial: objects/teleindex_v3.o Engine_v3.a objects/engine_trial.o json.a mXML.a
-	g++ -o engine objects/engine_trial.o -L./ -pthread -static-libgcc $(LIBSTDC) $(PCAP) $(CRYPTO) $(ZLIB) -ldl $(BOOST_SERIAL) objects/teleindex_v3.o Engine_v3.a json.a mXML.a $(PCRE) -lcurl -lrt $(GeoIP) $(Redis)
+	g++ -o engine objects/engine_trial.o -L./ -pthread -static-libgcc $(LIBSTDC) $(CRYPTO) -ldl $(BOOST_SERIAL) objects/teleindex_v3.o Engine_v3.a json.a mXML.a $(PCRE) -lcurl -lrt $(GeoIP) $(Redis)
 
 objects/engine_trial.o: engine.cpp
 	g++ $(GITFLAG) $(TIME2) -g -O -c -o objects/engine_trial.o -DREDIS -DVERSION3 -DTRIAL $(MSGPACK) engine.cpp $(Unordered)
@@ -272,7 +245,7 @@ objects/engine_trial.o: engine.cpp
 
 
 engine_debug: objects/teleindex_debug.o Engine_v3.a objects/engine_debug.o json.a mXML.a
-	g++ -o engine objects/engine_debug.o json.a -L./ -pthread -static-libgcc $(LIBSTDC) $(PCAP) $(CRYPTO) $(ZLIB) -ldl $(BOOST_SERIAL) objects/teleindex_debug.o Engine_v3.a mXML.a $(PCRE) -lcurl -lrt $(GeoIP) $(Redis)
+	g++ -o engine objects/engine_debug.o json.a -L./ -pthread -static-libgcc $(LIBSTDC) $(CRYPTO) -ldl $(BOOST_SERIAL) objects/teleindex_debug.o Engine_v3.a mXML.a $(PCRE) -lcurl -lrt $(GeoIP) $(Redis)
 
 objects/engine_debug.o: engine.cpp
 	g++ $(GITFLAG) $(TIME2) -g -O -c -o objects/engine_debug.o -DREDIS -DVERSION3 -DTRIAL -DDEBUG $(MSGPACK) engine.cpp $(Unordered)
@@ -282,7 +255,7 @@ objects/engine_debug.o: engine.cpp
 
 
 engine_logger: objects/teleindex_v3.o Engine_v3.a objects/engine_logger json.a mXML.a
-	g++ -o log_engine objects/engine_logger -L./ -pthread -static-libgcc $(LIBSTDC) $(PCAP) $(CRYPTO) $(ZLIB) -ldl $(BOOST_SERIAL) objects/teleindex_v3.o Engine_v3.a json.a mXML.a $(PCRE) -lrt $(GeoIP) 
+	g++ -o log_engine objects/engine_logger -L./ -pthread -static-libgcc $(LIBSTDC) $(CRYPTO) -ldl $(BOOST_SERIAL) objects/teleindex_v3.o Engine_v3.a json.a mXML.a $(PCRE) -lrt $(GeoIP) 
 
 objects/engine_logger.o: engine.cpp 
 	g++ $(GITFLAG) $(TIME2) -g -Wall -O -c -o objects/engine_logger -DLOGGER $(MSGPACK) engine.cpp $(Unordered)
