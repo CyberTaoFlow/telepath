@@ -321,7 +321,7 @@ void addRules()
 	unsigned int i,size;
 
 	for(i=0;i<addRulesIDs.size();i++){
-		sprintf(url,"localhost:9200/telepath-rules/rules/X%u/_source",addRulesIDs[i]);
+		sprintf(url,"%s/telepath-rules/rules/X%u/_source",es_connect.c_str(),addRulesIDs[i]);
 
 		curl = curl_easy_init();
 		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST,"GET");
@@ -373,7 +373,7 @@ void getRulesIDs(char *ptr)
 	}
 
 	for(i=0;i<ids.size();i++){
-		sprintf(url,"localhost:9200/telepath-rules/rules/%s/_source",ids[i].c_str());
+		sprintf(url,"%s/telepath-rules/rules/%s/_source",es_connect.c_str(),ids[i].c_str());
 		curl = curl_easy_init();
 		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST,"GET");
 		curl_easy_setopt(curl, CURLOPT_URL,url);
@@ -401,7 +401,7 @@ void loadRules(){ // Load rule_groups from database.
 	string output;
 
 	if(rules_table_was_changed==0){
-		es_get_config("http://localhost:9200/telepath-config/config/rules_table_was_changed_id/_source",output);
+		es_get_config("/telepath-config/config/rules_table_was_changed_id/_source",output);
 		rules_table_was_changed = (unsigned short)atoi(output.c_str());
 	}
 
@@ -424,19 +424,20 @@ void loadRules(){ // Load rule_groups from database.
 	rules.clear();
 	mRulesGroup.clear();
 	rules_table_was_changed=0;
-	es_insert("http://localhost:9200/telepath-config/config/rules_table_was_changed_id","{\"value\":\"0\"}");
+	es_insert("/telepath-config/config/rules_table_was_changed_id","{\"value\":\"0\"}");
 	//---------------------------------
 	CURL *curl;
-	char postfields[100];
+	char postfields[100],url[200];
 	unsigned int from=0;
 	numRulesRotate=0;
 	while(1){
+		sprintf(url,"%s/telepath-rules/rules/_search?filter_path=hits.hits.fields,hits.hits._id",es_connect.c_str());
 		sprintf(postfields,"{\"fields\":[\"hash\"],\"size\":%u,\"from\":%u}",LOAD_RULES_BULK,from);
 		from += LOAD_RULES_BULK;
 
 		curl = curl_easy_init();
 		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST,"POST");
-		curl_easy_setopt(curl, CURLOPT_URL, "localhost:9200/telepath-rules/rules/_search?filter_path=hits.hits.fields,hits.hits._id");
+		curl_easy_setopt(curl, CURLOPT_URL,url);
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS,postfields);
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, getRulesIDs);
 		curl_easy_perform(curl);
@@ -587,7 +588,7 @@ void addActions()
 	unsigned int i;
 
 	for(i=0;i<addActionIDs.size();i++){
-		sprintf(url,"localhost:9200/telepath-actions/actions/X%u",addActionIDs[i]);
+		sprintf(url,"%s/telepath-actions/actions/X%u",es_connect.c_str(),addActionIDs[i]);
 		curl = curl_easy_init();
 		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST,"GET");
 		curl_easy_setopt(curl, CURLOPT_URL,url);
@@ -629,7 +630,7 @@ void getActionIDs(char *ptr)
 		return;
 	}
 	for(i=0;i<ids.size();i++){
-		sprintf(url,"localhost:9200/telepath-actions/actions/%s",ids[i].c_str());
+		sprintf(url,"%s/telepath-actions/actions/%s",es_connect.c_str(),ids[i].c_str());
 		curl = curl_easy_init();
 		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST,"GET");
 		curl_easy_setopt(curl, CURLOPT_URL,url);
@@ -644,7 +645,7 @@ void loadActions(){ // Load business logic from database.
 	string output;
 
 	if(business_flow_was_changed==0){
-		es_get_config("http://localhost:9200/telepath-config/config/business_flow_was_changed_id/_source",output);
+		es_get_config("/telepath-config/config/business_flow_was_changed_id/_source",output);
 		business_flow_was_changed = (unsigned short)atoi(output.c_str());
 	}
 
@@ -661,19 +662,20 @@ void loadActions(){ // Load business logic from database.
 	//---------Clean Old Actions---------
 	businessFlowVec.clear();
 	business_flow_was_changed=0;
-	es_insert("http://localhost:9200/telepath-config/config/business_flow_was_changed_id","{\"value\":\"0\"}");
+	es_insert("/telepath-config/config/business_flow_was_changed_id","{\"value\":\"0\"}");
 	//-----------------------------------
 
 	CURL *curl;
-	char postfields[100];
+	char postfields[100],url[200];
 	unsigned int from=0;
 	while(1){
+		sprintf(url,"%s/telepath-actions/actions/_search?filter_path=hits.hits._id",es_connect.c_str());
 		sprintf(postfields,"{\"size\":%u,\"from\":%u}",LOAD_RULES_BULK,from);
 		from += LOAD_RULES_BULK;
 
 		curl = curl_easy_init();
 		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST,"POST");
-		curl_easy_setopt(curl, CURLOPT_URL, "localhost:9200/telepath-actions/actions/_search?filter_path=hits.hits._id");
+		curl_easy_setopt(curl, CURLOPT_URL,url);
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS,postfields);
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, getActionIDs);
 		curl_easy_perform(curl);
@@ -906,7 +908,7 @@ void getAppIDs(char *ptr)
 		return;
 	}
 	for(i=0;i<ids.size();i++){
-		snprintf(url,sizeof(url)-1,"localhost:9200/telepath-domains/domains/%s/_source",ids[i].c_str());
+		snprintf(url,sizeof(url)-1,"%s/telepath-domains/domains/%s/_source",es_connect.c_str(),ids[i].c_str());
 		curl = curl_easy_init();
 		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST,"GET");
 		curl_easy_setopt(curl, CURLOPT_URL,url);
@@ -918,22 +920,23 @@ void getAppIDs(char *ptr)
 }
 
 void loadApps(){ // Load business logic from database.
-	es_insert("http://localhost:9200/telepath-config/config/app_list_was_changed_id/","{\"value\":\"0\"}");
+	es_insert("/telepath-config/config/app_list_was_changed_id/","{\"value\":\"0\"}");
 	pthread_mutex_lock(&mutexAppMode);
 		mAppMode.clear();
 	pthread_mutex_unlock(&mutexAppMode);
 
 
 	CURL *curl;
-	char postfields[100];
+	char postfields[100],url[200];
 	unsigned int from=0;
 	while(1){
+		sprintf(url,"%s/telepath-domains/domains/_search?filter_path=hits.hits._id",es_connect.c_str());
 		sprintf(postfields,"{\"size\":%u,\"from\":%u}",LOAD_RULES_BULK,from);
 		from += LOAD_RULES_BULK;
 
 		curl = curl_easy_init();
 		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST,"POST");
-		curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:9200/telepath-domains/domains/_search?filter_path=hits.hits._id");
+		curl_easy_setopt(curl, CURLOPT_URL,url);
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS,postfields);
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, getAppIDs);
 		curl_easy_perform(curl);
@@ -1061,13 +1064,13 @@ void loadCases(){ // Load business logic from database.
 	}
 
 	case_list_was_changed=0;
-	es_insert("http://localhost:9200/telepath-config/config/case_list_was_changed_id","{\"value\":\"0\"}");
+	es_insert("/telepath-config/config/case_list_was_changed_id","{\"value\":\"0\"}");
 	vCases.clear();
 
 	CURL *curl;
 	curl = curl_easy_init();
 	curl_easy_setopt(curl,CURLOPT_CUSTOMREQUEST,"GET"); 
-	curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:9200/telepath-config/cases/cases_id");
+	curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:/telepath-config/cases/cases_id");
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, getCases);
 	curl_easy_perform(curl);
 	curl_easy_cleanup(curl); 
@@ -1191,22 +1194,23 @@ void loadBotIntelligence(){ // Load bot intelligence from database.
 		return;
 	}else{
 		bot_intelligence=0;
-		es_insert("http://localhost:9200/telepath-config/config/bot_intelligence_id","{\"value\":\"0\"}");
+		es_insert("/telepath-config/config/bot_intelligence_id","{\"value\":\"0\"}");
 	}
 	sTorIntelligenceIP.clear();
 
         //---------------------------------
         
 	CURL *curl;
-	char postfields[100];
+	char postfields[100],url[200];
 	unsigned int from=0;
 	while(1){
+		sprintf(url,"%s/telepath-tor-ips/tor/_search?filter_path=hits.hits._id",es_connect.c_str());
 		sprintf(postfields,"{\"size\":%u,\"from\":%u}",LOAD_BOTS_BULK,from);
 		from += LOAD_BOTS_BULK;
 
 		curl = curl_easy_init();
 		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST,"POST");
-		curl_easy_setopt(curl, CURLOPT_URL, "localhost:9200/telepath-tor-ips/tor/_search?filter_path=hits.hits._id");
+		curl_easy_setopt(curl, CURLOPT_URL,url);
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS,postfields);
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, getTorIPs);
 		curl_easy_perform(curl);
@@ -1220,12 +1224,13 @@ void loadBotIntelligence(){ // Load bot intelligence from database.
 	
 	from=0;
 	while(1){
+		sprintf(url,"%s/telepath-bad-ips/bad/_search?filter_path=hits.hits._id",es_connect.c_str());
 		sprintf(postfields,"{\"size\":%u,\"from\":%u}",LOAD_BOTS_BULK,from);
 		from += LOAD_BOTS_BULK;
 
 		curl = curl_easy_init();
 		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST,"POST");
-		curl_easy_setopt(curl, CURLOPT_URL, "localhost:9200/telepath-bad-ips/bad/_search?filter_path=hits.hits._id");
+		curl_easy_setopt(curl, CURLOPT_URL,url);
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS,postfields);
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, getBotIPs);
 		curl_easy_perform(curl);

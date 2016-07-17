@@ -292,7 +292,7 @@ void *thread_load_config(void *threadid)
 	while(globalEngine)
 	{
 		pthread_mutex_lock(&mutexUnknownApp);
-			es_get_config("http://localhost:9200/telepath-config/config/add_unknown_applications_id/_source",output);
+			es_get_config("/telepath-config/config/add_unknown_applications_id/_source",output);
 			addUnknownApp = (unsigned short)atoi(output.c_str());
 		pthread_mutex_unlock(&mutexUnknownApp);
 
@@ -356,7 +356,6 @@ void *thread_insert_req(void *threadid)
 	CURL *curl;
 	RequestValToInsert tmp;
 	curl = curl_easy_init();
-	static const char * url = "http://localhost:9200/_bulk";
 
 	unsigned int insert_count=0,explanations_counter=0;
 	unsigned int query_insert_size;
@@ -370,6 +369,9 @@ void *thread_insert_req(void *threadid)
 	boost::unordered_map <long long,ElasticAtt>::iterator itRidAtts;
 	boost::unordered_map <long long,ElasticData>::iterator itRidAlertAndAction;
 	boost::unordered_map <unsigned int,Reputation>::iterator itReputationIPs;
+
+	char url[100];
+	sprintf(url,"%s/_bulk",es_connect.c_str());
 
 	while(globalEngine)
 	{
@@ -577,11 +579,11 @@ void *thread_insert_logins(void *threadid)
 		addRulesIDs.push_back(hash_value2);
 //syslog(LOG_NOTICE,"3)action:%s|password=%s|username=%s|host=%s|uri:%s|",login.action.c_str(),login.password.c_str(),login.username.c_str(),login.host.c_str(),login.orig_uri.c_str());
 
-		sprintf(url,"http://localhost:9200/telepath-rules/rules/X%u",hash_value);
+		sprintf(url,"/telepath-rules/rules/X%u",hash_value);
 		sprintf(postfields,"{\"hash\":%u,\"name\":\"Login Brute-Force\",\"builtin_rule\": true,\"desc\":\"-\",\"category\":\"Brute-Force\",\"score\":100,\"cmd\":[\"captcha\"],\"criteria\":[{\"kind\":\"p\",\"type\":\"Other\",\"Other\":{\"domain\":\"%s\",\"pagename\":\"%s\",\"paramname\":\"%s\"},\"subtype\":\"parameter\",\"domain\":\"%s\",\"pagename\":\"%s\",\"paramname\":\"%s\",\"count\":\"3\",\"time\":\"180\",\"enable\":true,\"aggregate\":\"1\"}]}",hash_value,&login.host[0],&login.orig_uri[0],&login.username[0],&login.host[0],&login.orig_uri[0],&login.password[0]);
 		es_insert(url,postfields);
 
-		sprintf(url,"http://localhost:9200/telepath-rules/rules/X%u",hash_value2);
+		sprintf(url,"/telepath-rules/rules/X%u",hash_value2);
 		sprintf(postfields,"{\"hash\":%u,\"name\":\"Credential-Stuffing\",\"builtin_rule\": true,\"desc\":\"-\",\"category\":\"Credential-Stuffing\",\"score\":100,\"cmd\":[\"captcha\"],\"criteria\":[{\"kind\":\"p\",\"type\":\"IP\",\"subtype\":\"parameter\",\"domain\":\"%s\",\"pagename\":\"%s\",\"paramname\":\"%s\",\"count\":\"3\",\"time\":\"600\",\"enable\":true,\"aggregate\":\"1\"}]}",hash_value2,&login.host[0],&login.orig_uri[0],&login.username[0]);
 		es_insert(url,postfields);
 		pthread_mutex_unlock(&mutexAddRules);
@@ -589,7 +591,7 @@ void *thread_insert_logins(void *threadid)
 		pthread_mutex_lock(&mutexAddActions);
 		addActionIDs.push_back(hash_value);
 
-		sprintf(url,"http://localhost:9200/telepath-actions/actions/X%u",hash_value);
+		sprintf(url,"/telepath-actions/actions/X%u",hash_value);
 		sprintf(postfields,"{\"action_name\":\"Login\",\"application\":\"%s\",\"business\":[{\"pagename\":\"%s\",\"params\":[{\"name\":\"%s\",\"data\":\"*\"},{\"name\":\"%s\",\"data\":\"*\"}]}]}",&login.host[0],&login.orig_uri[0],&login.username[0],&login.password[0]);
 		es_insert(url,postfields);
 		pthread_mutex_unlock(&mutexAddActions);
@@ -1689,13 +1691,13 @@ void *thread_app_was_updated(void *threadid)
 	{
 		sleep(1);
 
-		es_get_config("http://localhost:9200/telepath-config/config/app_list_was_changed_id/_source",app_name);
+		es_get_config("/telepath-config/config/app_list_was_changed_id/_source",app_name);
 		if(app_name=="0"){
 			continue;
 		}
-		es_insert("http://localhost:9200/telepath-config/config/app_list_was_changed_id","{\"value\":\"0\"}");	
+		es_insert("/telepath-config/config/app_list_was_changed_id","{\"value\":\"0\"}");	
 
-		snprintf(url,sizeof(url)-1,"localhost:9200/telepath-domains/domains/%s/_source",app_name.c_str());
+		snprintf(url,sizeof(url)-1,"%s/telepath-domains/domains/%s/_source",es_connect.c_str(),app_name.c_str());
 		curl = curl_easy_init();
 		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST,"GET");
 		curl_easy_setopt(curl, CURLOPT_URL,url);
@@ -1805,17 +1807,17 @@ void *thread_expiration_date(void *threadid)
 		if( validKey(license_key,epoch) == true ){
 			if(check_time > 2678400 + epoch){
 				syslog(LOG_NOTICE,"***Trial Version Expired***");
-				es_insert("http://localhost:9200/telepath-config/config/license_mode_id","{\"value\":\"EXPIRED\"}");
+				es_insert("/telepath-config/config/license_mode_id","{\"value\":\"EXPIRED\"}");
 
 				globalEngine=0;
 				sleep(30);
 				exit(1);
 			}else{
-				es_insert("http://localhost:9200/telepath-config/config/license_mode_id","{\"value\":\"VALID\"}");
+				es_insert("/telepath-config/config/license_mode_id","{\"value\":\"VALID\"}");
 			}
 		}else{
 			syslog(LOG_NOTICE,"***Invalid License***");
-			es_insert("http://localhost:9200/telepath-config/config/license_mode_id","{\"value\":\"INVALID\"}");
+			es_insert("/telepath-config/config/license_mode_id","{\"value\":\"INVALID\"}");
 
 			globalEngine=0;
 			sleep(30);

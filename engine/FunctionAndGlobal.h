@@ -569,7 +569,7 @@ void findTopCookies(map <string,cookieNames>::iterator & it){
 
 	for (itTopCookies=topCookies.rbegin(); itTopCookies!=topCookies.rend(); ++itTopCookies){
 		if( i == 0 ){
- 			snprintf(url,sizeof(url)-1,"http://localhost:9200/telepath-domains/domains/%s/_update",it->first.c_str());
+ 			snprintf(url,sizeof(url)-1,"/telepath-domains/domains/%s/_update",it->first.c_str());
                         sprintf(postfields,"{\"doc\":{\"AppCookieName\":\"%s\"}}",itTopCookies->second.c_str());
                         es_mapping(url,postfields);
 			//sprintf(buffer,"UPDATE applications SET AppCookieName='%s' WHERE app_id=%u;",(char*)itTopCookies->second.c_str() , it->first );

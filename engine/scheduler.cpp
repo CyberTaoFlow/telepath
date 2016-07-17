@@ -1,6 +1,7 @@
 #include <iostream>
 #include <curl/curl.h>
 #include <syslog.h>
+#include <fstream>
 
 #include "teleindex.h"
 #include "ElasticSearch.h"
@@ -139,13 +140,16 @@ int main (int argc,char* array[])
 	openlog ("Scheduler", LOG_CONS | LOG_PID | LOG_NDELAY, LOG_LOCAL1);
 
 	demonize();
+
+	read_connect_conf_file();
+	syslog(LOG_NOTICE,"SCH FILE=========%s",es_connect.c_str());	
 	char buffer[100];
 	bool in_range;
 	unsigned int current_time,i,hour,op_mode;	
 	string day,output;
 	while(1){
 		sleep(5);
-		es_get_config("http://localhost:9200/telepath-config/config/operation_mode_id/_source",output);
+		es_get_config("/telepath-config/config/operation_mode_id/_source",output);
 		op_mode = (unsigned int)atoi(output.c_str());
 		if(op_mode==1){
 			continue;
@@ -158,7 +162,7 @@ int main (int argc,char* array[])
                         syslog(LOG_NOTICE,"Day=%s   Hour=%u",day.c_str(),hour);
                 #endif
 
-                sprintf(buffer,"http://localhost:9200/telepath-scheduler/times/%s/_source",day.c_str());
+                sprintf(buffer,"/telepath-scheduler/times/%s/_source",day.c_str());
                 es_get_config(string(buffer),output);
 
                 #ifdef DEBUG
@@ -179,11 +183,11 @@ int main (int argc,char* array[])
 		}
 		if( in_range == true){
 			if(op_mode==2){
-				es_insert("http://localhost:9200/telepath-config/config/operation_mode_id","{\"value\":\"3\"}");
+				es_insert("/telepath-config/config/operation_mode_id","{\"value\":\"3\"}");
 			}
 		}else{
 			if(op_mode==3){
-				es_insert("http://localhost:9200/telepath-config/config/operation_mode_id","{\"value\":\"2\"}");
+				es_insert("/telepath-config/config/operation_mode_id","{\"value\":\"2\"}");
 			}
 		}
 	}
