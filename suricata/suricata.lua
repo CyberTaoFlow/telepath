@@ -25,7 +25,6 @@ function init (args)
 end
 
 fingerprint = "0"
-setting_counter = 0
 block_extensions = {}
 whitelist_ips = {}
 --whitelist_ips[2219196937] = 2219196939
@@ -51,11 +50,9 @@ function setup (args)
 		es_location = "http://localhost:9200"
 	end
 
-	print (es_location)
 	-- Loading filter extensions --
 	login_url = es_location .. "/telepath-config/filter_extensions/extensions_id/_source"
 
-	print (login_url)
 	c = cURL.easy{
 		url            = login_url,
 		ssl_verifypeer = false,
@@ -199,38 +196,21 @@ local unescape = function(url)
 	end
 end
 
+
+-- transform a string of bytes in a string of hexadecimal digits
+local function str2hexa (s)
+	local h = string.gsub(s, ".", function(c)
+		return string.format("%02x", string.byte(c))
+	end)
+	return h
+end
+
 function log(args)
 	-- Checking if the configuration was changed. 
-	if setting_counter == 100 then
-		login_url = es_location .. "/telepath-config/config/config_was_changed_id/_source"
-		c = cURL.easy{
-			url            = login_url,
-			ssl_verifypeer = false,
-			ssl_verifyhost = false,
-			writefunction  = function(str)
-				local tmp = string.find(str, "1")
-				if ( tmp ) then
-					setup()
-				end
-			end
-		}
-                c:perform()
-		setting_counter = 0
-	else
-	   setting_counter = setting_counter + 1
+	config_was_changed_id = redis:lpop("C")
+	if (config_was_changed_id) then
+		setup()
 	end
-
-	hr_url = es_location .. "/telepath-config/config/hybrid_record_id/_source"
-	c = cURL.easy{
-		url            = hr_url,
-		ssl_verifypeer = false,
-		ssl_verifyhost = false,
-		writefunction  = function(str)
-			local tmp = string.find(str, '}')
-			hybrid_record = string.sub(str, 11, tmp-2)
-		end
-	}
-	c:perform()
 
 	-- Read it!
 	ipver, srcip, dstip, proto, sp, dp = SCFlowTuple()
@@ -368,14 +348,26 @@ function log(args)
 		end
 	end
 
-        express_flag = false
+	--EXP = {
+	--	id = "11111",
+	--	value = "192.168.1.1",
+	--	host = "hybridsec.com"
+	--}
+
+	express_flag = false
+
+	--redis:lpush("E", msgpack.pack(EXP)  )
+	hr_queue = redis:lpop("E")
+	if hr_queue then
+		hybrid_record = msgpack.unpack(hr_queue)
+	end
 
 	if (hybrid_record) then
-		if (hybrid_record ~= "0") then
-			if ( hybrid_record == srcip ) then
+		if (hybrid_record.value ~= "0") then
+			if ( hybrid_record.value == srcip ) then
 				express_flag = true
 			else
-				local record_url_tmp = "hybridrecord=" .. hybrid_record
+				local record_url_tmp = "hybridrecord=" .. hybrid_record.value
 				local record_url_flag = string.find(query,record_url_tmp)
 				if(record_url_flag) then
 					express_flag = true
