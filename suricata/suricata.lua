@@ -206,6 +206,48 @@ local function str2hexa (s)
 end
 
 function log(args)
+	local uri = HttpGetRequestUriRaw()
+	uri = unescape(uri) --url decoding for uri & GET parameters.
+
+	-- uri = string.lower(uri) 
+	query = ""
+	tmp = string.find(uri, "?")
+
+	if tmp then
+		uri2 = urlObj.parse(uri)
+		query = uri2.query         --GET parameters.
+		uri = string.sub(uri,1,tmp-1)
+	end
+
+	uri = string.lower(uri)
+
+	local ext = uri:reverse():find("%.")
+	if ext then
+		ext = #uri - ext+1
+		ext = string.sub(uri,ext)
+
+		if block_extensions[ext] == ext then
+			--Ignoring this request.
+			return
+		end
+	end
+
+	local requestline = HttpGetRequestLine()
+	if requestline then
+		local tmp = string.find(requestline, " ")
+		method = string.sub(requestline, 1, tmp-1)  --method.
+	else
+		return
+	end
+
+	local responseline = HttpGetResponseLine()
+	if responseline then
+		local tmp = string.find(responseline, " ")
+		status = string.sub(responseline,tmp+1,tmp+3) --status code.
+	else
+		return
+	end
+
 	-- Checking if the configuration was changed. 
 	config_was_changed_id = redis:lpop("C")
 	if (config_was_changed_id) then
@@ -233,49 +275,7 @@ function log(args)
 		rs_body = rs_body .. v
 	    end
 	end
-
-	local requestline = HttpGetRequestLine()
-	if requestline then
-		local tmp = string.find(requestline, " ")
-		method = string.sub(requestline, 1, tmp-1)  --method.
-	else
-		return
-	end
-
-	local responseline = HttpGetResponseLine()
-	if responseline then
-		local tmp = string.find(responseline, " ")
-		status = string.sub(responseline,tmp+1,tmp+3) --status code.
-	else
-		return
-	end
-
-	local uri = HttpGetRequestUriRaw()
-	uri = unescape(uri) --url decoding for uri & GET parameters.
-	
-	-- uri = string.lower(uri)			
-	query = ""
-	tmp = string.find(uri, "?")
-
-	if tmp then
-		uri2 = urlObj.parse(uri)
-		query = uri2.query	   --GET parameters.
-		uri = string.sub(uri,1,tmp-1)
-	end
-
-	uri = string.lower(uri)
-
-	local ext = uri:reverse():find("%.")
-	if ext then
-		ext = #uri - ext+1
-		ext = string.sub(uri,ext)
-
-		if block_extensions[ext] == ext then
-			--Ignoring this request.
-			return
-		end
-	end
-
+print (rs_body)
 	--Time stamp
 	time = SCPacketTimeString()
 	month,day,year,hour,min,sec = time:match("(%d+)/(%d+)/(%d+)-(%d+):(%d+):(%d+)")
