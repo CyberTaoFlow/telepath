@@ -275,7 +275,7 @@ function log(args)
 		rs_body = rs_body .. v
 	    end
 	end
-print (rs_body)
+
 	--Time stamp
 	time = SCPacketTimeString()
 	month,day,year,hour,min,sec = time:match("(%d+)/(%d+)/(%d+)-(%d+):(%d+):(%d+)")
