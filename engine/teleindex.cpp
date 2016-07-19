@@ -437,12 +437,9 @@ void searchDetect(char * reply,string & app_id,unsigned int page_id,string & pag
 	}
 }
 
-string makeSID(string ip,string & ua,string & host){
-	ip.append(ua);
-	ip.append(host);
-
+string makeSID(string & cookie){
 	char buff_sid[20];
-	sprintf(buff_sid,"%u",(unsigned int)hashCode(ip) );
+	sprintf(buff_sid,"%u",(unsigned int)hashCode(cookie) );
 
 	return string(buff_sid);
 }
@@ -877,6 +874,9 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 				else if(itConvertObj->first[1] == 'Q'){
 					parseGetPostParams(itConvertObj->second,vAttr,'G');
 				}
+				else if(itConvertObj->first[1] == 'S'){
+					teleo->mParams['e'/*SID*/] = makeSID(itConvertObj->second);
+				}
 				else if(itConvertObj->first[1] == 'B'){
 					postparams = itConvertObj->second;
 				}
@@ -1061,8 +1061,6 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 	//Make RID.
 	long long uRID = longRand();
 	teleo->mParams['j'/*RID*/]=int_to_string(uRID);
-	//Make SID.
-	teleo->mParams['e'/*SID*/] = makeSID(teleo->mParams['a'/*UserIP*/],teleo->mParams['z'/*user-agent*/],teleo->mParams['f'/*App*/]);
 
 	//Get Title
 	if(hashRespBodys.count(hashResp) == 0){
