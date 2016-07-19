@@ -211,12 +211,12 @@ function log(args)
 
 	-- uri = string.lower(uri) 
 	query = ""
-	tmp = string.find(uri, "?")
+	local question_mark = string.find(uri, "?")
 
-	if tmp then
+	if question_mark then
 		uri2 = urlObj.parse(uri)
 		query = uri2.query         --GET parameters.
-		uri = string.sub(uri,1,tmp-1)
+		uri = string.sub(uri,1,question_mark-1)
 	end
 
 	uri = string.lower(uri)
@@ -227,6 +227,22 @@ function log(args)
 		ext = string.sub(uri,ext)
 
 		if block_extensions[ext] == ext then
+			--Extension Filter.
+			--Ignoring this request.
+			return
+		end
+	end
+
+	--Getting source IP and destination IP.
+	ipver, srcip, dstip, proto, sp, dp = SCFlowTuple()
+	
+	--Making decimal client IP.
+	local o1,o2,o3,o4 = srcip:match("(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)" )
+	int_ip = 16777216*o1 + 65536*o2 + 256*o3 + o4
+
+	for key, value in pairs(whitelist_ips) do
+		if (whitelist_ips[key] >= int_ip and int_ip >= key) then
+			--Whitelist IP Filter.
 			--Ignoring this request.
 			return
 		end
@@ -237,6 +253,8 @@ function log(args)
 		local tmp = string.find(requestline, " ")
 		method = string.sub(requestline, 1, tmp-1)  --method.
 	else
+		--Invalid Method.
+		--Ignoring this request.
 		return
 	end
 
@@ -245,6 +263,8 @@ function log(args)
 		local tmp = string.find(responseline, " ")
 		status = string.sub(responseline,tmp+1,tmp+3) --status code.
 	else
+		--Invalid Status Code.
+		--Ignoring this request.
 		return
 	end
 
@@ -254,9 +274,6 @@ function log(args)
 		setup()
 	end
 
-	-- Read it!
-	ipver, srcip, dstip, proto, sp, dp = SCFlowTuple()
-	
 	rq_body = ""
 	rs_body = ""
 	
@@ -294,10 +311,6 @@ function log(args)
 		RC = status			--Status code.
 	}
 
-	--Making decimal client IP.
-	local o1,o2,o3,o4 = srcip:match("(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)" )
-	int_ip = 16777216*o1 + 65536*o2 + 256*o3 + o4
-
 	rqh = HttpGetRequestHeaders()
 	for k, v in pairs(rqh) do
 		k = unescape(k) --url decoding for header names.
@@ -328,12 +341,17 @@ function log(args)
 		end
 	end
 
-	for key, value in pairs(whitelist_ips) do
-		if (whitelist_ips[key] >= int_ip and int_ip >= key) then
-			--Ignoring this request.
-			return
-		end
+	if fp_ua then
+	else
+		fp_ua = "0"
 	end
+
+	if fp_host then
+	else
+		fp_host = "0"
+	end
+
+	request["TS"] = srcip .. fp_ua .. fp_host
 
 	rsh = HttpGetResponseHeaders()
 	for k, v in pairs(rsh) do
@@ -347,12 +365,6 @@ function log(args)
 			request["RH_" .. k] = tostring(v)
 		end
 	end
-
-	--EXP = {
-	--	id = "11111",
-	--	value = "192.168.1.1",
-	--	host = "hybridsec.com"
-	--}
 
 	express_flag = false
 
@@ -371,10 +383,9 @@ function log(args)
 				local record_url_flag = string.find(query,record_url_tmp)
 				if(record_url_flag) then
 					express_flag = true
-					fingerprint = srcip .. fp_ua .. fp_host
+					fingerprint = request["TS"]
 				else
-					local fp_tmp = srcip .. fp_ua .. fp_host
-					if (fp_tmp == fingerprint) then
+					if (request["TS"] == fingerprint) then
 						express_flag = true
 					end
 				end
@@ -398,3 +409,4 @@ end
 function deinit (args)
 	-- Shutdown
 end
+
