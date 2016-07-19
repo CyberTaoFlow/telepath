@@ -565,7 +565,7 @@ void *thread_check_disk_space(void *threadid)
 		if (statvfs("/", &vfs) < 0)
 			exit(-1);
 		free_space_ratio = 100 * (double long)vfs.f_bavail/ (double long)vfs.f_blocks;
-		if(free_space_ratio < 10){
+		if(free_space_ratio < 20){
 			delete_oldest();
 		}
 	}
