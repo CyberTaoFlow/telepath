@@ -3,7 +3,10 @@
 #source compiled.list
 
 #VER=`svn info | grep Revision | sed  's/Revision: //'`
-VER=`git rev-parse HEAD | grep ... | sed -e 's/^\(.\{4\}\).*/\1/'`
+#VER=`git rev-parse HEAD | grep ... | sed -e 's/^\(.\{4\}\).*/\1/'`
+VER=`cat .counter`;
+((VER++))
+echo $VER > .counter;
 BUILD_VER="1"
 OS=
 OS_VER=
@@ -411,7 +414,8 @@ create_tarball() {
 #cd trunk
 
 #VER=`svn info | grep Revision | sed  's/Revision: //'`
-VER=`git rev-parse HEAD | grep ... | sed -e 's/^\(.\{4\}\).*/\1/'`
+#VER=`git rev-parse HEAD | grep ... | sed -e 's/^\(.\{4\}\).*/\1/'`
+#VER=`cat ./counter`
 # REMOVE BUILDS
 
 #clear_binaries
