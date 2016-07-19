@@ -507,7 +507,7 @@ void *thread_check_elasticsearch(void *threadid){
 	CURL *curl;
 	curl = curl_easy_init();
 	char check_es[200];
-	sprintf(check_es,"%s/telepath-rules/_search",es_connect.c_str());
+	sprintf(check_es,"%s/telepath-config/_search",es_connect.c_str());
 	sleep(60);
 	while(1){
 		sleep(30);
@@ -545,7 +545,7 @@ void *thread_restart_es_stuck(void *threadid){
 			counter++;
 
 			syslog (LOG_NOTICE,"Trying to reconnect to ElasticSearch ... %u.",counter);
-			if(counter == 20){
+			if(counter == 60){
 				syslog (LOG_NOTICE,"Restarting ElasticSearch");
 				restart_program();
 			}
