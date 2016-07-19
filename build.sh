@@ -3,7 +3,10 @@
 #source compiled.list
 
 #VER=`svn info | grep Revision | sed  's/Revision: //'`
-VER=`git rev-parse HEAD | grep ... | sed -e 's/^\(.\{8\}\).*/\1/'`
+#VER=`git rev-parse HEAD | grep ... | sed -e 's/^\(.\{4\}\).*/\1/'`
+VER=`cat .counter`;
+((VER++))
+echo $VER > .counter;
 BUILD_VER="1"
 OS=
 OS_VER=
@@ -411,7 +414,8 @@ create_tarball() {
 #cd trunk
 
 #VER=`svn info | grep Revision | sed  's/Revision: //'`
-VER=`git rev-parse HEAD | grep ... | sed -e 's/^\(.\{8\}\).*/\1/'`
+#VER=`git rev-parse HEAD | grep ... | sed -e 's/^\(.\{4\}\).*/\1/'`
+#VER=`cat ./counter`
 # REMOVE BUILDS
 
 #clear_binaries
@@ -469,7 +473,7 @@ fi
 # BUILD / RSYNC .DEB
 if [ $OS == "UBUNTU" ]; then
 
-	sed -e "s/Version: 3.0/Version: "$VERSION"_"$VER"_ubuntu"$OS_VER"/" debian/control > ./debian/DEBIAN/control
+	sed -e "s/Version: 3.0/Version: "$VERSION"."$VER"ubuntu"$OS_VER"/" debian/control > ./debian/DEBIAN/control
 
 	cp ./debian/postrm ./debian/DEBIAN
 	chmod 755 ./debian/DEBIAN/postrm
@@ -480,7 +484,7 @@ if [ $OS == "UBUNTU" ]; then
 	rsync --exclude .svn -a debian/ debian-build
 	rm -rf debian-build/control
 	dpkg-deb --build debian-build > /dev/null 2>&1
-	mv debian-build.deb "telepath_amd64_"$VERSION"_"$VER"_ubuntu"$OS_VER".deb"
+	mv debian-build.deb "telepath_amd64_"$VERSION"."$VER"ubuntu"$OS_VER".deb"
 	#rm -rf debian-build
 
 	if [ "$ARG" == "v3" ]; then
@@ -510,6 +514,7 @@ if [ $OS == "UBUNTU" ]; then
 			echo "ENJOY YOUR NEW BUILD!!!"
 		fi
 	fi
+
 
 	if [ "$ARG" == "v2" ]; then
 		# VERSION 2 STAGING
