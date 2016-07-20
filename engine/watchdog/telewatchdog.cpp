@@ -362,12 +362,12 @@ void delete_oldest()
 	curl_easy_perform(curl);
         syslog(LOG_NOTICE,"curl -XDELETE %s", url);
 
-	sprintf(url,"rm /opt/telepath/db/elasticsearch/logs/*%s > /dev/null 2>&1",minShardString.c_str());
-	FILE* ppipe_logs_delete = popen(url, "w");
-	pclose(ppipe_logs_delete);
-	syslog(LOG_NOTICE,"%s",url);
-	FILE* ppipe_redis_delete = popen("rm /var/lib/redis/dump.rdb > /dev/null 2>&1", "w");
-	pclose(ppipe_redis_delete);
+	//sprintf(url,"rm /opt/telepath/db/elasticsearch/logs/*%s > /dev/null 2>&1",minShardString.c_str());
+	//FILE* ppipe_logs_delete = popen(url, "w");
+	//pclose(ppipe_logs_delete);
+	//syslog(LOG_NOTICE,"%s",url);
+	//FILE* ppipe_redis_delete = popen("rm /var/lib/redis/dump.rdb > /dev/null 2>&1", "w");
+	//pclose(ppipe_redis_delete);
 
 }
 
