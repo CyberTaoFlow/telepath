@@ -24,7 +24,6 @@ function init (args)
 	return needs 
 end
 
-fingerprint = "0"
 block_extensions = {}
 whitelist_ips = {}
 --whitelist_ips[2219196937] = 2219196939
@@ -32,7 +31,8 @@ whitelist_ips = {}
 load_balancer_ips = {}
 load_balancer_headers = {}
 
-
+records = {}
+fingerprint = {}
 
 function setup (args) 
 	-- Emptying the global configuration arrays --
@@ -367,39 +367,37 @@ function log(args)
 	end
 
 	express_flag = false
+	record_flag = false
 
-	--redis:lpush("E", msgpack.pack(EXP)  )
 	hr_queue = redis:lpop("E")
 	if hr_queue then
 		hybrid_record = msgpack.unpack(hr_queue)
+		records[hybrid_record.value] = hybrid_record.id
+		redis:lpush(hybrid_record.id,  "0")
+		record_flag = true
 	end
 
-	if (hybrid_record) then
-		if (hybrid_record.value ~= "0") then
-			if ( hybrid_record.value == srcip ) then
-				express_flag = true
-			else
-				local record_url_tmp = "hybridrecord=" .. hybrid_record.value
-				local record_url_flag = string.find(query,record_url_tmp)
-				if(record_url_flag) then
-					express_flag = true
-					fingerprint = request["TS"]
-				else
-					if (request["TS"] == fingerprint) then
-						express_flag = true
-					end
-				end
-			end
-		else
-			fingerprint="0"
-		end
+	if ( records[srcip] ) then
+		express_flag = true
+		express_queue_id = records[srcip]
+	elseif ( fingerprint[ request["TS"] ] ) then
+		express_flag = true
+		express_queue_id = fingerprint[ request["TS"] ]
 	else
-		fingerprint="0"
+		if (record_flag) then
+			local record_url_tmp = "hybridrecord=" .. hybrid_record.value
+			local record_url_flag = string.find(query,record_url_tmp)
+			if(record_url_flag) then
+				express_flag = true
+				express_queue_id = hybrid_record.id
+				fingerprint[ request["TS"] ] = hybrid_record.id
+			end
+		end
 	end
 
 	-- Pushing the request to redis.
 	if (express_flag) then
-		redis:lpush("R",  msgpack.pack(request)  )
+		redis:lpush(express_queue_id,  msgpack.pack(request)  )
 	else
 		redis:lpush("Q",  msgpack.pack(request)  )
 	end
