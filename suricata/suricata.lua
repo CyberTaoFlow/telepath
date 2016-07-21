@@ -172,9 +172,9 @@ function setup (args)
 	--	print (kk .. "=====" .. vv)
 	--end
 
-	--for kk, vv in pairs(block_extensions) do
-	--	print (kk .. "=====" .. vv)
-	--end
+	for kk, vv in pairs(block_extensions) do
+		print (kk .. "=====" .. vv)
+	end
 
 	--for kk, vv in pairs(load_balancer_headers) do
 	--	print (kk .. "=====" .. vv)
@@ -372,7 +372,14 @@ function log(args)
 	hr_queue = redis:lpop("E")
 	if hr_queue then
 		hybrid_record = msgpack.unpack(hr_queue)
-		records[hybrid_record.value] = hybrid_record.id
+		local url_or_ip = string.find(hybrid_record.value,"%.")
+		if (url_or_ip) then
+			records[hybrid_record.value] = hybrid_record.id
+		else
+			local record_url_tmp = "hybridrecord=" .. hybrid_record.value
+			records[record_url_tmp] = hybrid_record.id
+		end
+
 		redis:lpush(hybrid_record.id,  "0")
 		record_flag = true
 	end
@@ -383,16 +390,10 @@ function log(args)
 	elseif ( fingerprint[ request["TS"] ] ) then
 		express_flag = true
 		express_queue_id = fingerprint[ request["TS"] ]
-	else
-		if (record_flag) then
-			local record_url_tmp = "hybridrecord=" .. hybrid_record.value
-			local record_url_flag = string.find(query,record_url_tmp)
-			if(record_url_flag) then
-				express_flag = true
-				express_queue_id = hybrid_record.id
-				fingerprint[ request["TS"] ] = hybrid_record.id
-			end
-		end
+	elseif ( records[query] ) then
+		express_flag = true
+		express_queue_id = records[query]
+		fingerprint[ request["TS"] ] = records[query]
 	end
 
 	-- Pushing the request to redis.
@@ -407,4 +408,3 @@ end
 function deinit (args)
 	-- Shutdown
 end
-
