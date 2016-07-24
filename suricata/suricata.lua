@@ -359,6 +359,10 @@ function log(args)
 		v = unescape(v) --url decoding for header values.
 		k = string.lower(k) --lowercasing for header names.
 
+		if (k == "set-cookie") then
+			v = string.lower(v)
+		end
+
 		if type(v) == "table" then
 			request["RH_" .. k] = table.concat(v, "|&|")
 		else

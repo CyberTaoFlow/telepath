@@ -662,6 +662,7 @@ disableErrorMessages();
 initRegex();			// This function is defined at enginetypes.h .
 initHybridRecord();		// This function is defined at enginetypes.h .
 initAttType();			// This function is defined at enginetypes.h .
+initCookieBlackList();		// This function is defined at enginetypes.h .
 initSyslog();
 open_geoIP_database();		// This function is defined at geoip.h .
 

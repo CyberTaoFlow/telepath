@@ -4,6 +4,7 @@ using namespace std;
 boost::unordered_map <string,string> months;
 boost::unordered_set <string> methods;
 boost::unordered_map <string,char> const_attribute_types;
+boost::unordered_set <string> cookieBlackList;
 
 void initRegex(){
 				//  # Visa | MasterCard | American Express | Diners Club | Discover | JCB .
@@ -99,3 +100,13 @@ void initAttType(){
 
 }
 
+void initCookieBlackList(){
+	cookieBlackList.insert("path");
+	cookieBlackList.insert("domain");
+	cookieBlackList.insert("ui");
+	cookieBlackList.insert("max-age");
+	cookieBlackList.insert("version");
+	cookieBlackList.insert("expires");
+	cookieBlackList.insert("lang");
+	cookieBlackList.insert("drop_lang");
+}

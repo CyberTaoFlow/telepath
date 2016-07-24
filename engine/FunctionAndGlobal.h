@@ -628,6 +628,11 @@ void findTopCookies(map <string,cookieNames>::iterator & it){
 
 void calCookieNames(string & domainID,string & cookie){
 	std::pair<map <string,cookieNames >::iterator,bool> itCookieStat;
+	map <string,unsigned int>::iterator itCookieName;
+	std::size_t found;
+	string tmp;
+	bool flag=true;
+	
 
 	itCookieStat.first = mCookieStat.find(domainID);
 	if(itCookieStat.first == mCookieStat.end() ){
@@ -647,18 +652,13 @@ void calCookieNames(string & domainID,string & cookie){
 		itCookieStat.first->second.counter++;
 	}
 
-	bool flag=true;
-	string tmp;
-	std::size_t found;
-	map <string,unsigned int>::iterator itCookieName;
-
 	for(unsigned int i=0;i<cookie.size();i++){
 		if(flag==true){
 			if(cookie[i]=='='){
-				if ( !(tmp=="path" || tmp=="expires" || tmp=="domain") ){
+				if ( cookieBlackList.count(tmp) == 0 ) {
 					found = tmp.find("httponly");
 					if (found == std::string::npos){
-						found = tmp.find("drop_lang");
+						found = tmp.find("gmt;");
 						if (found == std::string::npos){
 							itCookieName = itCookieStat.first->second.names.find(tmp);
 							if( itCookieName != itCookieStat.first->second.names.end() ){
@@ -671,19 +671,18 @@ void calCookieNames(string & domainID,string & cookie){
 				}
 				tmp.clear();
 				flag=false;
-				continue;
 			}
-			else if(cookie[i]!=' '){
+			else if(cookie[i]!=' ' && cookie[i]!=','){
 				tmp.push_back(cookie[i]);
 				if(tmp.size()==2){
-					if(tmp[0]=='_' && tmp[1]=='_'){
+					if(tmp[0]=='_' && tmp[1]=='_'){ // Getting rid of google's cookie names.
 						tmp.clear();
 						flag=false;
 					}
 				}
 			}
 		}else{
-			if(cookie[i]==';'){
+			if(cookie[i]==';' || cookie[i]==','){
 				flag=true;
 			}
 		}
