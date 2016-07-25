@@ -218,27 +218,40 @@ unsigned int get_full_ps(string program_name){
 	}
 }
 
-void get_pcap_filter(string & pcap){
-	string tmp;
-	size_t find_pos = pcap.find("_filter\"");
+void get_pcap_filter(string & output,string & pcap){
+	size_t find_pos = output.find("_filter\"");
 	if(find_pos != string::npos ){
 		find_pos += 10;
 
-		tmp.clear();
-		for(unsigned int i=find_pos;i<pcap.size();i++){
-			if(pcap[i]=='\"'){
+		pcap.clear();
+		for(unsigned int i=find_pos;i<output.size();i++){
+			if(output[i]=='\"'){
 				break;
 			}
-			tmp.push_back(pcap[i]);
+			pcap.push_back(output[i]);
 		}
-		pcap=tmp;
+	}
+}
+
+void get_interface_name(string & output,string & interface){
+	size_t find_pos = output.find("interface_name\"");
+	if(find_pos != string::npos ){
+		find_pos += 17;
+
+		interface.clear();
+		for(unsigned int i=find_pos;i<output.size();i++){
+			if(output[i]=='\"'){
+				break;
+			}
+			interface.push_back(output[i]);
+		}
 	}
 }
 
 void *thread_init_suricata(void *threadid){
 	char suricata_cmd[5000];
 	FILE* ppipe_suricata;
-	string output;
+	string output,pcap,interface;
 
 	redisContext *redis;
 	redisReply *reply;
@@ -255,15 +268,21 @@ void *thread_init_suricata(void *threadid){
 			if( (get_ps("Suricata-Main")==0) ){
 				if( files_queue.empty() ){
 					es_get_config("/telepath-config/interfaces/interface_id/_source",output);
-					get_pcap_filter(output);
+					get_pcap_filter(output,pcap);
+					get_interface_name(output,interface);
+
+					sprintf( suricata_cmd,"ifconfig %s up; ifconfig %s promisc;",interface.c_str(),interface.c_str());
+					syslog(LOG_NOTICE,"%s",suricata_cmd);
+					ppipe_suricata = popen(suricata_cmd,"w");
+					pclose(ppipe_suricata);
 
 					syslog(LOG_NOTICE, "No more files to upload ... Reload Suricata");
-					sprintf( suricata_cmd,"/opt/telepath/suricata/suricata -D -c /opt/telepath/suricata/suricata.yaml --af-packet %s > /dev/null 2>&1",output.c_str());
+					sprintf( suricata_cmd,"/opt/telepath/suricata/suricata -D -c /opt/telepath/suricata/suricata.yaml --af-packet %s > /dev/null 2>&1",pcap.c_str());
 					es_insert("/telepath-config/config/file_loader_mode_id","{\"value\":\"0\"}");
 				}else{
 					string pcap_file = files_queue.front();
 					syslog(LOG_NOTICE, "Next file to upload: %s", (char*)pcap_file.c_str() );
-					files_queue.pop();		
+					files_queue.pop();
 					sprintf( suricata_cmd,"/opt/telepath/suricata/suricata -r %s -c /opt/telepath/suricata/suricata.yaml > /dev/null 2>&1",(char*)pcap_file.c_str() );
 					es_insert("/telepath-config/config/file_loader_mode_id","{\"value\":\"1\"}");
 				}
@@ -293,7 +312,7 @@ void *thread_init_suricata(void *threadid){
 				syslog (LOG_NOTICE,"%s",suricata_cmd);
 				ppipe_suricata = popen(suricata_cmd,"w");
 				pclose(ppipe_suricata);
-				sleep(2);		
+				sleep(2);
 			}
 		}else{
 			ppipe_suricata = popen("killall -9 Suricata-Main > /dev/null 2>&1 || true","w");
@@ -859,7 +878,7 @@ int main(int argc, char *argv[])
 			if(reverse_proxy_mode==1){
 				if(get_ps("nginx")==0){
 					syslog (LOG_NOTICE, "nginx is not running - Restart");
-					restart_program();				
+					restart_program();
 				}
 			}
 
