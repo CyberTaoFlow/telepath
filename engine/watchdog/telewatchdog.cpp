@@ -21,6 +21,7 @@
 #include <hiredis/hiredis.h>
 #include <fstream>
 
+#include "../local_time.h"
 #include "../ElasticSearch.h"
 #include "../jsoncpp/json.h"
 #include "../Sha1.h"
@@ -759,7 +760,8 @@ int main(int argc, char *argv[])
 	openlog ("Telewatchdog", LOG_CONS | LOG_PID | LOG_NDELAY, LOG_LOCAL1);
 
 	if( argc > 1 &&  strcmp("-v",argv[1]) == 0 ){
-		cout <<"Version:"<< GIT_REV <<endl;
+		cout <<"Watchdog Version:"<< GIT_REV;
+		print_time(COMPILATION_TIME);
 		exit(1);
 	}
 

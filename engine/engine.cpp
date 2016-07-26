@@ -579,7 +579,8 @@ void startThreads(){
 
 void showSvnVersion(char * mode){
 	if( strcmp("-v",mode) == 0 ){
-		cout <<"Version:"<< GIT_REV <<endl;
+		cout <<"Engine Version:  "<< GIT_REV;
+		print_time(COMPILATION_TIME);
 		exit(1);
 	}
 }
