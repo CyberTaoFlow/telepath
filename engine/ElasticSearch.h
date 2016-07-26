@@ -104,16 +104,16 @@ void es_insert(string url,string postparams){
 
 void initElasticSearchData(){
 
-	es_insert("/telepath-config","");
-	es_insert("/telepath-rules","");
-	es_insert("/telepath-domains","");
-	es_insert("/telepath-scheduler","");
-	es_insert("/telepath-cases","");
-	es_insert("/telepath-tor-ips","");
-	es_insert("/telepath-bad-ips","");
+	es_insert("/telepath-config","{\"settings\":{\"number_of_shards\":1,\"number_of_replicas\":0}}");
+	es_insert("/telepath-rules","{\"settings\":{\"number_of_shards\":1,\"number_of_replicas\":0}}");
+	es_insert("/telepath-domains","{\"settings\":{\"number_of_shards\":1,\"number_of_replicas\":0}}");
+	es_insert("/telepath-scheduler","{\"settings\":{\"number_of_shards\":1,\"number_of_replicas\":0}}");
+	es_insert("/telepath-cases","{\"settings\":{\"number_of_shards\":1,\"number_of_replicas\":0}}");
+	es_insert("/telepath-tor-ips","{\"settings\":{\"number_of_shards\":1,\"number_of_replicas\":0}}");
+	es_insert("/telepath-bad-ips","{\"settings\":{\"number_of_shards\":1,\"number_of_replicas\":0}}");
 	es_insert("/telepath-tor-ips/_settings","{\"index\":{\"max_result_window\":100000}}");
 	es_insert("/telepath-bad-ips/_settings","{\"index\":{\"max_result_window\":400000}}");
-	es_insert("/telepath-actions","{\"settings\":{\"analysis\":{\"analyzer\":{\"analyzer_keyword\":{\"tokenizer\":\"keyword\",\"filter\":\"lowercase\"}}}},\"mappings\":{\"actions\":{\"properties\":{\"action_name\":{\"type\":\"string\",\"store\":true,\"index\":\"not_analyzed\",\"fields\":{\"search\":{\"analyzer\":\"analyzer_keyword\",\"type\":\"string\"}}},\"application\":{\"type\":\"string\",\"store\":true,\"index\":\"not_analyzed\"}}}}}");
+	es_insert("/telepath-actions","{\"settings\":{\"number_of_shards\":1,\"number_of_replicas\":0,\"analysis\":{\"analyzer\":{\"analyzer_keyword\":{\"tokenizer\":\"keyword\",\"filter\":\"lowercase\"}}}},\"mappings\":{\"actions\":{\"properties\":{\"action_name\":{\"type\":\"string\",\"store\":true,\"index\":\"not_analyzed\",\"fields\":{\"search\":{\"analyzer\":\"analyzer_keyword\",\"type\":\"string\"}}},\"application\":{\"type\":\"string\",\"store\":true,\"index\":\"not_analyzed\"}}}}}");
 
 
 	es_mapping("/telepath-config/config/_mapping","{\"config\":{\"properties\":{\"value\":{\"type\":\"string\",\"store\":true,\"index\":\"not_analyzed\"}}}}");
