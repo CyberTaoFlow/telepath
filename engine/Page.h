@@ -67,7 +67,7 @@ public:
 	string host_name;			// For example : "hybridsec.com" .
 	string domain_id;			// For example : 534 .
 	unsigned int subdomain_id;		// For example : 432 .
-
+	string sha256_sid;
 
 	Page();
 	Page(boost::unordered_map<char,string> &,unsigned int,unsigned int,long long,string &,string &);
@@ -76,4 +76,3 @@ public:
 };
 
 #endif
-

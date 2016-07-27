@@ -5,6 +5,7 @@ class RequestValToInsert{
 public:
 	long long RID;
 	unsigned int Sid;
+	string sha256_sid;
 	string user_name;
 	string host_name;
 	string page_name;
@@ -33,7 +34,7 @@ public:
 	unsigned int decimalIP;
 
 	RequestValToInsert(){}
-	void init(string & user_name,long long RID,unsigned int & Sid,unsigned int & index,string & page_name,string & host_name,double & ts,string & ip_orig,string & ip_resp,double flow_score,double query_score,double geo_normal,double landing_normal,unsigned short & status_code,string & country,string & city,char SID_status,string & protocol,string & method,Coordinate & c,unsigned int decimalIP,string & shard,string & title,double presence,string & canonical_url,short op_mode){ 
+	void init(string & user_name,long long RID,unsigned int & Sid,string & sha256_sid,unsigned int & index,string & page_name,string & host_name,double & ts,string & ip_orig,string & ip_resp,double flow_score,double query_score,double geo_normal,double landing_normal,unsigned short & status_code,string & country,string & city,char SID_status,string & protocol,string & method,Coordinate & c,unsigned int decimalIP,string & shard,string & title,double presence,string & canonical_url,short op_mode){ 
 	boost::unordered_map <unsigned int,boost::unordered_map <string,UserReputation> >::iterator itReputationUsers;
 	boost::unordered_map <string,UserReputation>::iterator itUsers;
 
@@ -41,6 +42,7 @@ public:
 	this->user_name=user_name;
 	this->RID=RID;
 	this->Sid=Sid;
+	this->sha256_sid=sha256_sid;
 	this->sequence=index;
 	this->query_score=query_score;
 	this->page_name=page_name;

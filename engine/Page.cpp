@@ -33,6 +33,7 @@ Page::Page(boost::unordered_map<char,string> & mParams,unsigned int index,unsign
 	this->shard=mParams['S'/*Shard*/];
 	this->title=mParams['m'/*Title*/];
 	this->page_name=mParams['c'/*Page*/];
+	this->sha256_sid=mParams['E'/*SHA256_SID*/];
 	if(mParams['C'/*Canonical URL*/].size()==0){
 		this->canonical_url=mParams['c'/*Page*/];
 	}else{
