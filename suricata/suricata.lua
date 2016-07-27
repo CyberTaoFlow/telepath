@@ -9,6 +9,7 @@ package.cpath = package.cpath .. ";/usr/lib/x86_64-linux-gnu/lua/5.1/?.so"
 package.cpath = package.cpath .. ";/usr/lib64/lua/5.1/?.so"
 
 
+sha_256 = (loadfile("/opt/telepath/suricata/sha256.lua"))()
 msgpack = (loadfile("/opt/telepath/suricata/msgpack.lua"))()
 redisObj = (loadfile("/opt/telepath/suricata/redis.lua"))()
 redis, err = redisObj:connect()
@@ -172,9 +173,9 @@ function setup (args)
 	--	print (kk .. "=====" .. vv)
 	--end
 
-	for kk, vv in pairs(block_extensions) do
-		print (kk .. "=====" .. vv)
-	end
+	--for kk, vv in pairs(block_extensions) do
+	--	print (kk .. "=====" .. vv)
+	--end
 
 	--for kk, vv in pairs(load_balancer_headers) do
 	--	print (kk .. "=====" .. vv)
@@ -196,14 +197,6 @@ local unescape = function(url)
 	end
 end
 
-
--- transform a string of bytes in a string of hexadecimal digits
-local function str2hexa (s)
-	local h = string.gsub(s, ".", function(c)
-		return string.format("%02x", string.byte(c))
-	end)
-	return h
-end
 
 function log(args)
 	local uri = HttpGetRequestUriRaw()
@@ -351,17 +344,13 @@ function log(args)
 		fp_host = "0"
 	end
 
-	request["TS"] = srcip .. fp_ua .. fp_host
+	request["TS"] = sha_256.sha256(srcip .. fp_ua .. fp_host)
 
 	rsh = HttpGetResponseHeaders()
 	for k, v in pairs(rsh) do
 		k = unescape(k) --url decoding for header names.
 		v = unescape(v) --url decoding for header values.
 		k = string.lower(k) --lowercasing for header names.
-
-		if (k == "set-cookie") then
-			v = string.lower(v)
-		end
 
 		if type(v) == "table" then
 			request["RH_" .. k] = table.concat(v, "|&|")
@@ -371,21 +360,34 @@ function log(args)
 	end
 
 	express_flag = false
-	record_flag = false
 
 	hr_queue = redis:lpop("E")
 	if hr_queue then
 		hybrid_record = msgpack.unpack(hr_queue)
-		local url_or_ip = string.find(hybrid_record.value,"%.")
-		if (url_or_ip) then
-			records[hybrid_record.value] = hybrid_record.id
-		else
-			local record_url_tmp = "hybridrecord=" .. hybrid_record.value
-			records[record_url_tmp] = hybrid_record.id
-		end
+		if (hybrid_record.value == "0") then
+                        for key, val in pairs(records) do
+                                if (tostring(val) == hybrid_record.id) then
+                                        records[key] = nil
+                                        break
+                                end
+                        end
 
-		redis:lpush(hybrid_record.id,  "0")
-		record_flag = true
+                        for key, val in pairs(fingerprint) do
+                                if (tostring(val) == hybrid_record.id) then
+                                        fingerprint[key] = nil
+                                        break
+                                end
+                        end
+		else
+			if (hybrid_record.mode == "u") then
+				records[hybrid_record.value] = hybrid_record.id
+			elseif (hybrid_record.mode == "i") then
+				local record_url_tmp = "hybridrecord=" .. hybrid_record.value
+				records[record_url_tmp] = hybrid_record.id
+			elseif (hybrid_record.mode == "s") then
+
+			end
+		end
 	end
 
 	if ( records[srcip] ) then
@@ -399,7 +401,7 @@ function log(args)
 		express_queue_id = records[query]
 		fingerprint[ request["TS"] ] = records[query]
 	end
-
+	
 	-- Pushing the request to redis.
 	if (express_flag) then
 		redis:lpush(express_queue_id,  msgpack.pack(request)  )
@@ -412,3 +414,4 @@ end
 function deinit (args)
 	-- Shutdown
 end
+
