@@ -9,7 +9,7 @@ package.cpath = package.cpath .. ";/usr/lib/x86_64-linux-gnu/lua/5.1/?.so"
 package.cpath = package.cpath .. ";/usr/lib64/lua/5.1/?.so"
 
 
-sha_256 = (loadfile("/opt/telepath/suricata/sha256.lua"))()
+sha_256 = (loadfile("/opt/telepath/suricata/sha.lua"))()
 msgpack = (loadfile("/opt/telepath/suricata/msgpack.lua"))()
 redisObj = (loadfile("/opt/telepath/suricata/redis.lua"))()
 redis, err = redisObj:connect()
@@ -33,7 +33,6 @@ load_balancer_ips = {}
 load_balancer_headers = {}
 
 records = {}
-fingerprint = {}
 
 function setup (args) 
 	-- Emptying the global configuration arrays --
@@ -368,24 +367,16 @@ function log(args)
                         for key, val in pairs(records) do
                                 if (tostring(val) == hybrid_record.id) then
                                         records[key] = nil
-                                        break
-                                end
-                        end
-
-                        for key, val in pairs(fingerprint) do
-                                if (tostring(val) == hybrid_record.id) then
-                                        fingerprint[key] = nil
-                                        break
                                 end
                         end
 		else
-			if (hybrid_record.mode == "u") then
+			if (hybrid_record.mode == "i") then
 				records[hybrid_record.value] = hybrid_record.id
-			elseif (hybrid_record.mode == "i") then
+			elseif (hybrid_record.mode == "u") then
 				local record_url_tmp = "hybridrecord=" .. hybrid_record.value
 				records[record_url_tmp] = hybrid_record.id
 			elseif (hybrid_record.mode == "s") then
-
+				records[hybrid_record.value] = hybrid_record.id
 			end
 		end
 	end
@@ -393,15 +384,15 @@ function log(args)
 	if ( records[srcip] ) then
 		express_flag = true
 		express_queue_id = records[srcip]
-	elseif ( fingerprint[ request["TS"] ] ) then
+	elseif ( records[ request["TS"] ] ) then
 		express_flag = true
-		express_queue_id = fingerprint[ request["TS"] ]
+		express_queue_id = records[ request["TS"] ]
 	elseif ( records[query] ) then
 		express_flag = true
 		express_queue_id = records[query]
-		fingerprint[ request["TS"] ] = records[query]
+		records[ request["TS"] ] = express_queue_id
 	end
-	
+
 	-- Pushing the request to redis.
 	if (express_flag) then
 		redis:lpush(express_queue_id,  msgpack.pack(request)  )
