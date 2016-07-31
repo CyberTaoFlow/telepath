@@ -19,6 +19,11 @@ fi
 if [ -n "$(which apt-get)" ]; then
 	apt-get -y install dialog php5 libapache2-mod-php5 php-pear php5-dev gdb php5-mysql mysql-common mysql-server lua5.1 lua-socket libcurl-ocaml-dev luarocks jq
 	pecl install msgpack-0.5.7
+	echo extension=msgpack.so > /etc/php5/mods-available/msgpack.ini
+	cd /etc/php5/apache2/conf.d/
+	ln -s ../../mods-available/msgpack.ini ./20-msgpack.ini
+	cd /etc/php5/cli/conf.d/
+	ln -s ../../mods-available/msgpack.ini ./20-msgpack.ini
 
 	luarocks install Lua-cURL
 	luarocks install Lua-cURL --server=https://rocks.moonscript.org/dev
