@@ -17,7 +17,8 @@ if [ ! -f $MAIN_JSON ]; then
 fi
 
 if [ -n "$(which apt-get)" ]; then
-	apt-get -y install dialog php5 libapache2-mod-php5 php-pear php5-dev msgpack-0.5.7 gdb php5-mysql mysql-common mysql-server lua5.1 lua-socket libcurl-ocaml-dev luarocks jq
+	apt-get -y install dialog php5 libapache2-mod-php5 php-pear php5-dev gdb php5-mysql mysql-common mysql-server lua5.1 lua-socket libcurl-ocaml-dev luarocks jq
+	pecl install msgpack-0.5.7
 
 	luarocks install Lua-cURL
 	luarocks install Lua-cURL --server=https://rocks.moonscript.org/dev
