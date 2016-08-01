@@ -9,7 +9,7 @@ package.cpath = package.cpath .. ";/usr/lib/x86_64-linux-gnu/lua/5.1/?.so"
 package.cpath = package.cpath .. ";/usr/lib64/lua/5.1/?.so"
 
 
-sha_256 = (loadfile("/opt/telepath/suricata/sha.lua"))()
+sha_256 = (loadfile("/opt/telepath/suricata/sha256.lua"))()
 msgpack = (loadfile("/opt/telepath/suricata/msgpack.lua"))()
 redisObj = (loadfile("/opt/telepath/suricata/redis.lua"))()
 redis, err = redisObj:connect()
