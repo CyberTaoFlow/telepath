@@ -33,6 +33,7 @@ load_balancer_ips = {}
 load_balancer_headers = {}
 
 records = {}
+record_hosts = {}
 
 function setup (args) 
 	-- Emptying the global configuration arrays --
@@ -367,30 +368,44 @@ function log(args)
                         for key, val in pairs(records) do
                                 if (tostring(val) == hybrid_record.id) then
                                         records[key] = nil
+					record_hosts[key] = nil
                                 end
                         end
 		else
 			if (hybrid_record.mode == "i") then
 				records[hybrid_record.value] = hybrid_record.id
+				record_hosts[hybrid_record.value] = hybrid_record.host
 			elseif (hybrid_record.mode == "u") then
 				local record_url_tmp = "hybridrecord=" .. hybrid_record.value
 				records[record_url_tmp] = hybrid_record.id
+				record_hosts[record_url_tmp] = hybrid_record.host
 			elseif (hybrid_record.mode == "s") then
 				records[hybrid_record.value] = hybrid_record.id
+				record_hosts[hybrid_record.value] = hybrid_record.host
 			end
 		end
 	end
 
 	if ( records[srcip] ) then
-		express_flag = true
-		express_queue_id = records[srcip]
+		local tmp = string.find(fp_host,record_hosts[srcip])
+		if (tmp) then
+			express_flag = true
+			express_queue_id = records[srcip]
+		end
 	elseif ( records[ request["TS"] ] ) then
-		express_flag = true
-		express_queue_id = records[ request["TS"] ]
+		local tmp = string.find(fp_host,record_hosts[request["TS"]])
+		if (tmp) then
+			express_flag = true
+			express_queue_id = records[ request["TS"] ]
+		end
 	elseif ( records[query] ) then
-		express_flag = true
-		express_queue_id = records[query]
-		records[ request["TS"] ] = express_queue_id
+		local tmp = string.find(fp_host,record_hosts[query])
+		if (tmp) then
+			express_flag = true
+			express_queue_id = records[query]
+			records[ request["TS"] ] = express_queue_id
+			record_hosts[ request["TS"] ] = record_hosts[query]
+		end
 	end
 
 	-- Pushing the request to redis.
