@@ -17,7 +17,14 @@ if [ ! -f $MAIN_JSON ]; then
 fi
 
 if [ -n "$(which apt-get)" ]; then
-	apt-get -y install dialog php5 libapache2-mod-php5 php-pear php5-dev msgpack-0.5.7 gdb php5-mysql mysql-common mysql-server lua5.1 lua-socket libcurl-ocaml-dev luarocks jq
+	apt-get -y install dialog php5 libapache2-mod-php5 gdb php5-mysql mysql-common mysql-server lua5.1 lua-socket libcurl-ocaml-dev luarocks jq
+	apt-get -y install php-pear php5-dev
+	pecl install msgpack-0.5.7
+	echo extension=msgpack.so > /etc/php5/mods-available/msgpack.ini
+	cd /etc/php5/apache2/conf.d/
+	ln -s ../../mods-available/msgpack.ini ./20-msgpack.ini
+	cd /etc/php5/cli/conf.d/
+	ln -s ../../mods-available/msgpack.ini ./20-msgpack.ini
 
 	luarocks install Lua-cURL
 	luarocks install Lua-cURL --server=https://rocks.moonscript.org/dev
@@ -25,7 +32,6 @@ fi
 
 if [ -n "$(which yum)" ]; then
 	yum -y install dialog php php5 libapache2-mod-php5 php-cli gdb php-mysql mysql mysql-server mod_ssl lua-socket-devel.x86_64 ocaml-curl-devel.x86_64 lua-devel.x86_64 flex.x86_64 bison.x86_64 jq
-	
 	cd /tmp/
 	wget http://luarocks.org/releases/luarocks-2.0.6.tar.gz
 	tar -xzvf luarocks-2.0.6.tar.gz
@@ -280,8 +286,9 @@ binaries() {
 					rm -rf elasticsearch-2.3.1
 					#sed -i 's/^#index.number_of_shards: 1/index.number_of_shards: 1/g' /opt/telepath/db/elasticsearch/config/elasticsearch.yml
 					#sed -i 's/^#network.bind_host: 192.168.0.1/network.bind_host: 127.0.0.1/g' /opt/telepath/db/elasticsearch/config/elasticsearch.yml
+					sed -i 's/com.amazonaws: WARN/ ^#com.amazonaws: WARN/g' /opt/telepath/db/elasticsearch/config/loggin.yml
 					echo -e "*	soft nofile 100000\n* hard nofile  100000" >> /etc/security/limits.conf
-					echo "es=\$(grep MemTotal /proc/meminfo | awk '{print \$2/2/1000000}'  | head -c1)'g'; export ES_HEAP_SIZE=\$es; telepath restart;" >> ~/.bashrc
+					echo "es=\$(grep MemTotal /proc/meminfo | awk '{print \$2/2/1000000}'  | head -c1)'g'; export ES_HEAP_SIZE=\$es;" >> ~/.bashrc
 					echo "script.groovy.sandbox.enabled: true" >> /opt/telepath/db/elasticsearch/config/elasticsearch.yml
 					echo "http://localhost:9200" > /opt/telepath/db/elasticsearch/config/connect.conf
 			else
