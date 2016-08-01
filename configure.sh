@@ -286,6 +286,7 @@ binaries() {
 					rm -rf elasticsearch-2.3.1
 					#sed -i 's/^#index.number_of_shards: 1/index.number_of_shards: 1/g' /opt/telepath/db/elasticsearch/config/elasticsearch.yml
 					#sed -i 's/^#network.bind_host: 192.168.0.1/network.bind_host: 127.0.0.1/g' /opt/telepath/db/elasticsearch/config/elasticsearch.yml
+					sed -i 's/com.amazonaws: WARN/ ^#com.amazonaws: WARN/g' /opt/telepath/db/elasticsearch/config/loggin.yml
 					echo -e "*	soft nofile 100000\n* hard nofile  100000" >> /etc/security/limits.conf
 					echo "es=\$(grep MemTotal /proc/meminfo | awk '{print \$2/2/1000000}'  | head -c1)'g'; export ES_HEAP_SIZE=\$es;" >> ~/.bashrc
 					echo "script.groovy.sandbox.enabled: true" >> /opt/telepath/db/elasticsearch/config/elasticsearch.yml
