@@ -53,7 +53,6 @@ void demonize()
 	{
 		case 0:
 			setsid();
-			//log((char*)"ATMSd: starting in daemon mode",log_path.c_str());
 			syslog (LOG_NOTICE, "%s","starting in daemon mode");
 			break;
 		case -1:

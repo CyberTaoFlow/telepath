@@ -26,11 +26,6 @@
 #include "../jsoncpp/json.h"
 #include "../Sha1.h"
 
-#define ATMS 1
-#define ENGINE 2
-#define SCHEDULER 5
-#define GULPNAME "gulp"
-
 using namespace std;
 
 struct statvfs vfs;
@@ -756,15 +751,18 @@ int main(int argc, char *argv[])
 	
         time_t timer=0;
 
+	//Giving a syslog name to the process.
 	setlogmask (LOG_UPTO (LOG_NOTICE));
 	openlog ("Telewatchdog", LOG_CONS | LOG_PID | LOG_NDELAY, LOG_LOCAL1);
 
+	//Showing the git revision and the compilation time.
 	if( argc > 1 &&  strcmp("-v",argv[1]) == 0 ){
 		cout <<"Watchdog Version:"<< GIT_REV;
 		print_time(COMPILATION_TIME);
 		exit(1);
 	}
 
+	//
 	if (lget_pid("telewatchdog")!=-1){
 		syslog(LOG_NOTICE,"The telewatchdog is already running");
 		exit(0);
@@ -818,8 +816,8 @@ int main(int argc, char *argv[])
 		sleep(15);
 	}
 
-	initElasticSearchData();
-	while( checkLicenseKey() == false );
+	initElasticSearchData(); //Initializing all the elasticsearch data.
+	while( checkLicenseKey() == false ); // Checking license keygen (Valid/Invalid/Expired).
 	startThreads();
 	loadInputMode();
 
