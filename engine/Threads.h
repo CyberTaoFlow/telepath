@@ -682,9 +682,7 @@ void *thread_sid_per_min(void *threadid)
 	{
 		sleep(60);
 
-		/*syslog(LOG_NOTICE,"TC->setAttIndex.size(): %u\n", (unsigned int)TC->setAttIndex.size() );
-		syslog(LOG_NOTICE,"TC->setPageIndex.size(): %u\n", (unsigned int)TC->setPageIndex.size() );
-		syslog(LOG_NOTICE,"mSession.size(): %u\n", (unsigned int)mSession.size() );
+		/*syslog(LOG_NOTICE,"mSession.size(): %u\n", (unsigned int)mSession.size() );
 		syslog(LOG_NOTICE,"mAttAvg.size(): %u\n", (unsigned int)mAttAvg.size() );
 		syslog(LOG_NOTICE,"sTorIntelligenceIP.size(): %u\n", (unsigned int)sTorIntelligenceIP.size() );
 		syslog(LOG_NOTICE,"mQuery.size(): %u\n", (unsigned int)mQuery.size() );

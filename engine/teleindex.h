@@ -170,11 +170,6 @@ public:
 class TeleCache
 {
 public:
-
-	//indexes for pages and attributes.
-	boost::unordered_set<unsigned int> setPageIndex;
-	boost::unordered_set<unsigned int> setAttIndex;
-
 	queue <TeleObject> teleObjQueue;
 
 	void addobject(TeleObject*,std::unordered_map<string,string> &);

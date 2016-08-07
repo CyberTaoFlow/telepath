@@ -81,6 +81,7 @@ TeleCache::TeleCache()
 	srand (time(NULL));
 }
 
+// Fatching the title string from the response body.
 void findTitle(string & title,char * reply){
 	size_t title_len = 0;
 	char * pos = strcasestr(reply, "<title");
@@ -160,6 +161,7 @@ string url_encode(const string &value) {
 	return escaped.str();
 }
 
+// Fatching all the passwords in the page from the response body.
 void detectPasswords(char * reply,string & host,string & uri){
 	unsigned int len = 0;
 	char * end;
@@ -228,7 +230,7 @@ void detectPasswords(char * reply,string & host,string & uri){
 	}
 }
 
-
+// Fatching the username and password in the login page from the response body.
 void loginDetect(char * reply,Login & log){
 	string tmp_form,tmp;
 	unsigned int len = 0;
@@ -1125,7 +1127,7 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 		loginDetect((char*)teleo->mParams['B'/*ResponseBody*/].c_str(),login);
 		if(login.password.size() != 0){
 			login.host = teleo->mParams['f'/*App*/];
-			login.orig_uri = teleo->mParams['c'/*Page*/];;
+			login.orig_uri = teleo->mParams['c'/*Page*/];
 			string tmp_login_user = login.host + login.orig_uri + login.username;
 			setUserIDs.insert((unsigned int)hashCode(tmp_login_user));
 			pthread_mutex_lock(&mutexLogin);
@@ -1159,7 +1161,7 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 		}
 
 		attName.clear();
-		if(vAttr[i].attribute_source=='H' || vAttr[i].name[0]=='h' ){ // h = hybridrecord
+		if(vAttr[i].attribute_source=='H'){
 			it_global_header=global_header.find(vAttr[i].name);
 			if(it_global_header != global_header.end() ){ // Attribute name was found.
 				vAttr[i].hash = (unsigned int)it_global_header->second;

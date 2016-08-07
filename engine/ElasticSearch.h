@@ -162,7 +162,6 @@ void initElasticSearchData(){
 	es_insert("/telepath-config/config/loadbalancer_mode_id/_create","{\"value\":\"0\"}");
 	es_insert("/telepath-config/config/report_frequency_id/_create","{\"value\":\"60\"}");
 	es_insert("/telepath-config/config/max_events_id/_create","{\"value\":\"50\"}");
-	es_insert("/telepath-config/config/write_to_syslog_id/_create","{\"value\":\"0\"}");
 	es_insert("/telepath-config/config/report_window_id/_create","{\"value\":\"60\"}");
 	es_insert("/telepath-config/config/smtp_ip_id/_create","{\"value\":\"\"}");
 	es_insert("/telepath-config/config/smtp_port_id/_create","{\"value\":\"\"}");

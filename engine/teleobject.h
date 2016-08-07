@@ -34,6 +34,8 @@ public:
 	boost::unordered_map<char,string> mParams;
 	boost::unordered_multimap<unsigned int,struct Attribute> mAttr;
 
+	//------mParams Keys------
+
 	//'a' = UserIP.
 	//'b' = TimeStamp.
 	//'c' = Page.

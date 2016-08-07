@@ -14,34 +14,6 @@ void initRegex(){
 	cc_regex = pcre_compile((char*)cc_format.c_str(), 0, &error, &erroroffset, NULL);
 }
 
-void initHybridRecord(){
-
-	// The values of this parameter record the business action.
-	map<unsigned int,myAtt> ::iterator itMyAttMap = myAttMap.find(18);
-	if(itMyAttMap == myAttMap.end()){
-		myAtt att;  //lock=0
-		att.type = 't';
-		att.kind = 'G';
-		att.name = "hybridrecord";
-		att.ifUpdate='y';
-		att.page_id = 1;
-		att.num_of_values++;
-		myAttMap.insert( pair<unsigned int,myAtt>(18,att) );
-	}
-
-	itMyAttMap = myAttMap.find(19);
-	if(itMyAttMap == myAttMap.end()){
-		myAtt att;  //lock=0
-		att.type = 't';
-		att.kind = 'H';
-		att.name = "not-found";
-		att.ifUpdate='y';
-		att.page_id = 0;
-		att.num_of_values++;
-		myAttMap.insert( pair<unsigned int,myAtt>(19,att) );
-	}
-}
-
 // Months dictionary.
 void initMonths(){
 	months.insert(pair<string,string>("Jan","01"));

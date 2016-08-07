@@ -74,7 +74,7 @@ using namespace std;
 
 
 //initiating all pthread semaphores.
-void semaphores_initiation(){
+void initSemaphores(){
         sem_init(&sem_tokenize1,0,0);
 	sem_init(&sem_tokenize2,0,0);
 	sem_init(&sem_markov_att_start,0,0);
@@ -208,6 +208,7 @@ void checkOperation(){
 }
 
 #ifdef REDIS
+// This thread pops all the requests from the "Q" redis queue.
 void* thread_redis_messages(void* arg)
 {
 	TeleObject TO;
@@ -607,6 +608,8 @@ void createLicenseKey(int argc,char* array[]){
 	}
 }
 
+// Session initialization. 
+// Opening a new session or classifing an existing session to an old one.
 void insertOrUpdateSessionMap(TeleObject & teleobj){
 	unsigned int sid = (unsigned int)atoi(teleobj.mParams['e'/*SID*/].c_str());
 
@@ -661,13 +664,12 @@ isEngineRunning();
 demonize();
 disableErrorMessages();
 initRegex();			// This function is defined at enginetypes.h .
-initHybridRecord();		// This function is defined at enginetypes.h .
 initAttType();			// This function is defined at enginetypes.h .
 initCookieBlackList();		// This function is defined at enginetypes.h .
 initSyslog();
 open_geoIP_database();		// This function is defined at geoip.h .
 
-read_connect_conf_file();
+read_connect_conf_file();	// This function is defined at Elasticsearch.h .
 TC = new TeleCache;
 
 load_config();
@@ -686,7 +688,7 @@ initMonths();			// This function is defined at enginetypes.h .
 initMethod();			// This function is defined at enginetypes.h .
 loadApps();
 
-semaphores_initiation();
+initSemaphores();
 startThreads();
 
 map <unsigned int,myAtt> ::iterator itMyAttMap; // iterator of myAttMap.
@@ -715,34 +717,19 @@ loader();
 while(globalEngine){ // while engine learning - run the engine every time we get data from the pipe.
 	usleep(5);
 
-	#ifdef DEBUG
-		syslog(LOG_NOTICE,"Loading Rules");
-	#endif
+	//Loading Rules.
 	loadRules();
-	#ifdef DEBUG
-		syslog(LOG_NOTICE,"Loading Actions");
-	#endif
+	//Loading Actions.
 	loadActions();
 
-	#ifdef DEBUG
-		syslog(LOG_NOTICE,"Checking Cycle");
-	#endif
+	//TODO - Check a Redis queue to determine if the configuration was changed.
 	if(cycleLearning % 5 == 0){
-		#ifdef DEBUG
-			syslog(LOG_NOTICE,"Loading Config");
-		#endif
 		//------------Load config----------- 
 		load_config();
-		//------------Load rules------------
-		//loadCases();
-		#ifdef DEBUG    
-			syslog(LOG_NOTICE,"Loading BotIntelligence");
-		#endif
 	}
 	cycleLearning++;
-	#ifdef DEBUG
-		syslog(LOG_NOTICE,"Building TeleObject Vectors");
-	#endif
+		
+	//Building TeleObject Vectors.
 	vector<TeleObject> learning_vec;
 	vector<TeleObject> production_vec;
 
@@ -750,17 +737,15 @@ while(globalEngine){ // while engine learning - run the engine every time we get
 		if(globalEngine==0){
 			break;
 		}
-		#ifdef DEBUG
-			syslog(LOG_NOTICE,"Poping TeleObjects");
-		#endif
+
+		//Poping TeleObjects.
 		pthread_mutex_lock(&mutexTeleObjQueue);
 		TeleObject teleobj = TC->teleObjQueue.front() ;
 		TC->teleObjQueue.pop();
 		pthread_mutex_unlock(&mutexTeleObjQueue);
 
-		#ifdef DEBUG
-		        syslog(LOG_NOTICE,"Inserting TeleObjects");
-		#endif
+		
+		//Inserting TeleObjects.
 		insertOrUpdateSessionMap(teleobj);
 
 		pthread_mutex_lock(&mutexAppMode);
@@ -781,7 +766,6 @@ while(globalEngine){ // while engine learning - run the engine every time we get
 					#endif
 
 					production_vec.push_back(teleobj);
-
 					snprintf(url_mode,sizeof(url_mode)-1,"/telepath-domains/domains/%s/_update",teleobj.mParams['g'/*AppID*/].c_str());
 					sprintf(postfields_mode,"{\"doc\":{\"operation_mode\":\"2\",\"learning_so_far\":%u,\"eta\":\"0d 0h 0m\"}}",itAppMode->second.counter);
 					es_mapping(url_mode,postfields_mode);
@@ -897,15 +881,14 @@ while(globalEngine){ // while engine learning - run the engine every time we get
 	vector <TeleObject> ().swap(learning_vec);
 	vector <TeleObject> ().swap(production_vec);
 
-	// Attributes.
+	// Attributes - Types decision.
 	for(itdecideType=myAttMap.begin(); itdecideType !=myAttMap.end() ; itdecideType++ ){
 		if(itdecideType->second.ifUpdate=='y'){
 			decideType(itdecideType->second,0,1);
 		}
 	}
 
-	//****************Att Cal**********************
-
+	//Attributes Calculation.
 	unsigned int j;
 	Numeric numeric_markov;
 
@@ -1212,7 +1195,5 @@ mScoreAtt.clear();
 return 0;
 
 }// end main.
-
-
 
 

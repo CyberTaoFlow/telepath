@@ -137,7 +137,6 @@ void init_lookuptable()
 	//global_header.insert(pair<string,unsigned short>("content-length",15));
 	global_header.insert(pair<string,unsigned short>("authorization",16));
 	global_header.insert(pair<string,unsigned short>("connection",17));
-	global_header.insert(pair<string,unsigned short>("hybridrecord",18));
 
 	//------------------------------------
 
