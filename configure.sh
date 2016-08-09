@@ -431,6 +431,7 @@ conf_update_apache() {
 		fi
 
 	fi
+	a2enmod rewrite
 	chmod +x /opt/telepath/generate-ssl.sh
 	/opt/telepath/generate-ssl.sh
 }
