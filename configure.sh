@@ -29,6 +29,7 @@ if [ -n "$(which apt-get)" ]; then
 	ln -s ../../mods-available/msgpack.ini ./
 	mv ./msgpack.ini ./20-msgpack.ini
 #	fi
+	sudo sendmailconfig
 
 	luarocks install Lua-cURL
 	luarocks install Lua-cURL --server=https://rocks.moonscript.org/dev
