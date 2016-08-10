@@ -432,8 +432,8 @@ conf_update_apache() {
 
 	fi
 	a2enmod rewrite
-	chmod +x /opt/telepath/generate-ssl.sh
-	/opt/telepath/generate-ssl.sh
+	#chmod +x /opt/telepath/generate-ssl.sh
+	#/opt/telepath/generate-ssl.sh
 }
 
 conf_create_db() {
