@@ -202,7 +202,6 @@ function log(args)
 	local uri = HttpGetRequestUriRaw()
 	uri = unescape(uri) --url decoding for uri & GET parameters.
 
-	-- uri = string.lower(uri) 
 	query = ""
 	local question_mark = string.find(uri, "?")
 
@@ -211,8 +210,6 @@ function log(args)
 		query = uri2.query         --GET parameters.
 		uri = string.sub(uri,1,question_mark-1)
 	end
-
-	uri = string.lower(uri)
 
 	local ext = uri:reverse():find("%.")
 	if ext then
