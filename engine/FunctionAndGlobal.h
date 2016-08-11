@@ -1466,23 +1466,15 @@ void session_user_search2(string & UserID_,unsigned int sid,boost::unordered_map
 
 void countryRules(Rule & rule,string & src_ip,string & UserID,long long RID,unsigned int PageID,string & tmp_country,Session & s,string & resp_ip,string & cookie,string & hostname){
 	if( isAnySpecification(s.decimalIP,UserID,rule) ){ // App/User/IP violation ?.
-		short flag;
 		size_t found = rule.str_match.find(tmp_country);
 		if (found!=string::npos){ //Country was found .
 			if(rule.negate==false){  // Give alerts to countries in the list(block countries like China or Russia).
-				flag=1;
-			}else{
-				flag=0;
+				insert_alert(rule,RID,src_ip,resp_ip,cookie,hostname);
 			}
 		}else{			  //Country wasn't found .
-			if(rule.negate==false){
-				flag=0;
-			}else{			  // Give alerts to countries which aren't in the list(all countries except Israel & USA).
-				flag=1;
+			if(rule.negate==true){  // Give alerts to countries which aren't in the list(all countries except Israel & USA).
+				insert_alert(rule,RID,src_ip,resp_ip,cookie,hostname);
 			}
-		}
-		if(flag==1){
-			insert_alert(rule,RID,src_ip,resp_ip,cookie,hostname);
 		}
 	}
 }
