@@ -92,15 +92,15 @@ void pageRules(Rule & rule,Session & session,string & c_IP,long long & c_RID,uns
 		}
 	}*/
 
-	if(rule.method[0] == 'U'){ // URI.
-		if(rule.final_type == 's'){
+	if(rule.method[0] == 'U'){ // U=URI.
+		if(rule.final_type == 's'){ // s=stringmatch
 			if ( c_Uri.find(rule.str_match) != string::npos ){
 				pthread_mutex_lock(&mutexgetatt5);
 					insert_alert(rule,c_RID,c_IP,resp_ip,cookie,hostname);
 				pthread_mutex_unlock(&mutexgetatt5);
 			}
 		}
-		else if(rule.final_type == 'g'){
+		else if(rule.final_type == 'g'){// g=regex
 			bool null_alert;
 			pthread_mutex_lock(&mutexgetatt5);
 			regexRules2(rule,c_RID,c_Uri,session,null_alert,c_IP,resp_ip,cookie,hostname);
@@ -109,14 +109,14 @@ void pageRules(Rule & rule,Session & session,string & c_IP,long long & c_RID,uns
 	}
 	else if(rule.method[0] == 'T'){ // Title.
 		if (c_Title.size() > 0){
-			if(rule.final_type == 's'){
+			if(rule.final_type == 's'){// s=stringmatch
 				if ( c_Title.find(rule.str_match) != string::npos ){
 					pthread_mutex_lock(&mutexgetatt5);
 						insert_alert(rule,c_RID,c_IP,resp_ip,cookie,hostname);
 					pthread_mutex_unlock(&mutexgetatt5);
 				}
 			}
-			else if(rule.final_type == 'g'){
+			else if(rule.final_type == 'g'){ // g=regex
 				bool null_alert;
 				pthread_mutex_lock(&mutexgetatt5);
 				regexRules2(rule,c_RID,c_Title,session,null_alert,c_IP,resp_ip,cookie,hostname);
@@ -132,7 +132,7 @@ void pageRules(Rule & rule,Session & session,string & c_IP,long long & c_RID,uns
 
 }
 
-void rulesTrigger(bool learning_mode,Attribute & tmp_att,boost::unordered_map <unsigned int,Session> ::iterator & itSession,TeleObject *to,vector <unsigned int> & vector_value,string & tmp,char nf,char nfu,map <unsigned int,ScoreNumericAtt>::iterator & itN,map <string,ScoreNumericAtt>::iterator & itNU,int exp_score,double size_of_markov,string & c_IP,string & c_UserID,long long & c_RID,unsigned int & c_SID,string & c_Title,double & alert_score,string & resp_ip,string & cookie,string & hostname,string lower_att_val){
+void attributeRules(bool learning_mode,Attribute & tmp_att,boost::unordered_map <unsigned int,Session> ::iterator & itSession,TeleObject *to,vector <unsigned int> & vector_value,string & tmp,char nf,char nfu,map <unsigned int,ScoreNumericAtt>::iterator & itN,map <string,ScoreNumericAtt>::iterator & itNU,int exp_score,double size_of_markov,string & c_IP,string & c_UserID,long long & c_RID,unsigned int & c_SID,string & c_Title,double & alert_score,string & resp_ip,string & cookie,string & hostname,string lower_att_val){
 	unsigned int ruleSize = rules.size();
 	int hash_value;
 	double s_of_m,num_score;
@@ -233,8 +233,9 @@ void rulesTrigger(bool learning_mode,Attribute & tmp_att,boost::unordered_map <u
 						}*/
 					}
 					break;
-				case 'e':
-				case 'r':			// Length anomaly for a text value .
+				case 'e':			// e=ecxact.
+				case 'r':			// r=range.
+					// Length anomaly for a text value .
 					s_of_m = 0;
 					pthread_mutex_lock(&mutexgetatt5);
 					lengthRules(rules[j],s_of_m,vector_value,0,0,itSession->second,c_RID,alert_score,c_IP,resp_ip,cookie,hostname);
@@ -1065,7 +1066,7 @@ void *getAtt_thread(void *threadarg)
 				alert_score=0;
 				if(itSession.first!=mSession.end()){	//Session was found.
 					//-----------Rules---------
-					rulesTrigger(true,tmp_att,itSession.first,to,tmp_att.vec_value,tmp,'n','n',itN,itNU,exp_score,0,c_IP,c_UserID,c_RID,itSession.first->second.sid,c_Title,alert_score,c_Resp_IP,c_SetCookie,c_Domain,tmp_att.value);
+					attributeRules(true,tmp_att,itSession.first,to,tmp_att.vec_value,tmp,'n','n',itN,itNU,exp_score,0,c_IP,c_UserID,c_RID,itSession.first->second.sid,c_Title,alert_score,c_Resp_IP,c_SetCookie,c_Domain,tmp_att.value);
 					//---------End Rules-------
 				}
 
@@ -1561,7 +1562,7 @@ void *getAtt_thread_pro(void *threadarg)
 				alert_score=0;
 				if(itSession.first != mSession.end() ){	//Session was found.
 					//-----------Rules---------
-					rulesTrigger(false,tmp_att,itSession.first,to,tmp_att.vec_value,tmp,normal_flag,normal_flag_user,it_NumericAtt,it_NumericAttUser,exp_score,size_of_markov,c_IP,c_UserID,c_RID,itSession.first->second.sid,c_Title,alert_score,c_Resp_IP,c_SetCookie,c_Domain,tmp_att.value);
+					attributeRules(false,tmp_att,itSession.first,to,tmp_att.vec_value,tmp,normal_flag,normal_flag_user,it_NumericAtt,it_NumericAttUser,exp_score,size_of_markov,c_IP,c_UserID,c_RID,itSession.first->second.sid,c_Title,alert_score,c_Resp_IP,c_SetCookie,c_Domain,tmp_att.value);
 					//---------End Rules-------
 				}
 
