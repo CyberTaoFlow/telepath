@@ -429,7 +429,7 @@ conf_update_apache() {
 			fi
 
 		fi
-
+		sed -i 's|DocumentRoot /var/www/html|DocumentRoot /opt/telepath/ui/html|g' /etc/apache2/sites-available/000-default.conf
 	fi
 	a2enmod rewrite
 	#chmod +x /opt/telepath/generate-ssl.sh
