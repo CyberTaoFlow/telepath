@@ -150,12 +150,7 @@ void Path::tokenize(Session & s,short byHostOrUserOrGroup ){ // Build and update
 			}				
 			Link l(s.vRequest[i+1].compare,s.vRequest[i].compare,speed);
 
-			bool modeStatus=false;
-			if(s.vRequest[i].status_code==200 && s.vRequest[i+1].status_code==200){
-				modeStatus=true;
-			}
-
-			this->updateLink(l,byHostOrUserOrGroup,s.vRequest[i+1].ID,s.vRequest[i].ID,modeStatus);	
+			this->updateLink(l,byHostOrUserOrGroup,s.vRequest[i+1].ID,s.vRequest[i].ID);	
 		}
 	}
 	for(i=0 ; i < size-1 ;i++){
@@ -226,7 +221,7 @@ void Path::updatePage(Page & p,short flag,short & ifUser){
 }
 
 // Insert new Links to the Path or update their emission and diffLanding.
-void Path::updateLink(Link & l,short & ifUser,unsigned int & to,unsigned int & from,bool modeStatus){ 
+void Path::updateLink(Link & l,short & ifUser,unsigned int & to,unsigned int & from){ 
 	map <string,LinkExtended>::iterator itLinkExtended;
 
 	map <unsigned int,unsigned int>::iterator itLinkSum;
