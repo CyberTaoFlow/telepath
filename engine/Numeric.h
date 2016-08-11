@@ -36,7 +36,6 @@ public:
 	void init(vector <double> &);
 	void init(vector <unsigned short> &);
 	void init(vector <int> &);
-
 	double chebyshev(double);
 	void update(double);
 	void update(double,unsigned int);

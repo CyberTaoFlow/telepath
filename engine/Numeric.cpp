@@ -7,6 +7,7 @@ extern void es_mapping(string,string);
 extern void es_insert(string,string);
 using namespace std;
 
+// Constractor.
 Numeric::Numeric(){
 	this->mean = 0;
 	this->variance = 0;
