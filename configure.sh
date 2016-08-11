@@ -434,6 +434,13 @@ conf_update_apache() {
 	a2enmod rewrite
 	#chmod +x /opt/telepath/generate-ssl.sh
 	#/opt/telepath/generate-ssl.sh
+	if [ -n "$(which httpd)" ]; then
+                service httpd restart
+        fi
+
+        if [ -n "$(which apache2)" ]; then
+		service apache2 restart
+	fi
 }
 
 conf_create_db() {
