@@ -1089,7 +1089,7 @@ while(globalEngine){ // while engine learning - run the engine every time we get
 		sem_wait(&sem_markov_session_end);
 	}
 
-
+	//TODO saving according to redis
 	if(cycleLearning > 500){
 		/*if(RIDs_counter > (moveToProductionAfter * operationPercent) ){
 			checkOperation();

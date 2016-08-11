@@ -171,7 +171,7 @@ int Tree::calculate(vector <unsigned int> & value,double avg_size){
 		if(itNode!=this->mNode.end()){//Node was found
 			num = ((itNode->second.emission)/(double)(this->sampleNode[i]));
 		}else{			  //Node wasn't found
-			if( this->sampleNode.size() > i ){			// There are samples to this index.			
+			if( this->sampleNode.size() > i ){		// There are samples to this index.			
 				num = ( 1 / ((double)(this->sampleNode[i]+1)) );
 			}else{						// There are no samples to this index.
 				L = (double)(i+1);

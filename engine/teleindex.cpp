@@ -370,7 +370,7 @@ void authentication(char * reply,AppMode & am,string & logSuccess){
 			logSuccess = "y";
 			return;
 		}
-	}	
+	}
 }
 
 void loginSuccess(char * reply,string & logSuccess){
