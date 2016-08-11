@@ -17,7 +17,7 @@ if [ ! -f $MAIN_JSON ]; then
 fi
 
 if [ -n "$(which apt-get)" ]; then
-	apt-get -y install dialog php5 libapache2-mod-php5 gdb php5-mysql mysql-common mysql-server lua5.1 lua-socket libcurl-ocaml-dev luarocks jq sendmail
+	apt-get -y install dialog php5 libapache2-mod-php5 gdb php5-mysql mariadb-server lua5.1 lua-socket libcurl-ocaml-dev luarocks jq sendmail
 	apt-get -y install php-pear php5-dev
 	pecl install msgpack-0.5.7
 #	if [ ! -f "/etc/php5/mods-available/msgpack.ini" ]; then
@@ -206,11 +206,11 @@ install() {
 check_packages() {
 
 	if [ -n "$(which apt-get)" ]; then
-		apt-get -y install dialog gdb php5-mysql mysql-common mysql-server 		
+		apt-get -y install dialog gdb php5-mysql mariadb-server
 	fi
 
 	if [ -n "$(which yum)" ]; then
-		yum install dialog gdb php php-cli php-mysql mysql mysql-server 
+		yum install dialog gdb php php-cli php-mysql mysql mysql-server
 	fi
 
 	echo "If mysql wasnt installed before please configure it first."
