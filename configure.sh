@@ -17,14 +17,19 @@ if [ ! -f $MAIN_JSON ]; then
 fi
 
 if [ -n "$(which apt-get)" ]; then
-	apt-get -y install dialog php5 libapache2-mod-php5 gdb php5-mysql mysql-common mysql-server lua5.1 lua-socket libcurl-ocaml-dev luarocks jq
+	apt-get -y install dialog php5 libapache2-mod-php5 gdb php5-mysql mariadb-server lua5.1 lua-socket libcurl-ocaml-dev luarocks jq sendmail
 	apt-get -y install php-pear php5-dev
 	pecl install msgpack-0.5.7
+#	if [ ! -f "/etc/php5/mods-available/msgpack.ini" ]; then
 	echo extension=msgpack.so > /etc/php5/mods-available/msgpack.ini
 	cd /etc/php5/apache2/conf.d/
-	ln -s ../../mods-available/msgpack.ini ./20-msgpack.ini
+	ln -s ../../mods-available/msgpack.ini ./
+	mv ./msgpack.ini ./20-msgpack.ini
 	cd /etc/php5/cli/conf.d/
-	ln -s ../../mods-available/msgpack.ini ./20-msgpack.ini
+	ln -s ../../mods-available/msgpack.ini ./
+	mv ./msgpack.ini ./20-msgpack.ini
+#	fi
+	sudo printf "Y\nY\nY\n" | sendmailconfig
 
 	luarocks install Lua-cURL
 	luarocks install Lua-cURL --server=https://rocks.moonscript.org/dev
@@ -201,11 +206,11 @@ install() {
 check_packages() {
 
 	if [ -n "$(which apt-get)" ]; then
-		apt-get -y install dialog gdb php5-mysql mysql-common mysql-server 		
+		apt-get -y install dialog gdb php5-mysql mariadb-server
 	fi
 
 	if [ -n "$(which yum)" ]; then
-		yum install dialog gdb php php-cli php-mysql mysql mysql-server 
+		yum install dialog gdb php php-cli php-mysql mysql mysql-server
 	fi
 
 	echo "If mysql wasnt installed before please configure it first."
@@ -424,10 +429,18 @@ conf_update_apache() {
 			fi
 
 		fi
-
+		sed -i 's|DocumentRoot /var/www/html|DocumentRoot /opt/telepath/ui/html|g' /etc/apache2/sites-available/000-default.conf
 	fi
-	chmod +x /opt/telepath/generate-ssl.sh
-	/opt/telepath/generate-ssl.sh
+	a2enmod rewrite
+	#chmod +x /opt/telepath/generate-ssl.sh
+	#/opt/telepath/generate-ssl.sh
+	if [ -n "$(which httpd)" ]; then
+                service httpd restart
+        fi
+
+        if [ -n "$(which apache2)" ]; then
+		service apache2 restart
+	fi
 }
 
 conf_create_db() {
