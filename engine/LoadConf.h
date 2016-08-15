@@ -704,7 +704,7 @@ void loadActions(){ // Load business logic from database.
 
 }
 
-void parseAppsJson(Json::Value & root,string & preKey,string & domain,unsigned int & learning_so_far,unsigned int & operation_mode,unsigned int & move_to_production,unsigned short & redirect_mode,string & redirect_page,unsigned short & redirect_status_code,unsigned short & body_value_mode,string & body_value_html,string & form_param_name,unsigned short & cookie_mode,string & cookie_name,string & cookie_value,unsigned short & cookie_value_appearance,unsigned short & top_level_domain){
+void parseAppsJson(Json::Value & root,string & preKey,string & domain,unsigned int & learning_so_far,unsigned int & operation_mode,unsigned int & move_to_production,unsigned short & redirect_mode,string & redirect_page,unsigned short & redirect_status_code,unsigned short & body_value_mode,unsigned short & basic_mode,unsigned short & digest_mode,unsigned short & ntlm_mode,string & body_value_html,string & form_param_name,unsigned short & cookie_mode,string & cookie_name,string & cookie_value,unsigned short & cookie_value_appearance,unsigned short & top_level_domain){
         Json::Value::iterator it;
         unsigned int i,j;
 	string key,val,key2,tmp_full;
@@ -719,14 +719,14 @@ void parseAppsJson(Json::Value & root,string & preKey,string & domain,unsigned i
 		}
 
                 if( (*it).isObject() ){
-                        parseAppsJson((*it),key2,domain,learning_so_far,operation_mode,move_to_production,redirect_mode,redirect_page,redirect_status_code,body_value_mode,body_value_html,form_param_name,cookie_mode,cookie_name,cookie_value,cookie_value_appearance,top_level_domain);
+                        parseAppsJson((*it),key2,domain,learning_so_far,operation_mode,move_to_production,redirect_mode,redirect_page,redirect_status_code,body_value_mode,basic_mode,digest_mode,ntlm_mode,body_value_html,form_param_name,cookie_mode,cookie_name,cookie_value,cookie_value_appearance,top_level_domain);
                 }
                 else if( (*it).isArray() ){
                         Json::Value array = (*it);
                         for (j=0; j < array.size(); j++) {
 				if( array[j].isObject() ){
 					preKey = it.key().asString();
-                                        parseAppsJson(array[j],key2,domain,learning_so_far,operation_mode,move_to_production,redirect_mode,redirect_page,redirect_status_code,body_value_mode,body_value_html,form_param_name,cookie_mode,cookie_name,cookie_value,cookie_value_appearance,top_level_domain);
+                                        parseAppsJson(array[j],key2,domain,learning_so_far,operation_mode,move_to_production,redirect_mode,redirect_page,redirect_status_code,body_value_mode,basic_mode,digest_mode,ntlm_mode,body_value_html,form_param_name,cookie_mode,cookie_name,cookie_value,cookie_value_appearance,top_level_domain);
                                 }
                         }
                 }else{
@@ -760,6 +760,15 @@ void parseAppsJson(Json::Value & root,string & preKey,string & domain,unsigned i
 			else if(key=="body_value_mode"){
 				body_value_mode = (unsigned short)atoi(&val[0]);
 			}
+                        else if(key=="basic_mode"){
+                                basic_mode = (unsigned short)atoi(&val[0]);
+                        }
+                        else if(key=="digest_mode"){
+                                digest_mode = (unsigned short)atoi(&val[0]);
+                        }
+                        else if(key=="ntlm_mode"){
+                                ntlm_mode = (unsigned short)atoi(&val[0]);
+                        }
 			else if(key=="body_value_html"){
 				body_value_html = val;
 			}
@@ -798,7 +807,7 @@ void updateApp(char *ptr)
 	string action_json,redirect_page,body_value_html,form_param_name,cookie_name,cookie_value;
 	boost::unordered_map <string,AppMode>::iterator itAppMode;
 	unsigned int learning_so_far,operation_mode,move_to_production;
-	unsigned short redirect_mode,redirect_status_code,body_value_mode,cookie_mode,cookie_value_appearance,top_level_domain;
+	unsigned short redirect_mode,redirect_status_code,body_value_mode,basic_mode,digest_mode,ntlm_mode,cookie_mode,cookie_value_appearance,top_level_domain;
 	Json::Value root;
 	Json::Reader reader;
 	bool parsed;
@@ -811,7 +820,7 @@ void updateApp(char *ptr)
 				return;
 			}
 
-			parseAppsJson(root,prekey,domain,learning_so_far,operation_mode,move_to_production,redirect_mode,redirect_page,redirect_status_code,body_value_mode,body_value_html,form_param_name,cookie_mode,cookie_name,cookie_value,cookie_value_appearance,top_level_domain);
+			parseAppsJson(root,prekey,domain,learning_so_far,operation_mode,move_to_production,redirect_mode,redirect_page,redirect_status_code,body_value_mode,basic_mode,digest_mode,ntlm_mode,body_value_html,form_param_name,cookie_mode,cookie_name,cookie_value,cookie_value_appearance,top_level_domain);
 			pthread_mutex_lock(&mutexAppMode);
 				itAppMode = mAppMode.find( domain );
 				if( itAppMode != mAppMode.end() ){
@@ -831,6 +840,9 @@ void updateApp(char *ptr)
 					itAppMode->second.redirect_page=redirect_page;
 					itAppMode->second.redirect_status_code=redirect_status_code;
 					itAppMode->second.body_value_mode=body_value_mode;
+					itAppMode->second.basic_mode=basic_mode;
+					itAppMode->second.digest_mode=digest_mode;
+					itAppMode->second.ntlm_mode=ntlm_mode;
 					itAppMode->second.body_value_html=body_value_html;
 					itAppMode->second.form_param_name=form_param_name;
 					itAppMode->second.cookie_mode=cookie_mode;
@@ -840,7 +852,7 @@ void updateApp(char *ptr)
 					itAppMode->second.top_level_domain=top_level_domain;
 				}else{
 					operation_mode=1;
-					AppMode am(operation_mode,learning_so_far,move_to_production,redirect_mode,redirect_page,redirect_status_code,body_value_mode,body_value_html,form_param_name,cookie_mode,cookie_name,cookie_value,cookie_value_appearance,top_level_domain);
+					AppMode am(operation_mode,learning_so_far,move_to_production,redirect_mode,redirect_page,redirect_status_code,body_value_mode,basic_mode,digest_mode,ntlm_mode,body_value_html,form_param_name,cookie_mode,cookie_name,cookie_value,cookie_value_appearance,top_level_domain);
 					mAppMode.insert(pair<string,AppMode>(domain,am));
 				}
 			pthread_mutex_unlock(&mutexAppMode);
@@ -854,7 +866,7 @@ void getApp(char *ptr)
 	prekey.clear();
 	string action_json,redirect_page,body_value_html,form_param_name,cookie_name,cookie_value;
 	unsigned int learning_so_far=0,operation_mode=1,move_to_production=1000000;
-	unsigned short redirect_mode=0,redirect_status_code=0,body_value_mode=0,cookie_mode=0,cookie_value_appearance=0,top_level_domain=1;
+	unsigned short redirect_mode=0,redirect_status_code=0,body_value_mode=0,basic_mode=0,digest_mode=0,ntlm_mode=0,cookie_mode=0,cookie_value_appearance=0,top_level_domain=1;
 	Json::Value root;
 	Json::Reader reader;
 	bool parsed;
@@ -867,8 +879,8 @@ void getApp(char *ptr)
 			if(!parsed){
 				return;
 			}
-			parseAppsJson(root,prekey,domain,learning_so_far,operation_mode,move_to_production,redirect_mode,redirect_page,redirect_status_code,body_value_mode,body_value_html,form_param_name,cookie_mode,cookie_name,cookie_value,cookie_value_appearance,top_level_domain);
-			AppMode am(operation_mode,learning_so_far,move_to_production,redirect_mode,redirect_page,redirect_status_code,body_value_mode,body_value_html,form_param_name,cookie_mode,cookie_name,cookie_value,cookie_value_appearance,top_level_domain);
+			parseAppsJson(root,prekey,domain,learning_so_far,operation_mode,move_to_production,redirect_mode,redirect_page,redirect_status_code,body_value_mode,basic_mode,digest_mode,ntlm_mode,body_value_html,form_param_name,cookie_mode,cookie_name,cookie_value,cookie_value_appearance,top_level_domain);
+			AppMode am(operation_mode,learning_so_far,move_to_production,redirect_mode,redirect_page,redirect_status_code,body_value_mode,basic_mode,digest_mode,ntlm_mode,body_value_html,form_param_name,cookie_mode,cookie_name,cookie_value,cookie_value_appearance,top_level_domain);
 			pthread_mutex_lock(&mutexAppMode);
 				mAppMode.insert(pair<string,AppMode>(domain,am));
 			pthread_mutex_unlock(&mutexAppMode);

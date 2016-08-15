@@ -340,7 +340,7 @@ void findAppID(string & appName,string & appid){
 			appid = appName;
 
 			snprintf(url,sizeof(url)-1,"/telepath-domains/domains/%s/_create",appName.c_str());
-			snprintf(buffer,sizeof(buffer)-1,"{\"host\":\"%s\",\"operation_mode\":\"1\",\"learning_so_far\":1,\"move_to_production\":1000000,\"eta\":\"1d 0h 0m\",\"redirect_mode\":\"0\",\"redirect_page\":\"\",\"body_value_mode\":\"0\",\"body_value_html\":\"\",\"form_param_name\":\"\",\"cookie_mode\":\"0\",\"cookie_name\":\"\",\"cookie_value\":\"\",\"cookie_value_appearance\":\"0\",\"top_level_domain\":\"0\",\"subdomains\":[]}",appName.c_str() );
+			snprintf(buffer,sizeof(buffer)-1,"{\"host\":\"%s\",\"operation_mode\":\"1\",\"learning_so_far\":1,\"move_to_production\":1000000,\"eta\":\"1d 0h 0m\",\"redirect_mode\":\"0\",\"redirect_page\":\"\",\"body_value_mode\":\"0\",\"basic_mode\":\"0\",\"basic_mode\":\"0\",\"digest_mode\":\"0\",\"ntlm_mode\":\"0\",\"body_value_html\":\"\",\"form_param_name\":\"\",\"cookie_mode\":\"0\",\"cookie_name\":\"\",\"cookie_value\":\"\",\"cookie_value_appearance\":\"0\",\"top_level_domain\":\"0\",\"subdomains\":[]}",appName.c_str() );
 			es_insert(url,buffer );
 		}
 	}

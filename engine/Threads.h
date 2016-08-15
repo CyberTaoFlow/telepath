@@ -829,8 +829,7 @@ void *getAtt_thread(void *threadarg)
 						if( ( to->mParams['v'/*LoginMsg*/].size() != 0 )  &&  ( itSession.first->second.sUsername.size() != 0 ) ){
 							itSession.first->second.validUser = true;
 						}
-						else if(to->mParams['w'/*HttpAuthType*/].size() != 0 ){
-							itSession.first->second.sUsername = to->mParams['x'/*HttpUser*/];
+						else if(to->mParams['w'/*BasicDigestAuth*/].size() > 0 ){
 							itSession.first->second.validUser = true;
 						}
 					}

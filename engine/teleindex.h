@@ -82,6 +82,9 @@ public:
 	string redirect_page;
 	unsigned short redirect_status_code;
 	unsigned short body_value_mode;
+	unsigned short basic_mode;
+	unsigned short digest_mode;
+	unsigned short ntlm_mode;
 	string body_value_html;
 	string form_param_name;
 	unsigned int cookie_mode;
@@ -100,6 +103,9 @@ public:
 		this->redirect_page.clear();
 		this->redirect_status_code=0;
 		this->body_value_mode=0;
+		this->basic_mode=0;
+		this->digest_mode=0;
+		this->ntlm_mode=0;
 		this->body_value_html.clear();
 		this->form_param_name.clear();
 		this->cookie_mode=0;
@@ -109,7 +115,7 @@ public:
 		this->top_level_domain=0;
 	}
 
-	AppMode(unsigned int & mode,unsigned int & counter,unsigned int & move_to_production,unsigned short & redirect_mode,string & redirect_page,unsigned short & redirect_status_code,unsigned short & body_value_mode,string & body_value_html,string & form_param_name,unsigned short & cookie_mode,string & cookie_name,string & cookie_value,unsigned short & cookie_value_appearance,unsigned short & top_level_domain){
+	AppMode(unsigned int & mode,unsigned int & counter,unsigned int & move_to_production,unsigned short & redirect_mode,string & redirect_page,unsigned short & redirect_status_code,unsigned short & body_value_mode,unsigned short & basic_mode,unsigned short & digest_mode,unsigned short & ntlm_mode,string & body_value_html,string & form_param_name,unsigned short & cookie_mode,string & cookie_name,string & cookie_value,unsigned short & cookie_value_appearance,unsigned short & top_level_domain){
 		this->mode = mode;
 		this->counter = counter;
 		this->timer = (unsigned int)time(NULL);
@@ -118,6 +124,9 @@ public:
 		this->redirect_page=redirect_page;
 		this->redirect_status_code=redirect_status_code;
 		this->body_value_mode=body_value_mode;
+                this->basic_mode=basic_mode;
+                this->digest_mode=digest_mode;
+                this->ntlm_mode=ntlm_mode;
 		this->body_value_html=body_value_html;
 		this->form_param_name=form_param_name;
 		this->cookie_mode=cookie_mode;
@@ -136,6 +145,9 @@ public:
 		syslog(LOG_NOTICE,"redirect_page:%s",this->redirect_page.c_str());
 		syslog(LOG_NOTICE,"redirect_status_code:%hu",this->redirect_status_code);
 		syslog(LOG_NOTICE,"body_value_mode:%hu",this->body_value_mode);
+		syslog(LOG_NOTICE,"basic_mode:%hu",this->basic_mode);
+		syslog(LOG_NOTICE,"digest_mode:%hu",this->digest_mode);
+		syslog(LOG_NOTICE,"ntlm_mode:%hu",this->ntlm_mode);
 		syslog(LOG_NOTICE,"body_value_html:%s",this->body_value_html.c_str());
 		syslog(LOG_NOTICE,"form_param_name:%s",this->form_param_name.c_str());
 		syslog(LOG_NOTICE,"cookie_mode:%u",this->cookie_mode);

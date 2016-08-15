@@ -360,7 +360,8 @@ void loginDetect(char * reply,Login & log){
 	}
 }
 
-void authentication(char * reply,AppMode & am,string & logSuccess){
+void authentication(char * reply,AppMode & am,string & logSuccess,string & basicDigestAuth,string & authorization,unsigned short & status_code,string & username){
+	size_t found=0,found2=0;
 	if(am.body_value_mode==1){
 		char * pos = strcasestr( reply,(char*)am.body_value_html.c_str());
 		if (pos > 0){
@@ -369,6 +370,28 @@ void authentication(char * reply,AppMode & am,string & logSuccess){
 			#endif
 			logSuccess = "y";
 			return;
+		}
+	}
+	else if(am.basic_mode==1){
+		if(status_code >= 200 && status_code < 300){
+
+		}
+	}
+	else if(am.digest_mode==1){
+		if(authorization.size() > 0){
+			if(status_code >= 200 && status_code < 300){
+				found = authorization.find("username=`",found);
+				found += 10;
+
+                	        found2 = authorization.find('`',found);
+				username.assign(authorization.begin()+found,authorization.begin()+found2);
+				basicDigestAuth="y";
+			}
+		}
+	}
+	else if(am.ntlm_mode==1){
+		if(status_code >= 200 && status_code < 300){
+
 		}
 	}
 }
@@ -837,7 +860,7 @@ bool dynamicPageInit(string & page){
 void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & obj)
 {
 
-	string ext,fullPageName,attName,postparams,appid;
+	string ext,fullPageName,attName,postparams,appid,authorization;
 	unsigned int i,subDomainID,hash_page;
 	unsigned short statusCode;
 	std::unordered_map<string,string>::iterator itConvertObj;
@@ -1149,11 +1172,11 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 			am = itAppMode->second;
 		}
 	pthread_mutex_unlock(&mutexAppMode);
-	authentication((char*)teleo->mParams['B'/*ResponseBody*/].c_str(),am,teleo->mParams['v'/*LoginMsg*/]);
 
 	//loginSuccess((char*)teleo->mParams['B'/*ResponseBody*/].c_str(),teleo->mParams['v'/*LoginMsg*/] );
 	//searchDetect((char*)teleo->mParams['B'/*ResponseBody*/].c_str(),teleo->mParams['g'/*AppID*/],hash_page,teleo->mParams['c'/*Page*/]);
 
+	authorization.clear();
 	for(i=0 ;i < vAttr.size();i++)
 	{
 		if(vAttr[i].name.size()==0){
@@ -1162,6 +1185,10 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 
 		attName.clear();
 		if(vAttr[i].attribute_source=='H'){
+			if(vAttr[i].name == "authorization"){
+				authorization = vAttr[i].value;
+			}
+
 			it_global_header=global_header.find(vAttr[i].name);
 			if(it_global_header != global_header.end() ){ // Attribute name was found.
 				vAttr[i].hash = (unsigned int)it_global_header->second;
@@ -1204,6 +1231,8 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 		string_to_utf8(vAttr[i].value, vAttr[i].vec_value);
 		teleo->mAttr.insert(pair<unsigned int,struct Attribute>(vAttr[i].hash,vAttr[i]));
 	}
+
+	authentication((char*)teleo->mParams['B'/*ResponseBody*/].c_str(),am,teleo->mParams['v'/*LoginMsg*/],teleo->mParams['w'/*BasicDigestAuth*/],authorization,statusCode,teleo->mParams['A'/*Username*/]);
 
 	if(teleo->mParams['v'/*LoginMsg*/]=="y"){
 		teleo->mParams['A'/*Username*/] = usernamePerIP[teleo->mParams['a'/*UserIP*/]];
