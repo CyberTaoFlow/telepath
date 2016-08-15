@@ -78,33 +78,6 @@ void Enumeration::insertToList( int hash_val){
 
 }
 
-
-// Getting score for a given value inside the enum dictionary.
-//
-// For Example: 
-//	seen = [73613=>35,323435=>30,3453=>15] , size=80 .
-//         
-//	Input: hash_val = 323435.
-//	Return: score = 0.375 (30/80);
-//
-//	OR	
-//
-//	Input: hash_val = 1111123 (the value is not in the enum dictionary).
-//	Return: score = 0.012345679 (1/81);
-double Enumeration::getScore(int hash_val){	// Calculate the Probability of a new string in the Enumeration list.
-	map <int,unsigned int>::iterator it;		
-	double score;
-	
-	it = this->seen.find(hash_val);
-	if(it == this->seen.end() ){ // value wasn't found
-		score =  (1/((double)this->size+1))  ;
-	}else{			     // value was found
-		score = ( ( (double) it->second ) / ( (double) this->size ) ); //Laplace transform
-	}			
-
-	return score;
-}
-
 // Getting exponent score for a given value inside the enum dictionary.
 //
 // For Example: 

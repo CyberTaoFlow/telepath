@@ -26,40 +26,6 @@ unsigned int compareStatus(vector <unsigned int> nums , unsigned int status){ //
 	}
 }
 
-char checkMapPage(string str,unsigned short status){ // Get a comma separated string and a status code - check matching.
-	string diff;
-	vector <unsigned int> nums;
-	unsigned int i,size=str.size();
-	for(i=0;i<size;i++){
-		if(str[i]>57 || str[i] < 48 || i==size-1){
-			if(i==size-1){ // if it is the last char at the string.
-				diff.push_back(str[i]);
-				nums.push_back( (unsigned int)atoi( diff.c_str() ) );
-				if( compareStatus(nums,status) ){
-					vector <unsigned int>().swap(nums);
-					return 1;
-				}
-			}
-			nums.push_back( (unsigned int)atoi( diff.c_str() ) );
-			if(str[i]==45){	 // sign (-)		
-
-			}
-			if(str[i]==44){	 // sign (,)		
-				if( compareStatus(nums,status) ){
-					vector <unsigned int>().swap(nums);
-					return 1;
-				}
-				nums.clear();
-			}
-			diff.clear();
-			continue;	
-		}
-		diff.push_back(str[i]);
-	}
-	vector <unsigned int>().swap(nums);
-	return 0;
-}
-
 void checkMapPage(char & tainted,unsigned short & status){
 	if(status >= 400){
 		tainted=1;
@@ -93,7 +59,7 @@ Path::Path(string & domain,unsigned short group_id){
 	this->sampleP.assign(100,0); 
 }
 
-void Path::tokenize(Session & s,short byHostOrUserOrGroup ){ // Build and update the Path per session.
+void Path::tokenize(Session & s,short byHostOrUser ){ // Build and update the Path per session.
 	double speed;
 	short flag;	
 	unsigned long i,size = s.vRequest.size();
@@ -103,16 +69,16 @@ void Path::tokenize(Session & s,short byHostOrUserOrGroup ){ // Build and update
 
 	for(i=0 ; i < size ;i++){	
 
-		if(  byHostOrUserOrGroup==0 && s.vRequest[i].parsedHost == 2  ){ // Application
+		if(  byHostOrUser==0 && s.vRequest[i].parsedHost == 2  ){ // Application
 			this->mNodeExtended[s.vRequest[i].compare ].link_sample+=1;
 			s.vRequest[i].parsedHost =1 ;
 		}
-		else if(  byHostOrUserOrGroup==1 && s.vRequest[i].parsedUser == 2  ){ // User
+		else if(  byHostOrUser==1 && s.vRequest[i].parsedUser == 2  ){ // User
 			this->mNodeExtended[s.vRequest[i].compare ].link_sample+=1;
 			s.vRequest[i].parsedUser =1 ;
 		}
 
-		if( (byHostOrUserOrGroup==0 && s.vRequest[i].parsedHost==1) || (byHostOrUserOrGroup==1 && s.vRequest[i].parsedUser==1)  ){ // Go to the next page.
+		if( (byHostOrUser==0 && s.vRequest[i].parsedHost==1) || (byHostOrUser==1 && s.vRequest[i].parsedUser==1)  ){ // Go to the next page.
 			continue;
 		}
 
@@ -122,7 +88,7 @@ void Path::tokenize(Session & s,short byHostOrUserOrGroup ){ // Build and update
 			flag=1;
 		}
 		
-		this->updatePage(s.vRequest[i],flag,byHostOrUserOrGroup);	
+		this->updatePage(s.vRequest[i],flag,byHostOrUser);	
 		//Pushing or Updating samples to/into the vector.
 
 		if( s.vRequest[i].tainted==0 ){
@@ -132,7 +98,7 @@ void Path::tokenize(Session & s,short byHostOrUserOrGroup ){ // Build and update
 				this->sampleP.resize(s.vRequest[i].index+100,0);
 				this->sampleP[s.vRequest[i].index]++;
 			}
-			if(s.vRequest[i].index<=350){
+			if(s.vRequest[i].index==0){ //Insert IP coordinates only in the first request. 
 				pthread_mutex_lock(&mutexgeoip);
 				this->location.insert( getCoordinate(s.vRequest[i].user_ip) );
 				pthread_mutex_unlock(&mutexgeoip);
@@ -142,7 +108,7 @@ void Path::tokenize(Session & s,short byHostOrUserOrGroup ){ // Build and update
 	}	
 
 	for(i=0; i < size-1 ;i++){
-		if( ( byHostOrUserOrGroup==0 && s.vRequest[i+1].parsedHost == 0 ) ||  ( byHostOrUserOrGroup==1 && s.vRequest[i+1].parsedUser == 0 )  ){	
+		if( ( byHostOrUser==0 && s.vRequest[i+1].parsedHost == 0 ) ||  ( byHostOrUser==1 && s.vRequest[i+1].parsedUser == 0 )  ){	
 			if(s.vRequest[i+1].ts > s.vRequest[i].ts){
 				speed = (unsigned short)(s.vRequest[i+1].ts - s.vRequest[i].ts);	
 			}else{
@@ -150,20 +116,20 @@ void Path::tokenize(Session & s,short byHostOrUserOrGroup ){ // Build and update
 			}				
 			Link l(s.vRequest[i+1].compare,s.vRequest[i].compare,speed);
 
-			this->updateLink(l,byHostOrUserOrGroup,s.vRequest[i+1].ID,s.vRequest[i].ID);	
+			this->updateLink(l,byHostOrUser,s.vRequest[i+1].ID,s.vRequest[i].ID);	
 		}
 	}
 	for(i=0 ; i < size-1 ;i++){
-		if(byHostOrUserOrGroup == 0)
+		if(byHostOrUser == 0)
 			s.vRequest[i].parsedHost=1;
-		if(byHostOrUserOrGroup == 1)
+		if(byHostOrUser == 1)
 			s.vRequest[i].parsedUser=1;
 	}
 
 	// the current last page in a session parsed with 2. 
-	if(byHostOrUserOrGroup == 0)
+	if(byHostOrUser == 0)
 		s.vRequest[i].parsedHost=2; 
-	if(byHostOrUserOrGroup == 1)
+	if(byHostOrUser == 1)
 		s.vRequest[i].parsedUser=2;
 
 	this->numOfSessions++;

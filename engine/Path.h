@@ -20,7 +20,6 @@ class Session;
 using namespace std;
 
 unsigned int compareStatus(vector <unsigned int>,unsigned int);
-char checkMapPage(string,unsigned short);
 void checkMapPage(char &,unsigned short &);
 void loadMaxSession(unsigned int);
 string getCountry(string &);

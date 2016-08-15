@@ -901,77 +901,72 @@ while(globalEngine){ // while engine learning - run the engine every time we get
 		itMyAttMap->second.exp_score.clear();
 		itMyAttMap->second.exp_length.clear();
 
-		if( isIrrelevant(itMyAttMap->first) ){ // dont analyze push probability 1 and go to the queue.
-			itMyAttMap->second.exp_score.assign(sizeVal,0); // probability assignment.
-			itMyAttMap->second.exp_length.assign(sizeVal,0);    // size exponent assignment.
-		}else{
-			switch (itMyAttMap->second.type){
-				case 't':					//t=text analyzing by Markov. F=Free text
-				case 'F':
-					for(j=0;j < sizeVal  ; j++ ){
-						if(itMyAttMap->second.val_s_f[j].tokenOrNot=='n' ){
-							itMyAttMap->second.val_s_f[j].tokenOrNot='y';
+		switch (itMyAttMap->second.type){
+			case 't':					//t=text analyzing by Markov. F=Free text
+			case 'F':
+				for(j=0;j < sizeVal  ; j++ ){
+					if(itMyAttMap->second.val_s_f[j].tokenOrNot=='n' ){
+						itMyAttMap->second.val_s_f[j].tokenOrNot='y';
 
-							pthread_mutex_lock(&mutexMSatt);
-							if(MSatt.count(itMyAttMap->second.RIDs[j]) != 0){
-								pthread_mutex_unlock(&mutexMSatt);
-								continue;
-							}
+						pthread_mutex_lock(&mutexMSatt);
+						if(MSatt.count(itMyAttMap->second.RIDs[j]) != 0){
 							pthread_mutex_unlock(&mutexMSatt);
+							continue;
+						}
+						pthread_mutex_unlock(&mutexMSatt);
 
-							itMyAttMap->second.tree.tokenize(itMyAttMap->second.values[j]);
-							if(itMyAttMap->second.val_s_f[j].flag == 'y'){
-								itMyAttMap->second.sizeMarkovVec.push_back( itMyAttMap->second.val_s_f[j].size );
-							}
+						itMyAttMap->second.tree.tokenize(itMyAttMap->second.values[j]);
+						if(itMyAttMap->second.val_s_f[j].flag == 'y'){
+							itMyAttMap->second.sizeMarkovVec.push_back( itMyAttMap->second.val_s_f[j].size );
 						}
 					}
+				}
 
-					numeric_markov.init(itMyAttMap->second.sizeMarkovVec);// Numeric of length.
-					markovAtt_values_flag.assign(sizeVal,0);          // flages assignment.
-					itMyAttMap->second.exp_score.assign(sizeVal,0); // probability assignment.
-					itMyAttMap->second.exp_length.assign(sizeVal,0);    // size exponent assignment.
-					markov_Att = &(itMyAttMap->second);
-					markov_Length = &(numeric_markov);
+				numeric_markov.init(itMyAttMap->second.sizeMarkovVec);// Numeric of length.
+				markovAtt_values_flag.assign(sizeVal,0);          // flages assignment.
+				itMyAttMap->second.exp_score.assign(sizeVal,0); // probability assignment.
+				itMyAttMap->second.exp_length.assign(sizeVal,0);    // size exponent assignment.
+				markov_Att = &(itMyAttMap->second);
+				markov_Length = &(numeric_markov);
 
-					// Activate NUM_OF_MARKOV_THREADS threads which calculate the attribute scores.
-					for(markov_i=0 ; markov_i < NUM_OF_MARKOV_THREADS;markov_i++){
-						sem_post(&sem_markov_att_start);
-					}
+				// Activate NUM_OF_MARKOV_THREADS threads which calculate the attribute scores.
+				for(markov_i=0 ; markov_i < NUM_OF_MARKOV_THREADS;markov_i++){
+					sem_post(&sem_markov_att_start);
+				}
 
-					// Wait until the all threads(markovAtt_thread) stop.
-					for(markov_i=0 ; markov_i < NUM_OF_MARKOV_THREADS;markov_i++){
-						sem_wait(&sem_markov_att_end);
-					}
+				// Wait until the all threads(markovAtt_thread) stop.
+				for(markov_i=0 ; markov_i < NUM_OF_MARKOV_THREADS;markov_i++){
+					sem_wait(&sem_markov_att_end);
+				}
 
-					markovAtt_values_flag.clear();
-					break;
-				case 'n':					//n=numeric analyzing by Chebyshev.
-					for(j=0; j< sizeVal ; j++ ){
-						str_num.clear();
-						if( isNum( itMyAttMap->second.values[j],str_num ) == (-1) ){
-							att_exp=MIN_PROB;
-						}else{	
-							att_score = itMyAttMap->second.numeric.chebyshev( atof(str_num.c_str() ) );
-							frexp(att_score,&att_exp);
-							if(att_exp>0){att_exp=0;}
-						}
-						itMyAttMap->second.exp_score.push_back(att_exp);
+				markovAtt_values_flag.clear();
+				break;
+			case 'n':					//n=numeric analyzing by Chebyshev.
+				for(j=0; j< sizeVal ; j++ ){
+					str_num.clear();
+					if( isNum( itMyAttMap->second.values[j],str_num ) == (-1) ){
+						att_exp=MIN_PROB;
+					}else{	
+						att_score = itMyAttMap->second.numeric.chebyshev( atof(str_num.c_str() ) );
+						frexp(att_score,&att_exp);
+						if(att_exp>0){att_exp=0;}
 					}
-					break;
-				case 'e':			 		//e=enumeration analyzing by Covariance and Chebyshev.
-				case 'u':
-					for(j=0; j < sizeVal ; j++){
-						att_exp = itMyAttMap->second.enumeration.getProb(itMyAttMap->second.hash_values[j]);						
-						itMyAttMap->second.exp_score.push_back(att_exp);
-					}
-					break;
-				//case 'U':					//U=URL analyzing by binaric search.
-					//for(j=0; j < sizeVal ; j++){
-					//	att_exp = itMyAttMap->second.url.getProb( itMyAttMap->second.values[j] );
-					//	itMyAttMap->second.exp_score.push_back(att_exp);	
-					//}
-					//break;
-			}
+					itMyAttMap->second.exp_score.push_back(att_exp);
+				}
+				break;
+			case 'e':			 		//e=enumeration analyzing by Covariance and Chebyshev.
+			case 'u':
+				for(j=0; j < sizeVal ; j++){
+					att_exp = itMyAttMap->second.enumeration.getProb(itMyAttMap->second.hash_values[j]);						
+					itMyAttMap->second.exp_score.push_back(att_exp);
+				}
+				break;
+			//case 'U':					//U=URL analyzing by binaric search.
+				//for(j=0; j < sizeVal ; j++){
+				//	att_exp = itMyAttMap->second.url.getProb( itMyAttMap->second.values[j] );
+				//	itMyAttMap->second.exp_score.push_back(att_exp);	
+				//}
+				//break;
 		}
 
 		/*if(operationMode!=1){
@@ -1030,27 +1025,25 @@ while(globalEngine){ // while engine learning - run the engine every time we get
 
 		//--------------------Build path to each hostname and users------------------------
 
-		if(itSession->second.vRequest.size()>0 && itSession->second.update != 0){
-			if(itSession->second.user_flag==0){
-				itPath=mPath.find(itSession->second.vRequest[0].domain_id);
-				if(itPath!=mPath.end()){//Hostname was found
-					itPath->second.tokenize(itSession->second,0);
-				}else{//Hostname wasn't found
-					Path path(itSession->second.vRequest[0].domain_id);;
-					path.tokenize(itSession->second,0);
-					mPath.insert( pair<string,Path>(itSession->second.vRequest[0].domain_id,path) );
-				}
-			}else{
-				char hostUser[700];
-				sprintf(hostUser,"%s+%s",itSession->second.vRequest[0].domain_id.c_str(),itSession->second.vRequest[0].user.c_str() );
-				itPathUser=mPathUser.find(hostUser);
-				if(itPathUser!=mPathUser.end()){//Hostname was found
-					itPathUser->second.tokenize(itSession->second,1);
-				}else{//Hostname wasn't found
-					Path path(itSession->second.vRequest[0].domain_id);
-					path.tokenize(itSession->second,1);
-					mPathUser.insert( pair<string,Path>(hostUser,path) );
-				}
+		if(itSession->second.user_flag==0){
+			itPath=mPath.find(itSession->second.vRequest[0].domain_id);
+			if(itPath!=mPath.end()){//Hostname was found
+				itPath->second.tokenize(itSession->second,0);
+			}else{//Hostname wasn't found
+				Path path(itSession->second.vRequest[0].domain_id);;
+				path.tokenize(itSession->second,0);
+				mPath.insert( pair<string,Path>(itSession->second.vRequest[0].domain_id,path) );
+			}
+		}else{
+			char hostUser[700];
+			sprintf(hostUser,"%s+%s",itSession->second.vRequest[0].domain_id.c_str(),itSession->second.vRequest[0].user.c_str() );
+			itPathUser=mPathUser.find(hostUser);
+			if(itPathUser!=mPathUser.end()){//Hostname was found
+				itPathUser->second.tokenize(itSession->second,1);
+			}else{//Hostname wasn't found
+				Path path(itSession->second.vRequest[0].domain_id);
+				path.tokenize(itSession->second,1);
+				mPathUser.insert( pair<string,Path>(hostUser,path) );
 			}
 		}
 
@@ -1070,9 +1063,8 @@ while(globalEngine){ // while engine learning - run the engine every time we get
 			markovSession_path.push_back( &(itPath->second) );
 			markovSession_.push_back( &(itSession->second) );
 			markovSession_values_flag.push_back('n');
-			markovSession_host_user.push_back(itSession->second.user_flag);	
-			markovSession_mode.push_back(mAppMode[itPath->first].mode);	
-
+			markovSession_host_user.push_back(itSession->second.user_flag);
+			markovSession_mode.push_back(mAppMode[itPath->first].mode);
 		}else{ 		//Hostname wasn't found
 			#ifdef DEBUG
 				syslog(LOG_NOTICE,"Unknown hostname");

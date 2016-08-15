@@ -846,15 +846,6 @@ void decideType(myAtt & att,short userOrNot,unsigned int mode){ // deciding what
 	}
 }
 
-//  Deciding if to analyze an attribute.
-int isIrrelevant(unsigned int aid){
-	if(aid==7 || aid==8){ // cookie and host.
- 		return 1;
-	}else{
-		return 0;
-	}
-}
-
 // Check the rule time limit.
 unsigned short isTimeWinPass(double & pattern_timer,double & rule_ts){ 
 
@@ -1249,71 +1240,61 @@ bool isItNullVal(vector <unsigned int> & vec){
 
 void ifNumeric(myAtt & att,int & exp,vector <unsigned int> & vec , unsigned int & mode,unsigned int aid){
 	double new_num,score;
-	if( isIrrelevant(aid) ){  // dont analyze header,get or post, if config is zero.
-		exp=0;	
-		attributeValInit(vec);
-	}else{
-		attributeValInit(vec);
-		if( isItNullVal(vec) ){ // Null value
-			if(att.num_of_values != 0){
-				if(att.num_of_nulls==0){
-					score = ( 1/(double)att.num_of_values);
-				}else{
-					score = ( att.num_of_nulls/(double)att.num_of_values);
-				}
-				frexp(score,&exp);
-				if(exp>0){exp=0;}
-				return;
+	attributeValInit(vec);
+	if( isItNullVal(vec) ){ // Null value
+		if(att.num_of_values != 0){
+			if(att.num_of_nulls==0){
+				score = ( 1/(double)att.num_of_values);
+			}else{
+				score = ( att.num_of_nulls/(double)att.num_of_values);
 			}
-		}
-
-		string str_num;
-		if( isNum( vec,str_num ) == (-1) ){
-			exp=MIN_PROB;			
-		}else{		
-			new_num =(double)atof( str_num.c_str() );
-
-			//------------------------------Hybrid Mode------------------------------
-			if(mode==3){
-				att.numeric.update(new_num);
-			}
-			//-----------------------------------------------------------------------
-
-			score = att.numeric.chebyshev( new_num );
 			frexp(score,&exp);
 			if(exp>0){exp=0;}
+			return;
 		}
-	}	
-}
+	}
 
-void ifEnum(myAtt & att,int & exp,vector <unsigned int> & vec , unsigned int & mode,int hash_val,unsigned int aid){
-	if( isIrrelevant(aid) ){// dont analyze header,get or post, if config is zero.
-		attributeValInit(vec);
-		exp=0;
-	}else{
-		attributeValInit(vec);
-		if( isItNullVal(vec) ){ // Null value
-			if(att.num_of_values != 0){
-				double s;
-				if(att.num_of_nulls==0){
-					s = ( 1/(double)att.num_of_values);
-				}else{
-					s = ( att.num_of_nulls/(double)att.num_of_values);
-				}
-				frexp(s,&exp);
-				if(exp>0){exp=0;}
-				return;
-			}
-		}
+	string str_num;
+	if( isNum( vec,str_num ) == (-1) ){
+		exp=MIN_PROB;			
+	}else{		
+		new_num =(double)atof( str_num.c_str() );
 
 		//------------------------------Hybrid Mode------------------------------
 		if(mode==3){
-			att.enumeration.insertIntoEnum(hash_val);
+			att.numeric.update(new_num);
 		}
 		//-----------------------------------------------------------------------
 
-		exp = att.enumeration.getProb(hash_val);	
+		score = att.numeric.chebyshev( new_num );
+		frexp(score,&exp);
+		if(exp>0){exp=0;}
 	}
+}
+
+void ifEnum(myAtt & att,int & exp,vector <unsigned int> & vec , unsigned int & mode,int hash_val,unsigned int aid){
+	attributeValInit(vec);
+	if( isItNullVal(vec) ){ // Null value
+		if(att.num_of_values != 0){
+			double s;
+			if(att.num_of_nulls==0){
+				s = ( 1/(double)att.num_of_values);
+			}else{
+				s = ( att.num_of_nulls/(double)att.num_of_values);
+			}
+			frexp(s,&exp);
+			if(exp>0){exp=0;}
+			return;
+		}
+	}
+
+	//------------------------------Hybrid Mode------------------------------
+	if(mode==3){
+		att.enumeration.insertIntoEnum(hash_val);
+	}
+	//-----------------------------------------------------------------------
+
+	exp = att.enumeration.getProb(hash_val);	
 }
 
 /*
@@ -1326,11 +1307,6 @@ void ifUrl(myAtt & att,int & exp_score,Attribute & Attr, unsigned int & mode){
 		vector <unsigned int>().swap(backslash);
 	}
 
-	if( isIrrelevant(att.ID) ){// dont analyze header,get or post, if config is zero.
-		attributeValInit(Attr.vec2[1]);
-		attributeValInit(Attr.vec2[2]);
-		exp_score=0;
-	}else{
 
 		attributeValInit(Attr.vec2[1]);
 		attributeValInit(Attr.vec2[2]);
@@ -1356,42 +1332,37 @@ void ifUrl(myAtt & att,int & exp_score,Attribute & Attr, unsigned int & mode){
 		//-----------------------------------------------------------------------
 
 		exp_score = att.url.getProb(Attr.vec2[1],Attr.vec2[2]);
-	}
 }*/
 
 void ifTextOrFree(myAtt & att,int & exp_score,Attribute & Attr, unsigned int & mode,double & len_score,vector <unsigned int> & vec_val,double & avg_size,unsigned int aid){
-	if( isIrrelevant(aid) ){// dont analyze header,get or post, if config is zero.
-		attributeValInit(vec_val);
-	}else{
 
-		attributeValInit(vec_val);
-		if( isItNullVal(vec_val) ){ // Null value
-			if( att.num_of_values!=0 ){
-				double s;
-				if(att.num_of_nulls==0){
-					s = ( 1/(double)att.num_of_values);
-				}else{
-					s = (att.num_of_nulls/(double)att.num_of_values);
-				}
-				s *= s;
-				s *= s;
-				frexp(s,&exp_score);
-				if(exp_score>0){exp_score=0;}
-
-				len_score = att.sizeMarkov.chebyshev( 0 );
-				len_score = 1-len_score;
-
-				return;
+	attributeValInit(vec_val);
+	if( isItNullVal(vec_val) ){ // Null value
+		if( att.num_of_values!=0 ){
+			double s;
+			if(att.num_of_nulls==0){
+				s = ( 1/(double)att.num_of_values);
+			}else{
+				s = (att.num_of_nulls/(double)att.num_of_values);
 			}
-		}
+			s *= s;
+			s *= s;
+			frexp(s,&exp_score);
+			if(exp_score>0){exp_score=0;}
 
-		//------------------------------Hybrid Mode------------------------------
-		//if(mode==3){
-		//	att.tree.tokenize(vec_val);
-		//}
-		//-----------------------------------------------------------------------
-		exp_score = att.tree.calculate(vec_val,avg_size);
+			len_score = att.sizeMarkov.chebyshev( 0 );
+			len_score = 1-len_score;
+
+			return;
+		}
 	}
+
+	//------------------------------Hybrid Mode------------------------------
+	//if(mode==3){
+	//	att.tree.tokenize(vec_val);
+	//}
+	//-----------------------------------------------------------------------
+	exp_score = att.tree.calculate(vec_val,avg_size);
 
 	//------------------------------Hybrid Mode------------------------------
 	if(mode==3){

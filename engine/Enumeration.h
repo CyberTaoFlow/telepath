@@ -35,7 +35,6 @@ public:
 	void insertToList(int);
 	void insertIntoEnum(int);
 	int getProb(int);
-	double getScore(int);
 	void print();
 	void print_syslog();
 
