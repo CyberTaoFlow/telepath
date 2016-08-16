@@ -457,7 +457,6 @@ void *thread_insert_req(void *threadid)
 		insert_count++;
 		sprintf(dataPtr,"{\"index\":{\"_index\":\"telepath-%s\",\"_type\":\"http\",\"_id\":\"X%lld\"}}\n{\"ts\":%f,\"ip_orig\":\"%s\",\"ip_score\":%f,\"ip_resp\":\"%s\",\"status_code\":%hu,\"country_code\":\"%s\",\"city\":\"%s\",\"method\":\"%s\",\"location\":\"%f,%f\",\"sid\":%u,\"sha256_sid\":\"%s\",\"score_presence\":%f,\"score_query\":%f,\"score_flow\":%f,\"score_landing\":%f,\"score_geo\":%f,\"score_average\":%f,\"index\":%u,\"host\":\"%s\",\"uri\":\"%s\",\"canonical_url\":\"%s\",\"operation_mode\":%hd,\"title\":\"%s\",\"username\":\"%s\",\"parameters\":[%s]%s%s}\n",&tmp.shard[0],tmp.RID,tmp.ts,&tmp.ip_orig[0],tmp.ip_score,&tmp.ip_resp[0],tmp.status_code,&tmp.country[0],&tmp.city[0],&tmp.method[0],tmp.c.x,tmp.c.y,tmp.Sid,&tmp.sha256_sid[0],tmp.presence,tmp.query_score,tmp.flow_score,tmp.landing_normal,tmp.geo_normal,tmp.avg_normal,tmp.sequence,&tmp.host_name[0],&tmp.page_name[0],&tmp.canonical_url[0],tmp.op_mode,&tmp.title[0],&tmp.user_name[0],&atts[0],&alertandaction[0],&explanations[0]);
 		dataPtr += strlen(dataPtr);
-
 		if( ( insert_count == INSERT_REQ_AT_ONCE ) || valReqQueue.empty() ){
 			insertElastic += insert_count;
 			insert_count=0;
@@ -1557,6 +1556,10 @@ void *getAtt_thread_pro(void *threadarg)
 				}	
 
 				unicodeParser(tmp_att.vec_value,tmp);
+
+                                if(tmp_att.analysis=='u'){
+                                        normalize_score=0;
+                                }
 
 				alert_score=0;
 				if(itSession.first != mSession.end() ){	//Session was found.
