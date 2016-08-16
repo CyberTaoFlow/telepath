@@ -1,6 +1,7 @@
 #include "jsoncpp/json.h"
 #include "teleindex.h"
 #include "mxml/mxml.h"
+#include "base64.h"
 
 #include "Enumeration.h"
 #include <semaphore.h>
@@ -373,8 +374,18 @@ void authentication(char * reply,AppMode & am,string & logSuccess,string & basic
 		}
 	}
 	else if(am.basic_mode==1){
-		if(status_code >= 200 && status_code < 300){
-
+		if(authorization.size() > 0){
+			if(status_code >= 200 && status_code < 300){
+syslog(LOG_NOTICE,"authorization:%s",authorization.c_str());
+				string encoded = authorization.assign(authorization.begin()+6,authorization.end());
+syslog(LOG_NOTICE,"1)encoded:%s",encoded.c_str());
+				encoded = base64_decode(encoded);
+syslog(LOG_NOTICE,"2)encoded:%s",encoded.c_str());
+				found =  encoded.find(":",found);
+				username.assign(encoded.begin(),encoded.begin()+found);
+syslog(LOG_NOTICE,"username:%s",username.c_str());
+				basicDigestAuth="y";
+			}
 		}
 	}
 	else if(am.digest_mode==1){
@@ -390,8 +401,10 @@ void authentication(char * reply,AppMode & am,string & logSuccess,string & basic
 		}
 	}
 	else if(am.ntlm_mode==1){
-		if(status_code >= 200 && status_code < 300){
+		if(authorization.size() > 0){
+			if(status_code >= 200 && status_code < 300){
 
+			}
 		}
 	}
 }
@@ -1233,6 +1246,8 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 	}
 
 	authentication((char*)teleo->mParams['B'/*ResponseBody*/].c_str(),am,teleo->mParams['v'/*LoginMsg*/],teleo->mParams['w'/*BasicDigestAuth*/],authorization,statusCode,teleo->mParams['A'/*Username*/]);
+
+	syslog(LOG_NOTICE,"['A'/*Username*/]:%s     ['w'/*BasicDigestAuth*/]:%s",teleo->mParams['A'/*Username*/].c_str(),teleo->mParams['w'/*BasicDigestAuth*/].c_str());
 
 	if(teleo->mParams['v'/*LoginMsg*/]=="y"){
 		teleo->mParams['A'/*Username*/] = usernamePerIP[teleo->mParams['a'/*UserIP*/]];
