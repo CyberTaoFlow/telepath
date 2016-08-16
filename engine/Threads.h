@@ -824,14 +824,11 @@ void *getAtt_thread(void *threadarg)
 				//	longSessionDrop++;
 				//}else{
 					c_UserID.clear();
-syslog(LOG_NOTICE,"Before Basic");
 					if(itSession.first->second.validUser==false){
-syslog(LOG_NOTICE,"2(Before Basic");
 						if( ( to->mParams['v'/*LoginMsg*/].size() > 0 )  &&  ( itSession.first->second.sUsername.size() != 0 ) ){
 							itSession.first->second.validUser = true;
 						}
 						else if(to->mParams['w'/*BasicDigestAuth*/].size() > 0 ){
-syslog(LOG_NOTICE,"Basic IN");
 							itSession.first->second.validUser = true;
 						}
 					}
@@ -1197,18 +1194,15 @@ void *getAtt_thread_pro(void *threadarg)
 				//	ifSessionBlock = true;
 				//	longSessionDrop++;
 				//}else{
-                                        c_UserID.clear();
-syslog(LOG_NOTICE,"Before Basic");
-                                        if(itSession.first->second.validUser==false){
-syslog(LOG_NOTICE,"2(Before Basic");
-                                                if( ( to->mParams['v'/*LoginMsg*/].size() > 0 )  &&  ( itSession.first->second.sUsername.size() != 0 ) ){
-                                                        itSession.first->second.validUser = true;
-                                                }
-                                                else if(to->mParams['w'/*BasicDigestAuth*/].size() > 0 ){
-syslog(LOG_NOTICE,"Basic IN");
-                                                        itSession.first->second.validUser = true;
-                                                }
-                                        }
+					c_UserID.clear();
+					if(itSession.first->second.validUser==false){
+						if( ( to->mParams['v'/*LoginMsg*/].size() > 0 )  &&  ( itSession.first->second.sUsername.size() != 0 ) ){
+							itSession.first->second.validUser = true;
+						}
+						else if(to->mParams['w'/*BasicDigestAuth*/].size() > 0 ){
+							itSession.first->second.validUser = true;
+						}
+					}
 
 					//Don't change it to else.
 					if(itSession.first->second.validUser==true){
