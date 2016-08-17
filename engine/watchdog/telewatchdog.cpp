@@ -41,44 +41,98 @@ vector <string> pcapfilter_vec;
 
 bool es_restart_flag=false;
 
+//! Checking the Disk Space.
+/*!
+	This thread checks every 10 seconds the free space percentage.If that percentage is less than 20, the telewatchdog will delete the oldest elasticsearch index using delete_oldest() function. 
+	\param void*
+	\return void*
+	\sa statvfs
+*/
 void *thread_check_disk_space(void*);
+
+//! Checking the Elasticsearch Responsiveness.
+/*!
+	This thread executes a simple curl query to the Elasticsearch every 30 seconds. If there is no response from Elasticsearch it means it is locked and es_restart_flag=true.  
+	\param void*
+	\return void*
+*/
 void *thread_check_elasticsearch(void*);
+
+//! Restarting Telepath when Elasticsearch not Responding.
+/*!
+	This thread checks the es_restart_flag value every second. If the es_restart_flag==true for 60 seconds than all process(telewatchdog included) will be restarted itself.
+	\param void*
+	\return void*
+*/
 void *thread_restart_es_stuck(void*);
 void *thread_init_suricata(void*);
 void *thread_php_script(void*);
 void *thread_php_script2(void*);
 void loadInputMode();
 
+//! Running the Process as a Daemon.
+/*!
+	A standard way to run the process as a deamon. Most of the work is done by the standard C fork() function.
+        \param No
+        \return void
+        \sa fork() 
+*/
+void demonize();
+//! Starting all Threads.
+/*!
+	Starting all the telewatchdog threads using the pthread_create() GNU function.
+	\param No
+	\return void
+	\sa pthread_create(pthread_t *thread, const pthread_attr_t *attr,void *(*start_routine) (void *), void *arg)
+*/
+void startThreads();
+
+//! Restarting all Telepath Processes.
+/*!
+	\param No
+	\return void
+	\sa popen(const char *command, const char *type)
+	\sa pclose(FILE *stream)
+*/
+void restart_program();
+
+//! Returning Process ID
+/*!
+	The function gets process name as an argument and returns its Linux process ID(PID).
+	\param program_name a C++ string argument.
+	\return the process ID as an integer argument.
+*/
+int lget_pid(string);
+//! Checking the Existance of a Process.
+/*!
+	This function gets process name as an argument and returns an integer that indicates if the process is running or not.
+	\param program_name a C++ string argument.
+	\return 0 or 1 as an integer argument.
+	\n	0 - The process is not running.
+	\n	1 - The process is running.
+*/
+unsigned int get_ps(string);
+
 pthread_mutex_t mutexDetails         = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t mutex_es_check         = PTHREAD_MUTEX_INITIALIZER;
 
-/*
- * void demonize()
- * 		Demonizing process
- * Parameters:
- * 		No
- * Return value:
- * 		Doesn't return value
- */
 void demonize(){
 
-	//to create process as a daemon, we need to untie it from current process session.
-	//to do it correctly we need to make fork(), new process will be created, and it's session can be changed.
 	int pid;
 
 	pid=fork();
 	switch (pid)
 	{
-	case 0:
-		setsid();
-		break;
-	case -1:
-	cerr<<"ERROR! fork() failed!"<<endl;
-	exit(1);
-	break;
+		case 0:
+			setsid();
+			break;
+		case -1:
+			cerr<<"ERROR! fork() failed!"<<endl;
+			exit(1);
+			break;
 
-	default:
-		exit(0);
+		default:
+			exit(0);
 	}
 }
 
@@ -95,6 +149,8 @@ void startThreads(){
 
 	rc = pthread_create(&thread_reset_es, NULL,thread_restart_es_stuck, (void *)empty);// select info from user_groups table.
 	if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); return;}
+
+	rc = pthread_create(&thread_script, NULL,thread_php_script,(void *)empty);
 
 	rc = pthread_create(&thread_script, NULL,thread_php_script,(void *)empty);
 	if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); return;}
@@ -542,7 +598,6 @@ void *thread_check_elasticsearch(void *threadid){
 	return NULL;
 }
 
-// When ElasticSearch doesn't respond, the system restarting itself.
 void *thread_restart_es_stuck(void *threadid){
 	unsigned int counter=0;
 
@@ -908,5 +963,3 @@ int main(int argc, char *argv[])
 		#endif
 	}
 }
-
-
