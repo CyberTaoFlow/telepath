@@ -31,7 +31,7 @@ using namespace std;
 //! Checking the Disk Space.
 /*!
 	This thread checks every 10 seconds the free space percentage.If that percentage is less than 20, the telewatchdog will delete the oldest elasticsearch index using delete_oldest() function. 
-	\param void*
+	\param threadid
 	\return void*
 	\sa statvfs
 */
@@ -40,7 +40,7 @@ void *thread_check_disk_space(void*);
 //! Checking the Elasticsearch Responsiveness.
 /*!
 	This thread executes a simple curl query to the Elasticsearch every 30 seconds. If there is no response from Elasticsearch it means it is locked and es_restart_flag=true.  
-	\param void*
+	\param threadid
 	\return void*
 */
 void *thread_check_elasticsearch(void*);
@@ -48,27 +48,43 @@ void *thread_check_elasticsearch(void*);
 //! Restarting Telepath when Elasticsearch not Responding.
 /*!
 	This thread checks the es_restart_flag value every second. If the es_restart_flag==true for 60 seconds than all process(telewatchdog included) will be restarted itself.
-	\param void*
+	\param threadid
 	\return void*
 */
 void *thread_restart_es_stuck(void*);
+
+//! Starting/Stopping Suricata.
+/*!
+	This thread starts/stops suricata according to its sniffer_mode variable. Suricata can run in two modes(depending on the content of the 'files_queue' queue):
+	\n 1)sniffer mode - suricata receives packet flow from a given interface(suricata.yaml file) with a pcap filter.
+	\n 2)tcpdump mode - suricata loads data from tcpdump file/s.
+	\param threadid
+	\return void*
+	\sa http://192.168.1.222/index.php/Telepath_commands
+*/
 void *thread_init_suricata(void*);
-void *thread_php_script(void*);
-void *thread_php_script2(void*);
+
+//! Loading Telepath Status.
+/*!
+	Loading the "engine","sniffer" and "reverse_proxy" status(off/on) from Elasticsearch.
+	\param none
+	\return void*
+*/
 void loadInputMode();
 
 //! Running the Process as a Daemon.
 /*!
 	A standard way to run the process as a deamon. Most of the work is done by the standard C fork() function.
-        \param No
+        \param none
         \return void
         \sa fork() 
 */
 void demonize();
+
 //! Starting all Threads.
 /*!
 	Starting all the telewatchdog threads using the pthread_create() GNU function.
-	\param No
+	\param none
 	\return void
 	\sa pthread_create(pthread_t *thread, const pthread_attr_t *attr,void *(*start_routine) (void *), void *arg)
 */
@@ -76,7 +92,7 @@ void startThreads();
 
 //! Restarting all Telepath Processes.
 /*!
-	\param No
+	\param none
 	\return void
 	\sa popen(const char *command, const char *type)
 	\sa pclose(FILE *stream)
@@ -90,6 +106,7 @@ void restart_program();
 	\return the process ID as an integer argument.
 */
 int lget_pid(string);
+
 //! Checking the Existance of a Process.
 /*!
 	This function gets process name as an argument and returns an integer that indicates if the process is running or not.
@@ -100,6 +117,30 @@ int lget_pid(string);
 */
 unsigned int get_ps(string);
 
+//! Checking the Existance of a Process .
+/*!
+	This function gets command name as an argument and returns an integer that indicates if that command line is running or not.
+	\param command_name a C++ string argument.
+	\return 0 or 1 as an integer argument.
+	\n      0 - The command is not running.
+	\n      1 - The command is running.
+*/
+unsigned int get_full_ps(string);
+
+
+void get_pcap_filter(string & output,string & pcap);
+void get_interface_name(string & output,string & interface);
+void setMinShard(char *ptr);
+void delete_oldest();
+unsigned int get_ls_content(string & dir_name,string & content);
+void push_files_to_queue(string & dir_name,string & content);
+bool validKey(string & key,unsigned int & epoch);
+bool checkLicenseKey();
+
+
+
+void *thread_php_script(void*);
+void *thread_php_script2(void*);
 
 unsigned int countShard;
 unsigned int minShard;
@@ -236,11 +277,11 @@ unsigned int get_ps(string program_name){
 	}
 }
 
-unsigned int get_full_ps(string program_name){
+unsigned int get_full_ps(string command_name){
 	char buf[1000],buffer[1000];
 	int lSize;
 
-	sprintf(buffer,"ps -aux | grep %s",(char*)program_name.c_str());
+	sprintf(buffer,"ps -aux | grep %s",(char*)command_name.c_str());
 
 	FILE *fd;
 	memset(buf,'\0',sizeof(buf));
@@ -483,94 +524,6 @@ void push_files_to_queue(string & dir_name,string & content){
 	}
 }
 
-/*
- * void sighandler(int sig)
- * 		Signal handler
- * Parameters:
- * 		int sig - signal ID
- * Return value:
- * 		Doesn't return value
- */
-
-void sighandler(int sig){
-
-	//the thing is: watchdog runs another processes. If child process stopped, watchdog must receive exit status of it's child process.
-	//Or child process will be zombie.
-
-	//If wait() or waitpid() return because the status of a child process is available, these functions shall return a value equal to the process ID
-	//of the child process. In this case, if the value of the argument stat_loc is not a null pointer, information shall be stored in the location
-	//pointed to by stat_loc. The value stored at the location pointed to by stat_loc shall be 0 if and only if the status returned is from a terminated child
-	//process that terminated by one of the following means:
-
-	//	1.	The process returned 0 from main().
-	//	2.	The process called _exit() or exit() with a status argument of 0.
-	//	3.	The process was terminated because the last thread in the process terminated.
-
-	//So watchdog must handle  	SIGCHLD signal
-
-	int st=0;//status for wait() function
-
-	if(sig == SIGCHLD)
-	{
-		wait(&st);		//reads exit status of child process
-		if(st==256)		//if its 0 ??? just print status
-		{
-		}
-	}
-	else if(sig == SIGINT)
-	{
-
-	}
-
-	else if(sig == SIGUSR1)	//receives signal, sent by "telepath" script
-	{
-		stopflag=1;
-	}
-}
-
-/*
- * string getprocessinfo()
- * 		Function runs once during timer interval
- * Parameters:
- * 		No
- * Return value:
- * 		Doesn't return value
- */
-void getprocessinfo(){
-
-	char buf[2000];
-
-	string s="", delimeter;
-	FILE *fd;
-	vector<string> commands, results;
-	delimeter[0]='\n';
-	//creates vector of commands to run. It checks, if process is running
-	commands.push_back("ps aux | grep '[e]ngine'");
-	commands.push_back("ps aux | grep '[a]tmsd'");
-	commands.push_back("ps aux | grep '[m]ysqld'");
-	commands.push_back("head -n2 /proc/meminfo;");
-	commands.push_back("head -n15 /proc/meminfo | tail -n2;");
-
-	//runs every command and logs result to syslog
-	for(vector<string>::iterator i=commands.begin(); i!=commands.end(); ++i)
-	{
-		memset(buf,'\0',sizeof(buf));
-		fd=popen((*i).c_str(),"r");	//opens pipe and runs command
-		if(fd!=NULL)
-		{
-			fread(buf,1,sizeof(buf),fd);	//reads result from pipe
-			syslog (LOG_NOTICE, "%s",buf);
-			pclose(fd);
-		}
-		else
-		{
-			syslog (LOG_NOTICE, "%s","Can't open pipe for:");
-			syslog (LOG_NOTICE, "%s",(char*)(*i).c_str());
-		}
-	}
-}
-
-// Execute a simple curl query to check ElasticSearch responsiveness.
 void *thread_check_elasticsearch(void *threadid){
 	CURL *curl;
 	curl = curl_easy_init();
@@ -829,8 +782,6 @@ int main(int argc, char *argv[])
 	syslog (LOG_NOTICE, "The telewatchdog has started...");
 
 	demonize();
-	signal(SIGCHLD,sighandler);
-	signal(SIGUSR1,sighandler);
 
 	read_connect_conf_file();
 	// Suricata is reading from a tcpdump file.
@@ -919,12 +870,6 @@ int main(int argc, char *argv[])
 	{
 		sleep(5);
 		loadInputMode();
-
-		//running function to print info to syslog
-		if(time(NULL)-timer>900){
-			timer=time(NULL);
-			getprocessinfo();
-		}
 
 		#ifdef REDIS
 
