@@ -707,7 +707,7 @@ void *thread_sid_per_min(void *threadid)
 		writeB2(numOfSessionsPerDomain);
 		pthread_mutex_unlock(&mutexSessionsPerHost); //unlock
 
-		syslog(LOG_NOTICE,"Sessions:%u mMemory:%u |getRedis:%u |insertElastic:%u |dropApp:%u |dropPage:%u |dropMethod:%u |longSessionDrop:%u |Command:%u",size,(unsigned int)TC->teleObjQueue.size(),getRedis,insertElastic,dropApp,dropPage,dropMethod,longSessionDrop,(unsigned int)valCommandQueue.size());	
+		//syslog(LOG_NOTICE,"Sessions:%u mMemory:%u |getRedis:%u |insertElastic:%u |dropApp:%u |dropPage:%u |dropMethod:%u |longSessionDrop:%u |Command:%u",size,(unsigned int)TC->teleObjQueue.size(),getRedis,insertElastic,dropApp,dropPage,dropMethod,longSessionDrop,(unsigned int)valCommandQueue.size());	
 
 		if(errorCheck==insertElastic){
 			counter++;
