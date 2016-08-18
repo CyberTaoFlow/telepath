@@ -28,19 +28,6 @@
 
 using namespace std;
 
-struct statvfs vfs;
-unsigned int minShard;
-string minShardString;
-int stopflag=0;
-unsigned int engine_mode,reverse_proxy_mode,sniffer_mode;
-queue <string> files_queue;
-
-vector <string> interface_vec;
-vector <string> pcapfilter_vec;
-
-
-bool es_restart_flag=false;
-
 //! Checking the Disk Space.
 /*!
 	This thread checks every 10 seconds the free space percentage.If that percentage is less than 20, the telewatchdog will delete the oldest elasticsearch index using delete_oldest() function. 
@@ -113,6 +100,16 @@ int lget_pid(string);
 */
 unsigned int get_ps(string);
 
+
+unsigned int countShard;
+unsigned int minShard;
+string minShardString;
+int stopflag=0;
+unsigned int engine_mode,reverse_proxy_mode,sniffer_mode;
+queue <string> files_queue;
+vector <string> interface_vec;
+vector <string> pcapfilter_vec;
+bool es_restart_flag=false;
 pthread_mutex_t mutexDetails         = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t mutex_es_check         = PTHREAD_MUTEX_INITIALIZER;
 
@@ -380,6 +377,7 @@ void setMinShard(char *ptr)
 	static const char * telepath = "telepath-";
 	char tmp[20];
 	unsigned int tmp_min,min_shard=0;
+	countShard=0;
 
 	while(1){
 		ptr = strcasestr(ptr,telepath);
@@ -393,6 +391,7 @@ void setMinShard(char *ptr)
 			minShardString.insert(7,1,'-');
 			tmp_min = (unsigned int)atoi(tmp);
 			if(tmp_min != 0){
+				countShard++;
 				if(min_shard == 0){
 					min_shard = tmp_min;
 				}else{
@@ -427,19 +426,17 @@ void delete_oldest()
 		return;
 	}
 
+	if(countShard==1){
+		syslog(LOG_NOTICE,"Engine is restarting because there is no enough disk space and the current elasticsearch index is going to be deleted.");
+		FILE* ppipe_engine = popen("killall -9 engine > /dev/null 2>&1 || true","w");
+		pclose(ppipe_engine);
+	}
+
 	sprintf(url,"%s/telepath-%u",es_connect.c_str(),minShard);
 	curl_easy_setopt(curl,CURLOPT_CUSTOMREQUEST,"DELETE"); 
 	curl_easy_setopt(curl, CURLOPT_URL,url);
 	curl_easy_perform(curl);
         syslog(LOG_NOTICE,"curl -XDELETE %s", url);
-
-	//sprintf(url,"rm /opt/telepath/db/elasticsearch/logs/*%s > /dev/null 2>&1",minShardString.c_str());
-	//FILE* ppipe_logs_delete = popen(url, "w");
-	//pclose(ppipe_logs_delete);
-	//syslog(LOG_NOTICE,"%s",url);
-	//FILE* ppipe_redis_delete = popen("rm /var/lib/redis/dump.rdb > /dev/null 2>&1", "w");
-	//pclose(ppipe_redis_delete);
-
 }
 
 unsigned int get_ls_content(string & dir_name,string & content){
@@ -628,6 +625,7 @@ void *thread_restart_es_stuck(void *threadid){
 void *thread_check_disk_space(void *threadid)
 {
 	double long free_space_ratio;
+	struct statvfs vfs;
 
 	while(1){
 		sleep(10);
