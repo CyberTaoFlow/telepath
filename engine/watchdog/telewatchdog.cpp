@@ -55,7 +55,7 @@ void *thread_restart_es_stuck(void*);
 
 //! Starting/Stopping Suricata.
 /*!
-	This thread starts/stops suricata according to its sniffer_mode variable. Suricata can run in two modes(depending on the content of the 'files_queue' queue):
+	This thread starts/stops suricata according to its sniffer_mode variable. Suricata can run in two modes(depending on the content of the global 'files_queue' queue):
 	\n 1)sniffer mode - suricata receives packet flow from a given interface(suricata.yaml file) with a pcap filter.
 	\n 2)tcpdump mode - suricata loads data from tcpdump file/s.
 	\param threadid
@@ -109,7 +109,7 @@ int lget_pid(string);
 
 //! Checking the Existance of a Process.
 /*!
-	This function gets process name as an argument and returns an integer that indicates if the process is running or not.
+	This function gets process name as an argument and returns an integer variable that indicates if the process is running or not.
 	\param program_name a C++ string argument.
 	\return 0 or 1 as an integer argument.
 	\n	0 - The process is not running.
@@ -119,7 +119,7 @@ unsigned int get_ps(string);
 
 //! Checking the Existance of a Process .
 /*!
-	This function gets command name as an argument and returns an integer that indicates if that command line is running or not.
+	This function gets command name as an argument and returns an integer variable that indicates if that command line is running or not.
 	\param command_name a C++ string argument.
 	\return 0 or 1 as an integer argument.
 	\n      0 - The command is not running.
@@ -127,19 +127,90 @@ unsigned int get_ps(string);
 */
 unsigned int get_full_ps(string);
 
-
+//! Loading Suricata pcap filter/s.
+/*!
+	This function loads the Suricata pcap filter/s information from Elasticsearch. The full path is: http://localhost:9200/telepath-config/interfaces/interface_id .
+	\param output a C++ string argument. 
+	\param pcap a C++ string argument.
+	\return void
+*/
 void get_pcap_filter(string & output,string & pcap);
+
+//! Loading Suricata interface name/s.
+/*!
+	This function loads the Suricata interface name/s information from Elasticsearch. The full path is: http://localhost:9200/telepath-config/interfaces/interface_id .
+	\param output a C++ string argument. 
+	\param interface a C++ string argument.
+	\return void
+*/
 void get_interface_name(string & output,string & interface);
+
+//! Finding the oldest Elasticsearch index.
+/*!
+	This function finds the earliest/oldest Elasticsearch index date. For example the index telepath-20160808 is older than the index telepath-20160811
+	\param ptr a pointer to C character.
+	\return void
+*/
 void setMinShard(char *ptr);
+
+//! Deleting the oldest Elasticsearch index.
+/*!
+	This function executes a DELETE curl query to remove the earliest/oldest Elasticsearch index date.
+	\param none
+	\return void
+*/
 void delete_oldest();
+
+//!  Getting the File Names in a Directory.
+/*!
+	This function gets a directory name as an argument and returns an integer variable that indicates if there are any file/s inside.
+	\param dir_name a C++ string argument.
+	\param content a C++ string argument.
+	\return 0,1 or -1 as an integer argument.
+	\n	0 - No files inside the directory.
+	\n	1 - There are file/s inside the directory (Those will be written to the content string).
+	\n     -1 - An error has occured in the popen command.
+*/
 unsigned int get_ls_content(string & dir_name,string & content);
+
+//!  Pushing file names to a global queue.
+/*!
+	This function pushes filename/s(absolute path/s) to the global 'files_queue' queue.
+	\param dir_name a C++ string argument.
+	\param content a C++ string argument.
+	\return void
+*/
 void push_files_to_queue(string & dir_name,string & content);
+
+//!  Checking the Telepath License Validity.
+/*!
+	This function gets a license key as an argument and returns a boolean variable that indicates if the license is Valid/Invalid.
+	\param key a C++ string argument.
+	\param epoch an unsigned integer argument.
+	\return true or false as a boolean argument.
+	\n      true - The license is Valid.
+	\n      false - The license is Invalid.
+*/
 bool validKey(string & key,unsigned int & epoch);
+
+//!  Allowing/Forbidding to use Telepath.
+/*!
+	This function blockes the user/client access to the Telepath when the license is Invalid or Expired.
+	\param none
+	\return true or false as a boolean argument.
+	\n      true - The user can leagaly use Telepath (The license is Valid).
+	\n      false - The user cannot use Telepath (The license is Invalid/Expired).
+*/
 bool checkLicenseKey();
 
-
-
+//!  TODO - move to cron.
+/*!
+*/
 void *thread_php_script(void*);
+
+//!  TODO - move to cron.
+/*!
+*/
 void *thread_php_script2(void*);
 
 unsigned int countShard;
