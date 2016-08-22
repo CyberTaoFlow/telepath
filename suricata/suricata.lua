@@ -199,6 +199,13 @@ end
 
 
 function log(args)
+
+        -- Checking if the configuration was changed. 
+        config_was_changed_id = redis:lpop("C")
+        if (config_was_changed_id) then
+                setup()
+        end
+
 	local uri = HttpGetRequestUriRaw()
 	uri = unescape(uri) --url decoding for uri & GET parameters.
 
