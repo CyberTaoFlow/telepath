@@ -1556,7 +1556,6 @@ void *getAtt_thread_pro(void *threadarg)
 				}	
 
 				unicodeParser(tmp_att.vec_value,tmp);
-
                                 if(tmp_att.analysis=='u'){
                                         normalize_score=0;
                                 }
@@ -1569,7 +1568,6 @@ void *getAtt_thread_pro(void *threadarg)
 				}
 
 				normalize_score = alert_score/100 ;
-
 				if(normal_flag=='y'){
 					if(alert_score == 0){
 						if(exp_score < it_NumericAtt->second.attribute.mean ){
@@ -1581,8 +1579,12 @@ void *getAtt_thread_pro(void *threadarg)
 						tmpWeight=1; // Maximum weight.
 					}
 				}else{
-					normalize_score=1;
-					tmpWeight=1; // 
+					if(tmp_att.analysis=='u'){
+						normalize_score=0;
+					}else{
+						normalize_score=1;
+						tmpWeight=1; // 
+					}
 				}
 
 				Parameter h(normalize_score,len_score,tmpWeight);
@@ -1596,7 +1598,7 @@ void *getAtt_thread_pro(void *threadarg)
 
 				pthread_mutex_lock(&mutexRidAtts);
 				itRidAtts = mRidAtts.find(c_RID);
-				if( itRidAtts != mRidAtts.end() ){			// The first parameter in that request.
+				if( itRidAtts != mRidAtts.end() ){			// The request wasn't found.
 					maskPassword(tmp_att.hash,tmp_att.value);
 					maskCreditCard(tmp_att.value);
 					sprintf(attField,",{\"name\":\"%s\",\"value\":\"%s\",\"type\":\"%c\",\"score_data\":%f,\"score_length\":%f,\"weight\":%f,\"analysis\":\"%c\"}",&tmp_att.name[0],&tmp_att.value[0],tmp_att.attribute_source,100*normalize_score*tmpWeight,100*len_score*tmpWeight,tmpWeight,tmp_att.analysis);
