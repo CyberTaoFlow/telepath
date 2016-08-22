@@ -582,6 +582,7 @@ void showSvnVersion(char * mode){
 	if( strcmp("-v",mode) == 0 ){
 		cout <<"Engine Version:  "<< GIT_REV;
 		print_time(COMPILATION_TIME);
+		cout <<"Serial Number:   "<< COUNT_REV << endl;
 		exit(1);
 	}
 }
