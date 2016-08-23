@@ -259,13 +259,11 @@ void startThreads(){
 	rc = pthread_create(&thread_reset_es, NULL,thread_restart_es_stuck, (void *)empty);// select info from user_groups table.
 	if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); return;}
 
-	rc = pthread_create(&thread_script, NULL,thread_php_script,(void *)empty);
+	//rc = pthread_create(&thread_script, NULL,thread_php_script,(void *)empty);
+	//if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); return;}
 
-	rc = pthread_create(&thread_script, NULL,thread_php_script,(void *)empty);
-	if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); return;}
-
-	rc = pthread_create(&thread_script2, NULL,thread_php_script2,(void *)empty);
-	if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); return;}
+	//rc = pthread_create(&thread_script2, NULL,thread_php_script2,(void *)empty);
+	//if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); return;}
 }
 
 void restart_program()
