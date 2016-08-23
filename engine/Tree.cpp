@@ -3,8 +3,6 @@
 using namespace std;
 
 unsigned int lenHelper(unsigned int x) { 
-	// this is either a fun exercise in optimization 
-	// or it's extremely premature optimization.
 	if(x>=100000) {
 		if(x>=10000000) {
 			if(x>=1000000000) return 10;
@@ -47,7 +45,6 @@ void Tree::clean(){
 	vector <unsigned long> ().swap(this->sampleNode); 
 }
 
-// Replacing data with unique identification symbols that retain all the essential information about the data.
 void Tree::tokenize(vector <unsigned int> & attr_value){
 	bool last_letter = false;
 	unsigned long i,length;
@@ -97,7 +94,6 @@ void Tree::tokenize(vector <unsigned int> & attr_value){
 	this->word++;
 }
 
-// Creating a new Node or increasing the emission by one.
 void Tree::updateNode(bool last_letter,string & comp){
 	map <string,Node>::iterator itNode;
 
@@ -124,7 +120,6 @@ void Tree::updateNode(bool last_letter,string & comp){
 	}
 }
 
-// Creating a new Edge or increasing the emission by one.
 void Tree::updateEdge(Edge & edge,string comp){
 	map <string,Edge>::iterator itEdge;
 
@@ -206,7 +201,6 @@ int Tree::calculate(vector <unsigned int> & value,double avg_size){
 	return exp_score;
 }
 
-// Printing class variables.
 void Tree::print(){
 	std::map <string,Node>::iterator itNode;  // Nodes
 	std::map <string,Edge>::iterator itEdge;  // Egdes
@@ -225,7 +219,6 @@ void Tree::print(){
 	}
 }
 
-// Printing class memory consumption.
 void Tree::printCapacity(){
 	cout << "-------------------------"<< endl;
 	cout << "mNode.size():" << mNode.size() << endl;
