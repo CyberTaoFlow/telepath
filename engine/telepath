@@ -168,10 +168,12 @@ END
 
 	-v)
 		/opt/telepath/bin/telewatchdog -v
+		/opt/telepath/bin/engine -v
 	;;
 
 	--version)
 		/opt/telepath/bin/telewatchdog -v
+		/opt/telepath/bin/engine -v
 	;;
 
 

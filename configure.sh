@@ -17,7 +17,7 @@ if [ ! -f $MAIN_JSON ]; then
 fi
 
 if [ -n "$(which apt-get)" ]; then
-	apt-get -y install dialog php5 libapache2-mod-php5 gdb php5-mysql mysql-common mysql-server lua5.1 lua-socket libcurl-ocaml-dev luarocks jq sendmail
+	apt-get -y install dialog php5 libapache2-mod-php5 gdb php5-mysql mysql-common mysql-server lua5.1 lua-socket libcurl-ocaml-dev luarocks jq #sendmail
 	apt-get -y install php-pear php5-dev
 	pecl install msgpack-0.5.7
 #	if [ ! -f "/etc/php5/mods-available/msgpack.ini" ]; then
@@ -29,7 +29,7 @@ if [ -n "$(which apt-get)" ]; then
 	ln -s ../../mods-available/msgpack.ini ./
 	mv ./msgpack.ini ./20-msgpack.ini
 #	fi
-	sudo printf "Y\nY\nY\n" | sendmailconfig
+	#sudo printf "Y\nY\nY\n" | sendmailconfig
 
 	luarocks install Lua-cURL
 	luarocks install Lua-cURL --server=https://rocks.moonscript.org/dev
@@ -489,8 +489,8 @@ conf_create_db() {
 }
 cron_jobs(){
     crontab -l > currentCrons
-    echo "php /opt/telepath/ui/html/index.php cases flag_requests_by_cases >> /var/log/flag_requests_by_cases.log 2>&1 || true" >> currentCrons
-    echo "php /opt/telepath/ui/html/index.php cases store_similar_case_sessions >> /var/log/store_similar_case_sessions.log 2>&1 || true" >> currentCrons
+    echo "* * * * * php /opt/telepath/ui/html/index.php cases flag_requests_by_cases >> /var/log/flag_requests_by_cases.log 2>&1 || true" >> currentCrons
+    echo "0 * * * * php /opt/telepath/ui/html/index.php cases store_similar_case_sessions >> /var/log/store_similar_case_sessions.log 2>&1 || true" >> currentCrons
     crontab currentCrons
     rm currentCrons
 }
