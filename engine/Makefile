@@ -8,6 +8,8 @@ Comp =  -g -Wall -O -c -o
 
 GITDEV := -D'GIT_REV="$(shell git rev-parse HEAD | grep ... | sed -e 's/^\(.\{8\}\).*/\1/')"'
 GITFLAG := $(GITDEV)
+COUNTDEV := -D'COUNT_REV="$(shell cat ../.counter)"'
+COUNTFLAG := $(COUNTDEV)
 TIME2 := -D'COMPILATION_TIME=$(shell date +%s)'
 
 CRYPTO=/usr/lib/libcrypto.a
@@ -228,7 +230,7 @@ engine_v3: objects/teleindex_v3.o Engine_v3.a objects/engine_v3.o json.a mXML.a
 	g++ -o engine objects/engine_v3.o -L./ -pthread -static-libgcc $(LIBSTDC) $(CRYPTO) -ldl $(BOOST_SERIAL) objects/teleindex_v3.o Engine_v3.a json.a mXML.a $(PCRE) -lcurl -lrt $(GeoIP) $(Redis)
 
 objects/engine_v3.o: engine.cpp 
-	g++ $(GITFLAG) $(TIME2) -g -Wall -O -c -o objects/engine_v3.o -DREDIS -DVERSION3 $(MSGPACK) engine.cpp $(Unordered) 
+	g++ $(GITFLAG) $(COUNTFLAG) $(TIME2) -g -Wall -O -c -o objects/engine_v3.o -DREDIS -DVERSION3 $(MSGPACK) engine.cpp $(Unordered) 
 
 
 
@@ -238,7 +240,7 @@ engine_trial: objects/teleindex_v3.o Engine_v3.a objects/engine_trial.o json.a m
 	g++ -o engine objects/engine_trial.o -L./ -pthread -static-libgcc $(LIBSTDC) $(CRYPTO) -ldl $(BOOST_SERIAL) objects/teleindex_v3.o Engine_v3.a json.a mXML.a $(PCRE) -lcurl -lrt $(GeoIP) $(Redis)
 
 objects/engine_trial.o: engine.cpp
-	g++ $(GITFLAG) $(TIME2) -g -O -c -o objects/engine_trial.o -DREDIS -DVERSION3 -DTRIAL $(MSGPACK) engine.cpp $(Unordered)
+	g++ $(GITFLAG) $(COUNTFLAG) $(TIME2) -g -O -c -o objects/engine_trial.o -DREDIS -DVERSION3 -DTRIAL $(MSGPACK) engine.cpp $(Unordered)
 
 
 
@@ -248,7 +250,7 @@ engine_debug: objects/teleindex_debug.o Engine_v3.a objects/engine_debug.o json.
 	g++ -o engine objects/engine_debug.o json.a -L./ -pthread -static-libgcc $(LIBSTDC) $(CRYPTO) -ldl $(BOOST_SERIAL) objects/teleindex_debug.o Engine_v3.a mXML.a $(PCRE) -lcurl -lrt $(GeoIP) $(Redis)
 
 objects/engine_debug.o: engine.cpp
-	g++ $(GITFLAG) $(TIME2) -g -O -c -o objects/engine_debug.o -DREDIS -DVERSION3 -DTRIAL -DDEBUG $(MSGPACK) engine.cpp $(Unordered)
+	g++ $(GITFLAG) $(COUNTFLAG) $(TIME2) -g -O -c -o objects/engine_debug.o -DREDIS -DVERSION3 -DTRIAL -DDEBUG $(MSGPACK) engine.cpp $(Unordered)
 
 
 
@@ -258,7 +260,7 @@ engine_logger: objects/teleindex_v3.o Engine_v3.a objects/engine_logger json.a m
 	g++ -o log_engine objects/engine_logger -L./ -pthread -static-libgcc $(LIBSTDC) $(CRYPTO) -ldl $(BOOST_SERIAL) objects/teleindex_v3.o Engine_v3.a json.a mXML.a $(PCRE) -lrt $(GeoIP) 
 
 objects/engine_logger.o: engine.cpp 
-	g++ $(GITFLAG) $(TIME2) -g -Wall -O -c -o objects/engine_logger -DLOGGER $(MSGPACK) engine.cpp $(Unordered)
+	g++ $(GITFLAG) $(COUNTFLAG) $(TIME2) -g -Wall -O -c -o objects/engine_logger -DLOGGER $(MSGPACK) engine.cpp $(Unordered)
 
 
 
