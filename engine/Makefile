@@ -8,7 +8,7 @@ Comp =  -g -Wall -O -c -o
 
 GITDEV := -D'GIT_REV="$(shell git rev-parse HEAD | grep ... | sed -e 's/^\(.\{8\}\).*/\1/')"'
 GITFLAG := $(GITDEV)
-COUNTDEV := -D'COUNT_REV="$(shell cat /home/hybrid/trunk/.counter)"'
+COUNTDEV := -D'COUNT_REV="$(shell cat ../.counter)"'
 COUNTFLAG := $(COUNTDEV)
 TIME2 := -D'COMPILATION_TIME=$(shell date +%s)'
 
