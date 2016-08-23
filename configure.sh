@@ -198,7 +198,7 @@ install() {
 	conf_create_tbls
 	conf_update_apache
 	conf_init_cron
-
+    cron_jobs
 	conf_maintenence
 
 }
@@ -487,7 +487,13 @@ conf_create_db() {
 	echo "flush privileges" | $MYSQL -s $MUO -f $DATABASE > /dev/null 2>&1 || true
 
 }
-
+cron_jobs(){
+    crontab -l > currentCrons
+    echo "php /opt/telepath/ui/html/index.php cases flag_requests_by_cases >> /var/log/flag_requests_by_cases.log 2>&1 || true" >> currentCrons
+    echo "php /opt/telepath/ui/html/index.php cases store_similar_case_sessions >> /var/log/store_similar_case_sessions.log 2>&1 || true" >> currentCrons
+    crontab currentCrons
+    rm currentCrons
+}
 conf_create_tbls() {
 
 	echo "Creating/Updating table structure..."
