@@ -6,21 +6,46 @@ using namespace std;
 class Edge{
 public:
 
-	// Using the boost serialization-library for serializing and deserializing.
-	friend class boost::serialization::access;	
-	std::string from_node_comp;	 // Unique key for the source node.
+	friend class boost::serialization::access;
+
+	//!  Unique key for the exit node( the index and the utf8 value of the character ).
+	/*!*/
+	std::string from_node_comp;
 	template<class Archive>
+
+	//!  Boost Serialization Library.
+	/*!
+		Using the boost serialization library for serializing/deserializing the Edge object to/from the disk.
+	*/
 	void serialize(Archive & ar, const unsigned int version)
 	{
 		ar & emission;
 		ar & from_node_comp;
 	}
 
-	unsigned int emission;	 // The emission of this specific Edge.    
+	//!  The number of times this transition(between characters) exists in that level/index.
+	/*!*/
+	unsigned int emission;
 
+	//! Defult Constrator.
+	/*!
+		Initializing the object fields with its default values.
+	*/
 	Edge();
-	Edge(string &);
-	void print(); // Printing the class variables.
 
+	//! Defult Constrator.
+	/*!
+		Initializing the object fields with its default values.
+		\param from_node_comp as a C++ string argument. 
+	*/
+	Edge(string &);
+
+	//! Printing the class variables.
+	/*!
+		Printing to stdout the object fields.
+		\param none
+		\return void
+	*/
+	void print(); // Printing the class variables.
 };
 
