@@ -11,12 +11,6 @@ Enumeration::Enumeration(){
 	this->offset = 0;
 }	
 
-// Clear the seen vector.
-void Enumeration::clean(){
-	this->seen.clear(); 
-}
-
-// Classifying as Enumeration a list of strings by finding a convergence.
 bool Enumeration::getCorrelation(){
 	if(this->last > 8000){
 		return 0;
@@ -25,14 +19,13 @@ bool Enumeration::getCorrelation(){
 	// Using Covariance.
 	double Pvalue/*Covar[XY]*/ = (this->sumXY/(double)this->size)/*E[XY]*/ - ( (this->sumY/(double)this->size)/*E[Y]*/ * ( (this->size+1) /(double)2 )/*E[X]*/ );
 
-	if (Pvalue < -0.5){ // if Pvalue is less than 0, the list is classified as Enumeration.
+	if (Pvalue < -0.5){ // if Pvalue is less than -0.5, the list is classified as Enumeration.
 		return true;
 	}else{
 		return false;
 	}
 }
 
-// Adding a sample into the enum dictionary.
 void Enumeration::insertIntoEnum( int hash_val){
 	map <int,unsigned int>::iterator itSeen;
 
@@ -47,7 +40,6 @@ void Enumeration::insertIntoEnum( int hash_val){
 	}
 }
 
-// Updating the relevant variables(sumY and sumXY) when one sample is added.
 void Enumeration::insertToList( int hash_val){
 	map <int,unsigned int>::iterator itSeen;
 
@@ -78,19 +70,7 @@ void Enumeration::insertToList( int hash_val){
 
 }
 
-// Getting exponent score for a given value inside the enum dictionary.
-//
-// For Example: 
-//	seen = [73613=>35,323435=>30,3453=>15] , size=80 .
-//         
-//	Input: hash_val = 323435.
-//	Return: score = -1;
-//
-//	OR	
-//
-//	Input: hash_val = 1111123 (the value is not in the enum dictionary).
-//	Return: score = -6;
-int Enumeration::getProb(int hash_val){	// Calculate the Probability of a new string in the Enumeration list.
+int Enumeration::getProb(int hash_val){
 	map <int,unsigned int>::iterator it;		
 	double score;
 	int exp;	

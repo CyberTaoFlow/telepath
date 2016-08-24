@@ -27,7 +27,7 @@ public:
 
 	//! Defult Constrator.
 	/*!
-		Initializing the object fields with its default values.
+		Initializing the object fields with their default values.
 	*/
 	Node();
 
