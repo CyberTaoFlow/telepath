@@ -7,20 +7,57 @@ class Link{
 public:
 
 	friend class boost::serialization::access;
-	std::string from_page_comp;	// Unique key for from_Page.
-	std::string compare;		// Unique key for Link.
+
+	//! Unique key for the exit page( the index and the hash page value ).
+	/*!*/
+	std::string from_page_comp;
+
+	//!  Unique key for Link.
+	/*!*/
+	std::string compare;
 	template<class Archive>
+
+	//!  Boost Serialization Library.
+	/*!
+		Using the boost serialization library for serializing/deserializing the Tree object to/from the disk.
+	*/
 	void serialize(Archive & ar, const unsigned int version)
 	{
 		ar & from_page_comp;  
 		ar & landing;     
 		ar & compare;  
 	}
+
+	//!  Transition Speed Between Pages.
+	/*!
+		For Example : epoch_page[2] - epoch_page[1] .
+	*/
 	unsigned short landing; 
 
+	//!  Defult Constrator.
+	/*!
+		Initializing the object fields with their default values.
+	*/
 	Link();
+
+	//!  Constrator.
+	/*!
+		Initializing the object fields with their default values.
+		\param to_page_comp as a C++ string argument.
+		\param from_page_comp as a C++ string argument.
+		\param landing as an unsigned short argument.
+	*/
 	Link(string &,string &,unsigned short);
+
+	//!  Cleaning all object fields.
+        /*!*/
 	void clean();
+
+	//! Printing the class variables.
+	/*!
+		Printing to stdout the object fields.
+		\return void
+	*/
 	void print();
 };
 
