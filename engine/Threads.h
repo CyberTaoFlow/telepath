@@ -1437,12 +1437,12 @@ void *getAtt_thread_pro(void *threadarg)
 
 						switch (itMyAttMap->second.type){
 							case 'n':					//n=numeric.
-								itMyAttMap->second.enumeration.clean();
+								itMyAttMap->second.enumeration.seen.clear();
 								itMyAttMap->second.tree.clean();
 								break;
 							case 't':					//t=text. F=Free text.
 							case 'F':
-								itMyAttMap->second.enumeration.clean();
+								itMyAttMap->second.enumeration.seen.clear();
 								break;
 							case 'e':					//e=enumeration.
 								itMyAttMap->second.tree.clean();

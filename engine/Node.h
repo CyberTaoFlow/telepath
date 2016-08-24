@@ -17,11 +17,11 @@ public:
 		ar & edge_sample;
 	}
 
-	//!The number of times this character exists in that level/index.
+	//!  The number of times this character exists in that level/index.
 	/*!*/
 	unsigned int emission;
 
-	//!The number of times this character in that level/index is not the last letter in the word.
+	//!  The number of times this character in that level/index is not the last letter in the word.
         /*!*/
 	unsigned int edge_sample;
 
