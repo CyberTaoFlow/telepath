@@ -70,11 +70,11 @@ void Path::tokenize(Session & s,short byHostOrUser ){ // Build and update the Pa
 	for(i=0 ; i < size ;i++){	
 
 		if(  byHostOrUser==0 && s.vRequest[i].parsedHost == 2  ){ // Application
-			this->mNodeExtended[s.vRequest[i].compare ].link_sample+=1;
+			this->mCompressedPage[s.vRequest[i].compare ].link_sample+=1;
 			s.vRequest[i].parsedHost =1 ;
 		}
 		else if(  byHostOrUser==1 && s.vRequest[i].parsedUser == 2  ){ // User
-			this->mNodeExtended[s.vRequest[i].compare ].link_sample+=1;
+			this->mCompressedPage[s.vRequest[i].compare ].link_sample+=1;
 			s.vRequest[i].parsedUser =1 ;
 		}
 
@@ -138,7 +138,7 @@ void Path::tokenize(Session & s,short byHostOrUser ){ // Build and update the Pa
 
 //Insert new Pages to the Path or update their emission and link_sample.
 void Path::updatePage(Page & p,short flag,short & ifUser){
-	map <string,NodeExtended>::iterator itNodeExtended;
+	map <string,CompressedPage>::iterator itCompressedPage;
 
 	map <unsigned int, Operation >::iterator itOperation = mOperation.find(p.ID);
 	if( itOperation != mOperation.end() ){
@@ -157,28 +157,28 @@ void Path::updatePage(Page & p,short flag,short & ifUser){
 	}
 
 	if(this->numOfSessions == 0){
-		NodeExtended ne(p.index);
+		CompressedPage ne(p.index);
 		if(flag){
 			ne.link_sample=0;
 			p.link_sample=0;
 		}
-		this->mNodeExtended.insert( pair<string,NodeExtended>(p.compare,ne) );	
+		this->mCompressedPage.insert( pair<string,CompressedPage>(p.compare,ne) );	
 	}
 	else{
-		itNodeExtended=mNodeExtended.find(p.compare);
-		if(itNodeExtended!=this->mNodeExtended.end()){//Page was found
-			itNodeExtended->second.emission+=1;	
+		itCompressedPage=mCompressedPage.find(p.compare);
+		if(itCompressedPage!=this->mCompressedPage.end()){//Page was found
+			itCompressedPage->second.emission+=1;	
 			if(!flag){
-				itNodeExtended->second.link_sample+=1;
+				itCompressedPage->second.link_sample+=1;
 			}
 			
 		}else{			//Page wasn't found
-			NodeExtended ne(p.index);
+			CompressedPage ne(p.index);
 			if(flag){
 				ne.link_sample=0;
 				p.link_sample=0;
 			}
-			this->mNodeExtended.insert( pair<string,NodeExtended>(p.compare,ne) );	
+			this->mCompressedPage.insert( pair<string,CompressedPage>(p.compare,ne) );	
 		}	
 	}
 	if(ifUser!=0){
@@ -188,22 +188,22 @@ void Path::updatePage(Page & p,short flag,short & ifUser){
 
 // Insert new Links to the Path or update their emission and diffLanding.
 void Path::updateLink(Link & l,short & ifUser,unsigned int & to,unsigned int & from){ 
-	map <string,LinkExtended>::iterator itLinkExtended;
+	map <string,CompressedLink>::iterator itCompressedLink;
 
 	map <unsigned int,unsigned int>::iterator itLinkSum;
 
 	if(this->numOfSessions == 0){
-		LinkExtended le(l.from_page_comp,l.landing);
-		this->mLinkExtended.insert( pair<string,LinkExtended>(l.compare,le) );
+		CompressedLink le(l.from_page_comp,l.landing);
+		this->mCompressedLink.insert( pair<string,CompressedLink>(l.compare,le) );
 	}else{
 
-		itLinkExtended=mLinkExtended.find(l.compare);
-		if(itLinkExtended!=mLinkExtended.end()){//Link was found
-			itLinkExtended->second.emission+=1;
-			itLinkExtended->second.diffLanding.push_back(l.landing);
+		itCompressedLink=mCompressedLink.find(l.compare);
+		if(itCompressedLink!=mCompressedLink.end()){//Link was found
+			itCompressedLink->second.emission+=1;
+			itCompressedLink->second.diffLanding.push_back(l.landing);
 		}else{			//Link wasn't found
-			LinkExtended le(l.from_page_comp,l.landing);
-			this->mLinkExtended.insert( pair<string,LinkExtended>(l.compare,le) );
+			CompressedLink le(l.from_page_comp,l.landing);
+			this->mCompressedLink.insert( pair<string,CompressedLink>(l.compare,le) );
 		}
 	}
 	if(ifUser!=0 || to==from){
@@ -213,19 +213,19 @@ void Path::updateLink(Link & l,short & ifUser,unsigned int & to,unsigned int & f
 
 void Path::print(){
 
-	cout<<"---mNodeExtended---"<<endl;
-	map <string,NodeExtended>::iterator itNodeExtended;
-	for (itNodeExtended = this->mNodeExtended.begin() ; itNodeExtended != this->mNodeExtended.end() ; itNodeExtended++){	
-		itNodeExtended->second.print();
+	cout<<"---mCompressedPage---"<<endl;
+	map <string,CompressedPage>::iterator itCompressedPage;
+	for (itCompressedPage = this->mCompressedPage.begin() ; itCompressedPage != this->mCompressedPage.end() ; itCompressedPage++){
+		itCompressedPage->second.print();
 	}
 
-	cout<<"---mLinkExtended---"<<endl;
-	map <string,LinkExtended>::iterator itLinkExtended;
-	for (itLinkExtended = this->mLinkExtended.begin() ; itLinkExtended != this->mLinkExtended.end() ; itLinkExtended++){
-		itLinkExtended->second.print();
+	cout<<"---mCompressedLink---"<<endl;
+	map <string,CompressedLink>::iterator itCompressedLink;
+	for (itCompressedLink = this->mCompressedLink.begin() ; itCompressedLink != this->mCompressedLink.end() ; itCompressedLink++){
+		itCompressedLink->second.print();
 	}
 
-	cout<<"---mLinkExtended---"<<endl;
+	cout<<"---mCompressedLink---"<<endl;
 	for(unsigned int i=0;i<sampleP.size();i++){
 		cout << sampleP[i] <<" ";
 	}
@@ -244,8 +244,8 @@ void Path::printCapacity(){
 	cout<<"domain:" <<this->domain<< endl;
 	cout<<"activate:" <<this->activate<< endl;
 	cout<<"numOfSessions:" <<this->numOfSessions<< endl;
-	cout<<"mNodeExtended.size():" <<this->mNodeExtended.size()<< endl;
-	cout<<"mLink.size():" <<this->mLinkExtended.size()<< endl;
+	cout<<"mCompressedPage.size():" <<this->mCompressedPage.size()<< endl;
+	cout<<"mCompressedLink.size():" <<this->mCompressedLink.size()<< endl;
 	cout<<"sampleP.size():" <<this->sampleP.capacity()<< endl<<endl;
 }
 

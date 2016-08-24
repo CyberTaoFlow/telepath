@@ -184,11 +184,11 @@ objects/Cluster.o: Cluster.cpp
 objects/DB-SCAN.o: DB-SCAN.cpp 
 	g++ $(Comp) objects/DB-SCAN.o DB-SCAN.cpp
 
-objects/NodeExtended.o: NodeExtended.cpp 
-	g++ $(Comp) objects/NodeExtended.o NodeExtended.cpp
+objects/CompressedPage.o: CompressedPage.cpp 
+	g++ $(Comp) objects/CompressedPage.o CompressedPage.cpp
 
-objects/LinkExtended.o: LinkExtended.cpp 
-	g++ $(Comp) objects/LinkExtended.o LinkExtended.cpp
+objects/CompressedLink.o: CompressedLink.cpp 
+	g++ $(Comp) objects/CompressedLink.o CompressedLink.cpp
 
 objects/Page.o: Page.cpp 
 	g++ $(Comp) objects/Page.o Page.cpp
@@ -221,8 +221,8 @@ objects/ScoreData.o: ScoreData.cpp
 	g++ $(Comp) objects/ScoreData.o ScoreData.cpp
 
 
-Engine_v3.a: objects/teletypes.o objects/teleobject.o objects/Syslog.o objects/Node.o objects/Edge.o objects/Tree.o objects/Numeric.o objects/Enumeration.o objects/Parameter.o objects/Query.o objects/Coordinate.o objects/Cluster.o objects/DB-SCAN.o objects/NodeExtended.o objects/LinkExtended.o objects/Page.o objects/Link.o objects/Core.o objects/Session.o objects/Operation.o objects/Range.o objects/Rule.o objects/geoip.o objects/Path.o objects/ScoreData.o
-	ar r Engine_v3.a objects/teletypes.o objects/teleobject.o objects/Syslog.o objects/Node.o objects/Edge.o objects/Tree.o objects/Numeric.o objects/Enumeration.o objects/Parameter.o objects/Query.o objects/Coordinate.o objects/Cluster.o objects/DB-SCAN.o objects/NodeExtended.o objects/LinkExtended.o objects/Page.o objects/Link.o objects/Core.o objects/Session.o objects/Operation.o objects/Range.o objects/Rule.o objects/geoip.o objects/Path.o objects/ScoreData.o
+Engine_v3.a: objects/teletypes.o objects/teleobject.o objects/Syslog.o objects/Node.o objects/Edge.o objects/Tree.o objects/Numeric.o objects/Enumeration.o objects/Parameter.o objects/Query.o objects/Coordinate.o objects/Cluster.o objects/DB-SCAN.o objects/CompressedPage.o objects/CompressedLink.o objects/Page.o objects/Link.o objects/Core.o objects/Session.o objects/Operation.o objects/Range.o objects/Rule.o objects/geoip.o objects/Path.o objects/ScoreData.o
+	ar r Engine_v3.a objects/teletypes.o objects/teleobject.o objects/Syslog.o objects/Node.o objects/Edge.o objects/Tree.o objects/Numeric.o objects/Enumeration.o objects/Parameter.o objects/Query.o objects/Coordinate.o objects/Cluster.o objects/DB-SCAN.o objects/CompressedPage.o objects/CompressedLink.o objects/Page.o objects/Link.o objects/Core.o objects/Session.o objects/Operation.o objects/Range.o objects/Rule.o objects/geoip.o objects/Path.o objects/ScoreData.o
 
 
 

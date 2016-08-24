@@ -9,8 +9,8 @@
 #include <GeoIPCity.h>
 #include <pthread.h>
 
-#include "NodeExtended.h"
-#include "LinkExtended.h"
+#include "CompressedPage.h"
+#include "CompressedLink.h"
 #include "DB-SCAN.h"
 
 class Link;
@@ -31,14 +31,14 @@ class Path{
 public:
 
 	friend class boost::serialization::access;
-  	std::map <string,NodeExtended> mNodeExtended; // Unique key to each Page in the Path.
-	std::map <string,LinkExtended> mLinkExtended; // Unique key to each Link in the Path.
+  	std::map <string,CompressedPage> mCompressedPage; // Unique key to each Page in the Path.
+	std::map <string,CompressedLink> mCompressedLink; // Unique key to each Link in the Path.
 	std::vector <unsigned int> sampleP; // Number of sample to each level in the Path.
 	template<class Archive>
 	void serialize(Archive & ar, const unsigned int version)
 	{
-		ar & mNodeExtended;  
-		ar & mLinkExtended;     
+		ar & mCompressedPage;  
+		ar & mCompressedLink;     
 		ar & sampleP;  
 		ar & domain;  
   
