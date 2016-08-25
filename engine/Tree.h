@@ -71,7 +71,7 @@ public:
 
 	//!  Defult Constrator.
 	/*!
-		Initializing the object fields (only the word fields) with its default values.
+		Initializing the object fields (only the word fields) with their default values.
 	*/
 	Tree();
 

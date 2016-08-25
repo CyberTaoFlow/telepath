@@ -1,23 +1,20 @@
-#include "LinkExtended.h"
+#include "CompressedLink.h"
 
 using namespace std;
 
-// Defult Constrator.
-LinkExtended::LinkExtended(){}
-LinkExtended::LinkExtended(string & from_page_comp,unsigned short landing){
+CompressedLink::CompressedLink(){}
+CompressedLink::CompressedLink(string & from_page_comp,unsigned short landing){
 	this->from_page_comp = from_page_comp;
 	this->emission=1;
 	this->diffLanding.push_back(landing);
 }
 
-// Cleaning object.
-void LinkExtended::clean(){
+void CompressedLink::clean(){
 	vector <unsigned short> ().swap(this->diffLanding); 
 	this->from_page_comp.clear();
 }
 
-// Printing.
-void LinkExtended::print(){
+void CompressedLink::print(){
 	cout << "E:" << this->emission ;
 
 	cout << "  Landing:";

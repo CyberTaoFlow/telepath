@@ -7,7 +7,6 @@ extern void es_mapping(string,string);
 extern void es_insert(string,string);
 using namespace std;
 
-// Constractor.
 Numeric::Numeric(){
 	this->mean = 0;
 	this->variance = 0;
@@ -18,7 +17,6 @@ Numeric::Numeric(){
 	this->max=0;
 }
 
-// Calculating average, variance, standard-deviation,minimun value and maximum value.
 void Numeric::init(vector <double> & vec){
 	double sum=0.0,sum2=0.0;
 	unsigned int i;
@@ -54,7 +52,6 @@ void Numeric::init(vector <double> & vec){
 	this->stddev = sqrt(this->variance);
 }
 
-// Calculating average, variance, standard-deviation,minimun value and maximum value.
 void Numeric::init(vector <unsigned short> & vec){
 	double sum=0.0,sum2=0.0;
 	unsigned int i;
@@ -92,7 +89,6 @@ void Numeric::init(vector <unsigned short> & vec){
 
 }
 
-// Calculating average, variance, standard-deviation,minimun value and maximum value.
 void Numeric::init(vector <int> & vec){
 	double sum=0.0,sum2=0.0;
 	unsigned int i;
@@ -129,7 +125,6 @@ void Numeric::init(vector <int> & vec){
 	this->stddev = sqrt(this->variance);
 }
 
-// Chebyshev's inequality guarantees that in any probability distribution, "nearly all" values are close to the mean.
 double Numeric::chebyshev(double x){
 	double result;		
 	double variance =  this->variance;
@@ -144,14 +139,6 @@ double Numeric::chebyshev(double x){
 	}
 }
 
-// Updating fields(average,variance,...) when one value is added to the vector without reiterating it all.
-//
-// For Example: 
-//        size=4 , avg=3.5 , var=1.5 , std=1.118033989 , min=2 , max=5.
-//        New Number=10.
-//
-//        Then:
-//        size=5 avg=4.8 , var=7.76 , std=2.785677655 , min=2 , max=10.
 void Numeric::update(double new_num){
 	double this_sum,old_mean,A,B;
 
@@ -180,14 +167,6 @@ void Numeric::update(double new_num){
 	this->stddev = sqrt(this->variance);
 }
 
-// Updating fields(average,variance,...) when multiple idenical values are added to the vector without reiterating it all.
-//
-// For Example: 
-//        size=4 avg=3.5 , var=1.5 , std=1.118033989 , min=2 , max=5.
-//        New Numbers=[10,10,10]
-//
-//        Then:
-//        size=7 avg=6.285714 , var=11.06122 , std=3.32584 , min=2 , max=10.
 void Numeric::update(double new_num,unsigned int length){
 	double this_sum,old_mean,A,B;
 

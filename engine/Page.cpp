@@ -3,7 +3,6 @@
 
 using namespace std;
 
-// Defult Constrator.
 Page::Page(){}
 Page::Page(boost::unordered_map<char,string> & mParams,unsigned int index,unsigned int current_PageID,long long current_RID,string & current_IP,string & UserID_){
 	char buffer[35];
@@ -49,7 +48,6 @@ Page::Page(boost::unordered_map<char,string> & mParams,unsigned int index,unsign
 
 }
 
-// Printing.
 void Page::print(){
 	cout <<"\tID:"<<ID << "  name:"<<"  index:" <<index <<"  emission:"<< emission<<"  link_sample:"<< link_sample<<"   user_ip:"<<user_ip;
 	cout<<endl;

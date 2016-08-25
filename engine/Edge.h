@@ -29,13 +29,13 @@ public:
 
 	//! Defult Constrator.
 	/*!
-		Initializing the object fields with its default values.
+		Initializing the object fields with their default values.
 	*/
 	Edge();
 
-	//! Defult Constrator.
+	//!  Constrator.
 	/*!
-		Initializing the object fields with its default values.
+		Initializing the object fields with their values.
 		\param from_node_comp as a C++ string argument. 
 	*/
 	Edge(string &);

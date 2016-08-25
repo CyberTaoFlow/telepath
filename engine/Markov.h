@@ -33,8 +33,8 @@ public:
 		map <unsigned int, Operation >::iterator itOperation;
 		map <long long, OpRID >::iterator itOpRIDs;
 
-		map <string,NodeExtended>::iterator itNodeExtended;
-		map <string,LinkExtended>::iterator itLinkExtended;
+		map <string,CompressedPage>::iterator itCompressedPage;
+		map <string,CompressedLink>::iterator itCompressedLink;
 		for(unsigned int i=0 ;i < s.vRequest.size() ; i++){//2 for
 			itScoreNumeric = score_numeric.find(s.vRequest[i].domain_id);
 			if(itScoreNumeric != score_numeric.end() ){ // hostname was found.
@@ -107,8 +107,8 @@ public:
 
 			//---------------------------------------------------------------------
 			checkMapPage(s.vRequest[i].tainted,s.vRequest[i].status_code); // Tainted Page or not.
-			itNodeExtended=path.mNodeExtended.find(s.vRequest[i].compare);
-			if(itNodeExtended!=path.mNodeExtended.end() && s.vRequest[i].tainted==0){// The Page was found and the Page isn't tainted.
+			itCompressedPage=path.mCompressedPage.find(s.vRequest[i].compare);
+			if(itCompressedPage!=path.mCompressedPage.end() && s.vRequest[i].tainted==0){// The Page was found and the Page isn't tainted.
 
 				if(learn_or_pro!=1){ // production mode.
 					if(hostFlag==true){
@@ -227,10 +227,10 @@ public:
                         compareLink.push_back('|');
                         compareLink.append(s.vRequest[i+1].compare);
 
-			itLinkExtended=path.mLinkExtended.find(compareLink);
-			if(itLinkExtended!=path.mLinkExtended.end()){//Link was found
+			itCompressedLink=path.mCompressedLink.find(compareLink);
+			if(itCompressedLink!=path.mCompressedLink.end()){//Link was found
 				Numeric num_1;
-				num_1.init(itLinkExtended->second.diffLanding);
+				num_1.init(itCompressedLink->second.diffLanding);
 
 				diff = (double)(s.vRequest[i+1].ts - s.vRequest[i].ts);
 				if( (diff < num_1.mean && slowOrFastLanding==0) || (diff > num_1.mean && slowOrFastLanding==2) ){ // don't analyze fast speed or slow speed. 
@@ -239,7 +239,7 @@ public:
 					landing_score = num_1.chebyshev(diff)	; //landing_score	
 				}
 
-				num2 = (double)(  ((double)(itLinkExtended->second.emission))  /  ((double)( path.mNodeExtended[itLinkExtended->second.from_page_comp].link_sample ))  );
+				num2 = (double)(  ((double)(itCompressedLink->second.emission))  /  ((double)( path.mCompressedPage[itCompressedLink->second.from_page_comp].link_sample ))  );
 				frexp( num2, &(exp_2) );
 				if (exp_2 > 0){exp_2=0;}
 				totalExp = exp_2;   //flow_score_exponent

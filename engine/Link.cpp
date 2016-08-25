@@ -3,7 +3,6 @@
 
 using namespace std;
 
-// Defult Constrator.
 Link::Link(){}
 Link::Link(string & to_page_comp,string & from_page_comp,unsigned short landing){
 	this->from_page_comp = from_page_comp;
@@ -14,13 +13,11 @@ Link::Link(string & to_page_comp,string & from_page_comp,unsigned short landing)
 	this->landing = landing;
 }
 
-// Clear the object.
 void Link::clean(){
 	this->from_page_comp.clear();
 	this->compare.clear();
 }
 
-// Printing
 void Link::print(){
 	cout << "compare:"<< this->compare ;
 	cout << "  Landing:" << landing << endl;;
