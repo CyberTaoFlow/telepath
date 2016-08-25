@@ -206,6 +206,11 @@ function log(args)
                 setup()
         end
 
+	if (uri) then
+	else
+		return
+	end
+
 	local uri = HttpGetRequestUriRaw()
 	uri = unescape(uri) --url decoding for uri & GET parameters.
 
@@ -235,6 +240,12 @@ function log(args)
 	
 	--Making decimal client IP.
 	local o1,o2,o3,o4 = srcip:match("(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)" )
+	if ( o1 ) then
+	else
+		--Probably IPv6
+		return
+	end
+
 	int_ip = 16777216*o1 + 65536*o2 + 256*o3 + o4
 
 	for key, value in pairs(whitelist_ips) do
@@ -248,6 +259,10 @@ function log(args)
 	local requestline = HttpGetRequestLine()
 	if requestline then
 		local tmp = string.find(requestline, " ")
+		if (tmp) then
+		else
+			return
+		end
 		method = string.sub(requestline, 1, tmp-1)  --method.
 	else
 		--Invalid Method.
@@ -258,6 +273,10 @@ function log(args)
 	local responseline = HttpGetResponseLine()
 	if responseline then
 		local tmp = string.find(responseline, " ")
+		if (tmp) then
+		else
+			return
+		end
 		status = string.sub(responseline,tmp+1,tmp+3) --status code.
 	else
 		--Invalid Status Code.
