@@ -115,11 +115,12 @@ void print_time(unsigned int timer)
 
 	static struct tm br_time;
 	register struct tm *timep = &br_time;
-	register unsigned long dayno;
+	//register unsigned long dayno;
+	register long dayno;
 	register unsigned long dayclock;
 
 	int year = EPOCH_YR;
-    int hilikMonth;
+	
 	dayno = (timer+3*3600) / (SECS_DAY );
 
         while (dayno >= YEARSIZE(year)) {
@@ -129,9 +130,8 @@ void print_time(unsigned int timer)
 	timep->tm_year = year - YEAR0;
 	timep->tm_yday = dayno;
 	timep->tm_mon = 0;
-    hilikMonth =  _ytab[LEAPYEAR(year)][timep->tm_mon];
-        while (dayno >= hilikMonth) {
-                dayno -= hilikMonth;
+        while (dayno >= _ytab[LEAPYEAR(year)][timep->tm_mon]) {
+                dayno -= _ytab[LEAPYEAR(year)][timep->tm_mon];
                 timep->tm_mon++;
         }
 
