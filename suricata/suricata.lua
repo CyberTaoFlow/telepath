@@ -206,11 +206,6 @@ function log(args)
                 setup()
         end
 
-	if (uri) then
-	else
-		return
-	end
-
 	local uri = HttpGetRequestUriRaw()
 	uri = unescape(uri) --url decoding for uri & GET parameters.
 
