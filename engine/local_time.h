@@ -1,4 +1,3 @@
-
 #define SECS_DAY (24L * 60L * 60L)
 #define EPOCH_YR 1970
 #define YEAR0 1900
@@ -120,7 +119,7 @@ void print_time(unsigned int timer)
 	register unsigned long dayclock;
 
 	int year = EPOCH_YR;
-
+	
 	dayno = (timer+3*3600) / (SECS_DAY );
 
         while (dayno >= YEARSIZE(year)) {
@@ -130,7 +129,7 @@ void print_time(unsigned int timer)
 	timep->tm_year = year - YEAR0;
 	timep->tm_yday = dayno;
 	timep->tm_mon = 0;
-        while (dayno >= _ytab[LEAPYEAR(year)][timep->tm_mon]) {
+        while (dayno >= (unsigned long) _ytab[LEAPYEAR(year)][timep->tm_mon]) {
                 dayno -= _ytab[LEAPYEAR(year)][timep->tm_mon];
                 timep->tm_mon++;
         }
