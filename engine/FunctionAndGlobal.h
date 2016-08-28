@@ -480,15 +480,6 @@ bool ipABClasses(string & ip1,string & ip2){
 	return true;
 }
 
-void checkUserSyntax(string & user){
-	short size = user.size();
-
-	if(size==0){
-		user="0";
-		return;
-	}
-}
-
 // get a string of numbers and put them in vector.
 void stringToVec(string & str,vector <unsigned int> & vec_val){ 
 
@@ -1385,54 +1376,21 @@ void session_user_search(string & UserID_,unsigned int sid,boost::unordered_map 
 	if(itUserSession==mSession.end()){				//Session user wasn't found
 		Session sessionUser;//
 		sessionUser.sid = sid;	
-
 		// constructor for Page
 		Page pageUser( v.mParams , sessionUser.sequence , (unsigned int)atoi(v.mParams['k'/*PageID*/].c_str() ), atoll(v.mParams['j'/*RID*/].c_str() ),v.mParams['a'/*UserIP*/],UserID_)  ;
 
 		sessionUser.vRequest.push_back(pageUser);
-		
-		sessionUser.elapsed_ts = sessionUser.vRequest[sessionUser.vRequest.size()-1].ts - sessionUser.vRequest[0].ts; // session time.
 		sessionUser.user_flag=1;			
 		mSession.insert( pair<unsigned int,Session>(sid,sessionUser) );
 
 	}else{ 								//Session user was found
-
 		// constructor for Page		
-
 		Page pageUser( v.mParams ,itUserSession->second.sequence, (unsigned int)atoi(v.mParams['k'/*PageID*/].c_str() ), atoll(v.mParams['j'/*RID*/].c_str() ),v.mParams['a'/*UserIP*/],UserID_)  ;
-
 		itUserSession->second.vRequest.push_back(pageUser);
 		itUserSession->second.update=1; // need to update path.
-
 		itUserSession->second.elapsed_ts = itUserSession->second.vRequest[itUserSession->second.vRequest.size()-1].ts - itUserSession->second.vRequest[0].ts; //session time.		
 	}
 
-}
-
-void session_user_search2(string & UserID_,unsigned int sid,boost::unordered_map<unsigned int,Session> & mSession,TeleObject & v){
-
-	boost::unordered_map<unsigned int,Session> ::iterator itUserSession;// iterator of mSession
-	sid += (unsigned int)hashCode(UserID_);
-
-	itUserSession=mSession.find(sid);
-	if(itUserSession==mSession.end()){				//Session user wasn't found
-		Session sessionUser;//
-		sessionUser.sid = sid;	
-
-		// constructor for Page
-		Page pageUser(v.mParams,sessionUser.sequence,(unsigned int)atoi(v.mParams['k'/*PageID*/].c_str() ),atoll(v.mParams['j'/*RID*/].c_str() ),v.mParams['a'/*UserIP*/],UserID_);
-
-		sessionUser.vRequest.push_back(pageUser);
-		sessionUser.user_flag=1;
-		mSession.insert( pair<unsigned int,Session>(sid,sessionUser) );
-
-	}else{ 								//Session user was found
-		// constructor for Page	
-		Page pageUser( v.mParams,itUserSession->second.sequence,(unsigned int)atoi(v.mParams['k'/*PageID*/].c_str() ),atoll(v.mParams['j'/*RID*/].c_str() ),v.mParams['a'/*UserIP*/],UserID_);
-
-		itUserSession->second.vRequest.push_back(pageUser);
-		itUserSession->second.update=1; // need to update path.
-	}
 }
 
 void countryRules(Rule & rule,string & src_ip,string & UserID,long long RID,unsigned int PageID,string & tmp_country,Session & s,string & resp_ip,string & cookie,string & hostname){
@@ -1737,7 +1695,7 @@ void generalRules(Rule & rule,Session & s,string & src_ip,long long RID,unsigned
 
 	//---------User Pattern----------
 	if(rule.anchor.size() != 0){
-		if(rule.dynamic[0] == 'U' && UserID != "0"){
+		if(rule.dynamic[0] == 'U' && UserID.size()>0){
 			patternRulesUser(rule,src_ip,UserID,RID,s,resp_ip,cookie,hostname);
 		}
 	}

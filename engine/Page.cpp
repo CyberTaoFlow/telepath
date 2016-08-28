@@ -13,7 +13,6 @@ Page::Page(boost::unordered_map<char,string> & mParams,unsigned int index,unsign
 	this->parsedHost=0;
 	this->parsedUser=0;
 	this->parsedHostPro=0;
-	this->parsedUserPro=0;
 	this->presence=0;
 	this->tainted=0;
 
@@ -48,10 +47,6 @@ Page::Page(boost::unordered_map<char,string> & mParams,unsigned int index,unsign
 
 }
 
-void Page::print(){
-	cout <<"\tID:"<<ID << "  name:"<<"  index:" <<index <<"  emission:"<< emission<<"  link_sample:"<< link_sample<<"   user_ip:"<<user_ip;
-	cout<<endl;
-	cout <<"\tparsedHost:"<<parsedHost<< "  parsedUser:"<<parsedUser <<"  RID:"<<RID<<"  ts:"<<ts<<"   status_code:"<<status_code<<"  tainted:"<<tainted<<endl<<endl;
-}
+void Page::print(){}
 
 

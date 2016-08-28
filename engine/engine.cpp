@@ -617,7 +617,6 @@ void insertOrUpdateSessionMap(TeleObject & teleobj){
 	boost::unordered_map <unsigned int,Session> ::iterator itSession = mSession.find(sid);
 	if (itSession != mSession.end()) {
 		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! CHECK LOGOUT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 		//if(itSession->second.logout == true){ 
 			//itSession->second.reset();
 			//teleobj.mParams['s'/*ReqSeq*/] = "0";
@@ -1031,13 +1030,14 @@ while(globalEngine){ // while engine learning - run the engine every time we get
 			if(itPath!=mPath.end()){//Hostname was found
 				itPath->second.tokenize(itSession->second,0);
 			}else{//Hostname wasn't found
-				Path path(itSession->second.vRequest[0].domain_id);;
+				Path path(itSession->second.vRequest[0].domain_id);
 				path.tokenize(itSession->second,0);
 				mPath.insert( pair<string,Path>(itSession->second.vRequest[0].domain_id,path) );
 			}
 		}else{
-			char hostUser[700];
-			sprintf(hostUser,"%s+%s",itSession->second.vRequest[0].domain_id.c_str(),itSession->second.vRequest[0].user.c_str() );
+			string hostUser=itSession->second.vRequest[0].domain_id;
+			hostUser.push_back('+');
+			hostUser.append(itSession->second.vRequest[0].user);
 			itPathUser=mPathUser.find(hostUser);
 			if(itPathUser!=mPathUser.end()){//Hostname was found
 				itPathUser->second.tokenize(itSession->second,1);
@@ -1059,19 +1059,32 @@ while(globalEngine){ // while engine learning - run the engine every time we get
 			continue;
 		}
 
-		itPath=mPath.find(itSession->second.vRequest[0].domain_id);
-		if(itPath!=mPath.end()){//Hostname was found
-			markovSession_path.push_back( &(itPath->second) );
-			markovSession_.push_back( &(itSession->second) );
-			markovSession_values_flag.push_back('n');
-			markovSession_host_user.push_back(itSession->second.user_flag);
-			markovSession_mode.push_back(mAppMode[itPath->first].mode);
-		}else{ 		//Hostname wasn't found
-			#ifdef DEBUG
-				syslog(LOG_NOTICE,"Unknown hostname");
-			#endif
+		if(itSession->second.user_flag==0){
+			itPath=mPath.find(itSession->second.vRequest[0].domain_id);
+			if(itPath!=mPath.end()){//Hostname was found
+				markovSession_path.push_back( &(itPath->second) );
+				markovSession_.push_back( &(itSession->second) );
+				markovSession_values_flag.push_back('n');
+				markovSession_mode.push_back(mAppMode[itPath->first].mode);
+				if(itSession->second.vRequest[0].user.size()>0){
+					string hostUser=itSession->second.vRequest[0].domain_id;
+					hostUser.push_back('+');
+					hostUser.append(itSession->second.vRequest[0].user);
+					itPathUser=mPathUser.find(hostUser);
+					if(itPathUser!=mPathUser.end()){//Hostname was found
+						markovSession_path_user.push_back( &(itPathUser->second) );
+					}else{
+						markovSession_path_user.push_back( &(itPath->second) );
+					}
+				}else{
+					markovSession_path_user.push_back( &(itPath->second) );
+				}
+			}else{ 		//Hostname wasn't found
+				#ifdef DEBUG
+					syslog(LOG_NOTICE,"Unknown hostname");
+				#endif
+			}
 		}
-
 	}
 
 	for(markov_i=0 ; markov_i < NUM_OF_MARKOV_THREADS ; markov_i++){
@@ -1094,9 +1107,9 @@ while(globalEngine){ // while engine learning - run the engine every time we get
 
 	vector <char> ().swap(markovAtt_values_flag);
 	vector <Path*> ().swap(markovSession_path);
+	vector <Path*> ().swap(markovSession_path_user);
 	vector <Session*> ().swap(markovSession_);
 	vector <char> ().swap(markovSession_values_flag);
-	vector <short> ().swap(markovSession_host_user);
 	vector <short> ().swap(markovSession_mode);
 
 	pthread_mutex_lock(&mutexMSatt);

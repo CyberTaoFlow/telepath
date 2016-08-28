@@ -21,10 +21,9 @@ public:
 	void serialize(Archive & ar, const unsigned int version)
 	{
 		ar & index;     
-		ar & parsedHost;  
-		ar & parsedUser;        
+		ar & parsedHost;
+		ar & parsedUser;
 		ar & parsedHostPro;  
-		ar & parsedUserPro;    
 		ar & ID;     
 		ar & RID;    
 		ar & ts;  
@@ -67,12 +66,6 @@ public:
 		"0" or "1".
 	*/
 	char parsedHostPro;
-
-	//!  If The Request was Analyzed by the User Path in Production Mode.
-	/*!
-		"0" or "1".
-	*/
-	char parsedUserPro;
 
 	//!  Page ID.
 	/*!
