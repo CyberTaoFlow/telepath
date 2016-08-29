@@ -17,7 +17,7 @@ void size_and_flag::print(){
 
 myAtt::myAtt(){
 	this->lock=0;
-	this->user="0";
+	this->user.clear();
 	this->num_of_values=0;
 	this->num_of_numeric=0;
 	this->num_of_nulls=0;

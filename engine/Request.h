@@ -32,9 +32,10 @@ public:
 	double presence;
 	short op_mode;
 	unsigned int decimalIP;
+	string user_scores_string;
 
 	RequestValToInsert(){}
-	void init(string & user_name,long long RID,unsigned int & Sid,string & sha256_sid,unsigned int & index,string & page_name,string & host_name,double & ts,string & ip_orig,string & ip_resp,double flow_score,double query_score,double geo_normal,double landing_normal,unsigned short & status_code,string & country,string & city,char SID_status,string & protocol,string & method,Coordinate & c,unsigned int decimalIP,string & shard,string & title,double presence,string & canonical_url,short op_mode){ 
+	void init(string & user_name,long long RID,unsigned int & Sid,string & sha256_sid,unsigned int & index,string & page_name,string & host_name,double & ts,string & ip_orig,string & ip_resp,double flow_score,double query_score,double geo_normal,double landing_normal,unsigned short & status_code,string & country,string & city,char SID_status,string & protocol,string & method,Coordinate & c,unsigned int decimalIP,string & shard,string & title,double presence,string & canonical_url,short op_mode,string & user_scores_string){ 
 	boost::unordered_map <unsigned int,boost::unordered_map <string,UserReputation> >::iterator itReputationUsers;
 	boost::unordered_map <string,UserReputation>::iterator itUsers;
 
@@ -66,6 +67,7 @@ public:
 	this->presence=presence;
 	this->op_mode=op_mode;
 	this->decimalIP=decimalIP;
+	this->user_scores_string=user_scores_string;
 
 	this->avg_normal = ( query_score + flow_score + landing_normal ) / 3;
 	if(this->avg_normal < 0){

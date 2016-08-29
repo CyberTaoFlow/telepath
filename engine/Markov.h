@@ -21,11 +21,12 @@ public:
 		this->goodP = 0;
 	}
 	
-	void calculate(Path & path,Session & s,short host_user_or_group,short learn_or_pro,unsigned int I){
-		double flow_score,query_score,geo_normal,landing_normal,landing_score=1,num2,diff;
+	void calculate(Path & path,Path & path_user,Session & s,short learn_or_pro){
+		double flow_score,query_score,geo_normal,geo_normal_user,landing_normal,landing_score=1,num2,diff;
 		int totalExp=0,exp_2;
 		RequestValToInsert reqVal;
-		string country,city,compareLink;
+		string country,city,compareLink,user_scores_string;
+		char user_scores[500];
 		Coordinate coordinate;
 		bool hostFlag;
 		unsigned int i_rule;
@@ -47,7 +48,7 @@ public:
 			getIpInfo(s.vRequest[i].user_ip,country,city,coordinate);
 			pthread_mutex_unlock(&mutexgeoip);
 
-			if( (host_user_or_group==0 && s.vRequest[i].parsedHostPro==1) || (host_user_or_group==1 && s.vRequest[i].parsedUserPro==1) ){
+			if( s.vRequest[i].parsedHostPro==1 ){
 				totalExp = s.totalExp;
 				goto label_m;
 			}
@@ -67,28 +68,32 @@ public:
 				pthread_mutex_lock(&mutexlocation);
 				geo_normal = path.location.getProb(coordinate);
 				pthread_mutex_unlock(&mutexlocation);
+
+				if (s.vRequest[i].user.size()>0){
+					pthread_mutex_lock(&mutexlocation);
+					geo_normal_user = path_user.location.getProb(coordinate);
+					pthread_mutex_unlock(&mutexlocation);
+
+					sprintf(user_scores,"\"user_scores\":{\"geo_score\":%f},",geo_normal_user);
+				}
 				//---------------------------------------------------------------------
 			}else{			// learning mode.
 				geo_normal = 0;
+				if (s.vRequest[i].user.size()>0){
+					geo_normal_user = 0;
+					sprintf(user_scores,"\"user_scores\":{\"geo_score\":%f},",geo_normal_user);
+				}
 			}
 
 			//--------------------------------Query--------------------------------
 			pthread_mutex_lock(&mutex_mQuery);
-			if(host_user_or_group==0){
 				if(learn_or_pro!=1){ // production mode.
 					Query q_page(mQuery[s.vRequest[i].RID],s.vRequest[i].presence);     //query probability
 					query_score = q_page.result;
 				}else{		  // learning mode.
 					query_score = 0;
 				}
-			}else{
-				if(learn_or_pro!=1){ // production mode.
-					Query q_page(mQueryUser[s.vRequest[i].RID],s.vRequest[i].presence); //user query probability
-					query_score = q_page.result;
-				}else{		  // learning mode.
-					query_score = 0;
-				}					
-			}
+
 			pthread_mutex_unlock(&mutex_mQuery);
 
 			itOperation = mOperation.find(s.vRequest[i].ID);
@@ -109,7 +114,6 @@ public:
 			checkMapPage(s.vRequest[i].tainted,s.vRequest[i].status_code); // Tainted Page or not.
 			itCompressedPage=path.mCompressedPage.find(s.vRequest[i].compare);
 			if(itCompressedPage!=path.mCompressedPage.end() && s.vRequest[i].tainted==0){// The Page was found and the Page isn't tainted.
-
 				if(learn_or_pro!=1){ // production mode.
 					if(hostFlag==true){
 
@@ -133,38 +137,28 @@ public:
 					landing_normal = 0;
 				}
 
-//---------------------------------------------------------------Insert Requests to scores--------------------------------------------------------------------
-				if(host_user_or_group==0){ // Per application.
-					reqVal.init(s.vRequest[i].user,s.vRequest[i].RID,s.sid,s.vRequest[i].sha256_sid,s.vRequest[i].index,s.vRequest[i].page_name,s.vRequest[i].host_name,s.vRequest[i].ts,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,flow_score,query_score,geo_normal,landing_normal,s.vRequest[i].status_code,country,city,s.status,s.vRequest[i].protocol,s.vRequest[i].method,coordinate,s.decimalIP,s.vRequest[i].shard,s.vRequest[i].title,s.vRequest[i].presence,s.vRequest[i].canonical_url,learn_or_pro);
+				user_scores_string = string(user_scores);
+//---------------------------------------Insert Requests to scores-----------------------------------------------------------
+				reqVal.init(s.vRequest[i].user,s.vRequest[i].RID,s.sid,s.vRequest[i].sha256_sid,s.vRequest[i].index,s.vRequest[i].page_name,s.vRequest[i].host_name,s.vRequest[i].ts,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,flow_score,query_score,geo_normal,landing_normal,s.vRequest[i].status_code,country,city,s.status,s.vRequest[i].protocol,s.vRequest[i].method,coordinate,s.decimalIP,s.vRequest[i].shard,s.vRequest[i].title,s.vRequest[i].presence,s.vRequest[i].canonical_url,learn_or_pro,user_scores_string);
 
-					pthread_mutex_lock(&mutexScoreData);		
-					score_data[s.vRequest[i].domain_id].insert((double)totalExp,landing_score,geo_normal);
-					pthread_mutex_unlock(&mutexScoreData);
+				pthread_mutex_lock(&mutexScoreData);		
+				score_data[s.vRequest[i].domain_id].insert((double)totalExp,landing_score,geo_normal);
+				pthread_mutex_unlock(&mutexScoreData);
 
-					pthread_mutex_lock(&mutexInsertReq);
-					valReqQueue.push(reqVal);
-					pthread_mutex_unlock(&mutexInsertReq);
-					sem_post(&sem_insert_reqs);
-				}
-//-------------------------------------------------------------Insert Requests to scores_user-----------------------------------------------------------------
-				else if(host_user_or_group==1){ // Per User.
-					//reqVal.init(s.vRequest[i].user,s.vRequest[i].RID,s.sid,s.vRequest[i].index,s.vRequest[i].page_name,s.vRequest[i].host_name,s.vRequest[i].ts,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,0,0,0,0,s.vRequest[i].status_code,country,city,s.status,s.vRequest[i].protocol,s.vRequest[i].method,coordinate,s.decimalIP,s.vRequest[i].shard,s.vRequest[i].title);
-				}
-
+				pthread_mutex_lock(&mutexInsertReq);
+				valReqQueue.push(reqVal);
+				pthread_mutex_unlock(&mutexInsertReq);
+				sem_post(&sem_insert_reqs);
+//------------------------------------------Insert Requests to scores_user-----------------------------------------------------
 			}else{ // The Page wasn't found or the Page is tainted.
-//---------------------------------------------------------------Insert Requests to scores--------------------------------------------------------------------
-				if(host_user_or_group==0){
-					reqVal.init(s.vRequest[i].user,s.vRequest[i].RID,s.sid,s.vRequest[i].sha256_sid,s.vRequest[i].index,s.vRequest[i].page_name,s.vRequest[i].host_name,s.vRequest[i].ts,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,1,query_score,geo_normal,1,s.vRequest[i].status_code,country,city,s.status,s.vRequest[i].protocol,s.vRequest[i].method,coordinate,s.decimalIP,s.vRequest[i].shard,s.vRequest[i].title,s.vRequest[i].presence,s.vRequest[i].canonical_url,learn_or_pro);
+//------------------------------------------Insert Requests to scores------------------------------------------------------------
+				reqVal.init(s.vRequest[i].user,s.vRequest[i].RID,s.sid,s.vRequest[i].sha256_sid,s.vRequest[i].index,s.vRequest[i].page_name,s.vRequest[i].host_name,s.vRequest[i].ts,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,1,query_score,geo_normal,1,s.vRequest[i].status_code,country,city,s.status,s.vRequest[i].protocol,s.vRequest[i].method,coordinate,s.decimalIP,s.vRequest[i].shard,s.vRequest[i].title,s.vRequest[i].presence,s.vRequest[i].canonical_url,learn_or_pro,user_scores_string);
 
-					pthread_mutex_lock(&mutexInsertReq);
-					valReqQueue.push(reqVal);
-					pthread_mutex_unlock(&mutexInsertReq);
-					sem_post(&sem_insert_reqs);
-				}
-//-------------------------------------------------------------Insert Requests to scores_user-----------------------------------------------------------------
-				else if(host_user_or_group==1){
-					//reqVal.init(s.vRequest[i].user,s.vRequest[i].RID,s.sid,s.vRequest[i].index,s.vRequest[i].page_name,s.vRequest[i].host_name,s.vRequest[i].ts,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,0,0,0,0,s.vRequest[i].status_code,country,city,s.status,s.vRequest[i].protocol,s.vRequest[i].method,coordinate,s.decimalIP,s.vRequest[i].shard,s.vRequest[i].title);
-				}
+				pthread_mutex_lock(&mutexInsertReq);
+				valReqQueue.push(reqVal);
+				pthread_mutex_unlock(&mutexInsertReq);
+				sem_post(&sem_insert_reqs);
+//-------------------------------------------Insert Requests to scores_user-------------------------------------------------
 			}
 
 			if(learn_or_pro!=1){ // Rules
@@ -209,12 +203,7 @@ public:
 				}
 			}
 
-			if(host_user_or_group==0){ // per application.
-				s.vRequest[i].parsedHostPro=1;
-			}
-			else if(host_user_or_group==1){ // per user in application.
-				s.vRequest[i].parsedUserPro=1;
-			}
+			s.vRequest[i].parsedHostPro=1;
 			label_m:
 
 			if(i == s.vRequest.size()-1){ // last page in session.

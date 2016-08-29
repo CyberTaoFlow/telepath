@@ -384,10 +384,6 @@ void *thread_insert_req(void *threadid)
 		valReqQueue.pop();
 		pthread_mutex_unlock(&mutexInsertReq);
 
-		if(tmp.user_name=="0"){
-			tmp.user_name.clear();
-		}
-
 		if(tmp.op_mode==1){// Zero anomaly scores for learning mode.
 			tmp.flow_score=0;tmp.landing_normal=0;tmp.avg_normal=0;tmp.geo_normal=0;
 		}
@@ -455,7 +451,7 @@ void *thread_insert_req(void *threadid)
 		pthread_mutex_unlock(&mutexRepIPs);
 
 		insert_count++;
-		sprintf(dataPtr,"{\"index\":{\"_index\":\"telepath-%s\",\"_type\":\"http\",\"_id\":\"X%lld\"}}\n{\"ts\":%f,\"ip_orig\":\"%s\",\"ip_score\":%f,\"ip_resp\":\"%s\",\"status_code\":%hu,\"country_code\":\"%s\",\"city\":\"%s\",\"method\":\"%s\",\"location\":\"%f,%f\",\"sid\":%u,\"sha256_sid\":\"%s\",\"score_presence\":%f,\"score_query\":%f,\"score_flow\":%f,\"score_landing\":%f,\"score_geo\":%f,\"score_average\":%f,\"index\":%u,\"host\":\"%s\",\"uri\":\"%s\",\"canonical_url\":\"%s\",\"operation_mode\":%hd,\"title\":\"%s\",\"username\":\"%s\",\"parameters\":[%s]%s%s}\n",&tmp.shard[0],tmp.RID,tmp.ts,&tmp.ip_orig[0],tmp.ip_score,&tmp.ip_resp[0],tmp.status_code,&tmp.country[0],&tmp.city[0],&tmp.method[0],tmp.c.x,tmp.c.y,tmp.Sid,&tmp.sha256_sid[0],tmp.presence,tmp.query_score,tmp.flow_score,tmp.landing_normal,tmp.geo_normal,tmp.avg_normal,tmp.sequence,&tmp.host_name[0],&tmp.page_name[0],&tmp.canonical_url[0],tmp.op_mode,&tmp.title[0],&tmp.user_name[0],&atts[0],&alertandaction[0],&explanations[0]);
+		sprintf(dataPtr,"{\"index\":{\"_index\":\"telepath-%s\",\"_type\":\"http\",\"_id\":\"X%lld\"}}\n{\"ts\":%f,\"ip_orig\":\"%s\",\"ip_score\":%f,\"ip_resp\":\"%s\",\"status_code\":%hu,\"country_code\":\"%s\",\"city\":\"%s\",\"method\":\"%s\",\"location\":\"%f,%f\",\"sid\":%u,\"sha256_sid\":\"%s\",\"score_presence\":%f,\"score_query\":%f,\"score_flow\":%f,\"score_landing\":%f,\"score_geo\":%f,\"score_average\":%f,\"index\":%u,\"host\":\"%s\",\"uri\":\"%s\",\"canonical_url\":\"%s\",\"operation_mode\":%hd,\"title\":\"%s\",\"username\":\"%s\",%s\"parameters\":[%s]%s%s}\n",&tmp.shard[0],tmp.RID,tmp.ts,&tmp.ip_orig[0],tmp.ip_score,&tmp.ip_resp[0],tmp.status_code,&tmp.country[0],&tmp.city[0],&tmp.method[0],tmp.c.x,tmp.c.y,tmp.Sid,&tmp.sha256_sid[0],tmp.presence,tmp.query_score,tmp.flow_score,tmp.landing_normal,tmp.geo_normal,tmp.avg_normal,tmp.sequence,&tmp.host_name[0],&tmp.page_name[0],&tmp.canonical_url[0],tmp.op_mode,&tmp.title[0],&tmp.user_name[0],&tmp.user_scores_string[0],&atts[0],&alertandaction[0],&explanations[0]);
 		dataPtr += strlen(dataPtr);
 
 		if( ( insert_count == INSERT_REQ_AT_ONCE ) || valReqQueue.empty() ){
@@ -667,7 +663,7 @@ void *markovSession_thread(void *threadid)
 			}
 
 			Markov markov;
-			markov.calculate( *(markovSession_path[i]) ,*(markovSession_[i]),markovSession_host_user[i],markovSession_mode[i],i);
+			markov.calculate( *(markovSession_path[i]) , *(markovSession_path_user[i]) ,*(markovSession_[i]),markovSession_mode[i]);
 		}
 
 		sem_post(&sem_markov_session_end);
@@ -708,7 +704,7 @@ void *thread_sid_per_min(void *threadid)
 		writeB2(numOfSessionsPerDomain);
 		pthread_mutex_unlock(&mutexSessionsPerHost); //unlock
 
-		syslog(LOG_NOTICE,"Sessions:%u mMemory:%u |getRedis:%u |insertElastic:%u |dropApp:%u |dropPage:%u |dropMethod:%u |longSessionDrop:%u |Command:%u",size,(unsigned int)TC->teleObjQueue.size(),getRedis,insertElastic,dropApp,dropPage,dropMethod,longSessionDrop,(unsigned int)valCommandQueue.size());	
+		syslog(LOG_NOTICE,"Sessions:%u mMem:%u |getRedis:%u |insertElastic:%u |dropApp:%u |dropPage:%u |dropMethod:%u |dropLong:%u|",size,(unsigned int)TC->teleObjQueue.size(),getRedis,insertElastic,dropApp,dropPage,dropMethod,longSessionDrop);	
 
 		if(errorCheck==insertElastic){
 			counter++;
@@ -843,13 +839,11 @@ void *getAtt_thread(void *threadarg)
 						itSession.first->second.decimalIP = ipToNum(c_IP);
 					}
 
-					checkUserSyntax(c_UserID); // Null user.
-
 					if(c_SetCookie.size() != 0 ){
 						calCookieNames(c_Domain,c_SetCookie);
 					}
 
-					if( c_UserID != "0" ){	
+					if( c_UserID.size()>0 ){	
 						session_user_search(c_UserID,itSession.first->second.sid,mSession,*to);
 					}
 
@@ -1219,17 +1213,13 @@ void *getAtt_thread_pro(void *threadarg)
 						itSession.first->second.decimalIP = ipToNum(c_IP);
 					}
 
-					checkUserSyntax(c_UserID); // Null user.
-
 					if(c_SetCookie.size() != 0 ){
 						calCookieNames(c_Domain,c_SetCookie);
 					}
 
-					//****************SID User Cal**********************
-					if( c_UserID != "0" ){
-						session_user_search2(c_UserID, itSession.first->second.sid,mSession,*to);
+					if( c_UserID.size()>0 ){
+						session_user_search(c_UserID, itSession.first->second.sid,mSession,*to);
 					}
-					//**************SID User Cal - End********************
 
 					if(c_Seq == 0){
 						pthread_mutex_lock(&mutexSessionsPerHost); //lock
