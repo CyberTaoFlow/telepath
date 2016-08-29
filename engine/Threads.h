@@ -555,8 +555,6 @@ void *thread_insert_logins(void *threadid)
 			continue;
 		}
 
-//syslog(LOG_NOTICE,"2)action:%s|password=%s|username=%s|host=%s|uri:%s|",login.action.c_str(),login.password.c_str(),login.username.c_str(),login.host.c_str(),login.orig_uri.c_str());
-
 		hash_str = "Brute-Force "+login.host+login.orig_uri+login.password+login.username;
 		hash_value = hashCode(hash_str);
 		hash_str = "Credential-Stuffing "+login.host+login.orig_uri+login.username;
@@ -574,7 +572,6 @@ void *thread_insert_logins(void *threadid)
 		pthread_mutex_lock(&mutexAddRules);
 		addRulesIDs.push_back(hash_value);
 		addRulesIDs.push_back(hash_value2);
-//syslog(LOG_NOTICE,"3)action:%s|password=%s|username=%s|host=%s|uri:%s|",login.action.c_str(),login.password.c_str(),login.username.c_str(),login.host.c_str(),login.orig_uri.c_str());
 
 		sprintf(url,"/telepath-rules/rules/X%u",hash_value);
 		sprintf(postfields,"{\"hash\":%u,\"name\":\"Login Brute-Force\",\"builtin_rule\": true,\"desc\":\"-\",\"category\":\"Brute-Force\",\"score\":100,\"cmd\":[\"captcha\"],\"criteria\":[{\"kind\":\"p\",\"type\":\"Other\",\"Other\":{\"domain\":\"%s\",\"pagename\":\"%s\",\"paramname\":\"%s\"},\"subtype\":\"parameter\",\"domain\":\"%s\",\"pagename\":\"%s\",\"paramname\":\"%s\",\"count\":\"3\",\"time\":\"180\",\"enable\":true,\"aggregate\":\"1\"}]}",hash_value,&login.host[0],&login.orig_uri[0],&login.username[0],&login.host[0],&login.orig_uri[0],&login.password[0]);
@@ -593,6 +590,9 @@ void *thread_insert_logins(void *threadid)
 		es_insert(url,postfields);
 		pthread_mutex_unlock(&mutexAddActions);
 
+		sprintf(url,"/telepath-domains/domains/%s/_update",login.host.c_str());
+		sprintf(postfields,"{\"doc\":{\"form_param_name\":\"%s\"}}",login.username.c_str());
+		es_mapping(url,postfields);
 
 	}
 
