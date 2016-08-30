@@ -326,6 +326,8 @@ binaries() {
                         echo "Running NGINX install script, this might take up to 5 minutes and requires internet connection"
                         chmod +x /opt/telepath/openresty/openresty.sh
 			/opt/telepath/openresty/openresty.sh
+			mkdir /opt/telepath/openresty/nginx/certs/
+			chmod 777 /opt/telepath/openresty/nginx/certs/
 
         else
                         echo "NGINX was detected under /opt/telepath/openresty/nginx/sbin/nginx , skipping."
