@@ -164,7 +164,7 @@ public:
 			if(learn_or_pro!=1){ // Rules
 				for(i_rule=0 ; i_rule<rules.size() ; i_rule++ ){
 
-					/*if(rules[i_rule].radius != 0){
+					if(rules[i_rule].radius != 0){
 						if(s.status=='v'){
 							velocityAlert(s,rules[i_rule],i);
 						}
@@ -175,7 +175,7 @@ public:
 							ipSwitching(s,rules[i_rule],i);
 						}
 						continue;
-					}*/
+					}
 
 					// CHECK THE BUG IN THIS FLAG FOR SEPERATED APPS
 					if(hostFlag==true){
