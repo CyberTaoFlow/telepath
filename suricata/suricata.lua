@@ -208,6 +208,10 @@ function log(args)
 
 	local uri = HttpGetRequestUriRaw()
 	uri = unescape(uri) --url decoding for uri & GET parameters.
+        if (uri) then
+        else
+                return
+        end
 
 	query = ""
 	local question_mark = string.find(uri, "?")
