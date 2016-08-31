@@ -20,9 +20,21 @@ public:
 		ar & noise;        
 		ar & counter; 
 	}
+
+	//!  Longitude, Latitude.
+	/*!*/
 	float x,y;
+
+	//!  
+	/*!*/
 	char visited;
+
+	//!
+	/*!*/
 	char noise;
+
+	//!
+	/*!*/
 	unsigned int counter;
 
 	Coordinate();
