@@ -11,7 +11,6 @@ void checkRules(Rule &,double,Session &,unsigned &,long long,string&,string&,str
 //void insert_case(long long,unsigned int,string &,string&);
 void insert_alert(Rule &,long long,string&,string&,string&,string&);
 void insert_alert(Rule &,long long,string&,double,string&,string,string&);
-void velocityAlert(Rule &, Session &,unsigned &,long long,string &,string &,string,string &);
 void ipSwitching(Rule &, Session &,unsigned &,long long,string &p,string &,string,string &);
 class Markov{
 public:

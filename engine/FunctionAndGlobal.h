@@ -158,7 +158,7 @@ void ipSwitching(Rule & c_r, Session & s,unsigned & i,long long RID,string & src
 	}
 }
 
-void velocityAlert(Rule & c_r, Session & s,unsigned & i,long long RID,string & src_ip,string & resp_ip,string cookie,string & hos
+/*void velocityAlert(Rule & c_r, Session & s,unsigned & i,long long RID,string & src_ip,string & resp_ip,string cookie,string & hos
 	Coordinate coordinate(0,0),coordinate2(0,0);
 	if(i > 1){
 		pthread_mutex_lock(&mutexgeoip);
@@ -179,7 +179,7 @@ void velocityAlert(Rule & c_r, Session & s,unsigned & i,long long RID,string & s
 			}        
 		}
 	}
-}
+}*/
 
 void insert_alert(Rule & c_r,long long RID,string & src_ip,string & resp_ip,string & cookie,string & hostname){
 	char alertfields[300];
