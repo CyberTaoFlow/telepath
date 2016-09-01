@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#
 # Dialog config
 DIALOG=${DIALOG=dialog}
 CMD="--ascii-lines --title "Telepath" --clear"
