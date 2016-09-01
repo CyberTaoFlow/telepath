@@ -150,20 +150,18 @@ unsigned short levenshteinDistance(vector <unsigned int> v1,vector <unsigned int
 
 }
 
-void ipSwitching(Session & s,Rule & c_r,unsigned int & i){
+void ipSwitching(Rule & c_r, Session & s,unsigned & i,long long RID,string & src_ip,string & resp_ip,string cookie,string & hostname){
 	if(i > 1){
 		if( ipABClasses(s.vRequest[i].user_ip,s.vRequest[i-1].user_ip) == false ){
-			//string rule_name="Network IP Change";
-			//insert_alert(s,c_r,IP);
+			insert_alert(c_r,RID,src_ip,resp_ip,cookie,hostname);
 		}
 	}
 }
 
-void velocityAlert(Session & s,Rule & c_r,unsigned int & i){
+/*void velocityAlert(Rule & c_r, Session & s,unsigned & i,long long RID,string & src_ip,string & resp_ip,string cookie,string & hos
 	Coordinate coordinate(0,0),coordinate2(0,0);
 	if(i > 1){
 		pthread_mutex_lock(&mutexgeoip);
-		coordinate = getCoordinate(s.vRequest[i].user_ip);
 		coordinate2 = getCoordinate(s.vRequest[i-1].user_ip);
 		pthread_mutex_unlock(&mutexgeoip);
 		if(coordinate.key != coordinate2.key){
@@ -176,13 +174,12 @@ void velocityAlert(Session & s,Rule & c_r,unsigned int & i){
 
 			if(diff < c_r.ts ){
 				if(c_r.radius < Pythagoras( coordinate,coordinate2) ){
-					//string rule_name="Geo Velocity";
-					//insert_alert(s,c_r,IP);
-				}	
-			}		
+					insert_alert(c_r,RID,src_ip,resp_ip,cookie,hostname);
+				}
+			}        
 		}
 	}
-}
+}*/
 
 void insert_alert(Rule & c_r,long long RID,string & src_ip,string & resp_ip,string & cookie,string & hostname){
 	char alertfields[300];

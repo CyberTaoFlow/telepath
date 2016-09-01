@@ -11,7 +11,7 @@ void checkRules(Rule &,double,Session &,unsigned &,long long,string&,string&,str
 //void insert_case(long long,unsigned int,string &,string&);
 void insert_alert(Rule &,long long,string&,string&,string&,string&);
 void insert_alert(Rule &,long long,string&,double,string&,string,string&);
-
+void ipSwitching(Rule &, Session &,unsigned &,long long,string &p,string &,string,string &);
 class Markov{
 public:
 	int goodP;
@@ -160,23 +160,16 @@ public:
 //-------------------------------------------Insert Requests to scores_user-------------------------------------------------
 			}
 
-			if(learn_or_pro!=1){ // Rules
-				for(i_rule=0 ; i_rule<rules.size() ; i_rule++ ){
-
-					/*if(rules[i_rule].radius != 0){
-						if(s.status=='v'){
-							velocityAlert(s,rules[i_rule],i);
-						}
-						continue;	
+			for(i_rule=0 ; i_rule<rules.size() ; i_rule++ ){
+				if(rules[i_rule].final_type == 'N'){
+					if(s.status=='v'){
+						ipSwitching(rules[i_rule],s,i,s.vRequest[i].RID,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,"phpsessid",s.vRequest[i].host_name);
 					}
-					if(rules[i_rule].final_type == 'N'){ // N=Network IP Change.  
-						if(s.status=='v'){
-							ipSwitching(s,rules[i_rule],i);
-						}
-						continue;
-					}*/
+					continue;	
+				}
 
-					// CHECK THE BUG IN THIS FLAG FOR SEPERATED APPS
+				// CHECK THE BUG IN THIS FLAG FOR SEPERATED APPS
+				if(learn_or_pro != 1){ // Rules
 					if(hostFlag==true){
 						switch (rules[i_rule].method[0]) {
 							case 'l':							//landing rules.

@@ -246,6 +246,7 @@ void Rule::setCriterionType(){
 				case 'f':
 				case 'h':
 				case 's':
+				case 'N':
 					this->final_type=this->subtype[0];
 					break;
 
