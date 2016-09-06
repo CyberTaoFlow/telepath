@@ -66,7 +66,7 @@ void es_get_config(string url,string & output){
 	}
 	catch (const std::length_error& le) {
 		syslog(LOG_NOTICE,"Cannot Connent to Elasticsearch[!!!] - Please Check That The Address \"%s\" Is Correct.",es_connect.c_str());
-		exit(1);
+		output = "0";
 	}
 
 	free(chunk.memory);

@@ -787,6 +787,7 @@ bool validKey(string & key,unsigned int & epoch){
 bool checkLicenseKey(){
 	string license_key;
 	unsigned int check_time,epoch;
+	read_connect_conf_file();
 	es_get_config("/telepath-config/config/license_key_id/_source",license_key);
 
 	check_time = (unsigned int)time(NULL);
@@ -811,9 +812,9 @@ bool checkLicenseKey(){
 	}else{
 		es_insert("/telepath-config/config/license_mode_id","{\"value\":\"INVALID\"}");
 
-		syslog(LOG_NOTICE,"***Invalid License***");
-		syslog(LOG_NOTICE,"Waiting 10 seconds before checking the license key again ...");
-		cout <<"[!] Invalid License ... Telepath Cannot Start."<<endl;
+		syslog(LOG_NOTICE,"The license of your product may be invalid ... please check your license");
+		syslog(LOG_NOTICE,"In a case that you are sure that you have a valid license, please check the content of the /opt/telepath/db/elasticsearch/config/connect.conf file which indicates about the ip and the port of the elasticsearch. In a case that this file is not exist the defaulf value is http://localhost:9200 .");
+		syslog(LOG_NOTICE,"Waiting 10 seconds before checking the license key and the connection again ...");
 		sleep(10);
 		
 		return false;
