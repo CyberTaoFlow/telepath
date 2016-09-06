@@ -132,7 +132,7 @@ void pageRules(Rule & rule,Session & session,string & c_IP,long long & c_RID,uns
 
 }
 
-void attributeRules(bool learning_mode,Attribute & tmp_att,boost::unordered_map <unsigned int,Session> ::iterator & itSession,TeleObject *to,vector <unsigned int> & vector_value,string & tmp,char nf,char nfu,map <unsigned int,ScoreNumericAtt>::iterator & itN,map <string,ScoreNumericAtt>::iterator & itNU,int exp_score,double size_of_markov,string & c_IP,string & c_UserID,long long & c_RID,unsigned int & c_SID,string & c_Title,double & alert_score,string & resp_ip,string & cookie,string & hostname,string lower_att_val){
+void attributeRules(bool learning_mode,Attribute & tmp_att,boost::unordered_map <unsigned int,Session> ::iterator & itSession,TeleObject *to,vector <unsigned int> & vector_value,string & tmp,char nf,char nfu,map <unsigned int,ScoreNumericAtt>::iterator & itN,map <string,ScoreNumericAtt>::iterator & itNU,int exp_score,double size_of_markov,string & c_IP,string & c_UserID,long long & c_RID,unsigned int & c_SID,string & c_Title,double & alert_score,string & resp_ip,string & cookie,string & hostname,string lower_att_val,unsigned short c_StatusCode){
 	unsigned int ruleSize = rules.size();
 	int hash_value;
 	double s_of_m,num_score;
@@ -269,16 +269,17 @@ void attributeRules(bool learning_mode,Attribute & tmp_att,boost::unordered_map 
 			}
 
 			hash_value = hashCode(tmp);
-
-			if(rules[j].att_id != 0){
-				bool alert_flag=false;
-				pthread_mutex_lock(&mutexgetatt5);
-				patternRulesParameter(rules[j],c_IP,c_UserID,c_RID,hash_value,itSession->second,att_anchor,tmp,resp_ip,cookie,hostname,alert_flag);
-				pthread_mutex_unlock(&mutexgetatt5);
-				if(alert_flag==true){
-					alert_score = (double)rules[j].threshold;
+				if(c_StatusCode < 400){
+					if(rules[j].att_id != 0){
+						bool alert_flag=false;
+						pthread_mutex_lock(&mutexgetatt5);
+						patternRulesParameter(rules[j],c_IP,c_UserID,c_RID,hash_value,itSession->second,att_anchor,tmp,resp_ip,cookie,hostname,alert_flag);
+						pthread_mutex_unlock(&mutexgetatt5);
+						if(alert_flag==true){
+							alert_score = (double)rules[j].threshold;
+						}
+					}
 				}
-			}
 			//--------------------------------------------
 
 			//--------------End Pattern rules-----------------
@@ -1059,7 +1060,7 @@ void *getAtt_thread(void *threadarg)
 				alert_score=0;
 				if(itSession.first!=mSession.end()){	//Session was found.
 					//-----------Rules---------
-					attributeRules(true,tmp_att,itSession.first,to,tmp_att.vec_value,tmp,'n','n',itN,itNU,exp_score,0,c_IP,c_UserID,c_RID,itSession.first->second.sid,c_Title,alert_score,c_Resp_IP,c_SetCookie,c_Domain,tmp_att.value);
+					attributeRules(true,tmp_att,itSession.first,to,tmp_att.vec_value,tmp,'n','n',itN,itNU,exp_score,0,c_IP,c_UserID,c_RID,itSession.first->second.sid,c_Title,alert_score,c_Resp_IP,c_SetCookie,c_Domain,tmp_att.value,c_StatusCode);
 					//---------End Rules-------
 				}
 
@@ -1554,7 +1555,7 @@ void *getAtt_thread_pro(void *threadarg)
 				alert_score=0;
 				if(itSession.first != mSession.end() ){	//Session was found.
 					//-----------Rules---------
-					attributeRules(false,tmp_att,itSession.first,to,tmp_att.vec_value,tmp,normal_flag,normal_flag_user,it_NumericAtt,it_NumericAttUser,exp_score,size_of_markov,c_IP,c_UserID,c_RID,itSession.first->second.sid,c_Title,alert_score,c_Resp_IP,c_SetCookie,c_Domain,tmp_att.value);
+					attributeRules(false,tmp_att,itSession.first,to,tmp_att.vec_value,tmp,normal_flag,normal_flag_user,it_NumericAtt,it_NumericAttUser,exp_score,size_of_markov,c_IP,c_UserID,c_RID,itSession.first->second.sid,c_Title,alert_score,c_Resp_IP,c_SetCookie,c_Domain,tmp_att.value,c_StatusCode);
 					//---------End Rules-------
 				}
 
