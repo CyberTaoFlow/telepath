@@ -235,7 +235,6 @@ void Path::print(){
 	cout<<"numOfSessions:" <<this->numOfSessions<< endl;
 	cout<<"group_id:" <<this->group_id<< endl;
 	cout<<"---location---"<<endl;
-	location.print();
 
 	cout<<"---End---"<<endl;
 }

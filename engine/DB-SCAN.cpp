@@ -4,19 +4,8 @@
 
 using namespace std;
 
-// Density-based spatial clustering of applications with noise (DBSCAN).
-// It is a density-based clustering algorithm: 
-// given a set of points in some space, it groups together points that are closely
-// packed together (points with many nearby neighbors), marking as outliers points that 
-// lie alone in low-density regions (whose nearest neighbors are too far away).
-//
-// The following code is an implementation of a given pseudocode.
-// https://en.wikipedia.org/wiki/DBSCAN .
-
-//Initializing.
 Db_Scan::Db_Scan(){}
 
-// Inserting new Coordinate into dictionary.
 void Db_Scan::insert(Coordinate c){
 	map <string,Coordinate>::iterator it;
 	if(c.x==0 && c.y==0){
@@ -132,25 +121,6 @@ vector <Coordinate> Db_Scan::regionQuery(Coordinate & p,double & eps,unsigned in
 		}		
 	}
 	return N;
-}
-
-// Printing.
-void Db_Scan::print(){
-	unsigned int i;
-	map <string,Coordinate>::iterator it;
-
-	cout<<"---clusters---"<<endl;
-	for(i=0;i<clusters.size();i++){
-		clusters[i].print(i);
-	}
-	
-	cout<<"---points---"<<endl;
-	for( it=points.begin() ; it!=points.end() ; it++ ){
-		cout << it->first << " = ";
-		it->second.print();
-		cout<<endl;
-	}
-	cout << "------------" << endl;
 }
 
 void Db_Scan::print_syslog(){

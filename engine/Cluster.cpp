@@ -22,14 +22,12 @@ double Pythagoras(Coordinate & c1,Coordinate & c2){
 	return dist;
 }
 
-// Initializing Cluster.
 Cluster::Cluster(){
 	totalX=0;
 	totalY=0;
 	numOfPoints=0;
 }
 
-// Inserting new Coordinate into Cluster.
 void Cluster::insert(Coordinate & c){
 	this->points[c.key] = c;
 	this->totalX += c.x*c.counter;
@@ -37,10 +35,6 @@ void Cluster::insert(Coordinate & c){
 	numOfPoints += c.counter;
 }
 
-// Saving the centroid of the Cluster.
-//
-// Returning a zero value if the Cluster is empty.
-// Otherwise returning a one value.
 unsigned int Cluster::getCentroid(){
 	if(numOfPoints==0){
 		this->centroid.x = 0;
@@ -54,7 +48,6 @@ unsigned int Cluster::getCentroid(){
 	return 1;
 }
 
-// Returning the most distant Coordinate from the Cluster centroid.
 void Cluster::getMostDistantPoint(){
 	double dist=0.5,dist2;
 	map <string,Coordinate>::iterator itPoint;
@@ -65,17 +58,6 @@ void Cluster::getMostDistantPoint(){
 		}
 	}
 	this->Distant = dist;
-}
-
-// Printing
-void Cluster::print(unsigned int i){
-	cout << "Cluster "<<i<<endl;
-	cout << "x "<<totalX<<endl;
-	cout << "y "<<totalY<<endl;
-	cout << "numOfPoints "<<numOfPoints<<endl;
-	cout << "mean:";
-	centroid.show();
-	cout << "Distant:"<<this->Distant<<endl;
 }
 
 void Cluster::print_syslog(){
