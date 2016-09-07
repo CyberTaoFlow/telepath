@@ -361,47 +361,35 @@ void loginDetect(char * reply,Login & log){
 	}
 }
 
-void authentication(char * reply,AppMode & am,string & logSuccess,string & basicDigestAuth,string & authorization,unsigned short & status_code,string & username){
-	size_t found=0,found2=0;
+void authentication(char * reply,AppMode & am,string & logSuccess){
 	if(am.body_value_mode==1){
 		char * pos = strcasestr( reply,(char*)am.body_value_html.c_str());
 		if (pos > 0){
 			#ifdef DEBUG
-				syslog(LOG_NOTICE,"Authentication has been detected!!!");
+				syslog(LOG_NOTICE,"Form authentication has been detected!!!");
 			#endif
 			logSuccess = "y";
-			return;
 		}
 	}
 	else if(am.basic_mode==1){
-		if(authorization.size() > 0){
-			if(status_code >= 200 && status_code < 300){
-				string encoded = authorization.assign(authorization.begin()+6,authorization.end());
-				encoded = base64_decode(encoded);
-				found =  encoded.find(":",found);
-				username.assign(encoded.begin(),encoded.begin()+found);
-				basicDigestAuth="y";
-			}
+		char * pos = strcasestr( reply,(char*)am.body_value_html.c_str());
+		if (pos > 0){
+			#ifdef DEBUG
+				syslog(LOG_NOTICE,"Basic authentication has been detected!!!");
+			#endif
+			logSuccess = "y";
 		}
 	}
 	else if(am.digest_mode==1){
-		if(authorization.size() > 0){
-			if(status_code >= 200 && status_code < 300){
-				found = authorization.find("username=`",found);
-				found += 10;
-
-                	        found2 = authorization.find('`',found);
-				username.assign(authorization.begin()+found,authorization.begin()+found2);
-				basicDigestAuth="y";
-			}
+		char * pos = strcasestr( reply,(char*)am.body_value_html.c_str());
+		if (pos > 0){
+			#ifdef DEBUG
+				syslog(LOG_NOTICE,"Digest authentication has been detected!!!");
+			#endif
+			logSuccess = "y";
 		}
 	}
 	else if(am.ntlm_mode==1){
-		if(authorization.size() > 0){
-			if(status_code >= 200 && status_code < 300){
-
-			}
-		}
 	}
 }
 
@@ -1225,7 +1213,36 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 			if(am.form_param_name==vAttr[i].name){
 				usernamePerIP[teleo->mParams['a'/*UserIP*/]] = vAttr[i].value;
 			}
-		}
+
+			if(vAttr[i].name=="authorization"){
+				if(am.digest_mode==1){
+					if(vAttr[i].value.size() > 0){
+						size_t found=0,found2=0;
+						string username;
+						username.clear();
+						found = vAttr[i].value.find("username=`",found);
+						found += 10;
+
+						found2 = vAttr[i].value.find('`',found);
+						username.assign(vAttr[i].value.begin()+found,vAttr[i].value.begin()+found2);
+						usernamePerIP[teleo->mParams['a'/*UserIP*/]] = username;
+                        		}
+				}
+				else if(am.basic_mode==1){
+					if(vAttr[i].value.size() > 0){
+						size_t found=0;
+						string username,encoded;
+						username.clear();
+						encoded.clear();
+						encoded = vAttr[i].value.assign(vAttr[i].value.begin()+6,vAttr[i].value.end());
+						encoded = base64_decode(encoded);
+						found =  encoded.find(":",found);
+						username.assign(encoded.begin(),encoded.begin()+found);
+						usernamePerIP[teleo->mParams['a'/*UserIP*/]] = username;
+					}
+                		}
+                	}
+        	}
 
 		if(hash_page != 0){
 			if(vAttr[i].name=="logout" ){
@@ -1240,7 +1257,7 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 		teleo->mAttr.insert(pair<unsigned int,struct Attribute>(vAttr[i].hash,vAttr[i]));
 	}
 
-	authentication((char*)teleo->mParams['B'/*ResponseBody*/].c_str(),am,teleo->mParams['v'/*LoginMsg*/],teleo->mParams['w'/*BasicDigestAuth*/],authorization,statusCode,teleo->mParams['A'/*Username*/]);
+	authentication((char*)teleo->mParams['B'/*ResponseBody*/].c_str(),am,teleo->mParams['v'/*LoginMsg*/]);
 
 	if(teleo->mParams['v'/*LoginMsg*/]=="y"){
 		teleo->mParams['A'/*Username*/] = usernamePerIP[teleo->mParams['a'/*UserIP*/]];
