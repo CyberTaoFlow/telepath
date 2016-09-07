@@ -3,7 +3,6 @@
 #define _Session_h
 
 #include "Page.h"
-#include "Core.h"
 #include <boost/unordered_map.hpp>
 #include <boost/unordered_set.hpp>
 
