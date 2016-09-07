@@ -21,11 +21,11 @@ public:
 	}
 	
 	void calculate(Path & path,Path & path_user,Session & s,short learn_or_pro){
-		double flow_score,query_score,geo_normal,geo_normal_user,landing_normal,landing_score=1,num2,diff;
+		double flow_score,query_score,geo_normal,geo_normal_user,landing_normal,landing_score=1,num2,diff,avg_score_user=0;
 		int totalExp=0,exp_2;
 		RequestValToInsert reqVal;
 		string country,city,compareLink,user_scores_string;
-		char user_scores[500];
+		char user_scores[2000],tmp[200];
 		Coordinate coordinate;
 		bool hostFlag;
 		unsigned int i_rule;
@@ -73,14 +73,15 @@ public:
 					geo_normal_user = path_user.location.getProb(coordinate);
 					pthread_mutex_unlock(&mutexlocation);
 
-					sprintf(user_scores,"\"user_scores\":{\"geo_score\":%f},",geo_normal_user);
+					sprintf(user_scores,"\"user_scores\":{\"score_geo\":%f,",geo_normal_user);
+					avg_score_user += geo_normal_user;
 				}
 				//---------------------------------------------------------------------
 			}else{			// learning mode.
 				geo_normal = 0;
 				if (s.vRequest[i].user.size()>0){
 					geo_normal_user = 0;
-					sprintf(user_scores,"\"user_scores\":{\"geo_score\":%f},",geo_normal_user);
+					sprintf(user_scores,"\"user_scores\":{\"score_geo\":0,");
 				}
 			}
 
@@ -89,8 +90,17 @@ public:
 				if(learn_or_pro!=1){ // production mode.
 					Query q_page(mQuery[s.vRequest[i].RID],s.vRequest[i].presence);     //query probability
 					query_score = q_page.result;
+					if (s.vRequest[i].user.size()>0){
+						sprintf(tmp,"\"score_query\":%f,",q_page.result);
+						strcat(user_scores,tmp);
+						avg_score_user += q_page.result;
+					}
 				}else{		  // learning mode.
 					query_score = 0;
+					if (s.vRequest[i].user.size()>0){
+						sprintf(tmp,"\"score_query\":0,");
+						strcat(user_scores,tmp);
+					}
 				}
 
 			pthread_mutex_unlock(&mutex_mQuery);
@@ -127,17 +137,37 @@ public:
 						}else{
 							landing_normal = 0;
 						}
+						
+						if (s.vRequest[i].user.size()>0){
+							avg_score_user += flow_score;
+							avg_score_user += landing_normal;
+							avg_score_user /= 4;
+							sprintf(tmp,"\"score_flow\":%f,\"score_landing\":%f,\"score_average\":%f},",flow_score,landing_normal,avg_score_user);
+							strcat(user_scores,tmp);
+						}
 					}else{
 						flow_score = 1;
 						landing_normal = 1;
+
+						if (s.vRequest[i].user.size()>0){
+							avg_score_user += 2;
+							avg_score_user /= 4;
+							sprintf(tmp,"\"score_flow\":1,\"score_landing\":1,\"score_average\":%f},",avg_score_user);
+							strcat(user_scores,tmp);
+						}
 					}
 				}else{		  // learning mode.
 					flow_score =  0;
 					landing_normal = 0;
+					if (s.vRequest[i].user.size()>0){
+						avg_score_user /= 4;
+						sprintf(tmp,"\"score_flow\":0,\"score_landing\":0,\"score_average\":%f},",avg_score_user);
+						strcat(user_scores,tmp);
+					}
 				}
 
+				//Insert Request.
 				user_scores_string = string(user_scores);
-//---------------------------------------Insert Requests to scores-----------------------------------------------------------
 				reqVal.init(s.vRequest[i].user,s.vRequest[i].RID,s.sid,s.vRequest[i].sha256_sid,s.vRequest[i].index,s.vRequest[i].page_name,s.vRequest[i].host_name,s.vRequest[i].ts,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,flow_score,query_score,geo_normal,landing_normal,s.vRequest[i].status_code,country,city,s.status,s.vRequest[i].protocol,s.vRequest[i].method,coordinate,s.decimalIP,s.vRequest[i].shard,s.vRequest[i].title,s.vRequest[i].presence,s.vRequest[i].canonical_url,learn_or_pro,user_scores_string);
 
 				pthread_mutex_lock(&mutexScoreData);		
@@ -148,16 +178,15 @@ public:
 				valReqQueue.push(reqVal);
 				pthread_mutex_unlock(&mutexInsertReq);
 				sem_post(&sem_insert_reqs);
-//------------------------------------------Insert Requests to scores_user-----------------------------------------------------
 			}else{ // The Page wasn't found or the Page is tainted.
-//------------------------------------------Insert Requests to scores------------------------------------------------------------
+				//Insert Request.
+				user_scores_string = string(user_scores);
 				reqVal.init(s.vRequest[i].user,s.vRequest[i].RID,s.sid,s.vRequest[i].sha256_sid,s.vRequest[i].index,s.vRequest[i].page_name,s.vRequest[i].host_name,s.vRequest[i].ts,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,1,query_score,geo_normal,1,s.vRequest[i].status_code,country,city,s.status,s.vRequest[i].protocol,s.vRequest[i].method,coordinate,s.decimalIP,s.vRequest[i].shard,s.vRequest[i].title,s.vRequest[i].presence,s.vRequest[i].canonical_url,learn_or_pro,user_scores_string);
 
 				pthread_mutex_lock(&mutexInsertReq);
 				valReqQueue.push(reqVal);
 				pthread_mutex_unlock(&mutexInsertReq);
 				sem_post(&sem_insert_reqs);
-//-------------------------------------------Insert Requests to scores_user-------------------------------------------------
 			}
 
 			for(i_rule=0 ; i_rule<rules.size() ; i_rule++ ){
