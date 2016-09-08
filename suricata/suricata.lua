@@ -309,9 +309,11 @@ function log(args)
 	end
 
 	--Time stamp
-	time = SCPacketTimeString()
-	month,day,year,hour,min,sec = time:match("(%d+)/(%d+)/(%d+)-(%d+):(%d+):(%d+)")
+	month,day,year,hour,min,sec,msec = time:match("(%d+)/(%d+)/(%d+)-(%d+):(%d+):(%d+).(%d+)")
 	epoch=os.time{year=year,month=month,day=day,hour=hour,min=min,sec=sec}
+	epoch_str = string.format("%i",epoch)
+	msec_str = string.format("%i",msec)
+	epoch_str = epoch_str .. "." .. msec_str
 
 	request = {
 		TT = string.format("%i",epoch),	--Time stamp.
@@ -356,17 +358,20 @@ function log(args)
 		end
 	end
 
+	fingerprint = ""
 	if fp_ua then
+		fingerprint = fingerprint .. fp_ua
 	else
-		fp_ua = "0"
+		fingerprint = dstip
 	end
 
 	if fp_host then
+		fingerprint = fingerprint .. fp_host
 	else
-		fp_host = "0"
+		fingerprint = dstip
 	end
 
-	request["TS"] = sha_256.sha256(srcip .. fp_ua .. fp_host)
+	request["TS"] = sha_256.sha256(srcip .. fingerprint)
 
 	rsh = HttpGetResponseHeaders()
 	for k, v in pairs(rsh) do
