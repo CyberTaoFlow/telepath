@@ -361,47 +361,35 @@ void loginDetect(char * reply,Login & log){
 	}
 }
 
-void authentication(char * reply,AppMode & am,string & logSuccess,string & basicDigestAuth,string & authorization,unsigned short & status_code,string & username){
-	size_t found=0,found2=0;
+void authentication(char * reply,AppMode & am,string & logSuccess){
 	if(am.body_value_mode==1){
 		char * pos = strcasestr( reply,(char*)am.body_value_html.c_str());
 		if (pos > 0){
 			#ifdef DEBUG
-				syslog(LOG_NOTICE,"Authentication has been detected!!!");
+				syslog(LOG_NOTICE,"Form authentication has been detected!!!");
 			#endif
 			logSuccess = "y";
-			return;
 		}
 	}
 	else if(am.basic_mode==1){
-		if(authorization.size() > 0){
-			if(status_code >= 200 && status_code < 300){
-				string encoded = authorization.assign(authorization.begin()+6,authorization.end());
-				encoded = base64_decode(encoded);
-				found =  encoded.find(":",found);
-				username.assign(encoded.begin(),encoded.begin()+found);
-				basicDigestAuth="y";
-			}
+		char * pos = strcasestr( reply,(char*)am.body_value_html.c_str());
+		if (pos > 0){
+			#ifdef DEBUG
+				syslog(LOG_NOTICE,"Basic authentication has been detected!!!");
+			#endif
+			logSuccess = "y";
 		}
 	}
 	else if(am.digest_mode==1){
-		if(authorization.size() > 0){
-			if(status_code >= 200 && status_code < 300){
-				found = authorization.find("username=`",found);
-				found += 10;
-
-                	        found2 = authorization.find('`',found);
-				username.assign(authorization.begin()+found,authorization.begin()+found2);
-				basicDigestAuth="y";
-			}
+		char * pos = strcasestr( reply,(char*)am.body_value_html.c_str());
+		if (pos > 0){
+			#ifdef DEBUG
+				syslog(LOG_NOTICE,"Digest authentication has been detected!!!");
+			#endif
+			logSuccess = "y";
 		}
 	}
 	else if(am.ntlm_mode==1){
-		if(authorization.size() > 0){
-			if(status_code >= 200 && status_code < 300){
-
-			}
-		}
 	}
 }
 
@@ -1088,7 +1076,7 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 
 		char curl_buff[200];
 		sprintf(curl_buff,"/telepath-%s",&shard[0]);
-		es_insert(curl_buff,"{\"settings\":{\"number_of_shards\":1,\"number_of_replicas\":0,\"analysis\":{\"analyzer\":{\"path-analyzer-slash\":{\"type\":\"custom\",\"tokenizer\":\"path-tokenizer-slash\"},\"path-analyzer-dot\":{\"type\":\"custom\",\"tokenizer\":\"path-tokenizer-dot\"},\"path-analyzer-param-value\":{\"type\":\"custom\",\"tokenizer\":\"path-tokenizer-param-value\"},\"path-analyzer-city\":{\"type\":\"custom\",\"tokenizer\":\"path-tokenizer-city\"},\"path-analyzer-username\":{\"type\":\"custom\",\"tokenizer\":\"path-tokenizer-username\"},\"path-analyzer-title\":{\"type\":\"custom\",\"tokenizer\":\"path-tokenizer-space\"},\"my_lowercaser\":{\"tokenizer\":\"standard\",\"filter\":[\"lowercase\"]}},\"tokenizer\":{\"path-tokenizer-slash\":{\"type\":\"path_hierarchy\",\"delimiter\":\"/\"},\"path-tokenizer-dot\":{\"type\":\"path_hierarchy\",\"delimiter\":\".\"},\"path-tokenizer-param-value\":{\"type\":\"path_hierarchy\",\"delimiter\":[\"/\",\".\",\" \",\",\",\"-\",\"+\",\"_\",\";\"]},\"path-tokenizer-city\":{\"type\":\"path_hierarchy\",\"delimiter\":[\" \",\"-\"]},\"path-tokenizer-username\":{\"type\":\"path_hierarchy\",\"delimiter\":[\"-\",\" \",\"_\"]},\"path-tokenizer-space\":{\"type\":\"path_hierarchy\",\"delimiter\":\" \"}}}},\"mappings\":{\"http\":{\"dynamic\":\"true\",\"properties\":{\"host\":{\"type\":\"string\",\"term_vector\":\"yes\",\"store\":true,\"index\":\"not_analyzed\",\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"path-analyzer-dot\"}}},\"uri\":{\"type\":\"string\",\"term_vector\":\"yes\",\"store\":true,\"index\":\"not_analyzed\",\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"path-analyzer-slash\"}}},\"canonical_url\":{\"type\":\"string\",\"term_vector\":\"yes\",\"store\":true,\"index\":\"not_analyzed\",\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"path-analyzer-slash\"}}},\"alerts\":{\"properties\":{\"name\":{\"type\":\"string\",\"term_vector\":\"yes\",\"index\":\"not_analyzed\",\"store\":true,\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"my_lowercaser\"}}},\"score\":{\"type\":\"float\"}}},\"alerts_count\":{\"type\":\"long\"},\"business_actions\":{\"properties\":{\"name\":{\"type\":\"string\",\"term_vector\":\"yes\",\"index\":\"not_analyzed\",\"store\":true,\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"my_lowercaser\"}}},\"status\":{\"type\":\"short\"}}},\"cases_name\":{\"type\":\"string\",\"term_vector\":\"yes\",\"index\":\"not_analyzed\",\"store\":true,\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"my_lowercaser\"}}},\"city\":{\"type\":\"string\",\"term_vector\":\"yes\",\"index\":\"not_analyzed\",\"store\":true,\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"path-analyzer-city\"}}},\"country_code\":{\"type\":\"string\",\"term_vector\":\"yes\",\"index\":\"not_analyzed\",\"store\":true,\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"my_lowercaser\"}}},\"explanations\":{\"type\":\"long\"},\"explanations_count\":{\"type\":\"long\"},\"index\":{\"type\":\"long\"},\"ip_orig\":{\"type\":\"ip\"},\"ip_resp\":{\"type\":\"ip\"},\"ip_score\":{\"type\":\"double\"},\"location\":{\"type\":\"geo_point\"},\"method\":{\"type\":\"string\",\"term_vector\":\"yes\",\"index\":\"not_analyzed\",\"store\":true},\"parameters\":{\"properties\":{\"name\":{\"type\":\"string\",\"term_vector\":\"yes\",\"index\":\"not_analyzed\",\"store\":true},\"score_data\":{\"type\":\"double\"},\"score_length\":{\"type\":\"double\"},\"type\":{\"type\":\"string\",\"term_vector\":\"yes\"},\"value\":{\"type\":\"string\",\"term_vector\":\"yes\",\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"path-analyzer-param-value\"}}}}},\"score_average\":{\"type\":\"float\"},\"score_flow\":{\"type\":\"float\"},\"score_geo\":{\"type\":\"float\"},\"score_landing\":{\"type\":\"float\"},\"score_presence\":{\"type\":\"double\"},\"score_query\":{\"type\":\"float\"},\"sid\":{\"type\":\"long\"},\"status_code\":{\"type\":\"short\"},\"sha256_sid\":{\"type\":\"string\",\"term_vector\":\"yes\",\"index\":\"not_analyzed\",\"store\":true},\"title\":{\"type\":\"string\",\"term_vector\":\"yes\",\"index\":\"not_analyzed\",\"store\":true,\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"path-analyzer-title\"}}},\"username\":{\"type\":\"string\",\"term_vector\":\"yes\",\"index\":\"not_analyzed\",\"store\":true,\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"path-analyzer-username\"}}},\"ts\":{\"type\":\"double\"}}}}}");
+		es_insert(curl_buff,"{\"settings\":{\"number_of_shards\":1,\"number_of_replicas\":0,\"analysis\":{\"analyzer\":{\"path-analyzer-slash\":{\"type\":\"custom\",\"tokenizer\":\"path-tokenizer-slash\"},\"path-analyzer-dot\":{\"type\":\"custom\",\"tokenizer\":\"path-tokenizer-dot\"},\"path-analyzer-param-value\":{\"type\":\"custom\",\"tokenizer\":\"path-tokenizer-param-value\"},\"path-analyzer-city\":{\"type\":\"custom\",\"tokenizer\":\"path-tokenizer-city\"},\"path-analyzer-username\":{\"type\":\"custom\",\"tokenizer\":\"path-tokenizer-username\"},\"path-analyzer-title\":{\"type\":\"custom\",\"tokenizer\":\"path-tokenizer-space\"},\"my_lowercaser\":{\"tokenizer\":\"standard\",\"filter\":[\"lowercase\"]}},\"tokenizer\":{\"path-tokenizer-slash\":{\"type\":\"path_hierarchy\",\"delimiter\":\"/\"},\"path-tokenizer-dot\":{\"type\":\"path_hierarchy\",\"delimiter\":\".\"},\"path-tokenizer-param-value\":{\"type\":\"path_hierarchy\",\"delimiter\":[\"/\",\".\",\" \",\",\",\"-\",\"+\",\"_\",\";\"]},\"path-tokenizer-city\":{\"type\":\"path_hierarchy\",\"delimiter\":[\" \",\"-\"]},\"path-tokenizer-username\":{\"type\":\"path_hierarchy\",\"delimiter\":[\"-\",\" \",\"_\"]},\"path-tokenizer-space\":{\"type\":\"path_hierarchy\",\"delimiter\":\" \"}}}},\"mappings\":{\"http\":{\"dynamic\":\"true\",\"properties\":{\"host\":{\"type\":\"string\",\"term_vector\":\"yes\",\"store\":true,\"index\":\"not_analyzed\",\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"path-analyzer-dot\"}}},\"uri\":{\"type\":\"string\",\"term_vector\":\"yes\",\"store\":true,\"index\":\"not_analyzed\",\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"path-analyzer-slash\"}}},\"canonical_url\":{\"type\":\"string\",\"term_vector\":\"yes\",\"store\":true,\"index\":\"not_analyzed\",\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"path-analyzer-slash\"}}},\"alerts\":{\"properties\":{\"name\":{\"type\":\"string\",\"term_vector\":\"yes\",\"index\":\"not_analyzed\",\"store\":true,\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"my_lowercaser\"}}},\"score\":{\"type\":\"float\"}}},\"alerts_count\":{\"type\":\"long\"},\"business_actions\":{\"properties\":{\"name\":{\"type\":\"string\",\"term_vector\":\"yes\",\"index\":\"not_analyzed\",\"store\":true,\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"my_lowercaser\"}}},\"status\":{\"type\":\"short\"}}},\"cases_name\":{\"type\":\"string\",\"term_vector\":\"yes\",\"index\":\"not_analyzed\",\"store\":true,\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"my_lowercaser\"}}},\"city\":{\"type\":\"string\",\"term_vector\":\"yes\",\"index\":\"not_analyzed\",\"store\":true,\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"path-analyzer-city\"}}},\"country_code\":{\"type\":\"string\",\"term_vector\":\"yes\",\"index\":\"not_analyzed\",\"store\":true,\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"my_lowercaser\"}}},\"explanations\":{\"type\":\"long\"},\"explanations_count\":{\"type\":\"long\"},\"index\":{\"type\":\"long\"},\"ip_orig\":{\"type\":\"ip\"},\"ip_resp\":{\"type\":\"ip\"},\"ip_score\":{\"type\":\"double\"},\"location\":{\"type\":\"geo_point\"},\"method\":{\"type\":\"string\",\"term_vector\":\"yes\",\"index\":\"not_analyzed\",\"store\":true},\"parameters\":{\"properties\":{\"name\":{\"type\":\"string\",\"term_vector\":\"yes\",\"index\":\"not_analyzed\",\"store\":true},\"score_data\":{\"type\":\"double\"},\"score_length\":{\"type\":\"double\"},\"type\":{\"type\":\"string\",\"term_vector\":\"yes\"},\"value\":{\"type\":\"string\",\"term_vector\":\"yes\",\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"path-analyzer-param-value\"}}}}},\"score_average\":{\"type\":\"float\"},\"score_flow\":{\"type\":\"float\"},\"score_geo\":{\"type\":\"float\"},\"score_landing\":{\"type\":\"float\"},\"score_presence\":{\"type\":\"float\"},\"score_query\":{\"type\":\"float\"},\"sid\":{\"type\":\"long\"},\"status_code\":{\"type\":\"short\"},\"sha256_sid\":{\"type\":\"string\",\"term_vector\":\"yes\",\"index\":\"not_analyzed\",\"store\":true},\"title\":{\"type\":\"string\",\"term_vector\":\"yes\",\"index\":\"not_analyzed\",\"store\":true,\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"path-analyzer-title\"}}},\"user_scores\":{\"properties\":{\"score_average\":{\"type\":\"float\"},\"score_flow\":{\"type\":\"float\"},\"score_geo\":{\"type\":\"float\"},\"score_landing\":{\"type\":\"float\"},\"score_presence\":{\"type\":\"float\"},\"score_query\":{\"type\":\"float\"}}},\"username\":{\"type\":\"string\",\"term_vector\":\"yes\",\"index\":\"not_analyzed\",\"store\":true,\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"path-analyzer-username\"}}},\"ts\":{\"type\":\"double\"}}}}}");
 	}
 
 
@@ -1225,7 +1213,36 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 			if(am.form_param_name==vAttr[i].name){
 				usernamePerIP[teleo->mParams['a'/*UserIP*/]] = vAttr[i].value;
 			}
-		}
+
+			if(vAttr[i].name=="authorization"){
+				if(am.digest_mode==1){
+					if(vAttr[i].value.size() > 0){
+						size_t found=0,found2=0;
+						string username;
+						username.clear();
+						found = vAttr[i].value.find("username=`",found);
+						found += 10;
+
+						found2 = vAttr[i].value.find('`',found);
+						username.assign(vAttr[i].value.begin()+found,vAttr[i].value.begin()+found2);
+						usernamePerIP[teleo->mParams['a'/*UserIP*/]] = username;
+                        		}
+				}
+				else if(am.basic_mode==1){
+					if(vAttr[i].value.size() > 0){
+						size_t found=0;
+						string username,encoded;
+						username.clear();
+						encoded.clear();
+						encoded = vAttr[i].value.assign(vAttr[i].value.begin()+6,vAttr[i].value.end());
+						encoded = base64_decode(encoded);
+						found =  encoded.find(":",found);
+						username.assign(encoded.begin(),encoded.begin()+found);
+						usernamePerIP[teleo->mParams['a'/*UserIP*/]] = username;
+					}
+                		}
+                	}
+        	}
 
 		if(hash_page != 0){
 			if(vAttr[i].name=="logout" ){
@@ -1240,7 +1257,7 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 		teleo->mAttr.insert(pair<unsigned int,struct Attribute>(vAttr[i].hash,vAttr[i]));
 	}
 
-	authentication((char*)teleo->mParams['B'/*ResponseBody*/].c_str(),am,teleo->mParams['v'/*LoginMsg*/],teleo->mParams['w'/*BasicDigestAuth*/],authorization,statusCode,teleo->mParams['A'/*Username*/]);
+	authentication((char*)teleo->mParams['B'/*ResponseBody*/].c_str(),am,teleo->mParams['v'/*LoginMsg*/]);
 
 	if(teleo->mParams['v'/*LoginMsg*/]=="y"){
 		teleo->mParams['A'/*Username*/] = usernamePerIP[teleo->mParams['a'/*UserIP*/]];
