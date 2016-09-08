@@ -830,7 +830,7 @@ void *getAtt_thread(void *threadarg)
 							itSession.first->second.validUser = true;
 						}
 					}
-					//Don't change it to else.
+
 					if(itSession.first->second.validUser==true){
 						c_UserID = itSession.first->second.sUsername;
 					}
