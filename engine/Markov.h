@@ -21,7 +21,7 @@ public:
 	}
 	
 	void calculate(Path & path,Path & path_user,Session & s,short learn_or_pro){
-		double flow_score,query_score,geo_normal,geo_normal_user,landing_normal,landing_score=1,num2,diff,avg_score_user=0;
+		double flow_score,query_score,geo_normal,geo_normal_user,landing_normal,landing_score=1,num2,diff,avg_score_user;
 		int totalExp=0,exp_2;
 		RequestValToInsert reqVal;
 		string country,city,compareLink,user_scores_string;
@@ -74,7 +74,7 @@ public:
 					pthread_mutex_unlock(&mutexlocation);
 
 					sprintf(user_scores,"\"user_scores\":{\"score_geo\":%f,",geo_normal_user);
-					avg_score_user += geo_normal_user;
+					avg_score_user = geo_normal_user;
 				}
 				//---------------------------------------------------------------------
 			}else{			// learning mode.
