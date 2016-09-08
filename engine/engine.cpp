@@ -633,6 +633,11 @@ void insertOrUpdateSessionMap(TeleObject & teleobj){
 		teleobj.mParams['s'/*ReqSeq*/] = "0";
 		Session session;//
 		session.sid = sid;
+		if(session.validUser == false){
+				if(teleobj.mParams['A'/*Username*/].size() > 0){
+					session.sUsername = teleobj.mParams['A'/*Username*/];
+				}
+		}
 		mSession.insert( pair<unsigned int,Session>(session.sid,session) );
 	}
 
