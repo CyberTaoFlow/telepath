@@ -50,7 +50,6 @@
 #include "ScoreData.h"
 #include "Action.h"
 #include "Rule.h"
-#include "BotIntelligence.h"
 #include "Reputation.h"
 #include "Attribute.h"
 #include "Globals.h"

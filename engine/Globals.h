@@ -197,11 +197,9 @@ boost::unordered_map <string,AppMode> mAppMode;
 
 boost::unordered_map <long long,ElasticAtt> mRidAtts;// save all Session data.
 boost::unordered_map <long long,ElasticData> mRidAlertAndAction;// save all Session data.
-//boost::unordered_map <string,BotIntelligence> mBotIntelligenceIP; // BotIntelligence For IPs
 boost::unordered_set <string> sTorIntelligenceIP;
 boost::unordered_set <string> sBotIntelligenceIP;
 boost::unordered_set <long long> sRidSaveDB;
-//boost::unordered_map <string,BotIntelligence>::iterator itBotIntelligence;
 boost::unordered_map <unsigned int,boost::unordered_map <string,UserReputation> > mReputationUsers;
 boost::unordered_map <unsigned int,Reputation> mReputationIPs;
 map<unsigned int,Path> mPathPerGroup; // Path to any suspicious group.
