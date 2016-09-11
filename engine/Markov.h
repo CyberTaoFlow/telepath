@@ -21,7 +21,7 @@ public:
 	}
 	
 	void calculate(Path & path,Path & path_user,Session & s,short learn_or_pro){
-		double flow_score,query_score,geo_normal,geo_normal_user,landing_normal,landing_score=1,num2,diff,avg_score_user;
+		double rule_score,flow_score,query_score,geo_normal,geo_normal_user,landing_normal,landing_score=1,num2,diff,avg_score_user;
 		int totalExp=0,exp_2;
 		RequestValToInsert reqVal;
 		string country,city,compareLink,user_scores_string;
@@ -197,24 +197,35 @@ public:
 					continue;	
 				}
 
-				// CHECK THE BUG IN THIS FLAG FOR SEPERATED APPS
 				if(learn_or_pro != 1){ // Rules
 					if(hostFlag==true){
 						switch (rules[i_rule].method[0]) {
 							case 'l':							//landing rules.
-								checkRules(rules[i_rule],landing_score,s,i,itScoreNumeric->second.landing,s.vRequest[i].RID,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,"phpsessid",s.vRequest[i].host_name);
+								rule_score=landing_score;
+								checkRules(rules[i_rule],rule_score,s,i,itScoreNumeric->second.landing,s.vRequest[i].RID,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,"phpsessid",s.vRequest[i].host_name);
 								break;
-							case 'q':							//query rules. 
+							case 'q':							//query rules.
 								checkRules(rules[i_rule],query_score ,s,i,s.vRequest[i].RID,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,"phpsessid",s.vRequest[i].host_name);
 								break;
-							case 'g':							//geo rules. 
-								checkRules(rules[i_rule],geo_normal,s,i,itScoreNumeric->second.geo,s.vRequest[i].RID,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,"phpsessid",s.vRequest[i].host_name);
+							case 'g':							//geo rules.
+								if(rules[i_rule].personal==0){
+									rule_score=geo_normal;
+								}else{
+									rule_score=geo_normal_user;
+								} 
+								checkRules(rules[i_rule],rule_score,s,i,itScoreNumeric->second.geo,s.vRequest[i].RID,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,"phpsessid",s.vRequest[i].host_name);
 								break;
 							case 'f':							//flow rules.
-								checkRules(rules[i_rule],totalExp ,s,i,itScoreNumeric->second.flow,s.vRequest[i].RID,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,"phpsessid",s.vRequest[i].host_name);
+								rule_score=totalExp;
+								checkRules(rules[i_rule],rule_score,s,i,itScoreNumeric->second.flow,s.vRequest[i].RID,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,"phpsessid",s.vRequest[i].host_name);
 								break;
 							case 'a':							//average rules. 
-								checkRules(rules[i_rule],reqVal.avg_normal ,s,i,s.vRequest[i].RID,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,"phpsessid",s.vRequest[i].host_name);
+								if(rules[i_rule].personal==0){
+									rule_score=reqVal.avg_normal;
+								}else{
+									rule_score=avg_score_user;
+								}
+								checkRules(rules[i_rule],rule_score ,s,i,s.vRequest[i].RID,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,"phpsessid",s.vRequest[i].host_name);
 								break;
 							case 'p':
 								checkRules(rules[i_rule],s.vRequest[i].presence ,s,i,s.vRequest[i].RID,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,"phpsessid",s.vRequest[i].host_name);
