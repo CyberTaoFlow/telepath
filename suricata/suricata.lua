@@ -309,6 +309,7 @@ function log(args)
 	end
 
 	--Time stamp
+	time = SCPacketTimeString()
 	month,day,year,hour,min,sec,msec = time:match("(%d+)/(%d+)/(%d+)-(%d+):(%d+):(%d+).(%d+)")
 	epoch=os.time{year=year,month=month,day=day,hour=hour,min=min,sec=sec}
 	epoch_str = string.format("%i",epoch)
