@@ -316,7 +316,7 @@ function log(args)
 	epoch_str = epoch_str .. "." .. msec_str
 
 	request = {
-		TT = string.format("%i",epoch),	--Time stamp.
+		TT = epoch_str,         	--Time stamp.
 		TI = srcip,			--Client IP.
 		TU = uri,			--Uri.
 		TB = rq_body,			--Request body.
