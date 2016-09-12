@@ -5,19 +5,6 @@ using namespace std;
 
 Query::Query(){}
 
-// Culculating a total query score for a given vector of parameters.
-//
-// For Example: 
-//	Input:
-//		params = [
-//			{score=0.5,length=0,weight=1},              /*User-Agent*/
-//			{score=0.75,length=0.5,weight=0.25},        /*Host*/
-//			{score=0,length=0,weight=1},                /*Content-length*/
-//			{score=0.1,length=0,weight=1}               /*Accept*/
-//		] 
-//      	presence = 0.3
-//
-//	Return: result = ( ( 0.2423/*average_score*/ + 0.0384/*average_length*/ + 0.3/*presence*/ )/3 ) = 0.1935
 Query::Query(vector <Parameter> & params,double presence){
 	double sum_score=0,sum_weight=0,sum_length=0,average_score,average_length;	
 

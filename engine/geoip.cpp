@@ -5,7 +5,6 @@ using namespace std;
 
 GeoIP *gi;
 
-//opening GeoIP database
 void open_geoIP_database(){
 
 	if( access( "/opt/telepath/db/geoip/GeoIPCity.dat", F_OK ) != -1 ) {
