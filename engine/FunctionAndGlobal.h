@@ -11,6 +11,17 @@ struct cookieNames{  // values of attributes score.
 
 map <string,cookieNames > mCookieStat;
 
+//!  Excluding Rules
+/*!
+	This function decides to exclude rules according to their IP and the negate rule flag ('ip_neg').
+
+	\param range as a Range object.
+	\param decimalIP as an unsigned integer argument.
+	\param ip_neg as an unsigned short argument.
+	\return true or false as a boolean argument.
+	\n      true - The rule won't be exclude because of its IP range.
+	\n      false - The rule will be exclude because of its IP range.
+*/
 bool excludeIP(Range & range,unsigned int decimalIP,unsigned short ip_neg){
 	if(range.to == 0){
 		return true;
@@ -34,39 +45,78 @@ bool excludeIP(Range & range,unsigned int decimalIP,unsigned short ip_neg){
 
 }
 
+//!  Validation to Behavior Rules.
+/*!
+	This function gets rule('c_r') and request data and checks if the request match the rule('c_r') specifications. \n
+	The specifications are: \n 
+	1) The source IP of the request does not exclude by the rule. \n 
+	2) The request score is hueristically low/medium/high. \n \n
+
+	An alert will be triggered to the request(elasticsearch document) if all the specifications were matched.
+	\param c_r as a Rule object.
+	\param score as a double argument.
+	\param s as a Session object.
+	\param index as an unsigned integer argument.
+	\param numeric as a Numeric object.
+	\param RID as a long long number argument.
+	\param src_ip as a C++ string argument.
+	\param resp_ip as a C++ string argument.
+	\param cookie as a C++ string argument.
+	\param hostname as a C++ string argument.
+	\sa excludeIP()
+	\sa isTheRuleMatch()
+	\sa insert_alert()
+*/
 void checkRules( Rule & c_r , double score , Session & s,unsigned & index,Numeric & numeric,long long RID,string & src_ip,string & resp_ip,string cookie,string & hostname){ // push to SID the id of rule violation.
 	double num_score=0;
 	string lit_score; 
 
 	score *= 100;
 
-	bool flagIP=false;
 	for(unsigned int iii=0;iii<c_r.vecRangeIP.size();iii++){
 		if( excludeIP(c_r.vecRangeIP[iii],s.decimalIP,c_r.ip_neg) == true){
-			flagIP=true;
-			break;
+			return;
 		}
 	}
 
-	if( (s.elapsed_ts>=c_r.ts) && /*(s.vRequest[index].index>=c_r.Index)  && ( !c_r.App || c_r.App== s.vRequest[index].hostname ) &&*/ (c_r.user.size()==0 || c_r.user.compare(s.vRequest[0].user) == 0 ) && flagIP==false ){
+	if( (s.elapsed_ts>=c_r.ts) && (c_r.user.size()==0 || c_r.user.compare(s.vRequest[0].user) == 0 )  ){
 		if(isTheRuleMatch(c_r.threshold ,numeric,score,num_score,0) == 0){
 			insert_alert(c_r,RID,src_ip,num_score,resp_ip,cookie,hostname);
 		}
 	}
 }
 
+//!  Validation to Behavior Rules.
+/*!
+	This function gets rule('c_r') and request data and checks if the request match the rule('c_r') specifications. \n
+	The specifications are: \n
+	1) The source IP of the request does not exclude by the rule. \n 
+	2) The rule threshold('c_r.threshold') is lower than the request average score('score'). \n \n
+
+	An alert will be triggered to the request(elasticsearch document) if all the specifications were matched.
+	\param c_r as a Rule object.
+	\param score as a double argument.
+	\param s as a Session object.
+	\param index as an unsigned integer argument.
+	\param RID as a long long number argument.
+	\param src_ip as a C++ string argument.
+	\param resp_ip as a C++ string argument.
+	\param cookie as a C++ string argument.
+	\param hostname as a C++ string argument.
+	\sa excludeIP()
+	\sa isTheRulddeMatch()
+	\sa insert_alert()
+*/
 void checkRules( Rule & c_r , double score , Session & s,unsigned & index,long long RID,string & src_ip,string & resp_ip,string cookie,string & hostname){ // push to SID the id of rule violation.
 	score *= 100;
 
-	bool flagIP=false;
 	for(unsigned int iii=0;iii<c_r.vecRangeIP.size();iii++){
 		if( excludeIP(c_r.vecRangeIP[iii],s.decimalIP,c_r.ip_neg) == true){
-			flagIP=true;
-			break;
+			return;
 		}
 	}
 
-	if( (s.elapsed_ts>=c_r.ts) && /*(s.vRequest[index].index>=c_r.Index)  && ( !c_r.App || c_r.App== s.vRequest[index].hostname ) &&*/ (c_r.user.size()==0 || c_r.user.compare(s.vRequest[0].user)==0 ) && flagIP==false ){
+	if( (s.elapsed_ts>=c_r.ts) && (c_r.user.size()==0 || c_r.user.compare(s.vRequest[0].user)==0 ) ){
 		if ( c_r.threshold < score) { // Check score matching.
 			insert_alert(c_r,RID,src_ip,score,resp_ip,cookie,hostname);
 		}
