@@ -314,7 +314,15 @@ function log(args)
 	epoch=os.time{year=year,month=month,day=day,hour=hour,min=min,sec=sec}
 	epoch_str = string.format("%i",epoch)
 	msec_str = string.format("%i",msec)
-	epoch_str = epoch_str .. "." .. msec_str
+	if(string.len(msec_str) == 5 ) then
+		epoch_str = epoch_str .. ".0" .. msec_str
+	elseif(string.len(msec_str) == 4 ) then
+		epoch_str = epoch_str .. ".00" .. msec_str
+	elseif(string.len(msec_str) == 3 ) then
+		epoch_str = epoch_str .. ".000" .. msec_str
+	else
+		epoch_str = epoch_str .. "." .. msec_str
+	end
 
 	request = {
 		TT = epoch_str,         	--Time stamp.
