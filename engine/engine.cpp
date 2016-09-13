@@ -226,7 +226,7 @@ void* thread_redis_messages(void* arg)
 	}
 
 	while(globalEngine==1){
-		reply = (redisReply*)redisCommand(redis, "LPOP %s","Q" );
+		reply = (redisReply*)redisCommand(redis, "RPOP %s","Q" );
 		if ( reply->type == REDIS_REPLY_ERROR ){
 			freeReplyObject(reply);
 		}else{
@@ -235,7 +235,7 @@ void* thread_redis_messages(void* arg)
 				try{
 					msgpack::unpack(&msg, reply->str, reply->len);
 					freeReplyObject(reply);
-					
+
 					obj = msg.get();
 					obj.convert(&mMessage);
 					pTC->addobject(&TO,mMessage);
@@ -244,7 +244,6 @@ void* thread_redis_messages(void* arg)
 				}
 				catch (msgpack::v1::type_error& bc){syslog(LOG_NOTICE,"Catch: %s",bc.what() );}
 				catch (msgpack::v1::insufficient_bytes& bc){syslog(LOG_NOTICE,"Catch: %s",bc.what() );}
-
 			}else{
 				usleep(1000);
 			}
@@ -621,7 +620,6 @@ void insertOrUpdateSessionMap(TeleObject & teleobj){
 		//}else{
 			itSession->second.sequence++;
 			teleobj.mParams['s'/*ReqSeq*/] = int_to_string(itSession->second.sequence);
-
 			if(itSession->second.validUser == false){
 				if(teleobj.mParams['A'/*Username*/].size() > 0){
 					itSession->second.sUsername = teleobj.mParams['A'/*Username*/];
