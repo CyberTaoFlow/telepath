@@ -168,8 +168,11 @@ void detectPasswords(char * reply,string & host,string & uri){
 	char * end;
 	char * end2;
 	char * pos;
+	char * pos2;
 	char * new_reply;
 	string password;
+	string action;
+	string hash_str;
 
 	if(*reply != '<'){
 		return;
@@ -216,13 +219,46 @@ void detectPasswords(char * reply,string & host,string & uri){
 
 		password.assign(end,len);
 
-		if(password_masking==1){
-			//string hash_str = host+uri+url_encode(password);
-			string hash_str = host+uri+password;
-			unsigned int hash_value = (unsigned int)hashCode(hash_str);
-			setHashMasks.insert(hash_value);
+		action.clear();
+		pos2 = strcasestr(reply, "action=");
+		if(pos2 > 0){
+			if(pos2 < end){
+				end = pos2+7;
+				if(*end == '\"' || *end == '\''){
+					end++;
+					end2 = end;
+					for ( ; *end2 != '\"' && *end2 != '\''; end2++){}
+				}else{
+					end2 = strcasestr(end, " ");
+				}
+				if (end2 <= 0){return;}
+
+				len = ((end2-(end) > 200 ) ? 200 : (end2-(end) ));
+				action.assign(end,len);
+			}
 		}
 
+		if(action.size()>0){
+			size_t found=action.find('/');
+			if (found!=string::npos || uri.size()==0){
+				hash_str = host+action+password;
+			}else{
+				int i;
+				for(i=(uri.size()-1);i>=0;i-- ){
+					if(uri[i]=='/'){
+						break;
+					}
+				}
+
+				action.insert(action.begin(),uri.begin(),uri.begin()+i+1);
+				hash_str = host+action+password;
+			}
+		}else{
+			hash_str = host+uri+password;
+		}
+
+		unsigned int hash_value = (unsigned int)hashCode(hash_str);
+		setHashMasks.insert(hash_value);
 		pos = strcasestr(new_reply, "<");
 
 		if(pos != NULL){

@@ -36,11 +36,9 @@ char parseCC(string & str,string & new_val) {
 }
 
 void maskPassword(unsigned int hash,string & value){
-	if(password_masking==1){
-		if(setHashMasks.count(hash) != 0){
-			string tmp = value + "cd#f3r@Dd24eR$~!"; // Random Hash.
-			value = sha256(tmp);
-		}
+	if(setHashMasks.count(hash) != 0){
+		string tmp = value + "cd#f3r@Dd24eR$~!"; // Random Hash.
+		value = sha256(tmp);
 	}
 }
 
