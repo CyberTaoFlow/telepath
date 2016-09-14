@@ -199,6 +199,16 @@ void Numeric::update(double new_num,unsigned int length){
 	this->stddev = sqrt(this->variance);
 }
 
+void Numeric::clean(){
+	this->mean = 0;
+	this->variance = 0;
+	this->stddev=0;
+	this->size=0;
+	this->valid=false;
+	this->min=0;
+	this->max=0;
+}
+
 void Numeric::print(){
 	cout <<endl;
 	cout << "\t\tmean:" << this->mean << endl;

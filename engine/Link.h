@@ -8,10 +8,6 @@ public:
 
 	friend class boost::serialization::access;
 
-	//! Unique key for the exit page( the index and the hash page value ).
-	/*!*/
-	std::string from_page_comp;
-
 	//!  Unique key for Link.
 	/*!*/
 	std::string compare;
@@ -23,7 +19,6 @@ public:
 	*/
 	void serialize(Archive & ar, const unsigned int version)
 	{
-		ar & from_page_comp;  
 		ar & landing;     
 		ar & compare;  
 	}
@@ -32,7 +27,7 @@ public:
 	/*!
 		For Example : epoch_page[2] - epoch_page[1] .
 	*/
-	unsigned short landing; 
+	double landing; 
 
 	//!  Defult Constrator.
 	/*!
@@ -43,11 +38,10 @@ public:
 	//!  Constrator.
 	/*!
 		Initializing the object fields with their default values.
-		\param to_page_comp as a C++ string argument.
-		\param from_page_comp as a C++ string argument.
+		\param compare as a C++ string argument.
 		\param landing as an unsigned short argument.
 	*/
-	Link(string &,string &,unsigned short);
+	Link(string &,double&);
 
 	//!  Cleaning all object fields.
         /*!*/

@@ -131,6 +131,10 @@ public:
 	*/
 	void update(double,unsigned int);
 
+	//!  Cleaning all object fields.
+	/*!
+	*/
+	void clean();
 	//! Printing the class variables.
 	/*!
 		Printing to stdout the object fields.

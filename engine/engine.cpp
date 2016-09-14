@@ -627,7 +627,10 @@ void insertOrUpdateSessionMap(TeleObject & teleobj){
 			}
 
 			teleobj.mParams['Y'/*ComapredPage*/] = teleobj.mParams['s'/*ReqSeq*/] + "+" + teleobj.mParams['k'/*PageID*/];
-
+			double tmp_speed = (double)atof(teleobj.mParams['b'/*TimeStamp*/].c_str() ) ;
+			itSession->second.last_speed = tmp_speed - itSession->second.last_speed;
+			teleobj.mParams['W'/*DiffSpeed*/]=int_to_string(itSession->second.last_speed);
+			itSession->second.last_speed = tmp_speed;
 			itSession->second.compared_link.push_back('|');
 			itSession->second.compared_link.append(teleobj.mParams['Y'/*ComapredPage*/]);
 			teleobj.mParams['Z'/*ComapredLink*/] = itSession->second.compared_link;
@@ -643,6 +646,8 @@ void insertOrUpdateSessionMap(TeleObject & teleobj){
 				}
 		}
 
+		session.last_speed=(double)atof(teleobj.mParams['b'/*TimeStamp*/].c_str() ) ;
+		teleobj.mParams['W'/*DiffSpeed*/]="0";
 		session.compared_link = "0+" + teleobj.mParams['k'/*PageID*/];
 		teleobj.mParams['Y'/*ComparePage*/]=session.compared_link;
 		teleobj.mParams['Z'/*ComapredLink*/] = "0";

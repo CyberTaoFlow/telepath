@@ -20,7 +20,7 @@ public:
 		\n From key1(/index.html in the first index) to key2(/clients.html in the second index) the vector looks like that:
 		\n [5,23,6,1,4,2,7,4,8,1]
 	*/
-	std::vector <unsigned short> diffLanding; 
+	std::vector <double> diffLanding; 
 	template<class Archive>
 
 	//!  Boost Serialization Library.
@@ -50,7 +50,7 @@ public:
 		\param from_page_comp as a C++ string argument.
 		\param landing as an unsigned short argument.
 	*/
-	CompressedLink(string &,unsigned short);
+	CompressedLink(string &,double&);
 
 	//!  Cleaning all object fields.
 	/*!

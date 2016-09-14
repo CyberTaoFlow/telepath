@@ -1,5 +1,6 @@
 #include "Tree.h"
 #include "Page.h"
+#include <syslog.h>
 
 using namespace std;
 
@@ -38,6 +39,7 @@ Page::Page(boost::unordered_map<char,string> & mParams,unsigned int index,unsign
 	this->host_name=mParams['f'/*App*/];
 	this->compare = mParams['Y'/*ComparePage*/];
 	this->compare_link=mParams['Z'/*ComapredLink*/];
+	this->diff_speed = (double)atof(mParams['W'/*DiffSpeed*/].c_str() ) ;
 
 }
 

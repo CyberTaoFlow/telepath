@@ -64,7 +64,7 @@ public:
 	Path(string&,unsigned short);
 	void tokenize(Session &,short);
 	void updatePage(Page &,short,short &);
-	void updateLink(Link &,short &,unsigned int &,unsigned int &);
+	void updateLink(Link &,short &);
 	void print();
 	void printCapacity();
 
