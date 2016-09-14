@@ -114,6 +114,8 @@ void initElasticSearchData(){
 	es_insert("/telepath-bad-ips/_settings","{\"index\":{\"max_result_window\":500000}}");
 	es_insert("/telepath-actions","{\"settings\":{\"max_result_window\":500000,\"number_of_shards\":1,\"number_of_replicas\":0,\"analysis\":{\"analyzer\":{\"my_lowercaser\":{\"tokenizer\":\"standard\",\"filter\":[\"lowercase\"]}}}},\"mappings\":{\"actions\":{\"properties\":{\"action_name\":{\"type\":\"string\",\"store\":true,\"index\":\"not_analyzed\",\"fields\":{\"search\":{\"analyzer\":\"my_lowercaser\",\"type\":\"string\"}}},\"application\":{\"type\":\"string\",\"store\":true,\"index\":\"not_analyzed\"}}}}}");
 	es_insert("/telepath-cases","{\"settings\":{\"number_of_shards\":1,\"number_of_replicas\":0,\"analysis\":{\"analyzer\":{\"my_lowercaser\":{\"tokenizer\":\"standard\",\"filter\":[\"lowercase\"]}}}},\"mappings\":{\"case\":{\"properties\":{\"case_name\":{\"type\":\"string\",\"store\":true,\"index\":\"not_analyzed\",\"fields\":{\"search\":{\"type\":\"string\",\"term_vector\":\"yes\",\"analyzer\":\"my_lowercaser\"}}},\"similars\":{\"properties\":{\"count\":{\"type\":\"long\"},\"items\":{\"properties\":{\"alerts_count\":{\"type\":\"long\"},\"alerts_names\":{\"properties\":{\"doc_count\":{\"type\":\"long\"},\"key\":{\"type\":\"string\"}}},\"city\":{\"type\":\"string\"},\"count\":{\"type\":\"long\"},\"country\":{\"type\":\"string\"},\"date\":{\"type\":\"long\"},\"host\":{\"properties\":{\"doc_count\":{\"type\":\"long\"},\"key\":{\"type\":\"string\"}}},\"ip_orig\":{\"type\":\"ip\"},\"score\":{\"type\":\"long\"},\"sid\":{\"type\":\"long\"}}}}}}}}}");
+	es_insert("/telepath-users","{\"mappings\":{\"users\":{\"properties\":{\"host\":{\"index\":\"not_analyzed\",\"store\":true,\"type\":\"string\"},\"last_activity\":{\"index\":\"not_analyzed\",\"store\":true,\"type\":\"double\"},\"username\":{\"index\":\"not_analyzed\",\"store\":true,\"type\":\"string\"}}}}}");
+
 
 	es_mapping("/telepath-config/config/_mapping","{\"config\":{\"properties\":{\"value\":{\"type\":\"string\",\"store\":true,\"index\":\"not_analyzed\"}}}}");
 	es_mapping("/telepath-config/ips/_mapping","{\"ips\":{\"properties\":{\"ips\":{\"properties\":{\"from\":{\"type\":\"string\",\"store\":true,\"index\":\"not_analyzed\"},\"to\":{\"type\":\"string\",\"store\":true,\"index\":\"not_analyzed\"}}}}}}");
@@ -142,7 +144,7 @@ void initElasticSearchData(){
 	es_insert("/telepath-config/config/noise_percent_id/_create","{\"value\":\"90\"}");
 	es_insert("/telepath-config/config/landing_speed_id/_create","{\"value\":\"2\"}");
 	es_insert("/telepath-config/config/learning_so_far_id/_create","{\"value\":\"0\"}");
-	es_insert("/telepath-config/config/bot_intelligence_id/_create","{\"value\":\"0\"}");
+	es_insert("/telepath-config/config/bot_intelligence_id/_create","{\"value\":\"1\"}");
 	es_insert("/telepath-config/config/rules_table_was_changed_id/_create","{\"value\":\"0\"}");
 	es_insert("/telepath-config/config/config_was_changed_id/_create","{\"value\":\"0\"}");
 	es_insert("/telepath-config/config/business_flow_was_changed_id/_create","{\"value\":\"0\"}");
