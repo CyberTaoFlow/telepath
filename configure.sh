@@ -492,6 +492,7 @@ conf_create_db() {
 cron_jobs(){
     crontab -l > currentCrons
     echo "* * * * * php /opt/telepath/ui/html/index.php cases flag_requests_by_cases >> /var/log/flag_requests_by_cases.log 2>&1 || true" >> currentCrons
+    echo "* * * * * php /opt/telepath/ui/html/index.php webusers store_users >> /var/log/web_users.log 2>&1 || true" >> currentCrons
     echo "0 * * * * php /opt/telepath/ui/html/index.php cases store_similar_case_sessions >> /var/log/store_similar_case_sessions.log 2>&1 || true" >> currentCrons
     crontab currentCrons
     rm currentCrons
