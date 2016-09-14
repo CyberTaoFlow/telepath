@@ -24,7 +24,7 @@ public:
 		double rule_score,flow_score,query_score,geo_normal,geo_normal_user,landing_normal,landing_score=1,num2,diff,avg_score_user;
 		int totalExp=0,exp_2;
 		RequestValToInsert reqVal;
-		string country,city,compareLink,user_scores_string;
+		string country,city,user_scores_string;
 		char user_scores[2000],tmp[200];
 		Coordinate coordinate;
 		bool hostFlag;
@@ -243,12 +243,7 @@ public:
 				continue;
 			}
 
-			compareLink.clear();
-			compareLink.append(s.vRequest[i].compare);
-                        compareLink.push_back('|');
-                        compareLink.append(s.vRequest[i+1].compare);
-
-			itCompressedLink=path.mCompressedLink.find(compareLink);
+			itCompressedLink=path.mCompressedLink.find(s.vRequest[i].compare_link);
 			if(itCompressedLink!=path.mCompressedLink.end()){//Link was found
 				Numeric num_1;
 				num_1.init(itCompressedLink->second.diffLanding);

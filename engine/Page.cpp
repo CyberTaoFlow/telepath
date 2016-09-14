@@ -5,8 +5,6 @@ using namespace std;
 
 Page::Page(){}
 Page::Page(boost::unordered_map<char,string> & mParams,unsigned int index,unsigned int current_PageID,long long current_RID,string & current_IP,string & UserID_){
-	char buffer[35];
-	unsigned int length;
 
 	this->emission=1;
 	this->link_sample=1;
@@ -38,12 +36,8 @@ Page::Page(boost::unordered_map<char,string> & mParams,unsigned int index,unsign
 		this->canonical_url=mParams['C'/*Canonical URL*/];
 	}
 	this->host_name=mParams['f'/*App*/];
-
-	length = itoa (this->index,buffer);
-	buffer[length++] = '+';
-	length += itoa(this->ID,buffer+length);
-
-	this->compare = buffer;
+	this->compare = mParams['Y'/*ComparePage*/];
+	this->compare_link=mParams['Z'/*ComapredLink*/];
 
 }
 
