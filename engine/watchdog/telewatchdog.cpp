@@ -526,7 +526,6 @@ void delete_oldest()
 	curl = curl_easy_init();
 
         syslog(LOG_NOTICE,"No Disk Space, Clean Old data" );
-        // we need to delete the oldest shard
 	sprintf(url,"%s/_settings",es_connect.c_str());
 	curl_easy_setopt(curl, CURLOPT_URL,url);
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, setMinShard);

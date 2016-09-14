@@ -1028,7 +1028,6 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 		}
 
 	}
-syslog(LOG_NOTICE,"|%s|%s|",teleo->mParams['b'/*TimeStamp*/].c_str(),teleo->mParams['c'/*Page*/].c_str());
 
 	//syslog(LOG_NOTICE,"Getting Obj7 ===> %s:%s:%s:%s:%s:%s:%s:%s:%s",teleo->mParams['a'/*UserIP*/].c_str(),teleo->mParams['b'/*TimeStamp*/].c_str(),teleo->mParams['c'/*Page*/].c_str(),teleo->mParams['i'/*Protocol*/].c_str(),teleo->mParams['d'/*StatusCode*/].c_str(),teleo->mParams['j'/*RID*/].c_str(),teleo->mParams['h'/*Request*/].c_str(),teleo->mParams['z'/*user-agent*/].c_str(),teleo->mParams['f'/*App*/].c_str());
 

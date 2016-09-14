@@ -24,6 +24,7 @@ Session::Session(){
 	this->validUser = false;
 	this->logout = false;
 	this->logout_counter = 0;
+	compared_link.clear();
 }
 
 void Session::reset(){
@@ -37,6 +38,7 @@ void Session::reset(){
 	this->erase='n';
 	this->validUser = false;
 	this->logout = false;
+	compared_link.clear();
 }
 
 

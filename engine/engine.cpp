@@ -625,6 +625,13 @@ void insertOrUpdateSessionMap(TeleObject & teleobj){
 					itSession->second.sUsername = teleobj.mParams['A'/*Username*/];
 				}
 			}
+
+			teleobj.mParams['Y'/*ComapredPage*/] = teleobj.mParams['s'/*ReqSeq*/] + "+" + teleobj.mParams['k'/*PageID*/];
+
+			itSession->second.compared_link.push_back('|');
+			itSession->second.compared_link.append(teleobj.mParams['Y'/*ComapredPage*/]);
+			teleobj.mParams['Z'/*ComapredLink*/] = itSession->second.compared_link;
+			itSession->second.compared_link = teleobj.mParams['Y'/*ComapredPage*/];
 		//}
 	}else{
 		teleobj.mParams['s'/*ReqSeq*/] = "0";
@@ -635,6 +642,10 @@ void insertOrUpdateSessionMap(TeleObject & teleobj){
 					session.sUsername = teleobj.mParams['A'/*Username*/];
 				}
 		}
+
+		session.compared_link = "0+" + teleobj.mParams['k'/*PageID*/];
+		teleobj.mParams['Y'/*ComparePage*/]=session.compared_link;
+		teleobj.mParams['Z'/*ComapredLink*/] = "0";
 		mSession.insert( pair<unsigned int,Session>(session.sid,session) );
 	}
 

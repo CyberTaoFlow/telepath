@@ -32,7 +32,8 @@ public:
 		ar & emission;        
 		ar & link_sample;  
 		ar & user_ip;        
-		ar & compare;   
+		ar & compare;
+		ar & compare_link;
 		ar & user;
 		ar & shard;
 		ar & title;
@@ -202,6 +203,8 @@ public:
 	/*!
 		Initializing the object fields with their default values.
 	*/
+
+	string compare_link;
 	Page();
 
 	//!  Constrator.
