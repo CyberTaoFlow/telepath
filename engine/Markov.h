@@ -135,7 +135,6 @@ public:
 						num2 = (double)(  ((double)(itCompressedLink->second.emission))  /  ((double)( path.sampleP[s.vRequest[i].index] ))  );
 						frexp( num2, &(flow_exp) );
 						if (flow_exp > 0){flow_exp=0;}
-syslog(LOG_NOTICE,"%s=%s; %u/%u=%f   exp=%d|",s.vRequest[i].page_name.c_str(),s.vRequest[i].compare_link.c_str(),itCompressedLink->second.emission,path.sampleP[s.vRequest[i].index],num2,flow_exp);
 						flow_exp = flow_exp;   //flow_score_exponent
 					}else{
 						flow_exp=MIN_PROB;
