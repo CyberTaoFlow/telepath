@@ -82,7 +82,6 @@ TeleCache::TeleCache()
 	srand (time(NULL));
 }
 
-// Fatching the title string from the response body.
 void findTitle(string & title,char * reply){
 	size_t title_len = 0;
 	char * pos = strcasestr(reply, "<title");
@@ -162,7 +161,6 @@ string url_encode(const string &value) {
 	return escaped.str();
 }
 
-// Fatching all the passwords in the page from the response body.
 void detectPasswords(char * reply,string & host,string & uri){
 	unsigned int len = 0;
 	char * end;
@@ -267,7 +265,6 @@ void detectPasswords(char * reply,string & host,string & uri){
 	}
 }
 
-// Fatching the username and password in the login page from the response body.
 void loginDetect(char * reply,Login & log){
 	string tmp_form,tmp;
 	unsigned int len = 0;
