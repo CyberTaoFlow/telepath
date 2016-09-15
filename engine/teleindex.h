@@ -342,12 +342,12 @@ public:
 		5) Creating mapping for a new index ('telepath-<date>').\n
 		6) Creating a random request id(RID).\n
 		7) Getting the title of the page from the response body.\n
-		8) Canonical URLs detection.
-		9) Logins detection.
-		10) Passwords detection and masking.
-		11) Inserting all the parameter(Headers,Gets,Posts ..) to 'TeleObject.mAttr' unordered_map. 
-		12) Authentication by success criteria.
-		13) Pushing the TeleObject into the TeleCache queue(teleObjQueue).
+		8) Canonical URLs detection.\n
+		9) Logins detection.\n
+		10) Passwords detection and masking.\n
+		11) Inserting all the parameter(Headers,Gets,Posts ..) to 'TeleObject.mAttr' unordered_map.\n
+		12) Authentication by success criteria.\n
+		13) Pushing the TeleObject into the TeleCache queue(teleObjQueue).\n
 		\param teleo as a pointer to the TeleObject object.
 		\param obj as a C++ STL unordered_map argument.
 		\sa parseMultipart() checkXML() mxmlLoadString() parseXML() parseGetPostParams() findAppID() getDate() dynamicPageInit() findTitle()
@@ -363,93 +363,102 @@ public:
 
 //!  Fatching the title string from the response body.
 /*!
-	\param title
-	\param reply
+	\param title as a C++ string argument.
+	\param reply as a pointer to character argument.
 */
 void findTitle(string &,char *);
 
-//!
+//!  URL Encoding
 /*!
-	\param value
+	\param value as a C++ const string argument.
 	\return
 */
 string url_encode(const string &);
 
 //!  Fatching all the passwords in the page from the response body.
 /*!
-	\param reply
-	\param host
-	\param uri
+	\param reply as a pointer to character argument.
+	\param host as a C++ string argument.
+	\param uri as a C++ string argument.
 */
 void detectPasswords(char *,string &,string &);
 
 //!  Fatching the username and password in the login page from the response body.
 /*!
-	\param reply
+	\param reply as a pointer to character argument.
 	\param log
 */
 void loginDetect(char *,Login &);
 
-//!
+//!  Checking the success criteria(basic, digest or form) of the response body.
 /*!
-	\param reply
-	\param am
-	\param logSuccess
+	\param reply as a pointer to character argument.
+	\param am as a AppMode object argument.
+	\param logSuccess as a C++ string argument.
 */
 void authentication(char *,AppMode &,string &);
 
-//!
+//!  Generating a Random Number.
 /*!
-	\return 
+	\return The unsigned long long random number .
 */
 unsigned long long longRand();
 
 //!
 /*!
-	\param str
+	\param str as a C++ string argument.
 */
 void parseString(string &);
 
-//!
+//!  Parsing multipart parameters.
 /*
-	\param str
-	\param vAttr
+	\param str as a C++ string argument.
+	\param vAttr as a C++ STL vector of Attribute structs.
+	\sa https://www.w3.org/Protocols/rfc1341/7_2_Multipart.html 
 */
 void parseMultipart(string &,vector <struct Attribute> &);
 
-//!
+//!  Parsing GET/POST parameters.
 /*!
-	\param str
-	\param vAttr
+	For example:\n str = "username=roi&password=123456&save_pass=true" \n
+		       vAttr[1].name="username"\n
+		       vAttr[1].value="roi"\n
+                       vAttr[2].name="password"\n
+                       vAttr[2].value="123456"\n
+                       vAttr[3].name="save_pass"\n
+                       vAttr[3].value="true"\n
+                     
+	\param str as a C++ string argument.
+	\param vAttr as a C++ STL vector of Attribute structs.
 	\param attribute_source
 */
 void parseGetPostParams(string &,vector <struct Attribute> &,char);
 
 //!
 /*!
-	\param str
-	\param vAttr
+	\param str as a C++ string argument.
+	\param vAttr as a C++ STL vector of Attribute structs.
 */
 void parseCookieParams(string &,vector <struct Attribute> &);
 
 //!
 /*!
-	\param param_name
-	\param param_value
-	\param vAttr
+	\param param_name as a C++ string argument.
+	\param param_value as a C++ string argument.
+	\param vAttr as a C++ STL vector of Attribute structs.
 */
-void parseNestedCookie(string param_name,string param_value,vector <struct Attribute> & vAttr);
+void parseNestedCookie(string,string,vector <struct Attribute> &);
 
-// Check if the input value is a valid XML.
+//  Check if the input value is a valid XML.
 //!
 /*!
-	\param buff
+	\param buff as a pointer to character argument.
 */
 unsigned int checkXML(char *);
 
 //!
 /*!
-	\param page
+	\param page as a C++ string argument.
 */
 bool dynamicPageInit(string &);
 
