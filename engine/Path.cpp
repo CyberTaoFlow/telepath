@@ -60,7 +60,6 @@ Path::Path(string & domain,unsigned short group_id){
 }
 
 void Path::tokenize(Session & s,short byHostOrUser ){ // Build and update the Path per session.
-	double speed;
 	short flag;	
 	unsigned long i,size = s.vRequest.size();
 	
@@ -105,20 +104,12 @@ void Path::tokenize(Session & s,short byHostOrUser ){ // Build and update the Pa
 			}
 		}
 
-	}	
-
-	for(i=0; i < size-1 ;i++){
-		if( ( byHostOrUser==0 && s.vRequest[i+1].parsedHost == 0 ) ||  ( byHostOrUser==1 && s.vRequest[i+1].parsedUser == 0 )  ){	
-			if(s.vRequest[i+1].ts > s.vRequest[i].ts){
-				speed = (unsigned short)(s.vRequest[i+1].ts - s.vRequest[i].ts);	
-			}else{
-				speed=0;
-			}				
-			Link l(s.vRequest[i+1].compare,s.vRequest[i].compare,speed);
-
-			this->updateLink(l,byHostOrUser,s.vRequest[i+1].ID,s.vRequest[i].ID);	
+		if(s.vRequest[i].index!=0){
+			Link l(s.vRequest[i].compare_link,s.vRequest[i].diff_speed);
+			this->updateLink(l,byHostOrUser);
 		}
 	}
+
 	for(i=0 ; i < size-1 ;i++){
 		if(byHostOrUser == 0)
 			s.vRequest[i].parsedHost=1;
@@ -187,26 +178,25 @@ void Path::updatePage(Page & p,short flag,short & ifUser){
 }
 
 // Insert new Links to the Path or update their emission and diffLanding.
-void Path::updateLink(Link & l,short & ifUser,unsigned int & to,unsigned int & from){ 
+void Path::updateLink(Link & l,short & ifUser){ 
 	map <string,CompressedLink>::iterator itCompressedLink;
 
 	map <unsigned int,unsigned int>::iterator itLinkSum;
 
 	if(this->numOfSessions == 0){
-		CompressedLink le(l.from_page_comp,l.landing);
+		CompressedLink le(l.compare,l.landing);
 		this->mCompressedLink.insert( pair<string,CompressedLink>(l.compare,le) );
 	}else{
-
 		itCompressedLink=mCompressedLink.find(l.compare);
 		if(itCompressedLink!=mCompressedLink.end()){//Link was found
 			itCompressedLink->second.emission+=1;
 			itCompressedLink->second.diffLanding.push_back(l.landing);
 		}else{			//Link wasn't found
-			CompressedLink le(l.from_page_comp,l.landing);
+			CompressedLink le(l.compare,l.landing);
 			this->mCompressedLink.insert( pair<string,CompressedLink>(l.compare,le) );
 		}
 	}
-	if(ifUser!=0 || to==from){
+	if(ifUser!=0){
 		return;
 	}
 }

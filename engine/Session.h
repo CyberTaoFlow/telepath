@@ -39,6 +39,7 @@ public:
 	unsigned int logout_counter;
 	boost::unordered_map<unsigned int,alert > RIDsPerFlow;
 	string compared_link;
+	double last_speed;
 
 	Session();
 	void reset();

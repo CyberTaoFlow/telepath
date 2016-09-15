@@ -34,6 +34,7 @@ public:
 		ar & user_ip;        
 		ar & compare;
 		ar & compare_link;
+		ar & diff_speed;
 		ar & user;
 		ar & shard;
 		ar & title;
@@ -205,6 +206,7 @@ public:
 	*/
 
 	string compare_link;
+	double diff_speed;
 	Page();
 
 	//!  Constrator.

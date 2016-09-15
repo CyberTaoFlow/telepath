@@ -21,8 +21,8 @@ public:
 	}
 	
 	void calculate(Path & path,Path & path_user,Session & s,short learn_or_pro){
-		double rule_score,flow_score,query_score,geo_normal,geo_normal_user,landing_normal,landing_score=1,num2,diff,avg_score_user;
-		int totalExp=0,exp_2;
+		double rule_score,flow_score,query_score,geo_normal,geo_normal_user,landing_normal,landing_score=1,num2,avg_score_user;
+		int flow_exp;
 		RequestValToInsert reqVal;
 		string country,city,user_scores_string;
 		char user_scores[2000],tmp[200];
@@ -32,9 +32,10 @@ public:
 		map <string,ScoresNumeric>::iterator itScoreNumeric;
 		map <unsigned int, Operation >::iterator itOperation;
 		map <long long, OpRID >::iterator itOpRIDs;
-
 		map <string,CompressedPage>::iterator itCompressedPage;
 		map <string,CompressedLink>::iterator itCompressedLink;
+		Numeric numeric;
+
 		for(unsigned int i=0 ;i < s.vRequest.size() ; i++){//2 for
 			itScoreNumeric = score_numeric.find(s.vRequest[i].domain_id);
 			if(itScoreNumeric != score_numeric.end() ){ // hostname was found.
@@ -48,17 +49,15 @@ public:
 			pthread_mutex_unlock(&mutexgeoip);
 
 			if( s.vRequest[i].parsedHostPro==1 ){
-				totalExp = s.totalExp;
-				goto label_m;
+				continue;
 			}
 
 			pthread_mutex_lock(&mutexRidAlertAndBusiness);
 			if(sRidSaveDB.count(s.vRequest[i].RID)!=0){
-				totalExp = s.totalExp;
 				sRidSaveDB.erase(s.vRequest[i].RID);
 				mRidAlertAndAction.erase(s.vRequest[i].RID);
 				pthread_mutex_unlock(&mutexRidAlertAndBusiness);
-				goto label_m;
+				continue;
 			}
 			pthread_mutex_unlock(&mutexRidAlertAndBusiness);
 
@@ -120,14 +119,43 @@ public:
 			}
 
 			//---------------------------------------------------------------------
+			if(s.vRequest[i].index!=0){
+				itCompressedLink=path.mCompressedLink.find(s.vRequest[i].compare_link);
+				if(itCompressedLink!=path.mCompressedLink.end()){//Link was found
+					numeric.clean();
+					numeric.init(itCompressedLink->second.diffLanding);
+
+					if( (s.vRequest[i].diff_speed < numeric.mean && slowOrFastLanding==0) || (s.vRequest[i].diff_speed > numeric.mean && slowOrFastLanding==2) ){ // don't analyze fast speed or slow speed. 
+						landing_score = 1;
+					}else{
+						landing_score = numeric.chebyshev(s.vRequest[i].diff_speed);
+					}
+
+					if(path.sampleP.size() > (s.vRequest[i].index) || (path.sampleP[s.vRequest[i].index-1]==0) ){
+						num2 = (double)(  ((double)(itCompressedLink->second.emission))  /  ((double)( path.sampleP[s.vRequest[i].index] ))  );
+						frexp( num2, &(flow_exp) );
+						if (flow_exp > 0){flow_exp=0;}
+syslog(LOG_NOTICE,"%s=%s; %u/%u=%f   exp=%d|",s.vRequest[i].page_name.c_str(),s.vRequest[i].compare_link.c_str(),itCompressedLink->second.emission,path.sampleP[s.vRequest[i].index],num2,flow_exp);
+						flow_exp = flow_exp;   //flow_score_exponent
+					}else{
+						flow_exp=MIN_PROB;
+					}
+				}else{//Link wasn't found
+					landing_score=0;
+					flow_exp=MIN_PROB;
+				}
+			}else{
+				flow_exp=0;
+			}
+
 			checkMapPage(s.vRequest[i].tainted,s.vRequest[i].status_code); // Tainted Page or not.
 			itCompressedPage=path.mCompressedPage.find(s.vRequest[i].compare);
 			if(itCompressedPage!=path.mCompressedPage.end() && s.vRequest[i].tainted==0){// The Page was found and the Page isn't tainted.
 				if(learn_or_pro!=1){ // production mode.
 					if(hostFlag==true){
 
-						if(itScoreNumeric->second.flow.mean > (double)totalExp){
-							flow_score = 1 - itScoreNumeric->second.flow.chebyshev( (double)totalExp );
+						if(itScoreNumeric->second.flow.mean > (double)flow_exp){
+							flow_score = 1 - itScoreNumeric->second.flow.chebyshev( (double)flow_exp );
 						}else{
 							flow_score = 0;
 						}
@@ -171,7 +199,7 @@ public:
 				reqVal.init(s.vRequest[i].user,s.vRequest[i].RID,s.sid,s.vRequest[i].sha256_sid,s.vRequest[i].index,s.vRequest[i].page_name,s.vRequest[i].host_name,s.vRequest[i].ts,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,flow_score,query_score,geo_normal,landing_normal,s.vRequest[i].status_code,country,city,s.status,s.vRequest[i].protocol,s.vRequest[i].method,coordinate,s.decimalIP,s.vRequest[i].shard,s.vRequest[i].title,s.vRequest[i].presence,s.vRequest[i].canonical_url,learn_or_pro,user_scores_string);
 
 				pthread_mutex_lock(&mutexScoreData);		
-				score_data[s.vRequest[i].domain_id].insert((double)totalExp,landing_score,geo_normal);
+				score_data[s.vRequest[i].domain_id].insert((double)flow_exp,landing_score,geo_normal);
 				pthread_mutex_unlock(&mutexScoreData);
 
 				pthread_mutex_lock(&mutexInsertReq);
@@ -216,7 +244,7 @@ public:
 								checkRules(rules[i_rule],rule_score,s,i,itScoreNumeric->second.geo,s.vRequest[i].RID,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,"phpsessid",s.vRequest[i].host_name);
 								break;
 							case 'f':							//flow rules.
-								rule_score=totalExp;
+								rule_score=flow_score;
 								checkRules(rules[i_rule],rule_score,s,i,itScoreNumeric->second.flow,s.vRequest[i].RID,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,"phpsessid",s.vRequest[i].host_name);
 								break;
 							case 'a':							//average rules. 
@@ -236,34 +264,7 @@ public:
 			}
 
 			s.vRequest[i].parsedHostPro=1;
-			label_m:
 
-			if(i == s.vRequest.size()-1){ // last page in session.
-				s.totalExp = totalExp;				
-				continue;
-			}
-
-			itCompressedLink=path.mCompressedLink.find(s.vRequest[i].compare_link);
-			if(itCompressedLink!=path.mCompressedLink.end()){//Link was found
-				Numeric num_1;
-				num_1.init(itCompressedLink->second.diffLanding);
-
-				diff = (double)(s.vRequest[i+1].ts - s.vRequest[i].ts);
-				if( (diff < num_1.mean && slowOrFastLanding==0) || (diff > num_1.mean && slowOrFastLanding==2) ){ // don't analyze fast speed or slow speed. 
-					landing_score = 1;
-				}else{
-					landing_score = num_1.chebyshev(diff)	; //landing_score	
-				}
-
-				num2 = (double)(  ((double)(itCompressedLink->second.emission))  /  ((double)( path.mCompressedPage[itCompressedLink->second.from_page_comp].link_sample ))  );
-				frexp( num2, &(exp_2) );
-				if (exp_2 > 0){exp_2=0;}
-				totalExp = exp_2;   //flow_score_exponent
-
-			}else{//Link wasn't found
-				landing_score=0;
-				totalExp=MIN_PROB;
-			}
 		}//2 for end
 
 		if(s.vRequest.size() != 0 ){
