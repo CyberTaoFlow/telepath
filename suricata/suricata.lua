@@ -31,7 +31,7 @@ whitelist_ips = {}
 --whitelist_ips[2219196940] = 2219196942
 load_balancer_ips = {}
 load_balancer_headers = {}
-
+load_cookies = {}
 records = {}
 record_hosts = {}
 
@@ -158,6 +158,41 @@ function setup (args)
 	}
 	c:perform()
 	----------------------------------
+
+        -- Loading domain cookies --
+        login_url = es_location .. "/telepath-domains/domains/_search"
+        c = cURL.easy{
+                url            = login_url,
+		postfields     = "{\"size\":10000,\"fields\":[\"AppCookieName\"],\"query\":{\"bool\":{\"must\":{\"exists\":{\"field\":\"AppCookieName\"}}}}}",
+                ssl_verifypeer = false,
+                ssl_verifyhost = false,
+                writefunction  = function(str)
+			while true do
+				local tmp = string.find(str, "_id\"")
+				if (tmp) then
+					str = string.sub(str, tmp+4, string.len(str))
+					tmp = string.find(str, "\"")
+					local tmp2 = string.find(str, "\",")
+					output = string.sub(str, tmp+1, tmp2-1)
+					local host = output
+					tmp = string.find(str, "AppCookieName\"")
+					str = string.sub(str, tmp+14, string.len(str))
+					tmp = string.find(str, "\"")
+					str = string.sub(str, tmp+1, string.len(str))
+					tmp = string.find(str, "\"")
+					output = string.sub(str, 0, tmp-1)
+					load_cookies[host] = output
+					--print(host .. "->" .. output)
+				else
+					break
+				end
+			end
+                end
+        }
+        c:perform()
+        ----------------------------------
+
+
 	
 	login_url = es_location .. "/telepath-config/config/config_was_changed_id"
 	c = cURL.easy{
@@ -347,6 +382,8 @@ function log(args)
 			fp_ua = v
 		elseif (k == "host") then
 			fp_host = v
+		elseif (k == "cookie") then
+			fp_cookie = v
 		end
 
 		if load_balancer_headers[k] == k then
@@ -367,20 +404,44 @@ function log(args)
 		end
 	end
 
-	fingerprint = ""
-	if fp_ua then
-		fingerprint = fingerprint .. fp_ua
-	else
-		fingerprint = dstip
-	end
+	if (load_cookie[fp_host]) then
+		local cookie_tmp = string.find(fp_cookie, load_cookie[fp_host])
+		if (cookie_tmp) then
+			local fp_cookie = string.sub(fp_cookie, cookie_tmp, string.len(fp_cookie))
+			cookie_tmp = string.find(fp_cookie, "=")
+			local cookie_tmp2 = string.find(fp_cookie, ";")
+			fp_cookie = string.sub(fp_cookie, cookie_tmp+1, cookie_tmp2-1)
+			request["TS"] = sha_256.sha256(fp_cookie)
+		else
+			fingerprint = ""
+			if fp_ua then
+				fingerprint = fingerprint .. fp_ua
+			else
+				fingerprint = dstip
+			end
 
-	if fp_host then
-		fingerprint = fingerprint .. fp_host
+			if fp_host then
+				fingerprint = fingerprint .. fp_host
+			else
+				fingerprint = dstip
+			end
+			request["TS"] = sha_256.sha256(srcip .. fingerprint)
+		end
 	else
-		fingerprint = dstip
-	end
+		fingerprint = ""
+		if fp_ua then
+			fingerprint = fingerprint .. fp_ua
+		else
+			fingerprint = dstip
+		end
 
-	request["TS"] = sha_256.sha256(srcip .. fingerprint)
+		if fp_host then
+			fingerprint = fingerprint .. fp_host
+		else
+			fingerprint = dstip
+		end
+		request["TS"] = sha_256.sha256(srcip .. fingerprint)
+	end
 
 	rsh = HttpGetResponseHeaders()
 	for k, v in pairs(rsh) do
