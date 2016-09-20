@@ -382,8 +382,6 @@ function log(args)
 			fp_ua = v
 		elseif (k == "host") then
 			fp_host = v
-		elseif (k == "cookie") then
-			fp_cookie = v
 		end
 
 		if load_balancer_headers[k] == k then
@@ -404,18 +402,53 @@ function log(args)
 		end
 	end
 
+	rsh = HttpGetResponseHeaders()
+	for k, v in pairs(rsh) do
+		k = unescape(k) --url decoding for header names.
+		v = unescape(v) --url decoding for header values.
+		k = string.lower(k) --lowercasing for header names.
+
+		if (k == "set_cookie") then
+			fp_cookie = v
+		end
+
+		if type(v) == "table" then
+			request["RH_" .. k] = table.concat(v, "|&|")
+		else
+			request["RH_" .. k] = tostring(v)
+		end
+	end
+
 	if (load_cookies[fp_host]) then
-		local cookie_tmp = string.find(fp_cookie, load_cookies[fp_host])
-		if (cookie_tmp) then
-			local fp_cookie = string.sub(fp_cookie, cookie_tmp, string.len(fp_cookie))
-			cookie_tmp = string.find(fp_cookie, "=")
-			local cookie_tmp2 = string.find(fp_cookie, ";")
-			fp_cookie = string.sub(fp_cookie, cookie_tmp+1, cookie_tmp2-1)
-			request["TS"] = sha_256.sha256(fp_cookie)
+		if (fp_cookie) then
+			local cookie_tmp = string.find(fp_cookie, load_cookies[fp_host])
+			if (cookie_tmp) then
+				local fp_cookie = string.sub(fp_cookie, cookie_tmp, string.len(fp_cookie))
+				cookie_tmp = string.find(fp_cookie, "=")
+				local cookie_tmp2 = string.find(fp_cookie, ";")
+				fp_cookie = string.sub(fp_cookie, cookie_tmp+1, cookie_tmp2-1)
+				request["TS"] = sha_256.sha256(fp_cookie)
+			--The statistical cookie wasn't found in the following request.
+			else
+				fingerprint = ""
+				if fp_ua then
+					fingerprint = fingerprint .. fp_ua
+				else
+					fingerprint = dstip
+				end
+
+				if fp_host then
+					fingerprint = fingerprint .. fp_host
+				else
+					fingerprint = dstip
+				end
+				request["TS"] = sha_256.sha256(srcip .. fingerprint)
+			end
+		--The following request has no cookie header.
 		else
 			fingerprint = ""
 			if fp_ua then
-				fingerprint = fingerprint .. fp_ua
+			fingerprint = fingerprint .. fp_ua
 			else
 				fingerprint = dstip
 			end
@@ -427,6 +460,7 @@ function log(args)
 			end
 			request["TS"] = sha_256.sha256(srcip .. fingerprint)
 		end
+	--The load_cookies dictionary has no statistical cookie.
 	else
 		fingerprint = ""
 		if fp_ua then
@@ -441,19 +475,6 @@ function log(args)
 			fingerprint = dstip
 		end
 		request["TS"] = sha_256.sha256(srcip .. fingerprint)
-	end
-
-	rsh = HttpGetResponseHeaders()
-	for k, v in pairs(rsh) do
-		k = unescape(k) --url decoding for header names.
-		v = unescape(v) --url decoding for header values.
-		k = string.lower(k) --lowercasing for header names.
-
-		if type(v) == "table" then
-			request["RH_" .. k] = table.concat(v, "|&|")
-		else
-			request["RH_" .. k] = tostring(v)
-		end
 	end
 
 	express_flag = false
