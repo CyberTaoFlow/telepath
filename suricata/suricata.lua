@@ -404,8 +404,8 @@ function log(args)
 		end
 	end
 
-	if (load_cookie[fp_host]) then
-		local cookie_tmp = string.find(fp_cookie, load_cookie[fp_host])
+	if (load_cookies[fp_host]) then
+		local cookie_tmp = string.find(fp_cookie, load_cookies[fp_host])
 		if (cookie_tmp) then
 			local fp_cookie = string.sub(fp_cookie, cookie_tmp, string.len(fp_cookie))
 			cookie_tmp = string.find(fp_cookie, "=")
