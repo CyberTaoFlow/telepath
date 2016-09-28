@@ -20,6 +20,7 @@ curl -XDELETE 'http://localhost:9200/telepath-20*';
 curl -XDELETE 'http://localhost:9200/telepath-domains';
 curl -XDELETE 'http://localhost:9200/telepath-actions';
 curl -XDELETE 'http://localhost:9200/telepath-rules';
+curl -XDELETE 'http://localhost:9200/telepath-users';
 echo "";
 echo timestamp >> /var/log/reset.log
 #echo "---------------------------";
