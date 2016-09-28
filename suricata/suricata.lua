@@ -228,6 +228,7 @@ end
 
 local unescape = function(url)
 	if (url) then
+		url = url:gsub("%+"," ")
 		return url:gsub("%%(%x%x)", hex_to_char)
 	end
 end
