@@ -93,10 +93,20 @@ void pageRules(Rule & rule,Session & session,string & c_IP,long long & c_RID,uns
 	if(rule.method[0] == 'U'){ // U=URI.
 		if(rule.final_type == 's'){ // s=stringmatch
 			if ( c_Uri.find(rule.str_match) != string::npos ){
-				pthread_mutex_lock(&mutexgetatt5);
-					insert_alert(rule,c_RID,c_IP,resp_ip,cookie,hostname);
-				pthread_mutex_unlock(&mutexgetatt5);
-			}
+                                if(rule.negate == false){
+                                        pthread_mutex_lock(&mutexgetatt5);
+                                        insert_alert(rule,c_RID,c_IP,resp_ip,cookie,hostname);
+                                        pthread_mutex_unlock(&mutexgetatt5);
+                                }
+                        }else{
+                                if(rule.negate == true){
+                                        pthread_mutex_lock(&mutexgetatt5);
+                                        insert_alert(rule,c_RID,c_IP,resp_ip,cookie,hostname);
+                                        pthread_mutex_unlock(&mutexgetatt5);
+                                }
+
+                        }	
+			
 		}
 		else if(rule.final_type == 'g'){// g=regex
 			bool null_alert;
@@ -109,9 +119,17 @@ void pageRules(Rule & rule,Session & session,string & c_IP,long long & c_RID,uns
 		if (c_Title.size() > 0){
 			if(rule.final_type == 's'){// s=stringmatch
 				if ( c_Title.find(rule.str_match) != string::npos ){
-					pthread_mutex_lock(&mutexgetatt5);
-						insert_alert(rule,c_RID,c_IP,resp_ip,cookie,hostname);
-					pthread_mutex_unlock(&mutexgetatt5);
+	                                if(rule.negate == false){
+        	                                pthread_mutex_lock(&mutexgetatt5);
+                	                        insert_alert(rule,c_RID,c_IP,resp_ip,cookie,hostname);
+                        	                pthread_mutex_unlock(&mutexgetatt5);
+                        	        }
+                        	}else{
+                        	        if(rule.negate == true){
+                                	        pthread_mutex_lock(&mutexgetatt5);
+                                        	insert_alert(rule,c_RID,c_IP,resp_ip,cookie,hostname);
+						pthread_mutex_unlock(&mutexgetatt5);
+                                	}
 				}
 			}
 			else if(rule.final_type == 'g'){ // g=regex
