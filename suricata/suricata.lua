@@ -158,38 +158,47 @@ function setup (args)
 	}
 	c:perform()
 	----------------------------------
-
-        -- Loading domain cookies --
+	
+	-- Loading domain cookies --
         login_url = es_location .. "/telepath-domains/domains/_search"
         c = cURL.easy{
                 url            = login_url,
-		postfields     = "{\"size\":10000,\"fields\":[\"AppCookieName\"],\"query\":{\"bool\":{\"must\":{\"exists\":{\"field\":\"AppCookieName\"}}}}}",
+                postfields     = "{\"size\":10000,\"fields\":[\"AppCookieName\"],\"query\":{\"bool\":{\"must\":{\"exists\":{\"field\":\"AppCookieName\"}}}}}",
                 ssl_verifypeer = false,
                 ssl_verifyhost = false,
                 writefunction  = function(str)
-			while true do
-				local tmp = string.find(str, "_id\"")
-				if (tmp) then
-					str = string.sub(str, tmp+4, string.len(str))
-					tmp = string.find(str, "\"")
-					local tmp2 = string.find(str, "\",")
-					output = string.sub(str, tmp+1, tmp2-1)
-					local host = output
-					tmp = string.find(str, "AppCookieName\"")
-					str = string.sub(str, tmp+14, string.len(str))
-					tmp = string.find(str, "\"")
-					str = string.sub(str, tmp+1, string.len(str))
-					tmp = string.find(str, "\"")
-					output = string.sub(str, 0, tmp-1)
-					load_cookies[host] = output
-					--print(host .. "->" .. output)
-				else
-					break
-				end
-			end
+                        while true do
+                                local tmp = string.find(str, "_id\"")
+                                if (tmp) then
+                                        str = string.sub(str, tmp+4, string.len(str))
+                                        tmp = string.find(str, "\"")
+                                        local tmp2 = string.find(str, "\",")
+                                        if(tmp2) then
+                                                output = string.sub(str, tmp+1, tmp2-1)
+                                        else
+                                                break
+                                        end
+                                        local host = output
+                                        tmp = string.find(str, "AppCookieName\"")
+                                        if(tmp) then
+                                                str = string.sub(str, tmp+14, string.len(str))
+                                                tmp = string.find(str, "\"")
+                                                str = string.sub(str, tmp+1, string.len(str))
+                                                tmp = string.find(str, "\"")
+                                                output = string.sub(str, 0, tmp-1)
+                                                load_cookies[host] = output
+                                        else
+                                                break
+                                        end
+                                        --print(host .. "->" .. output)
+                                else
+                                        break
+                                end
+                        end
                 end
         }
         c:perform()
+
         ----------------------------------
 
 
