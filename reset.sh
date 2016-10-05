@@ -16,11 +16,11 @@ echo "-----------------------------------";
 echo "";
 /opt/telepath/db/elasticsearch/bin/elasticsearch -d -Des.insecure.allow.root=true;
 sleep 15;
-curl -XDELETE 'http://localhost:9200/telepath-20*';
-curl -XDELETE 'http://localhost:9200/telepath-domains';
-curl -XDELETE 'http://localhost:9200/telepath-actions';
-curl -XDELETE 'http://localhost:9200/telepath-rules';
-curl -XDELETE 'http://localhost:9200/telepath-users';
+curl -XDELETE 'http://localhost:9200/telepath-20*?timeout=5m';
+curl -XDELETE 'http://localhost:9200/telepath-domains?timeout=5m';
+curl -XDELETE 'http://localhost:9200/telepath-actions?timeout=5m';
+curl -XDELETE 'http://localhost:9200/telepath-rules?timeout=5m';
+curl -XDELETE 'http://localhost:9200/telepath-users?timeout=5m';
 echo "";
 echo timestamp >> /var/log/reset.log
 #echo "---------------------------";
