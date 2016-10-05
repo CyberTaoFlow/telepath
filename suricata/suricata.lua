@@ -183,10 +183,18 @@ function setup (args)
                                         if(tmp) then
                                                 str = string.sub(str, tmp+14, string.len(str))
                                                 tmp = string.find(str, "\"")
-                                                str = string.sub(str, tmp+1, string.len(str))
+						if(tmp) then 
+                                                	str = string.sub(str, tmp+1, string.len(str))
+						else
+							break
+						end
                                                 tmp = string.find(str, "\"")
-                                                output = string.sub(str, 0, tmp-1)
-                                                load_cookies[host] = output
+						if(tmp) then
+                                                	output = string.sub(str, 0, tmp-1)
+                                                	load_cookies[host] = output
+						else
+							break
+						end
                                         else
                                                 break
                                         end
