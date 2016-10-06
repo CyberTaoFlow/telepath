@@ -131,7 +131,8 @@ void initElasticSearchData(){
 	es_insert("/telepath-scheduler/times/Sunday/_create","{\"times\":[]}");
 	es_insert("/telepath-scheduler/times/Monday/_create","{\"times\":[]}");
 	es_insert("/telepath-scheduler/times/Tuesday/_create","{\"times\":[]}");
-	es_insert("/telepath-scheduler/times/Wednesday/_create","{\"times\":[{\"from\":10,\"to\":13},{\"from\":18,\"to\":20}]}");
+	//es_insert("/telepath-scheduler/times/Wednesday/_create","{\"times\":[{\"from\":10,\"to\":13},{\"from\":18,\"to\":20}]}");
+	es_insert("/telepath-scheduler/times/Wednesday/_create","{\"times\":[]}");
 	es_insert("/telepath-scheduler/times/Thursday/_create","{\"times\":[]}");
 	es_insert("/telepath-scheduler/times/Friday/_create","{\"times\":[]}");
 	es_insert("/telepath-scheduler/times/Saturday/_create","{\"times\":[]}");
