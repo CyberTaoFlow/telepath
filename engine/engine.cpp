@@ -108,7 +108,7 @@ void semaphores_destruction(){
 	sem_destroy(&sem_command);
 	sem_destroy(&sem_captcha);
 }
-//Check this function
+
 //void loadMaxSession(unsigned int val){
 //	maxSession = val; 
 //	if(maxSession==0){
