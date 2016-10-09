@@ -22,7 +22,7 @@ wget http://openresty.org/download/ngx_openresty-1.7.7.2.tar.gz
 tar -xf ngx_openresty-1.7.7.2.tar.gz
 cd ngx_openresty-1.7.7.2/
 
-./configure --prefix=/opt/telepath/openresty
+./configure --prefix=/opt/telepath/openresty --with-http_sub_module
 
 make
 make install
