@@ -343,7 +343,8 @@ binaries() {
                 	sed -i 's|^logfile /var/log/redis/redis-server.log|#logfile /var/log/redis/redis-server.log|g' /etc/redis/redis.conf
         	fi
 	fi
-
+    echo -e "vm.swappiness=0\nvm.overcommit_memory=1" >> /etc/sysctl.conf;
+    
 	if [ -z $MYSQL ]; then
 		$DIALOG $CMD --msgbox "MySql was not found, aborting." 5 40
 		terminate
