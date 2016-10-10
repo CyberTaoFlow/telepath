@@ -18,7 +18,7 @@ fi
 
 if [ -n "$(which apt-get)" ]; then
 	apt-get -y install dialog php5 libapache2-mod-php5 gdb php5-mysql mysql-common mysql-server lua5.1 lua-socket libcurl-ocaml-dev luarocks jq #sendmail
-	apt-get -y install php-pear php5-dev
+	apt-get -y install php-pear php5-dev php5-gd
 	pecl install msgpack-0.5.7
 #	if [ ! -f "/etc/php5/mods-available/msgpack.ini" ]; then
 	echo extension=msgpack.so > /etc/php5/mods-available/msgpack.ini
