@@ -635,6 +635,10 @@ void insertOrUpdateSessionMap(TeleObject & teleobj){
 			itSession->second.compared_link.append(teleobj.mParams['Y'/*ComapredPage*/]);
 			teleobj.mParams['Z'/*ComapredLink*/] = itSession->second.compared_link;
 			itSession->second.compared_link = teleobj.mParams['Y'/*ComapredPage*/];
+			if(itSession->second.sequence >= 10000){
+                        	itSession->second.reset();
+			}
+
 		//}
 	}else{
 		teleobj.mParams['s'/*ReqSeq*/] = "0";
