@@ -48,7 +48,7 @@ iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 iptables -A INPUT -p tcp --dport 8080 -j ACCEPT
 iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 
-ln -s /opt/telepath/ui/html /opt/telepath/openresty/nginx/html
+ln -sr /opt/telepath/ui/html/* /opt/telepath/openresty/nginx/html
 
 /opt/telepath/openresty/nginx/sbin/nginx
 
