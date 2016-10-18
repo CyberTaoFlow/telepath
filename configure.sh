@@ -434,6 +434,8 @@ conf_update_apache() {
 
 		fi
 		sed -i 's|DocumentRoot /var/www/html|DocumentRoot /opt/telepath/ui/html|g' /etc/apache2/sites-available/000-default.conf
+		sed -i 's|:80|:8000|g' /etc/apache2/sites-available/000-default.conf
+		sed -i 's|Listen 80|Listen 8000|g' /etc/apache2/ports.conf
 	fi
 	a2enmod rewrite
 	#chmod +x /opt/telepath/generate-ssl.sh
@@ -495,6 +497,7 @@ cron_jobs(){
     echo "* * * * * php /opt/telepath/ui/html/index.php cases flag_requests_by_cases >> /var/log/flag_requests_by_cases.log 2>&1 || true" >> currentCrons
     echo "*/5 * * * * php /opt/telepath/ui/html/index.php webusers store_users >> /var/log/web_users.log 2>&1 || true" >> currentCrons
     echo "0 * * * * php /opt/telepath/ui/html/index.php cases store_similar_case_sessions >> /var/log/store_similar_case_sessions.log 2>&1 || true" >> currentCrons
+    echo "*/2 * * * * /opt/telepath/teleup.sh" >> currentCrons
     crontab currentCrons
     rm currentCrons
 }
