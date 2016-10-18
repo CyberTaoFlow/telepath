@@ -32,6 +32,7 @@ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /opt/telepath/u
 chmod -R 777 /opt/telepath/openresty/nginx/certs/
 mv /opt/telepath/openresty/nginx/lua/telepath.conf.default /opt/telepath/openresty/nginx/conf/nginx.conf
 chmod -R 777 /opt/telepath/openresty/nginx/conf/nginx.conf
+mv /opt/telepath/openresty/nginx/html/index.html  /opt/telepath/openresty/nginx/html/index_old.html
 
 service apache2 stop
 service httpd stop
