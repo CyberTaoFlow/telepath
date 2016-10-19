@@ -406,7 +406,8 @@ function log(args)
 			for key, value in pairs(load_balancer_ips) do
 				if (load_balancer_ips[key] >= int_ip and int_ip >= key) then
 					--Replacing to original client IP.
-					request["TI"] = v 
+					request["TI"] = v
+					srcip = v
 					o1,o2,o3,o4 = v:match("(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)" )
 					int_ip = 16777216*o1 + 65536*o2 + 256*o3 + o4
 				end
