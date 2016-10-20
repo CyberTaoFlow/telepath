@@ -447,7 +447,7 @@ void *thread_init_suricata(void *threadid){
 				}
 
 				while(1){
-					reply = (redisReply*)redisCommand(redis, "LPOP %s","Q" );
+					reply = (redisReply*)redisCommand(redis, "LLEN %s","Q" );
 					if ( reply->type == REDIS_REPLY_ERROR ){
 						freeReplyObject(reply);
 						syslog(LOG_NOTICE,"REDIS ERROR");
@@ -457,12 +457,12 @@ void *thread_init_suricata(void *threadid){
 						sleep(2);
 						restart_program();
 					}else{
-						if(reply->str != NULL){
-							syslog(LOG_NOTICE, "Redis is full");
-							sleep(20);
-						}else{
+						if(reply->integer > 10000){
+							syslog(LOG_NOTICE, "Redis is full: %lld",reply->integer);
+							sleep(5);
+						}else if(reply->integer == 0){
 							syslog(LOG_NOTICE, "Redis is empty");
-							sleep(10);
+							sleep(5);
 							break;
 						}
 					}
