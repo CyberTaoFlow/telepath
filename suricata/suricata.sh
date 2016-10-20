@@ -41,7 +41,7 @@ cd "suricata-$VER"
 
 mkdir -p /opt/telepath/suricata/logs
 
-./configure --prefix=/opt/telepath/suricata/ --sysconfdir=/opt/telepath/suricata/ --localstatedir=/opt/telepath/suricata/ --enable-luajit --enable-pfring  --disable-detection --enable-luajit --with-libnss-libraries=/usr/lib --with-libnss-includes=/usr/include/nss/ --with-libnspr-libraries=/usr/lib --with-libluajit-includes=/usr/local/include/luajit-2.0/ --with-libluajit-libraries=/usr/lib/x86_64-linux-gnu/
+./configure --prefix=/opt/telepath/suricata/ --sysconfdir=/opt/telepath/suricata/ --localstatedir=/opt/telepath/suricata/ --disable-detection --enable-luajit --with-libnss-libraries=/usr/lib --with-libnss-includes=/usr/include/nss/ --with-libnspr-libraries=/usr/lib --with-libluajit-includes=/usr/local/include/luajit-2.0/ --with-libluajit-libraries=/usr/lib/x86_64-linux-gnu/
 make
 make install
 ln -s /opt/telepath/suricata/bin/suricata /opt/telepath/suricata/suricata
