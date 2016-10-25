@@ -291,7 +291,7 @@ build_directory() {
         
 	cp ./teleup.sh $BUILD_DIR/teleup.sh
         chmod 755 $BUILD_DIR/teleup.sh
-        echo "Copied reset.sh"
+        echo "Copied teleup.sh"
 
 	cp ./configure.sh $BUILD_DIR/configure.sh
 	chmod 755 $BUILD_DIR/configure.sh
