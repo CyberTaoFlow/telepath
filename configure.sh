@@ -135,12 +135,12 @@ conf_maintenence() {
 		mysql -h $hostname -u $username -p$password -e 'SET GLOBAL connect_timeout=900; SET GLOBAL interactive_timeout=900;'
 	fi
 
-	chmod +x /opt/telepath/suricata/run
-	chmod +x /opt/telepath/suricata/suricata.sh
+	chmod +x /opt/telepath/suricata/run.sh
+	chmod +x /opt/telepath/suricata/suricata
 	chmod +x /opt/telepath/suricata/af-packet.sh
-        chmod 755 /opt/telepath/suricata/af-packet.sh
+    chmod 755 /opt/telepath/suricata/af-packet.sh
 	chmod 777 /opt/telepath/suricata
-
+    chmod +x /opt/telepath/teleup.sh
 
 	# Restart telepath if it running in the background at this point
 	pgrep telewatchdog && telepath restart
