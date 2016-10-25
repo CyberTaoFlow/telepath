@@ -284,11 +284,11 @@ binaries() {
 			if [ ! -f "/opt/telepath/db/elasticsearch/config/elasticsearch.yml" ]; then
 					cd /opt/telepath/db/
 					#wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.5.2.tar.gz
-					wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.3.1/elasticsearch-2.3.1.tar.gz
-					tar -xf elasticsearch-2.3.1.tar.gz
-					mv elasticsearch-2.3.1/* elasticsearch
-					rm elasticsearch-2.3.1.tar.gz
-					rm -rf elasticsearch-2.3.1
+					wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.4.1/elasticsearch-2.4.1.tar.gz
+					tar -xf elasticsearch-2.4.1.tar.gz
+					mv elasticsearch-2.4.1/* elasticsearch
+					rm elasticsearch-2.4.1.tar.gz
+					rm -rf elasticsearch-2.4.1
 					#sed -i 's/^#index.number_of_shards: 1/index.number_of_shards: 1/g' /opt/telepath/db/elasticsearch/config/elasticsearch.yml
 					#sed -i 's/^#network.bind_host: 192.168.0.1/network.bind_host: 127.0.0.1/g' /opt/telepath/db/elasticsearch/config/elasticsearch.yml
 					sed -i 's/com.amazonaws: WARN/ ^#com.amazonaws: WARN/g' /opt/telepath/db/elasticsearch/config/loggin.yml
