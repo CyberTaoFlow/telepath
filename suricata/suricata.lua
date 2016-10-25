@@ -254,8 +254,8 @@ end
 function log(args)
 
         -- Checking if the configuration was changed. 
-        config_was_changed_id = redis:lpop("C")
-        if (config_was_changed_id) then
+        config_was_changed_id = redis:llen("C")
+        if (config_was_changed_id > 0) then
                 setup()
         end
 

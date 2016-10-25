@@ -288,6 +288,10 @@ build_directory() {
 	cp ./reset.sh $BUILD_DIR/reset.sh
         chmod 755 $BUILD_DIR/reset.sh
         echo "Copied reset.sh"
+        
+	cp ./teleup.sh $BUILD_DIR/teleup.sh
+        chmod 755 $BUILD_DIR/teleup.sh
+        echo "Copied teleup.sh"
 
 	cp ./configure.sh $BUILD_DIR/configure.sh
 	chmod 755 $BUILD_DIR/configure.sh

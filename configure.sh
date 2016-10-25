@@ -135,12 +135,12 @@ conf_maintenence() {
 		mysql -h $hostname -u $username -p$password -e 'SET GLOBAL connect_timeout=900; SET GLOBAL interactive_timeout=900;'
 	fi
 
-	chmod +x /opt/telepath/suricata/run
-	chmod +x /opt/telepath/suricata/suricata.sh
+	chmod +x /opt/telepath/suricata/run.sh
+	chmod +x /opt/telepath/suricata/suricata
 	chmod +x /opt/telepath/suricata/af-packet.sh
-        chmod 755 /opt/telepath/suricata/af-packet.sh
+    chmod 755 /opt/telepath/suricata/af-packet.sh
 	chmod 777 /opt/telepath/suricata
-
+    chmod +x /opt/telepath/teleup.sh
 
 	# Restart telepath if it running in the background at this point
 	pgrep telewatchdog && telepath restart
@@ -284,11 +284,11 @@ binaries() {
 			if [ ! -f "/opt/telepath/db/elasticsearch/config/elasticsearch.yml" ]; then
 					cd /opt/telepath/db/
 					#wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.5.2.tar.gz
-					wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.3.1/elasticsearch-2.3.1.tar.gz
-					tar -xf elasticsearch-2.3.1.tar.gz
-					mv elasticsearch-2.3.1/* elasticsearch
-					rm elasticsearch-2.3.1.tar.gz
-					rm -rf elasticsearch-2.3.1
+					wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.4.1/elasticsearch-2.4.1.tar.gz
+					tar -xf elasticsearch-2.4.1.tar.gz
+					mv elasticsearch-2.4.1/* elasticsearch
+					rm elasticsearch-2.4.1.tar.gz
+					rm -rf elasticsearch-2.4.1
 					#sed -i 's/^#index.number_of_shards: 1/index.number_of_shards: 1/g' /opt/telepath/db/elasticsearch/config/elasticsearch.yml
 					#sed -i 's/^#network.bind_host: 192.168.0.1/network.bind_host: 127.0.0.1/g' /opt/telepath/db/elasticsearch/config/elasticsearch.yml
 					sed -i 's/com.amazonaws: WARN/ ^#com.amazonaws: WARN/g' /opt/telepath/db/elasticsearch/config/loggin.yml
@@ -434,7 +434,7 @@ conf_update_apache() {
 
 		fi
 		sed -i 's|DocumentRoot /var/www/html|DocumentRoot /opt/telepath/ui/html|g' /etc/apache2/sites-available/000-default.conf
-		sed -i 's|:80|:8000|g' /etc/apache2/sites-available/000-default.conf
+		sed -i 's|:80>|:8000>|g' /etc/apache2/sites-available/000-default.conf
 		sed -i 's|Listen 80|Listen 8000|g' /etc/apache2/ports.conf
 	fi
 	a2enmod rewrite
