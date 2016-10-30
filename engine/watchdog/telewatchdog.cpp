@@ -824,7 +824,6 @@ bool checkLicenseKey(){
 int main(int argc, char *argv[])
 {
 	
-        time_t timer=0;
 
 	//Giving a syslog name to the process.
 	setlogmask (LOG_UPTO (LOG_NOTICE));
@@ -837,7 +836,6 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-	//
 	if (lget_pid("telewatchdog")!=-1){
 		syslog(LOG_NOTICE,"The telewatchdog is already running");
 		exit(0);
@@ -922,6 +920,7 @@ int main(int argc, char *argv[])
 
 	FILE* af_packet = popen("/opt/telepath/suricata/af-packet.sh > /dev/null 2>&1 || true", "w");
 	pclose(af_packet);
+
 
 	//----- Initiating Suricata thread -----
 
