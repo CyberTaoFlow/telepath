@@ -4,6 +4,6 @@ Section: misc
 Priority: optional
 Architecture: amd64
 Maintainer: Hybrid Security <info@hybridsec.com>
-Pre-Depends: mysql-common, php5-fpm, php5-mysql, php5-curl, mysql-server, mysql-client, geoip-bin, dialog, libyaml-0-2, libnet1, redis-server, php5-redis, openjdk-7-jre, php5-cli, apache2
+Pre-Depends: php5-fpm, php5-sqlite, php5-curl, geoip-bin, dialog, libyaml-0-2, libnet1, redis-server, php5-redis, openjdk-7-jre, php5-cli, apache2
 Description: Hybrid Telepath Web Fraud Prevention.
 
