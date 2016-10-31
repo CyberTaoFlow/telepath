@@ -635,6 +635,7 @@ void *thread_restart_es_stuck(void *threadid){
 			syslog (LOG_NOTICE,"Trying to reconnect to ElasticSearch ... %u.",counter);
 			if(counter == 60){
 				syslog (LOG_NOTICE,"Restarting ElasticSearch");
+				es_restart_flag = false;
 				restart_program();
 			}
 			sleep(1);
