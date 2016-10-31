@@ -283,8 +283,8 @@ terminate() {
 
 binaries() {
 
-	MYSQL=`which mysql` || true
-	MYSQLADMIN=`which mysqladmin` || true
+	#MYSQL=`which mysql` || true
+	#MYSQLADMIN=`which mysqladmin` || true
 	DIALOG_CHK=`which dialog` || true
 
 	if [ -z $DIALOG_CHK ]; then
@@ -337,8 +337,8 @@ binaries() {
         # CHECK IF WE HAVE NGINX COMPILED AND INSTALLED IN OUR DIR
         if [ ! -f "/opt/telepath/openresty/nginx/sbin/nginx" ]; then
 
-                        echo "Running NGINX install script, this might take up to 5 minutes and requires internet connection"
-                        chmod +x /opt/telepath/openresty/openresty.sh
+            echo "Running NGINX install script, this might take up to 5 minutes and requires internet connection"
+            chmod +x /opt/telepath/openresty/openresty.sh
 			/opt/telepath/openresty/openresty.sh
 			mkdir /opt/telepath/openresty/nginx/certs/
 			chmod 777 /opt/telepath/openresty/nginx/certs/
@@ -359,15 +359,15 @@ binaries() {
 	fi
     #echo -e "vm.swappiness=0\nvm.overcommit_memory=1" >> /etc/sysctl.conf;
     
-	if [ -z $MYSQL ]; then
-		$DIALOG $CMD --msgbox "MySql was not found, aborting." 5 40
-		terminate
-	fi
+	#if [ -z $MYSQL ]; then
+	#	$DIALOG $CMD --msgbox "MySql was not found, aborting." 5 40
+	#	terminate
+	#fi
 
-	if [ -z $MYSQLADMIN ]; then
-		$DIALOG $CMD --msgbox "MySqlAdmin was not found, aborting." 5 40
-		terminate
-	fi
+	#if [ -z $MYSQLADMIN ]; then
+	#	$DIALOG $CMD --msgbox "MySqlAdmin was not found, aborting." 5 40
+	#	terminate
+	#fi
 
 	pip install elasticsearch
         pip install tqdm
@@ -385,14 +385,14 @@ binaries() {
 	mv /opt/telepath/bin/gulp /usr/sbin/
 
 	# Our special SSD config
-	if [ -d /sas ]; then
+	#if [ -d /sas ]; then
 
 		# If our system has apparmor
-		if [ -d /etc/apparmor.d ]; then
-			sed -i "s/\\}/\\/sas\\/telepath\\/ r,\n\\/sas\\/telepath\\/** rwk,\n\\}/g" /etc/apparmor.d/usr.sbin.mysqld
-		fi
+	#	if [ -d /etc/apparmor.d ]; then
+	#		sed -i "s/\\}/\\/sas\\/telepath\\/ r,\n\\/sas\\/telepath\\/** rwk,\n\\}/g" /etc/apparmor.d/usr.sbin.mysqld
+	#	fi
 
-	fi
+	#fi
 
 	# Create telepath user (needed for memcached webservice mode
 	useradd telepath
@@ -401,7 +401,7 @@ binaries() {
 	if [ -n getenforce ]; then
 		sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 		setenforce permissive
-        fi
+    fi
 
 
 }
