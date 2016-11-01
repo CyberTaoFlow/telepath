@@ -5,9 +5,9 @@ DIALOG=${DIALOG=dialog}
 CMD="--ascii-lines --title "Telepath" --clear"
 
 # Executable / DB Name
-MYSQL="mysql"
-USER="telepath"
-DATABASE="telepath"
+#MYSQL="mysql"
+#USER="telepath"
+#DATABASE="telepath"
 
 # Main configuration JSON file that will be updated from the UI with the interface settings
 MAIN_JSON='/opt/telepath/conf/telepath.json'
@@ -17,7 +17,8 @@ if [ ! -f $MAIN_JSON ]; then
 fi
 
 if [ -n "$(which apt-get)" ]; then
-	apt-get -y install dialog php5 libapache2-mod-php5 gdb php5-mysql mysql-common mysql-server lua5.1 lua-socket libcurl-ocaml-dev luarocks jq #sendmail
+	#apt-get -y install dialog php5 libapache2-mod-php5 gdb php5-mysql mysql-common mysql-server lua5.1 lua-socket libcurl-ocaml-dev luarocks jq #sendmail
+	apt-get -y install dialog php5 libapache2-mod-php5 gdb php5-sqlite lua5.1 lua-socket libcurl-ocaml-dev luarocks jq #sendmail
 	apt-get -y install php-pear php5-dev php5-gd
 	pecl install msgpack-0.5.7
 #	if [ ! -f "/etc/php5/mods-available/msgpack.ini" ]; then
@@ -36,7 +37,8 @@ if [ -n "$(which apt-get)" ]; then
 fi
 
 if [ -n "$(which yum)" ]; then
-	yum -y install dialog php php5 libapache2-mod-php5 php-cli gdb php-mysql mysql mysql-server mod_ssl lua-socket-devel.x86_64 ocaml-curl-devel.x86_64 lua-devel.x86_64 flex.x86_64 bison.x86_64 jq
+	#yum -y install dialog php php5 libapache2-mod-php5 php-cli gdb php-mysql mysql mysql-server mod_ssl lua-socket-devel.x86_64 ocaml-curl-devel.x86_64 lua-devel.x86_64 flex.x86_64 bison.x86_64 jq
+	yum -y install dialog php php5 libapache2-mod-php5 php-cli gdb php5-sqlite mod_ssl lua-socket-devel.x86_64 ocaml-curl-devel.x86_64 lua-devel.x86_64 flex.x86_64 bison.x86_64 jq
 	cd /tmp/
 	wget http://luarocks.org/releases/luarocks-2.0.6.tar.gz
 	tar -xzvf luarocks-2.0.6.tar.gz
@@ -48,22 +50,33 @@ if [ -n "$(which yum)" ]; then
 	luarocks install Lua-cURL --server=https://rocks.moonscript.org/dev
 fi
 
-echo "If mysql wasnt installed before please configure it first."
-echo "service mysqld start"
-echo "mysqladmin -u root password <newpassword>"
+#echo "If mysql wasnt installed before please configure it first."
+#echo "service mysqld start"
+#echo "mysqladmin -u root password <newpassword>"
 
 
 CONFDEFAULT='/opt/telepath/conf/atms-default.conf'
 CONF='/opt/telepath/conf/atms.conf'
 DATACONF='/opt/telepath/conf/database.conf'
-MYSQL_SCRIPT="/opt/telepath/db/telepath.sql"
+#MYSQL_SCRIPT="/opt/telepath/db/telepath.sql"
 
 # Default values
-MYSQL_HOST="localhost"
-MYSQL_PORT="3306"
-MYSQL_USER="root"
-
+#MYSQL_HOST="localhost"
+#MYSQL_PORT="3306"
+#MYSQL_USER="root"
 conf_maintenence() {
+    chmod +x /opt/telepath/suricata/run.sh
+	chmod +x /opt/telepath/suricata/suricata
+	chmod +x /opt/telepath/suricata/af-packet.sh
+    chmod 755 /opt/telepath/suricata/af-packet.sh
+	chmod 777 /opt/telepath/suricata
+    chmod +x /opt/telepath/teleup.sh
+
+	# Restart telepath if it running in the background at this point
+	pgrep telewatchdog && telepath restart
+	rm /opt/telepath/suricata/logs/stats.log -f
+}
+conf_maintenence_old() {
 	
 	# Make sure we have exactly one copy of once a minute reports cron
 	command="php /opt/telepath/ui/html/index.php cron reports"
@@ -167,7 +180,7 @@ check_installed() {
 	
 
 	# Run upgrade PHP
-	php /opt/telepath/ui/html/index.php setup cli $database_address $database_port $username $password
+	# php /opt/telepath/ui/html/index.php setup cli $database_address $database_port $username $password
 	
 	telepath start
 	sed -i '/telepath/d' /etc/rc.local
@@ -185,18 +198,19 @@ install() {
 
 	# Collect info from user
 	# conf_interface
-	conf_mysql
-	conf_admin_user
-	conf_admin_password
+	# conf_mysql
+	# conf_admin_user
+	# conf_admin_password
 
 	# Create configuration file
-	conf_create_file
+	# conf_create_file
 
 	# Additional configuration steps
 	conf_setup_perms
-	conf_create_db
-	conf_create_tbls
+	#conf_create_db
+	#conf_create_tbls
 	conf_update_apache
+	conf_sqlite_db
 	conf_init_cron
     cron_jobs
 	conf_maintenence
@@ -269,8 +283,8 @@ terminate() {
 
 binaries() {
 
-	MYSQL=`which mysql` || true
-	MYSQLADMIN=`which mysqladmin` || true
+	#MYSQL=`which mysql` || true
+	#MYSQLADMIN=`which mysqladmin` || true
 	DIALOG_CHK=`which dialog` || true
 
 	if [ -z $DIALOG_CHK ]; then
@@ -323,8 +337,8 @@ binaries() {
         # CHECK IF WE HAVE NGINX COMPILED AND INSTALLED IN OUR DIR
         if [ ! -f "/opt/telepath/openresty/nginx/sbin/nginx" ]; then
 
-                        echo "Running NGINX install script, this might take up to 5 minutes and requires internet connection"
-                        chmod +x /opt/telepath/openresty/openresty.sh
+            echo "Running NGINX install script, this might take up to 5 minutes and requires internet connection"
+            chmod +x /opt/telepath/openresty/openresty.sh
 			/opt/telepath/openresty/openresty.sh
 			mkdir /opt/telepath/openresty/nginx/certs/
 			chmod 777 /opt/telepath/openresty/nginx/certs/
@@ -345,15 +359,15 @@ binaries() {
 	fi
     #echo -e "vm.swappiness=0\nvm.overcommit_memory=1" >> /etc/sysctl.conf;
     
-	if [ -z $MYSQL ]; then
-		$DIALOG $CMD --msgbox "MySql was not found, aborting." 5 40
-		terminate
-	fi
+	#if [ -z $MYSQL ]; then
+	#	$DIALOG $CMD --msgbox "MySql was not found, aborting." 5 40
+	#	terminate
+	#fi
 
-	if [ -z $MYSQLADMIN ]; then
-		$DIALOG $CMD --msgbox "MySqlAdmin was not found, aborting." 5 40
-		terminate
-	fi
+	#if [ -z $MYSQLADMIN ]; then
+	#	$DIALOG $CMD --msgbox "MySqlAdmin was not found, aborting." 5 40
+	#	terminate
+	#fi
 
 	pip install elasticsearch
         pip install tqdm
@@ -371,14 +385,14 @@ binaries() {
 	mv /opt/telepath/bin/gulp /usr/sbin/
 
 	# Our special SSD config
-	if [ -d /sas ]; then
+	#if [ -d /sas ]; then
 
 		# If our system has apparmor
-		if [ -d /etc/apparmor.d ]; then
-			sed -i "s/\\}/\\/sas\\/telepath\\/ r,\n\\/sas\\/telepath\\/** rwk,\n\\}/g" /etc/apparmor.d/usr.sbin.mysqld
-		fi
+	#	if [ -d /etc/apparmor.d ]; then
+	#		sed -i "s/\\}/\\/sas\\/telepath\\/ r,\n\\/sas\\/telepath\\/** rwk,\n\\}/g" /etc/apparmor.d/usr.sbin.mysqld
+	#	fi
 
-	fi
+	#fi
 
 	# Create telepath user (needed for memcached webservice mode
 	useradd telepath
@@ -387,7 +401,7 @@ binaries() {
 	if [ -n getenforce ]; then
 		sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 		setenforce permissive
-        fi
+    fi
 
 
 }
@@ -448,7 +462,22 @@ conf_update_apache() {
 		service apache2 restart
 	fi
 }
-
+conf_sqlite_db() {
+    cp /opt/telepath/ui/html/application/databases/telepath_users_default.db /opt/telepath/ui/html/application/databases/telepath_users.db
+    
+	if [ $(cat /etc/passwd | grep apache) ]; then
+           USER="apache"
+        fi
+        if [ $(cat /etc/passwd | grep www-data) ]; then
+           USER="www-data"
+	fi
+    chown $USER /opt/telepath/ui/html/application/databases/telepath_users.db
+    chmod 770 /opt/telepath/ui/html/application/databases
+    chmod 770 /opt/telepath/ui/html/application/sessions
+    chown $USER /opt/telepath/ui/html/application/databases
+    chown $USER /opt/telepath/ui/html/application/sessions
+}
+    
 conf_create_db() {
 
 	if $MYSQL -s $MUO -BNe 'show databases' | grep -q -E "^$DATABASE\$"; then
@@ -710,13 +739,13 @@ conf_create_file() {
 		cp -a $CONFDEFAULT $CONF
 	fi
 
-	OLDP=`grep "password=" $CONF 2>/dev/null | sed 's/[^=]*=\s*//' 2>/dev/null` || true
-	OLDP=`echo $OLDP | sed -s "s/^\(\(\"\(.*\)\"\)\|\('\(.*\)'\)\)\$/\\3\\5/g"` || true
-	if [ "$OLDP" = "" -o "$OLDP" = "password" ]; then
-		PASSWD=`</dev/urandom tr -dc A-Za-z0-9 | head -c16` || true
-	else
-		PASSWD=$OLDP
-	fi
+	#OLDP=`grep "password=" $CONF 2>/dev/null | sed 's/[^=]*=\s*//' 2>/dev/null` || true
+	#OLDP=`echo $OLDP | sed -s "s/^\(\(\"\(.*\)\"\)\|\('\(.*\)'\)\)\$/\\3\\5/g"` || true
+	#if [ "$OLDP" = "" -o "$OLDP" = "password" ]; then
+	#	PASSWD=`</dev/urandom tr -dc A-Za-z0-9 | head -c16` || true
+	#else
+	#	PASSWD=$OLDP
+	#fi
 
 	cfg_cont=`grep -v -E "(gulp_network_interface|username|password|database_\\w+)=" $CONF` 
 
