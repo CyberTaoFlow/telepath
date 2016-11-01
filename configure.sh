@@ -472,6 +472,7 @@ conf_sqlite_db() {
            USER="www-data"
 	fi
     chown $USER /opt/telepath/ui/html/application/databases/telepath_users.db
+    mkdir /opt/telepath/ui/html/application/sessions
     chmod 770 /opt/telepath/ui/html/application/databases
     chmod 770 /opt/telepath/ui/html/application/sessions
     chown $USER /opt/telepath/ui/html/application/databases
