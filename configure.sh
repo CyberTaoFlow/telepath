@@ -471,12 +471,12 @@ conf_sqlite_db() {
         if [ $(cat /etc/passwd | grep www-data) ]; then
            USER="www-data"
 	fi
-    chown $USER /opt/telepath/ui/html/application/databases/telepath_users.db
+    chown $USER:$USER /opt/telepath/ui/html/application/databases/telepath_users.db
     mkdir /opt/telepath/ui/html/application/sessions
-    chmod 770 /opt/telepath/ui/html/application/databases
-    chmod 770 /opt/telepath/ui/html/application/sessions
-    chown $USER /opt/telepath/ui/html/application/databases
-    chown $USER /opt/telepath/ui/html/application/sessions
+    chmod 700 /opt/telepath/ui/html/application/databases
+    chmod 700 /opt/telepath/ui/html/application/sessions
+    chown $USER:$USER /opt/telepath/ui/html/application/databases
+    chown $USER:$USER /opt/telepath/ui/html/application/sessions
 }
     
 conf_create_db() {
