@@ -273,6 +273,7 @@ case $choice in
 	;;
 esac
 
+
 }
 
 
@@ -795,8 +796,8 @@ case "$1" in
 
 	*)
 
-		menu
-
+		#menu
+        install
 	;;
 
 esac
