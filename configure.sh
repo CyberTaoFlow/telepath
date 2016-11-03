@@ -801,5 +801,6 @@ case "$1" in
 	;;
 
 esac
+telepath start
 
 exit 0
