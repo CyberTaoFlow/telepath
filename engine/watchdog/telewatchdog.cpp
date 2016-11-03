@@ -459,7 +459,8 @@ void *thread_init_suricata(void *threadid){
 					}else{
 						if(reply->integer > 1000000){
 							syslog(LOG_NOTICE, "Redis is full: %lld",reply->integer);
-							sleep(5);
+							sleep(5);	
+							break;
 						}else if(reply->integer == 0){
 							syslog(LOG_NOTICE, "Redis is empty");
 							sleep(5);
