@@ -723,21 +723,21 @@ void *thread_sid_per_min(void *threadid)
 
 		syslog(LOG_NOTICE,"Sessions:%u mMem:%u |getRedis:%u |insertElastic:%u |dropApp:%u |dropPage:%u |dropMethod:%u |dropLong:%u|",size,(unsigned int)TC->teleObjQueue.size(),getRedis,insertElastic,dropApp,dropPage,dropMethod,longSessionDrop);	
 
-		if(errorCheck==insertElastic){
-			counter++;
-		}else{
-			counter=0;
-			errorCheck=insertElastic;
-		}
+		//if(errorCheck==insertElastic){
+		//	counter++;
+		//}else{
+		//	counter=0;
+		//	errorCheck=insertElastic;
+		//}
 
-		if(counter==15){
-			counter=0;
-			syslog(LOG_NOTICE,"Engine has not gotten any requests for 15 minutes ... ");
-
-			FILE *fd = popen("telepath restart > /dev/null 2>&1","w");
-			pclose(fd);
-			sleep(15);
-		}
+		//if(counter==15){
+		//	counter=0;
+		//	syslog(LOG_NOTICE,"Engine has not gotten any requests for 15 minutes ... ");
+		//
+		//	FILE *fd = popen("telepath restart > /dev/null 2>&1","w");
+		//	pclose(fd);
+		//	sleep(15);
+		//}
 
 	}
 	pthread_mutex_destroy(&mutexSidPerMin);
