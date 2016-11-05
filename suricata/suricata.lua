@@ -34,6 +34,7 @@ load_balancer_headers = {}
 load_cookies = {}
 records = {}
 record_hosts = {}
+counter = 0
 
 function setup (args) 
 	-- Emptying the global configuration arrays --
@@ -252,13 +253,17 @@ end
 
 
 function log(args)
-
-        -- Checking if the configuration was changed. 
+    
+    counter = counter + 1
+    
+    -- Checking if the configuration was changed. 
+    if (counter >= 1000) then 
         config_was_changed_id = redis:lpop("C")
         if (config_was_changed_id) then
                 setup()
         end
-
+    end
+    
 	local uri = HttpGetRequestUriRaw()
 	uri = unescape(uri) --url decoding for uri & GET parameters.
         if (uri) then
