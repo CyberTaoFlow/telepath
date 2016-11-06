@@ -35,7 +35,11 @@ load_cookies = {}
 records = {}
 record_hosts = {}
 <<<<<<< HEAD
+<<<<<<< HEAD
 count = 0
+=======
+counter = 0
+>>>>>>> 1fc066bf8dd8bd45247a75fad3f02e5628c543a8
 =======
 counter = 0
 >>>>>>> 1fc066bf8dd8bd45247a75fad3f02e5628c543a8
@@ -258,6 +262,7 @@ end
 
 function log(args)
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	count = count + 1
         -- Checking if the configuration was changed. 
@@ -270,6 +275,8 @@ function log(args)
 	end
 
 =======
+=======
+>>>>>>> 1fc066bf8dd8bd45247a75fad3f02e5628c543a8
     
     counter = counter + 1
     
@@ -281,6 +288,9 @@ function log(args)
         end
     end
     
+<<<<<<< HEAD
+>>>>>>> 1fc066bf8dd8bd45247a75fad3f02e5628c543a8
+=======
 >>>>>>> 1fc066bf8dd8bd45247a75fad3f02e5628c543a8
 	local uri = HttpGetRequestUriRaw()
 	uri = unescape(uri) --url decoding for uri & GET parameters.
