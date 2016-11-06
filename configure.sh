@@ -65,7 +65,7 @@ DATACONF='/opt/telepath/conf/database.conf'
 #MYSQL_PORT="3306"
 #MYSQL_USER="root"
 conf_maintenence() {
-    chmod +x /opt/telepath/suricata/run.sh
+    #chmod +x /opt/telepath/suricata/run.sh
 	chmod +x /opt/telepath/suricata/suricata
 	chmod +x /opt/telepath/suricata/af-packet.sh
     chmod 755 /opt/telepath/suricata/af-packet.sh
@@ -802,5 +802,9 @@ case "$1" in
 
 esac
 telepath start
+clear
+echo ""
+echo "Telepath v3 installation completed!"
+echo "Please open the browser at http://YOUR_SERVER_ADDRESS:8000/ for Telepath application."
 
 exit 0
