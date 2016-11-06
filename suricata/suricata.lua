@@ -34,15 +34,8 @@ load_balancer_headers = {}
 load_cookies = {}
 records = {}
 record_hosts = {}
-<<<<<<< HEAD
-<<<<<<< HEAD
 count = 0
-=======
-counter = 0
->>>>>>> 1fc066bf8dd8bd45247a75fad3f02e5628c543a8
-=======
-counter = 0
->>>>>>> 1fc066bf8dd8bd45247a75fad3f02e5628c543a8
+
 
 function setup (args) 
 	-- Emptying the global configuration arrays --
@@ -261,8 +254,6 @@ end
 
 
 function log(args)
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 	count = count + 1
         -- Checking if the configuration was changed. 
@@ -274,24 +265,6 @@ function log(args)
 	        end
 	end
 
-=======
-=======
->>>>>>> 1fc066bf8dd8bd45247a75fad3f02e5628c543a8
-    
-    counter = counter + 1
-    
-    -- Checking if the configuration was changed. 
-    if (counter >= 1000) then 
-        config_was_changed_id = redis:lpop("C")
-        if (config_was_changed_id) then
-                setup()
-        end
-    end
-    
-<<<<<<< HEAD
->>>>>>> 1fc066bf8dd8bd45247a75fad3f02e5628c543a8
-=======
->>>>>>> 1fc066bf8dd8bd45247a75fad3f02e5628c543a8
 	local uri = HttpGetRequestUriRaw()
 	uri = unescape(uri) --url decoding for uri & GET parameters.
         if (uri) then
