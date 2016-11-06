@@ -335,7 +335,7 @@ compile_all() {
 	
 	# TODO: V2 || V3
 	
-	make engine_trial
+	make -j 10 engine_trial
 
 	if [ ! -f "./engine" ]; then
 		echo "ENGINE compile failed, aborting"
@@ -345,7 +345,7 @@ compile_all() {
 	echo "Compiling WATCHDOG"
 	cd watchdog
 	make clean
-	make telewatchdog
+	make -j 10 telewatchdog
 	
 	if [ ! -f "./telewatchdog" ]; then
 		echo "WATCHDOG compile failed, aborting"
