@@ -53,8 +53,10 @@ fi
 
 
 rm /opt/telepath/db/kb_bin/paths/*
+rm /opt/telepath/db/kb_bin/user_paths/*
+rm /opt/telepath/db/kb_bin/user_attributes/*
 rm /opt/telepath/db/kb_bin/attributes/all_attributes
-rm /opt/telepath/db/kb_bin/globals/appearance
+rm /opt/telepath/db/kb_bin/globals/sessions
 rm /opt/telepath/db/kb_bin/flows/*
 
 redis-cli flushall
