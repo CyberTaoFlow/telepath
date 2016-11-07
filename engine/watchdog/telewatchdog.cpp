@@ -203,6 +203,15 @@ bool validKey(string & key,unsigned int & epoch);
 */
 bool checkLicenseKey();
 
+//!  Checking Network Configuration Change.
+/*!
+        This thread checks every 60 seconds if there was any configuration change that require a Suricata restart.
+	\param threadid
+        \return void*
+*/
+
+void *thread_suricata_configuration_check(void *threadid);
+
 //!  TODO - move to cron.
 /*!
 */
@@ -392,6 +401,40 @@ void get_pcap_filter(string & output,string & pcap){
 	}
 }
 
+
+void *thread_suricata_configuration_check(void *threadid){
+        char suricata_cmd[5000];
+        FILE* ppipe_suricata;
+        string output,pcap,interface;
+	
+	while(1){
+		if(sniffer_mode==1){
+			es_get_config("/telepath-config/config/config_was_changed_id/_source",output);
+			if(output.compare("1") == 0){
+				syslog (LOG_NOTICE,"Suricata Configuration Was Changed[!!!]");
+				//Stop suricata
+				ppipe_suricata = popen("killall -9 Suricata-Main > /dev/null 2>&1 || true","w");
+				pclose(ppipe_suricata);	
+
+				//init the af-packet script
+				FILE* af_packet = popen("/opt/telepath/suricata/af-packet.sh > /dev/null 2>&1 || true", "w");
+			        pclose(af_packet);
+
+				//Restart suricata
+				sprintf( suricata_cmd,"/opt/telepath/suricata/suricata -D -c /opt/telepath/suricata/suricata.yaml --af-packet tcp port 80");
+				syslog (LOG_NOTICE,"%s",suricata_cmd);
+				ppipe_suricata = popen(suricata_cmd,"w");
+				pclose(ppipe_suricata);
+
+				//change the flag back
+				es_insert("/telepath-config/config/config_was_changed_id","{\"value\":\"0\"}");
+			}
+		}
+		sleep(60);
+	}
+}
+
+
 void get_interface_name(string & output,string & interface){
 	size_t find_pos = output.find("interface_name\"");
 	if(find_pos != string::npos ){
@@ -457,10 +500,9 @@ void *thread_init_suricata(void *threadid){
 						sleep(2);
 						restart_program();
 					}else{
-						if(reply->integer > 1000000){
+						if(reply->integer > 1500000){
 							syslog(LOG_NOTICE, "Redis is full: %lld",reply->integer);
 							sleep(5);	
-							break;
 						}else if(reply->integer == 0){
 							syslog(LOG_NOTICE, "Redis is empty");
 							sleep(5);

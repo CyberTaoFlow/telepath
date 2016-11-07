@@ -726,8 +726,9 @@ string str_num;
 double att_score;
 int att_exp;
 char url_mode[500],postfields_mode[1000];
-
-loader();
+try{
+	loader();
+}catch(...){syslog(LOG_NOTICE,"Error!!! While trying to load old engine brain");}
 
 #ifdef DEBUG
 	syslog(LOG_NOTICE,"Debug Mode");
