@@ -203,6 +203,15 @@ bool validKey(string & key,unsigned int & epoch);
 */
 bool checkLicenseKey();
 
+//!  Checking Network Configuration Change.
+/*!
+        This thread checks every 60 seconds if there was any configuration change that require a Suricata restart.
+	\param threadid
+        \return void*
+*/
+
+void *thread_suricata_configuration_check(void *threadid);
+
 //!  TODO - move to cron.
 /*!
 */
@@ -247,7 +256,7 @@ void demonize(){
 
 
 void startThreads(){
-	pthread_t thread_disk_space,thread_elasticsearch,thread_reset_es,thread_script,thread_script2; 
+	pthread_t thread_disk_space,thread_elasticsearch,thread_reset_es,thread_check_network; 
 	unsigned long rc,empty=0;
 
 	rc = pthread_create(&thread_disk_space, NULL,thread_check_disk_space, (void *)empty);// select info from user_groups table.
@@ -257,6 +266,9 @@ void startThreads(){
 	if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); return;}
 
 	rc = pthread_create(&thread_reset_es, NULL,thread_restart_es_stuck, (void *)empty);// select info from user_groups table.
+	if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); return;}
+
+	rc = pthread_create(&thread_check_network, NULL,thread_suricata_configuration_check, (void *)empty);// select info from user_groups table.
 	if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); return;}
 
 	//rc = pthread_create(&thread_script, NULL,thread_php_script,(void *)empty);
@@ -392,6 +404,40 @@ void get_pcap_filter(string & output,string & pcap){
 	}
 }
 
+
+void *thread_suricata_configuration_check(void *threadid){
+        char suricata_cmd[5000];
+        FILE* ppipe_suricata;
+        string output,pcap,interface;
+	
+	while(1){
+		if(sniffer_mode==1){
+			es_get_config("/telepath-config/config/config_was_changed_id/_source",output);
+			if(output.compare("1") == 0){
+				syslog (LOG_NOTICE,"Suricata Configuration Was Changed[!!!]");
+				//Stop suricata
+				ppipe_suricata = popen("killall -9 Suricata-Main > /dev/null 2>&1 || true","w");
+				pclose(ppipe_suricata);	
+
+				//init the af-packet script
+				FILE* af_packet = popen("/opt/telepath/suricata/af-packet.sh > /dev/null 2>&1 || true", "w");
+			        pclose(af_packet);
+
+				//Restart suricata
+				sprintf( suricata_cmd,"/opt/telepath/suricata/suricata -D -c /opt/telepath/suricata/suricata.yaml --af-packet tcp port 80");
+				syslog (LOG_NOTICE,"%s",suricata_cmd);
+				ppipe_suricata = popen(suricata_cmd,"w");
+				pclose(ppipe_suricata);
+
+				//change the flag back
+				es_insert("/telepath-config/config/config_was_changed_id","{\"value\":\"0\"}");
+			}
+		}
+		sleep(60);
+	}
+}
+
+
 void get_interface_name(string & output,string & interface){
 	size_t find_pos = output.find("interface_name\"");
 	if(find_pos != string::npos ){
@@ -457,9 +503,9 @@ void *thread_init_suricata(void *threadid){
 						sleep(2);
 						restart_program();
 					}else{
-						if(reply->integer > 1000000){
+						if(reply->integer > 1500000){
 							syslog(LOG_NOTICE, "Redis is full: %lld",reply->integer);
-							sleep(5);
+							sleep(5);	
 						}else if(reply->integer == 0){
 							syslog(LOG_NOTICE, "Redis is empty");
 							sleep(5);

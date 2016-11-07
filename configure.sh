@@ -65,7 +65,7 @@ DATACONF='/opt/telepath/conf/database.conf'
 #MYSQL_PORT="3306"
 #MYSQL_USER="root"
 conf_maintenence() {
-    chmod +x /opt/telepath/suricata/run.sh
+    #chmod +x /opt/telepath/suricata/run.sh
 	chmod +x /opt/telepath/suricata/suricata
 	chmod +x /opt/telepath/suricata/af-packet.sh
     chmod 755 /opt/telepath/suricata/af-packet.sh
@@ -309,7 +309,8 @@ binaries() {
 					sed -i 's/com.amazonaws: WARN/ ^#com.amazonaws: WARN/g' /opt/telepath/db/elasticsearch/config/loggin.yml
 					echo -e "*	soft nofile 100000\n* hard nofile  100000" >> /etc/security/limits.conf
 					echo "es=\$(grep MemTotal /proc/meminfo | awk '{print \$2/2/1000000}'  | head -c1)'g'; export ES_HEAP_SIZE=\$es;" >> ~/.bashrc
-					echo "es=\$(grep MemTotal /proc/meminfo | awk '{print \$2/2/1000000}'  | head -c1)'g'; export ES_HEAP_SIZE=\$es;" >> /etc/rc.local
+					echo "es=\$(grep MemTotal /proc/meminfo | awk '{print \$2/2/1000000}'  | head -c1)'g'; export ES_HEAP_SIZE=\$es;" >> /root/.bashrc
+					echo "es=\$(grep MemTotal /proc/meminfo | awk '{print \$2/2/1000000}'  | head -c1)'g'; export ES_HEAP_SIZE=\$es; exit 0" > /etc/rc.local
 					echo "script.groovy.sandbox.enabled: true" >> /opt/telepath/db/elasticsearch/config/elasticsearch.yml
 					echo "http://localhost:9200" > /opt/telepath/db/elasticsearch/config/connect.conf
 			else
@@ -801,5 +802,11 @@ case "$1" in
 	;;
 
 esac
+telepath start
+clear
+echo ""
+echo "Telepath v3 installation completed!"
+echo "Please open the browser for Telepath application at:"
+echo "http://YOUR_SERVER_ADDRESS:8000/"
 
 exit 0
