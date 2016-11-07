@@ -256,7 +256,7 @@ void demonize(){
 
 
 void startThreads(){
-	pthread_t thread_disk_space,thread_elasticsearch,thread_reset_es,thread_script,thread_script2; 
+	pthread_t thread_disk_space,thread_elasticsearch,thread_reset_es,thread_check_network; 
 	unsigned long rc,empty=0;
 
 	rc = pthread_create(&thread_disk_space, NULL,thread_check_disk_space, (void *)empty);// select info from user_groups table.
@@ -266,6 +266,9 @@ void startThreads(){
 	if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); return;}
 
 	rc = pthread_create(&thread_reset_es, NULL,thread_restart_es_stuck, (void *)empty);// select info from user_groups table.
+	if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); return;}
+
+	rc = pthread_create(&thread_check_network, NULL,thread_suricata_configuration_check, (void *)empty);// select info from user_groups table.
 	if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); return;}
 
 	//rc = pthread_create(&thread_script, NULL,thread_php_script,(void *)empty);

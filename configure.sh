@@ -425,7 +425,7 @@ conf_update_apache() {
 
 	# Modify sudoers
         echo "Defaults:$USER !requiretty" >> /etc/sudoers
-	echo "$USER ALL = (ALL) NOPASSWD: /opt/telepath/bin/telepath" >> /etc/sudoers
+	echo "$USER ALL = (ALL) NOPASSWD: /opt/telepath/bin/telepath, /opt/telepath/openresty/nginx/sbin/nginx"	 >> /etc/sudoers
 
 	if [ ! -d /opt/telepath/ui/html/files ]; then
 		mkdir /opt/telepath/ui/html/files
