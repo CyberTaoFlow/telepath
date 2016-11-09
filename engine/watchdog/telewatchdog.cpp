@@ -413,6 +413,7 @@ void *thread_suricata_configuration_check(void *threadid){
 	while(1){
 		if(sniffer_mode==1){
 			es_get_config("/telepath-config/config/config_was_changed_id/_source",output);
+
 			if(output.compare("1") == 0){
 				syslog (LOG_NOTICE,"Suricata Configuration Was Changed[!!!]");
 				//Stop suricata
@@ -422,9 +423,11 @@ void *thread_suricata_configuration_check(void *threadid){
 				//init the af-packet script
 				FILE* af_packet = popen("/opt/telepath/suricata/af-packet.sh > /dev/null 2>&1 || true", "w");
 			        pclose(af_packet);
+				
+				get_pcap_filter(output,pcap);
 
 				//Restart suricata
-				sprintf( suricata_cmd,"/opt/telepath/suricata/suricata -D -c /opt/telepath/suricata/suricata.yaml --af-packet tcp port 80");
+				sprintf( suricata_cmd,"/opt/telepath/suricata/suricata -D -c /opt/telepath/suricata/suricata.yaml --af-packet tcp port 80 %s > /dev/null 2>&1",pcap.c_str());
 				syslog (LOG_NOTICE,"%s",suricata_cmd);
 				ppipe_suricata = popen(suricata_cmd,"w");
 				pclose(ppipe_suricata);
