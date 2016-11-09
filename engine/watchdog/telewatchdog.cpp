@@ -413,27 +413,34 @@ void *thread_suricata_configuration_check(void *threadid){
 	while(1){
 		if(sniffer_mode==1){
 			es_get_config("/telepath-config/config/config_was_changed_id/_source",output);
-
 			if(output.compare("1") == 0){
-				syslog (LOG_NOTICE,"Suricata Configuration Was Changed[!!!]");
-				//Stop suricata
-				ppipe_suricata = popen("killall -9 Suricata-Main > /dev/null 2>&1 || true","w");
-				pclose(ppipe_suricata);	
+				try{
+					es_get_config("/telepath-config/interfaces/interface_id/_source",output);
+	                        	get_pcap_filter(output,pcap);
+	                        	get_interface_name(output,interface);
 
-				//init the af-packet script
-				FILE* af_packet = popen("/opt/telepath/suricata/af-packet.sh > /dev/null 2>&1 || true", "w");
-			        pclose(af_packet);
-				
-				get_pcap_filter(output,pcap);
+					syslog (LOG_NOTICE,"Suricata Configuration Was Changed[!!!]");
+					//Stop suricata
+					ppipe_suricata = popen("killall -9 Suricata-Main > /dev/null 2>&1 || true","w");
+					pclose(ppipe_suricata);	
+	
+					//init the af-packet script
+					FILE* af_packet = popen("/opt/telepath/suricata/af-packet.sh > /dev/null 2>&1 || true", "w");
+				        pclose(af_packet);
 
-				//Restart suricata
-				sprintf( suricata_cmd,"/opt/telepath/suricata/suricata -D -c /opt/telepath/suricata/suricata.yaml --af-packet tcp port 80 %s > /dev/null 2>&1",pcap.c_str());
-				syslog (LOG_NOTICE,"%s",suricata_cmd);
-				ppipe_suricata = popen(suricata_cmd,"w");
-				pclose(ppipe_suricata);
+					//Restart suricata
+					sprintf( suricata_cmd,"ifconfig %s up; ifconfig %s promisc;",interface.c_str(),interface.c_str());
+					ppipe_suricata = popen(suricata_cmd,"w");
+					pclose(ppipe_suricata);
 
-				//change the flag back
-				es_insert("/telepath-config/config/config_was_changed_id","{\"value\":\"0\"}");
+					sprintf( suricata_cmd,"/opt/telepath/suricata/suricata -D -c /opt/telepath/suricata/suricata.yaml --af-packet %s > /dev/null 2>&1",pcap.c_str());
+					syslog (LOG_NOTICE,"%s",suricata_cmd);
+					ppipe_suricata = popen(suricata_cmd,"w");
+					pclose(ppipe_suricata);
+
+					//change the flag back
+					es_insert("/telepath-config/config/config_was_changed_id","{\"value\":\"0\"}");
+				}catch(...){}
 			}
 		}
 		sleep(60);
