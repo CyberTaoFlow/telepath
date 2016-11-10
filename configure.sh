@@ -33,7 +33,7 @@ if [ -n "$(which apt-get)" ]; then
 	#sudo printf "Y\nY\nY\n" | sendmailconfig
 
 	luarocks install Lua-cURL
-	luarocks install Lua-cURL --server=https://rocks.moonscript.org/dev
+	#luarocks install Lua-cURL --server=https://rocks.moonscript.org/dev
 fi
 
 if [ -n "$(which yum)" ]; then
@@ -47,7 +47,7 @@ if [ -n "$(which yum)" ]; then
 	make
 	make install
 	luarocks install Lua-cURL
-	luarocks install Lua-cURL --server=https://rocks.moonscript.org/dev
+	#luarocks install Lua-cURL --server=https://rocks.moonscript.org/dev
 fi
 
 #echo "If mysql wasnt installed before please configure it first."
