@@ -124,6 +124,10 @@ void Rule::clean(){
 	this->threshold = 0;
 	this->cmds.clear();
 	this->criteria_count=0;
+	this->domain_block.clear();
+	this->ip_block_from.clear();
+	this->ip_block_to.clear();
+
 }
 
 void Rule::ipRangeParser(string & strIP){
@@ -353,7 +357,9 @@ void Rule::print_syslog(){
 	syslog(LOG_NOTICE,"action_name:%s",this->action_name.c_str());
 	syslog(LOG_NOTICE,"validReg:%u",(unsigned)this->validReg);
 	syslog(LOG_NOTICE,"this->criteria_count:%hu",this->criteria_count);
-        syslog(LOG_NOTICE,"------------------------------------------------------");
+	syslog(LOG_NOTICE,"Domian to block:%s",this->domain_block.c_str());
+	syslog(LOG_NOTICE,"Ip to block From:%s To:%s",this->ip_block_from.c_str(),this->ip_block_to.c_str());
+	syslog(LOG_NOTICE,"------------------------------------------------------");
 }
 
 

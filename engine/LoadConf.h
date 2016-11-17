@@ -58,7 +58,7 @@ void parseRulesJson(Json::Value & root,string & preKey,map <string,rule_group_da
                                 val = (*it).toStyledString();
                         }
 			
-			//syslog(LOG_NOTICE,"preKey:%s  key:%s  val:%s",preKey.c_str(),key.c_str(),val.c_str());
+		//	syslog(LOG_NOTICE,"preKey:%s  key:%s  val:%s",preKey.c_str(),key.c_str(),val.c_str());
 
 			if(preKey=="criteria"){
 				switch(key[0]){
@@ -85,6 +85,7 @@ void parseRulesJson(Json::Value & root,string & preKey,map <string,rule_group_da
 					case 'd':
 						if(key=="domain"){
 							rule.subdomain_name = val;
+							rule.domain_block = val;
 						}
 						else if(key=="distance"){
 							rule.distance = (unsigned short)atoi(&val[0]);
@@ -196,6 +197,16 @@ void parseRulesJson(Json::Value & root,string & preKey,map <string,rule_group_da
 						rule.user = val;
 						break;
 				}
+			}
+			
+			else if(preKey=="criteriaip"){
+				if(key=="from"){
+					rule.ip_block_from = val;
+				}
+				else if(key == "to"){
+					rule.ip_block_to = val;
+				}
+
 			}
 
 			else if(preKey=="criteriaspecific"){
