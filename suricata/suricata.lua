@@ -19,10 +19,10 @@ urlObj = require("socket.url")
 local cURL = require("cURL")
 -------------------------------------------
 
-function init (args) 
-	local needs = {} 
-	needs["protocol"] = "http" 
-	return needs 
+function init (args)
+	local needs = {}
+	needs["protocol"] = "http"
+	return needs
 end
 
 block_extensions = {}
@@ -37,7 +37,7 @@ record_hosts = {}
 count = 0
 
 
-function setup (args) 
+function setup (args)
 	-- Emptying the global configuration arrays --
 	block_extensions = {}
 	whitelist_ips = {}
@@ -160,7 +160,7 @@ function setup (args)
 	}
 	c:perform()
 	----------------------------------
-	
+
 	-- Loading domain cookies --
         login_url = es_location .. "/telepath-domains/domains/_search"
         c = cURL.easy{
@@ -185,7 +185,7 @@ function setup (args)
                                         if(tmp) then
                                                 str = string.sub(str, tmp+14, string.len(str))
                                                 tmp = string.find(str, "\"")
-						if(tmp) then 
+						if(tmp) then
                                                 	str = string.sub(str, tmp+1, string.len(str))
 						else
 							break
@@ -211,8 +211,6 @@ function setup (args)
 
         ----------------------------------
 
-
-	
 	login_url = es_location .. "/telepath-config/config/config_was_changed_id"
 	c = cURL.easy{
 		url            = login_url,
@@ -220,7 +218,7 @@ function setup (args)
 		ssl_verifyhost = false,
 		postfields = "{\"value\":\"0\"}",
 	}
-	c:perform()	
+	c:perform()
 
 	--Debug Printings
 	--for kk, vv in pairs(whitelist_ips) do
@@ -256,7 +254,7 @@ end
 function log(args)
 
 	count = count + 1
-        -- Checking if the configuration was changed. 
+        -- Checking if the configuration was changed.
         if (count > 1000) then
 		count = 0
 		config_was_changed_id = redis:lpop("C")
@@ -267,9 +265,8 @@ function log(args)
 
 	local uri = HttpGetRequestUriRaw()
 	uri = unescape(uri) --url decoding for uri & GET parameters.
-        if (uri) then
-        else
-                return
+        if not uri then
+		return
         end
 
 	query = ""
@@ -295,11 +292,11 @@ function log(args)
 
 	--Getting source IP and destination IP.
 	ipver, srcip, dstip, proto, sp, dp = SCFlowTuple()
-	
+
 	--Making decimal client IP.
-	local o1,o2,o3,o4 = srcip:match("(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)" )
-	if ( o1 ) then
-	else
+	local o1,o2,o3,o4 = srcip:match("(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)")
+
+	if ipver == 6 then
 		--Probably IPv6
 		return
 	end
@@ -317,8 +314,7 @@ function log(args)
 	local requestline = HttpGetRequestLine()
 	if requestline then
 		local tmp = string.find(requestline, " ")
-		if (tmp) then
-		else
+		if not tmp then
 			return
 		end
 		method = string.sub(requestline, 1, tmp-1)  --method.
@@ -331,8 +327,7 @@ function log(args)
 	local responseline = HttpGetResponseLine()
 	if responseline then
 		local tmp = string.find(responseline, " ")
-		if (tmp) then
-		else
+		if not tmp then
 			return
 		end
 		status = string.sub(responseline,tmp+1,tmp+3) --status code.
@@ -350,7 +345,7 @@ function log(args)
 
 	rq_body = ""
 	rs_body = ""
-	
+
 	a, o, e = HttpGetRequestBody(); --http request body.
 	if a then
 	    for n, v in ipairs(a) do
@@ -557,7 +552,7 @@ function log(args)
 	else
 		redis:lpush("Q",  msgpack.pack(request)  )
 	end
-	
+
 end
 
 function deinit (args)
