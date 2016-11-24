@@ -6,6 +6,7 @@ struct thread_struct_{  // values of attributes score.
 	unsigned short index;
 };
 
+
 string sha256(const string str)
 {
 	unsigned char hash[SHA256_DIGEST_LENGTH];
@@ -691,7 +692,7 @@ void *markovSession_thread(void *threadid)
 void *thread_sid_per_min(void *threadid)
 {
 	boost::unordered_map <unsigned int,boost::unordered_set <unsigned int> >::iterator itSessionPerMinuteHost;
-	unsigned int size,errorCheck=10,counter=0;
+	unsigned int size,errorCheck=10,counter=0,current = getRedis, delta=0;
 	while(globalEngine)
 	{
 		sleep(60);
@@ -722,14 +723,30 @@ void *thread_sid_per_min(void *threadid)
 		pthread_mutex_unlock(&mutexSessionsPerHost); //unlock
 
 		syslog(LOG_NOTICE,"Sessions:%u mMem:%u |getRedis:%u |insertElastic:%u |dropApp:%u |dropPage:%u |dropMethod:%u |dropLong:%u|",size,(unsigned int)TC->teleObjQueue.size(),getRedis,insertElastic,dropApp,dropPage,dropMethod,longSessionDrop);	
-
-		//if(errorCheck==insertElastic){
-		//	counter++;
-		//}else{
-		//	counter=0;
-		//	errorCheck=insertElastic;
-		//}
-
+		
+		delta = getRedis - current;
+		current = getRedis;
+		if(delta == 0){
+			syslog(LOG_NOTICE,"Suricata didn't recive any DATA");
+			FILE *fd = popen("telepath suricata > /dev/null 2>&1","w");
+			pclose(fd);
+		}
+		if(errorCheck==getRedis){
+			counter++;
+		}else{
+			counter=0;
+			errorCheck=getRedis;
+		}
+		
+		if(counter==3){
+	                delta = getRedis - current;
+			current = getRedis;
+        	        if(delta == 0){
+	                        syslog(LOG_NOTICE,"Suricata didn't recive any DATA");
+                        	FILE *fd = popen("telepath suricata > /dev/null 2>&1","w");
+                        	pclose(fd);
+                	}
+		}
 		//if(counter==15){
 		//	counter=0;
 		//	syslog(LOG_NOTICE,"Engine has not gotten any requests for 15 minutes ... ");
@@ -884,8 +901,14 @@ void *getAtt_thread(void *threadarg)
 
 					//--------------Page rules,Bot Intelligence & Country Rule-----------------
 					for(k=0; k<rules.size() ;k++){
-						generalRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_UserID,c_Resp_IP,c_SetCookie,c_Domain);
-						pageRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_Title,c_Uri,c_Resp_IP,c_SetCookie,c_Domain,c_StatusCode);
+						if(rules[k].domain_block.empty()){
+							generalRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_UserID,c_Resp_IP,c_SetCookie,c_Domain);
+							pageRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_Title,c_Uri,c_Resp_IP,c_SetCookie,c_Domain,c_StatusCode);
+						}
+						else if(rules[k].domain_block == c_Domain){
+							generalRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_UserID,c_Resp_IP,c_SetCookie,c_Domain);
+							pageRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_Title,c_Uri,c_Resp_IP,c_SetCookie,c_Domain,c_StatusCode);
+						}
 					}
 					//--------------------------------End--------------------------------------
 
@@ -1259,8 +1282,15 @@ void *getAtt_thread_pro(void *threadarg)
 
 					//--------------Page rules,Bot Intelligence & Country Rule-----------------
 					for(k=0; k<rules.size() ;k++){
-						generalRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_UserID,c_Resp_IP,c_SetCookie,c_Domain);
-						pageRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_Title,c_Uri,c_Resp_IP,c_SetCookie,c_Domain,c_StatusCode);
+						if(rules[k].domain_block.empty()){
+							generalRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_UserID,c_Resp_IP,c_SetCookie,c_Domain);
+							pageRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_Title,c_Uri,c_Resp_IP,c_SetCookie,c_Domain,c_StatusCode);
+					}
+					else if(rules[k].domain_block == c_Domain){
+							generalRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_UserID,c_Resp_IP,c_SetCookie,c_Domain);
+							pageRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_Title,c_Uri,c_Resp_IP,c_SetCookie,c_Domain,c_StatusCode);
+						}
+
 					}
 					//--------------------------------End--------------------------------------
 

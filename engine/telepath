@@ -61,7 +61,10 @@ END
 
 	;;
 
-
+    suricata)
+    kill -9 $(ps -A | grep Suricata | awk '{ print $1 }') > /dev/null 2>&1 || true
+    ;;
+    
 	restart)
 
 	kill $(pidof $name_telewatchdog) > /dev/null 2>&1 || true
