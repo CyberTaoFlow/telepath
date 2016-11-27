@@ -258,6 +258,47 @@ void* thread_redis_messages(void* arg)
 }
 #endif
 
+void findAndDeleteDomain(string del_domain){
+	boost::unordered_map <string,AppMode>::iterator itAppMode;
+	for(itAppMode = mAppMode.begin() ; itAppMode != mAppMode.end() ; itAppMode++ ){
+		string domain = itAppMode->first.c_str();
+		size_t found = domain.find(del_domain);
+		if(found != string::npos){
+			mAppMode.erase(itAppMode);
+			syslog(LOG_NOTICE,"Domain: %s - Had Been Deleted From Engine Brain!",domain.c_str());
+		}
+	}
+}
+
+void *thread_Delete_Domain(void *arg){
+	
+	redisContext *redis;
+	redisReply *reply;
+	
+	redis = redisConnect("127.0.0.1", 6379);
+	if(redis->err) {
+		exit(EXIT_FAILURE);
+	}
+	while(globalEngine==1){
+		int flag_queue = 1;
+		while(flag_queue==1){
+			reply = (redisReply*)redisCommand(redis, "RPOP %s","D" );
+			if ( reply->type == REDIS_REPLY_ERROR ){
+				flag_queue = 0;
+				freeReplyObject(reply);
+			}else{
+				if(reply->str != NULL){
+					findAndDeleteDomain((string)reply->str);
+				}else{
+					flag_queue = 0;
+				}
+			}
+		}
+		sleep(60);
+	}
+	pthread_exit(NULL);
+}
+
 bool validMethod(string & method){
 
 	if(methods.count(method) != 0 ){
@@ -468,7 +509,7 @@ void initSyslog(){
 void startThreads(){
 
 	unsigned long rc,empty=0;
-	pthread_t thread_sch,thread_s_p_m,thread_logins,thread_load;
+	pthread_t thread_sch,thread_s_p_m,thread_logins,thread_load,thread_delete;
 	pthread_t thread_req,thread_tokenize,thread_cmd,thread_cap,thread_app_updated;
 	pthread_t thread_m[NUM_OF_MARKOV_THREADS],thread_mS[NUM_OF_MARKOV_THREADS],thread_gA[NUM_OF_GET_ATT],thread_gAP[NUM_OF_GET_ATT];
 
@@ -514,6 +555,11 @@ void startThreads(){
 	rc = pthread_create(&thread_app_updated, NULL, thread_app_was_updated, (void *)empty);
 	if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); exit(1);}
 	pthread_detach(thread_sch);
+
+	rc = pthread_create(&thread_delete, NULL, thread_Delete_Domain, (void *)empty);
+	if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); exit(1);}
+	pthread_detach(thread_sch);
+
 
 	// Create NUM_OF_MARKOV_THREADS threads which calculate the attribute scores.
 	for(markov_i=0 ; markov_i < NUM_OF_MARKOV_THREADS;markov_i++){
