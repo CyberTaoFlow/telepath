@@ -274,22 +274,27 @@ void *thread_Delete_Domain(void *arg){
 	
 	redisContext *redis;
 	redisReply *reply;
-
+	
 	redis = redisConnect("127.0.0.1", 6379);
 	if(redis->err) {
 		exit(EXIT_FAILURE);
 	}
-	
 	while(globalEngine==1){
-		reply = (redisReply*)redisCommand(redis, "RPOP %s","D" );
-		if ( reply->type == REDIS_REPLY_ERROR ){
-			freeReplyObject(reply);
-		}else{
-			if(reply->str != NULL){
-				findAndDeleteDomain((string)reply->str);
+		int flag_queue = 1;
+		while(flag_queue==1){
+			reply = (redisReply*)redisCommand(redis, "RPOP %s","D" );
+			if ( reply->type == REDIS_REPLY_ERROR ){
+				flag_queue = 0;
+				freeReplyObject(reply);
+			}else{
+				if(reply->str != NULL){
+					findAndDeleteDomain((string)reply->str);
+				}else{
+					flag_queue = 0;
+				}
 			}
 		}
-		sleep(30);
+		sleep(60);
 	}
 	pthread_exit(NULL);
 }
