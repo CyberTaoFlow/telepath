@@ -1,7 +1,7 @@
 -- include additional path for libraries
 
 package.path = package.path .. ";/usr/share/lua/5.1/?.lua"
--- hilik
+
 --Ubuntu cpath.
 package.cpath = package.cpath .. ";/usr/lib/x86_64-linux-gnu/lua/5.1/?.so"
 
@@ -162,54 +162,54 @@ function setup (args)
 	----------------------------------
 
 	-- Loading domain cookies --
-        login_url = es_location .. "/telepath-domains/domains/_search"
-        c = cURL.easy{
-                url            = login_url,
-                postfields     = "{\"size\":10000,\"fields\":[\"AppCookieName\"],\"query\":{\"bool\":{\"must\":{\"exists\":{\"field\":\"AppCookieName\"}}}}}",
-                ssl_verifypeer = false,
-                ssl_verifyhost = false,
-                writefunction  = function(str)
-                        while true do
-                                local tmp = string.find(str, "_id\"")
-                                if (tmp) then
-                                        str = string.sub(str, tmp+4, string.len(str))
-                                        tmp = string.find(str, "\"")
-                                        local tmp2 = string.find(str, "\",")
-                                        if(tmp2) then
-                                                output = string.sub(str, tmp+1, tmp2-1)
-                                        else
-                                                break
-                                        end
-                                        local host = output
-                                        tmp = string.find(str, "AppCookieName\"")
-                                        if(tmp) then
-                                                str = string.sub(str, tmp+14, string.len(str))
-                                                tmp = string.find(str, "\"")
+		login_url = es_location .. "/telepath-domains/domains/_search"
+		c = cURL.easy{
+	        url = login_url,
+	        postfields = "{\"size\":10000,\"fields\":[\"AppCookieName\"],\"query\":{\"bool\":{\"must\":{\"exists\":{\"field\":\"AppCookieName\"}}}}}",
+	        ssl_verifypeer = false,
+	        ssl_verifyhost = false,
+	        writefunction = function(str)
+			while true do
+				local tmp = string.find(str, "_id\"")
+				if (tmp) then
+					str = string.sub(str, tmp+4, string.len(str))
+					tmp = string.find(str, "\"")
+					local tmp2 = string.find(str, "\",")
+					if(tmp2) then
+						output = string.sub(str, tmp+1, tmp2-1)
+					else
+						break
+					end
+					local host = output
+					tmp = string.find(str, "AppCookieName\"")
+					if(tmp) then
+						str = string.sub(str, tmp+14, string.len(str))
+						tmp = string.find(str, "\"")
 						if(tmp) then
-                                                	str = string.sub(str, tmp+1, string.len(str))
+							str = string.sub(str, tmp+1, string.len(str))
 						else
 							break
 						end
-                                                tmp = string.find(str, "\"")
+						tmp = string.find(str, "\"")
 						if(tmp) then
-                                                	output = string.sub(str, 0, tmp-1)
-                                                	load_cookies[host] = output
+							output = string.sub(str, 0, tmp-1)
+							load_cookies[host] = output
 						else
 							break
 						end
-                                        else
-                                                break
-                                        end
-                                        --print(host .. "->" .. output)
-                                else
-                                        break
-                                end
-                        end
-                end
-        }
-        c:perform()
+					else
+						break
+					end
+					--print(host .. "->" .. output)
+					else
+						break
+					end
+				end
+			end
+		}
+		c:perform()
 
-        ----------------------------------
+	----------------------------------
 
 	login_url = es_location .. "/telepath-config/config/config_was_changed_id"
 	c = cURL.easy{
@@ -254,20 +254,20 @@ end
 function log(args)
 
 	count = count + 1
-        -- Checking if the configuration was changed.
-        if (count > 1000) then
+		-- Checking if the configuration was changed.
+		if (count > 1000) then
 		count = 0
 		config_was_changed_id = redis:lpop("C")
-	        if (config_was_changed_id) then
-        	        setup()
-	        end
+			if (config_was_changed_id) then
+				setup()
+			end
 	end
 
 	local uri = HttpGetRequestUriRaw()
 	uri = unescape(uri) --url decoding for uri & GET parameters.
-        if not uri then
+	if not uri then
 		return
-        end
+	end
 
 	query = ""
 	local question_mark = string.find(uri, "?")
@@ -348,9 +348,9 @@ function log(args)
 
 	a, o, e = HttpGetRequestBody(); --http request body.
 	if a then
-	    for n, v in ipairs(a) do
-		rq_body = rq_body .. v
-	    end
+		for n, v in ipairs(a) do
+			rq_body = rq_body .. v
+		end
 	end
 
 	rq_body = unescape(rq_body) --url decoding for response body(POST parameters).
@@ -358,8 +358,8 @@ function log(args)
 	a, o, e = HttpGetResponseBody(); --http response body.
 	if a then
 	    for n, v in ipairs(a) do
-		rs_body = rs_body .. v
-	    end
+			rs_body = rs_body .. v
+		end
 	end
 
 	--Time stamp
@@ -503,12 +503,12 @@ function log(args)
 	if hr_queue then
 		hybrid_record = msgpack.unpack(hr_queue)
 		if (hybrid_record.value == "0") then
-                        for key, val in pairs(records) do
-                                if (tostring(val) == hybrid_record.id) then
-                                        records[key] = nil
+			for key, val in pairs(records) do
+				if (tostring(val) == hybrid_record.id) then
+					records[key] = nil
 					record_hosts[key] = nil
-                                end
-                        end
+				end
+			end
 		else
 			if (hybrid_record.mode == "i") then
 				records[hybrid_record.value] = hybrid_record.id
