@@ -17,18 +17,17 @@ if [ ! -f $MAIN_JSON ]; then
 fi
 
 if [ -n "$(which apt-get)" ]; then
-	#apt-get -y install dialog php5 libapache2-mod-php5 gdb php5-mysql mysql-common mysql-server lua5.1 lua-socket libcurl-ocaml-dev luarocks jq #sendmail
-	apt-get -y install dialog php5 libapache2-mod-php5 gdb php5-sqlite lua-sec lua5.1 lua-socket libcurl-ocaml-dev luarocks jq #sendmail
-	apt-get -y install php-pear php5-dev php5-gd
-	pecl install msgpack-0.5.7
-#	if [ ! -f "/etc/php5/mods-available/msgpack.ini" ]; then
-	echo extension=msgpack.so > /etc/php5/mods-available/msgpack.ini
-	cd /etc/php5/apache2/conf.d/
-	ln -s ../../mods-available/msgpack.ini ./
-	mv ./msgpack.ini ./20-msgpack.ini
-	cd /etc/php5/cli/conf.d/
-	ln -s ../../mods-available/msgpack.ini ./
-	mv ./msgpack.ini ./20-msgpack.ini
+	# apt-get -y install dialog php5 libapache2-mod-php5 gdb php5-sqlite lua-sec lua5.1 lua-socket libcurl-ocaml-dev luarocks jq #sendmail
+	apt-get -y install dialog php7.0 libapache2-mod-php7.0 gdb php7.0-sqlite lua-sec lua5.1 lua-socket libcurl-ocaml-dev luarocks jq #sendmail
+	apt-get -y install php-pear php7.0-dev php7.0-gd php7.0-msgpack
+	# pecl install msgpack-0.5.7
+	# echo extension=msgpack.so > /etc/php5/mods-available/msgpack.ini
+	# cd /etc/php5/apache2/conf.d/
+	# ln -s ../../mods-available/msgpack.ini ./
+	# mv ./msgpack.ini ./20-msgpack.ini
+	# cd /etc/php5/cli/conf.d/
+	# ln -s ../../mods-available/msgpack.ini ./
+	# mv ./msgpack.ini ./20-msgpack.ini
 #	fi
 	#sudo printf "Y\nY\nY\n" | sendmailconfig
 
@@ -38,7 +37,7 @@ fi
 
 if [ -n "$(which yum)" ]; then
 	#yum -y install dialog php php5 libapache2-mod-php5 php-cli gdb php-mysql mysql mysql-server mod_ssl lua-socket-devel.x86_64 ocaml-curl-devel.x86_64 lua-devel.x86_64 flex.x86_64 bison.x86_64 jq
-	yum -y install dialog php php5 libapache2-mod-php5 php-cli gdb php5-sqlite mod_ssl lua-sec lua-socket-devel.x86_64 ocaml-curl-devel.x86_64 lua-devel.x86_64 flex.x86_64 bison.x86_64 jq
+	yum -y install dialog php php7.0 libapache2-mod-php7.0 php-cli gdb php7.0-sqlite mod_ssl lua-sec lua-socket-devel.x86_64 ocaml-curl-devel.x86_64 lua-devel.x86_64 flex.x86_64 bison.x86_64 jq
 	cd /tmp/
 	wget http://luarocks.org/releases/luarocks-2.0.6.tar.gz
 	tar -xzvf luarocks-2.0.6.tar.gz
