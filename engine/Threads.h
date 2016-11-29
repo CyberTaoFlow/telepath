@@ -90,10 +90,11 @@ void pageRules(Rule & rule,Session & session,string & c_IP,long long & c_RID,uns
 			}
 		}
 	}*/
-
+	string tmp_c_Uri= c_Uri;
+	transform(tmp_c_Uri.begin(), tmp_c_Uri.end(), tmp_c_Uri.begin(),::tolower);
 	if(rule.method[0] == 'U'){ // U=URI.
 		if(rule.final_type == 's'){ // s=stringmatch
-			if ( c_Uri.find(rule.str_match) != string::npos ){
+			if ( tmp_c_Uri.find(rule.str_match) != string::npos ){
                                 if(rule.negate == false){
                                         pthread_mutex_lock(&mutexgetatt5);
                                         insert_alert(rule,c_RID,c_IP,resp_ip,cookie,hostname);
