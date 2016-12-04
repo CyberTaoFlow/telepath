@@ -64,6 +64,11 @@ DATACONF='/opt/telepath/conf/database.conf'
 #MYSQL_PORT="3306"
 #MYSQL_USER="root"
 conf_maintenence() {
+    # Make sure we have exactly one copy of once a minute reports cron
+	command="php /opt/telepath/ui/html/index.php cron reports"
+	job="* * * * * $command"
+	cat <(fgrep -i -v "$command" <(crontab -l)) <(echo "$job") | crontab -
+
     #chmod +x /opt/telepath/suricata/run.sh
 	chmod +x /opt/telepath/suricata/suricata
 	chmod +x /opt/telepath/suricata/af-packet.sh
