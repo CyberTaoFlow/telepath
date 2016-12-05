@@ -217,7 +217,7 @@ public:
 			}
 
 			for(i_rule=0 ; i_rule<rules.size() ; i_rule++ ){
-				if(rules[i_rule].final_type == 'N'){
+				if(rules[i_rule].final_type == 'G'){
 					if(s.status=='v'){
 						ipSwitching(rules[i_rule],s,i,s.vRequest[i].RID,s.vRequest[i].user_ip,s.vRequest[i].resp_ip,"phpsessid",s.vRequest[i].host_name);
 					}
