@@ -1,9 +1,9 @@
 Package: telepath
-Version: 3.0.4dd3d209ubuntu14.04
+Version: 3.0.290ubuntu14.04
 Section: misc
 Priority: optional
 Architecture: amd64
 Maintainer: Hybrid Security <info@hybridsec.com>
-Pre-Depends: php5-fpm, php5-sqlite, php5-curl, geoip-bin, dialog, libyaml-0-2, libnet1, redis-server, php5-redis, openjdk-7-jre, php5-cli, apache2
+Pre-Depends: php7.0-fpm, php7.0-sqlite3, php7.0-curl, geoip-bin, dialog, libyaml-0-2, libnet1, redis-server, php7.0-redis, openjdk-7-jre, php7.0-cli, apache2
 Description: Hybrid Telepath Web Fraud Prevention.
 
