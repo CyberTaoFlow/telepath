@@ -560,7 +560,7 @@ conf_init_cron() {
         	( crontab -l | grep -v "$croncmd" ; echo "$cronjob" ) | crontab -
 	fi
 	echo "--> Setting .htaccess production ENV."
-	echo -e "\nSetEnv ENVIRONMENT production" >> /opt/telepath/ui/html/.htaccess
+	echo -e "\nSetEnv CI_ENV production" >> /opt/telepath/ui/html/.htaccess
 }
 
 conf_setup_perms() {
