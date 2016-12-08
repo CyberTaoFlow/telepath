@@ -878,6 +878,13 @@ while(globalEngine){ // while engine learning - run the engine every time we get
 
 				}
 			}else{
+				if(itAppMode->second.mode == 2){
+                                                snprintf(url_mode,sizeof(url_mode)-1,"/telepath-domains/domains/%s/_update",teleobj.mParams['g'/*AppID*/].c_str());
+                                                sprintf(postfields_mode,"{\"doc\":{\"learning_so_far\":%u}}",itAppMode->second.counter);
+                                                es_mapping(url_mode,postfields_mode);
+
+				}
+
 				if( (itAppMode->second.counter % 1000) == 0 ){
 					snprintf(url_mode,sizeof(url_mode)-1,"/telepath-domains/domains/%s/_update",teleobj.mParams['g'/*AppID*/].c_str());
 					sprintf(postfields_mode,"{\"doc\":{\"learning_so_far\":%u}}",itAppMode->second.counter);
