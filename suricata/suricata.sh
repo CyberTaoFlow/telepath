@@ -33,7 +33,7 @@ ldconfig
 #cd oisf
 #rm -rf /opt/telepath/suricata/bin
 cd /home
-VER=3.1
+VER=3.2
 wget "http://www.openinfosecfoundation.org/download/suricata-$VER.tar.gz"
 tar -xvzf "suricata-$VER.tar.gz"
 cd "suricata-$VER"
