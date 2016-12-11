@@ -820,7 +820,7 @@ while(globalEngine){ // while engine learning - run the engine every time we get
 		if( itAppMode != mAppMode.end() ){
 			itAppMode->second.counter++;
 			if(itAppMode->second.mode == 1){
-				if(itAppMode->second.counter > itAppMode->second.move_to_production ){
+				if(itAppMode->second.counter > itAppMode->second.move_to_production || itAppMode->second.counter > moveToProductionAfter ){
 					itAppMode->second.mode=2;
 
 					// Normalizing scores for each aspect -> landing,flow and geo.
