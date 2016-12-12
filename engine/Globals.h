@@ -73,7 +73,7 @@ float operationPercent;
 unsigned short write_to_syslog;
 unsigned short addUnknownApp;
 
-unsigned int moveToProductionAfter; // move to production after this number of requests.
+unsigned int moveToProductionAfter=1000000; // move to production after this number of requests.
 unsigned int markov_i;
 unsigned int noisyFlag=1;
 unsigned int globalEngine=1; // Engine Mode.

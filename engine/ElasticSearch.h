@@ -138,7 +138,7 @@ void initElasticSearchData(){
 	es_insert("/telepath-scheduler/times/Saturday/_create","{\"times\":[]}");
 
 	es_insert("/telepath-config/config/operation_mode_id/_create","{\"value\":\"1\"}");
-	es_insert("/telepath-config/config/move_to_production_id/_create","{\"value\":100000}");
+	es_insert("/telepath-config/config/move_to_production_id/_create","{\"value\":1000000}");
 	es_insert("/telepath-config/config/eta_id/_create","{\"value\":\"0d 0h 0m\"}");
 	es_insert("/telepath-config/config/max_session_id/_create","{\"value\":\"50000\"}");
 	es_insert("/telepath-config/config/max_distance_id/_create","{\"value\":\"85\"}");
