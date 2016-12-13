@@ -728,7 +728,7 @@ void *thread_sid_per_min(void *threadid)
 		delta = getRedis - current;
 		current = getRedis;
 		if(delta == 0){
-			syslog(LOG_NOTICE,"Suricata didn't recive any DATA");
+			syslog(LOG_NOTICE,"Suricata didn't receive any DATA");
 			FILE *fd = popen("telepath suricata > /dev/null 2>&1","w");
 			pclose(fd);
 		}
