@@ -121,8 +121,8 @@ void load_config(){
 	string output;
 
 	es_get_config("/telepath-config/config/move_to_production_id/_source",output);
-	moveToProductionAfter = (unsigned int)atoi(output.c_str());
-	syslog(LOG_NOTICE,"Load Config-> moveAfter: %u Output: %u",moveToProductionAfter,(unsigned int)atoi(output.c_str()));
+	unsigned int temp = (unsigned int)atoi(output.c_str());
+	if (temp != 0 ) moveToProductionAfter = temp;
 	//es_get_config("/telepath-config/config/max_session_id/_source",output);
 	//loadMaxSession((unsigned int)atoi(output.c_str()));
 	es_get_config("/telepath-config/config/max_distance_id/_source",output);
@@ -823,7 +823,6 @@ while(globalEngine){ // while engine learning - run the engine every time we get
 			if(itAppMode->second.mode == 1){
 				if(itAppMode->second.counter > itAppMode->second.move_to_production || itAppMode->second.counter > moveToProductionAfter ){
 					itAppMode->second.mode=2;
-					syslog(LOG_NOTICE,"App: %s, Number Of Requests: %u, GlobalMoveToProd: %u,personalMoveToProd:%u",teleobj.mParams['g'/*AppID*/].c_str(),itAppMode->second.counter, moveToProductionAfter,itAppMode->second.move_to_production);
 					// Normalizing scores for each aspect -> landing,flow and geo.
 					score_numeric[teleobj.mParams['g'/*AppID*/]].insert(score_data[teleobj.mParams['g'/*AppID*/]]);
 					// Cleaning unnormalized data.
