@@ -560,7 +560,7 @@ conf_init_cron() {
         	( crontab -l | grep -v "$croncmd" ; echo "$cronjob" ) | crontab -
 	fi
 	# executing init cron jobs
-	php /opt/telepath/ui/html/index.php cron
+	eval $croncmd
 	echo "--> Setting .htaccess production ENV."
 	echo -e "\nSetEnv CI_ENV production" >> /opt/telepath/ui/html/.htaccess
 }
