@@ -536,6 +536,7 @@ cron_jobs(){
     echo "*/2 * * * * /opt/telepath/teleup.sh" >> currentCrons
     crontab currentCrons
     rm currentCrons
+    eval "php /opt/telepath/ui/html/index.php cron"
 }
 conf_create_tbls() {
 
@@ -548,7 +549,6 @@ conf_create_tbls() {
 }
 
 conf_init_cron() {
-
 	# Add new job update+email (PHP)
 	croncmd="php /opt/telepath/ui/html/index.php cron"
         cronjob="0 * * * * $croncmd"
@@ -560,7 +560,7 @@ conf_init_cron() {
         	( crontab -l | grep -v "$croncmd" ; echo "$cronjob" ) | crontab -
 	fi
 	# executing init cron jobs
-	eval $croncmd
+	# eval $croncmd
 	echo "--> Setting .htaccess production ENV."
 	echo -e "\nSetEnv CI_ENV production" >> /opt/telepath/ui/html/.htaccess
 }
