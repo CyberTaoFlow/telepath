@@ -62,12 +62,72 @@
 #include "EngineGuard.h"
 #include "scheduler.h"
 #include "Threads.h"
+#include "Range.h"
 
 thread_struct_ tstr[NUM_OF_GET_ATT]  = {{0}};
 thread_struct_ tstrP[NUM_OF_GET_ATT] = {{0}};
 
 using namespace std;
 
+
+//Loading filter extensions
+void load_filter_extensions(){
+	size_t pos = 0;
+	string output;
+	es_get_config("/telepath-config/filter_extensions/extensions_id/_source",output);
+	pos=output.find("[\"");
+	output.erase(0,pos+2);
+	while((pos = output.find("\",\"")) != string::npos){
+		sFilterExtensions.insert(output.substr(0,pos));
+		output.erase(0,pos+3);
+	}
+	
+}
+
+//Loading whitelist ips
+void load_whitelist_ips(){
+        size_t pos = 0;
+        string output,toIP,fromIP;
+	Range tempRange;
+	whitelist_ips.clear();
+	vector<Range>::iterator it = whitelist_ips.begin();	
+        es_get_config("/telepath-config/ips/whitelist_id/_source",output);
+	while((pos = output.find("to\":\"")) != string::npos){
+		output.erase(0,pos+5);
+		pos = output.find("\",\"from\":\"");
+		toIP = output.substr(0,pos);
+		output.erase(0,pos+10);
+		pos = output.find("\"},{");
+		if(pos == string::npos) pos = output.find("\"}");
+		fromIP = output.substr(0,pos);
+		output.erase(0,pos+4);
+		tempRange.init(ipToNum(toIP),ipToNum(fromIP));
+		it = whitelist_ips.insert(it,tempRange);
+	}
+}
+
+//Loading loadbalancer ips
+void load_loadbalancer_ips(){
+	size_t pos = 0;
+	string output,toIP,fromIP;
+	Range tempRange;
+	loadbalancer_ips.clear();
+	vector<Range>::iterator it = loadbalancer_ips.begin();
+	es_get_config("/telepath-config/ips/loadbalancerips_id/_source",output);
+        while((pos = output.find("to\":\"")) != string::npos){
+                output.erase(0,pos+5);
+                pos = output.find("\",\"from\":\"");
+                toIP = output.substr(0,pos);
+                output.erase(0,pos+10);
+                pos = output.find("\"},{");
+                if(pos == string::npos) pos = output.find("\"}");
+                fromIP = output.substr(0,pos);
+                output.erase(0,pos+4);
+		syslog(LOG_NOTICE,"to: %s, from: %s",toIP.c_str(),fromIP.c_str());
+                tempRange.init(ipToNum(toIP),ipToNum(fromIP));
+                it = loadbalancer_ips.insert(it,tempRange);
+        }
+}
 
 
 //initiating all pthread semaphores.
@@ -145,6 +205,9 @@ void load_config(){
 	password_masking = (unsigned short)atoi(output.c_str());
 	es_get_config("/telepath-config/config/cc_masking_id/_source",output);
 	cc_masking = (unsigned short)atoi(output.c_str());
+	//load_filter_extensions();
+	//load_whitelist_ips();
+	//load_loadbalancer_ips();
 }
 
 void checkOperation(){

@@ -163,6 +163,8 @@ vector <char> production_values_flag;
 vector <LogFile> apache_logs;
 vector <LogFile> iis_logs;
 vector <Rule> rules;
+vector <Range> whitelist_ips;
+vector <Range> loadbalancer_ips;
 //vector < Case > vCases;
 vector <unsigned int> addRulesIDs;
 vector <unsigned int> addActionIDs;
@@ -193,11 +195,10 @@ map <string,rule_group_data>::iterator itRulesGroup;
 
 boost::unordered_map <string,AppMode> mAppMode;
 
-
-
 boost::unordered_map <long long,ElasticAtt> mRidAtts;// save all Session data.
 boost::unordered_map <long long,ElasticData> mRidAlertAndAction;// save all Session data.
 boost::unordered_set <string> sTorIntelligenceIP;
+boost::unordered_set <string> sFilterExtensions;
 boost::unordered_set <string> sBotIntelligenceIP;
 boost::unordered_set <long long> sRidSaveDB;
 boost::unordered_map <unsigned int,boost::unordered_map <string,UserReputation> > mReputationUsers;
