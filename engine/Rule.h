@@ -61,8 +61,6 @@ public:
 	unsigned short criteria_count;
 
 	string domain_block;
-	string ip_block_from;
-	string ip_block_to;
 
 	boost::unordered_map <string,boost::unordered_set<int> >mCardinal_IP_att;
 	boost::unordered_map <unsigned int,boost::unordered_set<int> >mCardinal_SID_att;

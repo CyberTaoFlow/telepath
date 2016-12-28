@@ -125,8 +125,6 @@ void Rule::clean(){
 	this->cmds.clear();
 	this->criteria_count=0;
 	this->domain_block.clear();
-	this->ip_block_from.clear();
-	this->ip_block_to.clear();
 
 }
 
@@ -271,6 +269,11 @@ void Rule::setCriterionType(){
 	this->subtype.clear();
 	this->category.clear();
 	this->type.clear();
+	//Range tempRange;
+	//if(!this->ip_block_to.empty){
+	//	tempRange.Range(ip_block_to,ip_block_from);
+	//	this->vecRangeIP.insert(vecRangeIP.size()+1,tempRange);
+	//}
 	//this->print_syslog();
 }
 
@@ -321,6 +324,7 @@ void Rule::print(){
 }
 
 void Rule::print_syslog(){
+	unsigned int i;
 	syslog(LOG_NOTICE,"criterion_hash:%u",this->criterion_hash);
 	syslog(LOG_NOTICE,"rule_name:%s",this->rule_name.c_str());
 	syslog(LOG_NOTICE,"method:%s",this->method.c_str());
@@ -346,6 +350,11 @@ void Rule::print_syslog(){
 	syslog(LOG_NOTICE,"str_length_high:%hu",this->str_length_high);
 	syslog(LOG_NOTICE,"aggregate:%hu",this->aggregate);
 	syslog(LOG_NOTICE,"negate:%u",(unsigned)this->negate);
+	syslog(LOG_NOTICE,"ip_str:%s",this->ip_str.c_str());
+	for(i=0;i<this->vecRangeIP.size();i++){
+		syslog(LOG_NOTICE,"vecRangeIP: ");
+		this->vecRangeIP[i].print_syslog();
+	}
 	syslog(LOG_NOTICE,"ip_neg:%hu",this->ip_neg);
 	syslog(LOG_NOTICE,"time:%f",this->ts);
 	syslog(LOG_NOTICE,"distance:%hu",this->distance);
@@ -358,7 +367,6 @@ void Rule::print_syslog(){
 	syslog(LOG_NOTICE,"validReg:%u",(unsigned)this->validReg);
 	syslog(LOG_NOTICE,"this->criteria_count:%hu",this->criteria_count);
 	syslog(LOG_NOTICE,"Domian to block:%s",this->domain_block.c_str());
-	syslog(LOG_NOTICE,"Ip to block From:%s To:%s",this->ip_block_from.c_str(),this->ip_block_to.c_str());
 	syslog(LOG_NOTICE,"------------------------------------------------------");
 }
 
