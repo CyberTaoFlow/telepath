@@ -183,10 +183,11 @@ check_installed() {
 	conf_maintenence
 	
 
-	# Run upgrade PHP
-	# php /opt/telepath/ui/html/index.php setup cli $database_address $database_port $username $password
-	
+	# Run Tor and Bad IPs list
+	php /opt/telepath/ui/html/index.php cron
 	telepath start
+	
+	#set initial Telepath start when machine loads
 	sed -i '/telepath/d' /etc/rc.local
 	sed -i -e '$i \telepath start &\n' /etc/rc.local
 		
@@ -536,7 +537,6 @@ cron_jobs(){
     echo "*/2 * * * * /opt/telepath/teleup.sh" >> currentCrons
     crontab currentCrons
     rm currentCrons
-    eval "php /opt/telepath/ui/html/index.php cron"
 }
 conf_create_tbls() {
 
