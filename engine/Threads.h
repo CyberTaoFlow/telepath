@@ -906,7 +906,7 @@ void *getAtt_thread(void *threadarg)
 							generalRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_UserID,c_Resp_IP,c_SetCookie,c_Domain);
 							pageRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_Title,c_Uri,c_Resp_IP,c_SetCookie,c_Domain,c_StatusCode);
 						}
-						else if(rules[k].domain_block != c_Domain){
+						else if(!rules[k].domain_block.empty() && rules[k].domain_block != c_Domain){
 							generalRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_UserID,c_Resp_IP,c_SetCookie,c_Domain);
 							pageRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_Title,c_Uri,c_Resp_IP,c_SetCookie,c_Domain,c_StatusCode);
 						}else if(rules[k].vecRangeIP.size() != 0){
@@ -1285,18 +1285,22 @@ void *getAtt_thread_pro(void *threadarg)
 					itSession.first->second.update=1;
 					itSession.first->second.vRequest.push_back(page);
 
-
+					unsigned int demicalIP = ipToNum(c_Resp_IP);
 					//--------------Page rules,Bot Intelligence & Country Rule-----------------
 					for(k=0; k<rules.size() ;k++){
-						if(rules[k].domain_block.empty()){
-							generalRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_UserID,c_Resp_IP,c_SetCookie,c_Domain);
-							pageRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_Title,c_Uri,c_Resp_IP,c_SetCookie,c_Domain,c_StatusCode);
-					}
-					else if(rules[k].domain_block == c_Domain){
+						if(rules[k].domain_block.empty() && rules[k].vecRangeIP.size()==0){
 							generalRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_UserID,c_Resp_IP,c_SetCookie,c_Domain);
 							pageRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_Title,c_Uri,c_Resp_IP,c_SetCookie,c_Domain,c_StatusCode);
 						}
-
+						else if(!rules[k].domain_block.empty() && rules[k].domain_block != c_Domain){
+							generalRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_UserID,c_Resp_IP,c_SetCookie,c_Domain);
+							pageRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_Title,c_Uri,c_Resp_IP,c_SetCookie,c_Domain,c_StatusCode);
+						}else if(rules[k].vecRangeIP.size() != 0){
+							if(!rules[k].vecRangeIP[0].inRange(demicalIP)){
+								generalRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_UserID,c_Resp_IP,c_SetCookie,c_Domain);
+								pageRules(rules[k],itSession.first->second,itSession.first->second.IP,c_RID,c_PageID,c_Title,c_Uri,c_Resp_IP,c_SetCookie,c_Domain,c_StatusCode);
+							}
+						}
 					}
 					//--------------------------------End--------------------------------------
 
