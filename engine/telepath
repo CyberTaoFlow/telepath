@@ -71,7 +71,8 @@ END
 	kill -9 $(ps -A | grep Suricata | awk '{ print $1 }') > /dev/null 2>&1 || true
 	kill -9 $(ps -aux | grep [/opt/]telepath/db/elasticsearch | awk '{ print $2 }') > /dev/null 2>&1 || true
 	kill $(pidof $name_engine) > /dev/null 2>&1 || true
-
+	swapoff -a
+	swapon -a
 	gdb /proc/${PPID}/exe ${PPID} << END > /dev/null 2>&1 || true
 	call setenv("ES_HEAP_SIZE", "$phymem", 1)
 	call setenv("LD_LIBRARY_PATH","/usr/local/lib:$LD_LIBRARY_PATH",1)

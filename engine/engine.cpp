@@ -62,13 +62,12 @@
 #include "EngineGuard.h"
 #include "scheduler.h"
 #include "Threads.h"
+#include "Range.h"
 
 thread_struct_ tstr[NUM_OF_GET_ATT]  = {{0}};
 thread_struct_ tstrP[NUM_OF_GET_ATT] = {{0}};
 
 using namespace std;
-
-
 
 //initiating all pthread semaphores.
 void initSemaphores(){
@@ -121,7 +120,8 @@ void load_config(){
 	string output;
 
 	es_get_config("/telepath-config/config/move_to_production_id/_source",output);
-	moveToProductionAfter = (unsigned int)atoi(output.c_str());
+	unsigned int temp = (unsigned int)atoi(output.c_str());
+	if (temp != 0 ) moveToProductionAfter = temp;
 	//es_get_config("/telepath-config/config/max_session_id/_source",output);
 	//loadMaxSession((unsigned int)atoi(output.c_str()));
 	es_get_config("/telepath-config/config/max_distance_id/_source",output);
@@ -144,6 +144,9 @@ void load_config(){
 	password_masking = (unsigned short)atoi(output.c_str());
 	es_get_config("/telepath-config/config/cc_masking_id/_source",output);
 	cc_masking = (unsigned short)atoi(output.c_str());
+	//load_filter_extensions();
+	//load_whitelist_ips();
+	//load_loadbalancer_ips();
 }
 
 void checkOperation(){
@@ -822,7 +825,6 @@ while(globalEngine){ // while engine learning - run the engine every time we get
 			if(itAppMode->second.mode == 1){
 				if(itAppMode->second.counter > itAppMode->second.move_to_production || itAppMode->second.counter > moveToProductionAfter ){
 					itAppMode->second.mode=2;
-
 					// Normalizing scores for each aspect -> landing,flow and geo.
 					score_numeric[teleobj.mParams['g'/*AppID*/]].insert(score_data[teleobj.mParams['g'/*AppID*/]]);
 					// Cleaning unnormalized data.

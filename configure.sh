@@ -183,10 +183,11 @@ check_installed() {
 	conf_maintenence
 	
 
-	# Run upgrade PHP
-	# php /opt/telepath/ui/html/index.php setup cli $database_address $database_port $username $password
-	
+	# Run Tor and Bad IPs list
+	php /opt/telepath/ui/html/index.php cron
 	telepath start
+	
+	#set initial Telepath start when machine loads
 	sed -i '/telepath/d' /etc/rc.local
 	sed -i -e '$i \telepath start &\n' /etc/rc.local
 		
@@ -548,7 +549,6 @@ conf_create_tbls() {
 }
 
 conf_init_cron() {
-
 	# Add new job update+email (PHP)
 	croncmd="php /opt/telepath/ui/html/index.php cron"
         cronjob="0 * * * * $croncmd"
@@ -559,6 +559,8 @@ conf_init_cron() {
         	cronjob="0 * * * * $croncmd"
         	( crontab -l | grep -v "$croncmd" ; echo "$cronjob" ) | crontab -
 	fi
+	# executing init cron jobs
+	# eval $croncmd
 	echo "--> Setting .htaccess production ENV."
 	echo -e "\nSetEnv CI_ENV production" >> /opt/telepath/ui/html/.htaccess
 }

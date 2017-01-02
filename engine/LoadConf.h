@@ -111,7 +111,7 @@ void parseRulesJson(Json::Value & root,string & preKey,map <string,rule_group_da
 						rule.category = val;
 						break;
 					case 'I':
-						rule.ip_str = val;
+						//rule.ip_str = val;
 						break;
 					case 'l':
 						if(key=="location"){
@@ -201,10 +201,10 @@ void parseRulesJson(Json::Value & root,string & preKey,map <string,rule_group_da
 			
 			else if(preKey=="criteriaip"){
 				if(key=="from"){
-					rule.ip_block_from = val;
+					rule.ip_str = val;
 				}
 				else if(key == "to"){
-					rule.ip_block_to = val;
+					rule.ip_str = rule.ip_str + "-" + val;
 				}
 
 			}
