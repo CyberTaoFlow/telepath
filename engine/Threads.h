@@ -1760,106 +1760,18 @@ void *thread_app_was_updated(void *threadid)
 	pthread_exit(NULL);
 }
 
-bool validKey(string & key,unsigned int & epoch){
-	vector <string> vecStr;
-	unsigned int i,len = key.size();
-	string tmp;
-	if(len != 36){
-		return false;
-	}
-
-	for(i=0; i<len ;i++){
-		if(key[i]=='-'){
-			vecStr.push_back(tmp);
-			tmp.clear();
-
-			if(vecStr.size()==1){
-				if(vecStr[0].size() != 8 ){
-					return false;
-				}
-			}
-			else if( vecStr.size()>1 && vecStr.size()<5){
-				if(vecStr[vecStr.size()-1].size() != 4 ){
-					return false;
-				}
-			}else{
-				return false;
-			}
-		}
-		else if(i==len-1){
-			tmp.push_back(key[i]);
-			vecStr.push_back(tmp);
-			tmp.clear();
-
-			if(vecStr.size()==5){
-				if(vecStr[4].size() != 12 ){
-					return false;
-				}
-			}else{
-					return false;
-			}
-
-		}else{
-			tmp.push_back(key[i]);
-		}
-	}
-
-	string v1 = vecStr[0] + "HybridSeed~!";
-	string v2 = vecStr[1] + "HybridTime~!";
-
-	string sign_seed,sign_time;
-	SHA1::RunSHA1(v1,& sign_seed);
-	SHA1::RunSHA1(v2,& sign_time);
-	
-
-
-	if(vecStr[4][0]=='0'){
-		sign_seed.erase(sign_seed.begin()+11,sign_seed.end());
-		vecStr[4].erase(vecStr[4].begin());
-	}else{
-		sign_seed.erase(sign_seed.begin()+12,sign_seed.end());	
-	}
-
-
-	if(vecStr[2][0]=='0'){
-		sign_time.erase(sign_time.begin()+3,sign_time.end());
-		vecStr[2].erase(vecStr[2].begin());
-	}else{
-		sign_time.erase(sign_time.begin()+4,sign_time.end());	
-	}
-
-
-	if(sign_seed != vecStr[4]){
-		return false;
-	}
-
-	if(vecStr[3] != "TPTH"){
-		return false;
-	}
-
-	if(sign_time != vecStr[2]){
-		return false;
-	}
-
-	vecStr[1].erase( vecStr[1].begin()+3,vecStr[1].end() );
-	epoch = strtoul(vecStr[1].c_str(),NULL,36) * 3600 + 1388534400;
-
-	return true;
-
-}
 
 void *thread_expiration_date(void *threadid)
 {
-
 	unsigned int check_time,epoch;
 	while (globalEngine){
 		check_time = (unsigned int)time(NULL);
-
 		if( validKey(license_key,epoch) == true ){
 			if(check_time > 2678400 + epoch){
 				syslog(LOG_NOTICE,"***Trial Version Expired***");
 				es_insert("/telepath-config/config/license_mode_id","{\"value\":\"EXPIRED\"}");
-
+				es_insert("/telepath-config/config/license_key_id","{\"value\":\"0\"}");
+				check_license();
 				globalEngine=0;
 				sleep(30);
 				exit(1);

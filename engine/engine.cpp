@@ -728,7 +728,8 @@ int main (int argc,char* array[])
 if(argc > 1){
 	showSvnVersion(array[1]);
 }
-createLicenseKey(argc,array);
+//createLicenseKey(argc,array);
+check_license();
 isEngineRunning();
 demonize();
 disableErrorMessages();
