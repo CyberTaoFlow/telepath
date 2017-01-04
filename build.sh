@@ -20,7 +20,7 @@ RELEASE=$(date +%Y.%m.%d+%S)
 SUMMARY='Hybrid Telepath'
 TARFILE=$(pwd)"/telepath.tar"
 TARGET='/opt/telepath'
-URL='http://www.hybridsec.com'
+URL='http://188.166.57.109'
 
 
 # The version needs to be set in the command line
@@ -471,7 +471,7 @@ if [ $OS == "CENTOS" ]; then
 	restorecon -r /var/www/html
 	# RSync
 	echo "rsyncing.."
-	rsync -avzW /var/www/html/repo/* root@hybridsec.com:/var/www/html/repo/yum/
+	rsync -avzW /var/www/html/repo/* root@188.166.57.109:/var/www/html/repo/yum/
 fi
 
 # BUILD / RSYNC .DEB
@@ -499,9 +499,9 @@ if [ $OS == "UBUNTU" ]; then
 			#reprepro -b /var/www/html/repo_v3/apt/debian includedeb trusty *.deb
 			echo "Please login hybridsec to authenticate rsync"
                         #read -rsp $'Press any key to continue...\n' -n1 key
-                        rsync -avzW ./*.deb root@hybridsec.com:/root/
+                        rsync -avzW ./*.deb root@188.166.57.109:/root/
                         echo "Please login hybridsec to run publish script"
-                        ssh root@hybridsec.com "cd /root/ && ./publish_staging.sh"
+                        ssh root@188.166.57.109 "cd /root/ && ./publish_staging.sh"
 			rm ./*.deb
 			echo "ENJOY YOUR NEW BUILD!!!"
 		fi
@@ -511,9 +511,9 @@ if [ $OS == "UBUNTU" ]; then
 			echo "V3 -> Production Detected"
 			echo "Please login hybridsec to authenticate rsync"
 			#read -rsp $'Press any key to continue...\n' -n1 key
-			rsync -avzW ./*.deb root@hybridsec.com:/root/
+			rsync -avzW ./*.deb root@188.166.57.109:/root/
 			echo "Please login hybridsec to run publish script"
-			ssh root@hybridsec.com "cd /root/ && ./publish.sh"
+			ssh root@188.166.57.109 "cd /root/ && ./publish.sh"
 			rm ./*.deb
 			echo "ENJOY YOUR NEW BUILD!!!"
 		fi
@@ -534,9 +534,9 @@ if [ $OS == "UBUNTU" ]; then
 		if [ "$2" == "production" ]; then
 			echo "V2-> Staging Detected"
 			echo "Please login hybridsec to authenticate rsync"
-			rsync -avzW ./*.deb root@hybridsec.com:/root/
+			rsync -avzW ./*.deb root@188.166.57.109:/root/
 			echo "Please login hybridsec to run publish script"
-			ssh root@hybridsec.com "cd /root/ && ./publish.sh"
+			ssh root@188.166.57.109 "cd /root/ && ./publish.sh"
 			rm ./*.deb
 			echo "ENJOY YOUR NEW BUILD!!!"
 		fi
