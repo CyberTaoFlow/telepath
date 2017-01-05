@@ -150,7 +150,7 @@ void initElasticSearchData(){
 	es_insert("/telepath-config/config/config_was_changed_id/_create","{\"value\":\"0\"}");
 	es_insert("/telepath-config/config/business_flow_was_changed_id/_create","{\"value\":\"0\"}");
 	es_insert("/telepath-config/config/case_list_was_changed_id/_create","{\"value\":\"0\"}");
-	es_insert("/telepath-config/config/license_key_id/_create","{\"value\":\"\"}");
+	es_insert("/telepath-config/config/license_key_id/_create","{\"value\":\"0\"}");
 	es_insert("/telepath-config/config/license_mode_id/_create","{\"value\":\"\"}");
 	es_insert("/telepath-config/config/app_list_was_changed_id/_create","{\"value\":\"0\"}");
 	es_insert("/telepath-config/config/write_to_syslog_id/_create","{\"value\":\"0\"}");
