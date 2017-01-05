@@ -103,6 +103,9 @@ void check_license()
 {
 	es_get_config("/telepath-config/config/license_key_id/_source",license_key);
 	unsigned int epoch,check_time,checkLicenseFlag=1;
+	if(license_key != "0"){
+		checkLicenseFlag = 0;
+	}
 	while (checkLicenseFlag){
 		if( validKey(license_key,epoch) == true ){
 			es_insert("/telepath-config/config/license_mode_id","{\"value\":\"VALID\"}");
