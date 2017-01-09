@@ -147,6 +147,7 @@ void load_config(){
 	//load_filter_extensions();
 	//load_whitelist_ips();
 	//load_loadbalancer_ips();
+	//load_loadbalancer_headers();
 }
 
 void checkOperation(){

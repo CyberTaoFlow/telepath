@@ -169,10 +169,25 @@ void load_loadbalancer_ips(){
 		if(pos == string::npos) pos = output.find("\"}");
 		fromIP = output.substr(0,pos);
 		output.erase(0,pos+4);
-		syslog(LOG_NOTICE,"to: %s, from: %s",toIP.c_str(),fromIP.c_str());
 		tempRange.init(ipToNum(toIP),ipToNum(fromIP));
 		it = loadbalancer_ips.insert(it,tempRange);
 	}
+}
+
+//Loading loadbalancer headers
+void load_loadbalancer_headers(){
+	size_t pos = 0;
+	string output;
+	es_get_config("/telepath-config/headers/loadbalancerheaders_id/_source",output);
+	syslog(LOG_NOTICE,"headers block: %s",output.c_str());
+	pos=output.find("[\"");
+	output.erase(0,pos+2);
+	while((pos = output.find("\",\"")) != string::npos){
+		sLoadbalancerHeaders.insert(output.substr(0,pos));
+		output.erase(0,pos+3);
+	}
+	pos = output.find("\"");
+	sLoadbalancerHeaders.insert(output.substr(0,pos));
 }
 
 
