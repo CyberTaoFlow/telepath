@@ -144,10 +144,10 @@ void load_config(){
 	password_masking = (unsigned short)atoi(output.c_str());
 	es_get_config("/telepath-config/config/cc_masking_id/_source",output);
 	cc_masking = (unsigned short)atoi(output.c_str());
-	//load_filter_extensions();
-	//load_whitelist_ips();
-	//load_loadbalancer_ips();
-	//load_loadbalancer_headers();
+	load_filter_extensions();
+	load_whitelist_ips();
+	load_loadbalancer_ips();
+	load_loadbalancer_headers();
 }
 
 void checkOperation(){

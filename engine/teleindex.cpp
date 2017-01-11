@@ -2,10 +2,9 @@
 #include "teleindex.h"
 #include "mxml/mxml.h"
 #include "base64.h"
-
 #include "Enumeration.h"
 #include <semaphore.h>
-
+#include "Range.h"
 #define MAX_PARAM 128
 #define MAX_VALUE 8192
 
@@ -35,7 +34,9 @@ extern boost::unordered_set<string> domain_header;
 extern boost::unordered_set<string> const_method;
 extern boost::unordered_set<string> const_content_type;
 extern string getDate(unsigned int);
+extern boost::unordered_set <string> sLoadbalancerHeaders;
 extern unsigned short password_masking;
+extern vector <Range> loadbalancer_ips;
 //--------------------------------------------------------------
 extern void es_insert(string,string);
 //--------------------------------------------------------------
@@ -937,7 +938,11 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 					postparams = itConvertObj->second;
 				}
 				else if(itConvertObj->first[1] == 'U'){
-
+					size_t pos = 0;
+					string tmpUri = itConvertObj->second;
+					std::reverse(tmpUri.begin(),tmpUri.end());
+					pos = tmpUri.find(".");
+					//syslog(LOG_NOTICE,"%s",tmpUri.c_str());
 					//Max Size for url
 					if(itConvertObj->second.size()>MAX_PARAM){
 						itConvertObj->second.erase(itConvertObj->second.begin()+MAX_PARAM,itConvertObj->second.end());
@@ -984,6 +989,18 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 				parseString(attribute.name);
 				parseString(attribute.value);
 
+				//loadbalancer check headers then ips
+				for (boost::unordered_set <string>::iterator it = sLoadbalancerHeaders.begin(); it != sLoadbalancerHeaders.end(); ++it ){
+					//syslog(LOG_NOTICE,"%s",(*it).c_str());
+					if(attribute.name == (*it)){
+						for (std::vector<Range>::iterator it_ip = loadbalancer_ips.begin() ; it_ip != loadbalancer_ips.end(); ++it_ip){
+							if((*it_ip).inRange(ipToNum(teleo->mParams['a'/*UserIP*/]))){
+								teleo->mParams['a'/*UserIP*/] = attribute.value;
+							}
+						}
+					}
+				}
+					
 				if(attribute.name=="user-agent"){
 					vAttr.push_back(attribute);
 					presence -= 0.2;

@@ -179,7 +179,6 @@ void load_loadbalancer_headers(){
 	size_t pos = 0;
 	string output;
 	es_get_config("/telepath-config/headers/loadbalancerheaders_id/_source",output);
-	syslog(LOG_NOTICE,"headers block: %s",output.c_str());
 	pos=output.find("[\"");
 	output.erase(0,pos+2);
 	while((pos = output.find("\",\"")) != string::npos){
