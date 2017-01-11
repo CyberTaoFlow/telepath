@@ -136,7 +136,10 @@ void initElasticSearchData(){
 	es_insert("/telepath-scheduler/times/Thursday/_create","{\"times\":[]}");
 	es_insert("/telepath-scheduler/times/Friday/_create","{\"times\":[]}");
 	es_insert("/telepath-scheduler/times/Saturday/_create","{\"times\":[]}");
-
+	
+	es_insert("/telepath-config/config/syslog_port_id/_create","{\"value\":\"\"}");
+	es_insert("/telepath-config/config/syslog_protocol_id/_create","{\"value\":\"\"}");
+	es_insert("/telepath-config/config/syslog_delimiter_id/_create","{\"value\":\"\"}");
 	es_insert("/telepath-config/config/operation_mode_id/_create","{\"value\":\"1\"}");
 	es_insert("/telepath-config/config/move_to_production_id/_create","{\"value\":1000000}");
 	es_insert("/telepath-config/config/eta_id/_create","{\"value\":\"0d 0h 0m\"}");
