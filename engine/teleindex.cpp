@@ -35,6 +35,7 @@ extern boost::unordered_set<string> const_method;
 extern boost::unordered_set<string> const_content_type;
 extern string getDate(unsigned int);
 extern boost::unordered_set <string> sLoadbalancerHeaders;
+extern boost::unordered_set <string> sFilterExtensions;
 extern unsigned short password_masking;
 extern vector <Range> loadbalancer_ips;
 //--------------------------------------------------------------
@@ -942,7 +943,16 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 					string tmpUri = itConvertObj->second;
 					std::reverse(tmpUri.begin(),tmpUri.end());
 					pos = tmpUri.find(".");
-					//syslog(LOG_NOTICE,"%s",tmpUri.c_str());
+					if(pos != string::npos){
+						tmpUri.erase(pos+1,tmpUri.size()-1);
+						reverse(tmpUri.begin(),tmpUri.end());
+						for (boost::unordered_set <string>::iterator it = sFilterExtensions.begin(); it != sFilterExtensions.end(); ++it ){
+							if(tmpUri == (*it)){
+								//syslog(LOG_NOTICE,"Blocklist: %s our uri extention: %s",(*it).c_str(),tmpUri.c_str());
+								return;
+							}
+						}
+					}
 					//Max Size for url
 					if(itConvertObj->second.size()>MAX_PARAM){
 						itConvertObj->second.erase(itConvertObj->second.begin()+MAX_PARAM,itConvertObj->second.end());
