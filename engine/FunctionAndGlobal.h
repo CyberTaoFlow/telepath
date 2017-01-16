@@ -99,21 +99,16 @@ bool validKey(string & key,unsigned int & epoch){
 
 }
 
-void check_license()
-{
-	es_get_config("/telepath-config/config/license_key_id/_source",license_key);
-	unsigned int epoch,check_time,checkLicenseFlag=1;
-	if(license_key != "0"){
-		checkLicenseFlag = 0;
-	}
-	while (checkLicenseFlag){
-		if( validKey(license_key,epoch) == true ){
-			es_insert("/telepath-config/config/license_mode_id","{\"value\":\"VALID\"}");
-			checkLicenseFlag=0;
-		}else{
-			es_insert("/telepath-config/config/license_mode_id","{\"value\":\"INVALID\"}");
-			sleep(30);
-		}
+bool check_license()
+{	
+	read_connect_conf_file();
+	string tmp;
+	es_get_config("/telepath-config/config/license_mode_id/_source",tmp);
+	if( tmp != "VALID" ){
+		sleep(30);
+		return false;
+	}else{
+		return true;
 	}
 }
 
