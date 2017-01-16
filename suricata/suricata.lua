@@ -278,17 +278,17 @@ function log(args)
 		uri = string.sub(uri,1,question_mark-1)
 	end
 
-	local ext = uri:reverse():find("%.")
-	if ext then
-		ext = #uri - ext+1
-		ext = string.sub(uri,ext)
+--	local ext = uri:reverse():find("%.")
+--	if ext then
+--		ext = #uri - ext+1
+--		ext = string.sub(uri,ext)
 
-		if block_extensions[ext] == ext then
+--		if block_extensions[ext] == ext then
 			--Extension Filter.
 			--Ignoring this request.
-			return
-		end
-	end
+--			return
+--		end
+--	end
 
 	--Getting source IP and destination IP.
 	ipver, srcip, dstip, proto, sp, dp = SCFlowTuple()
@@ -303,13 +303,13 @@ function log(args)
 
 	int_ip = 16777216*o1 + 65536*o2 + 256*o3 + o4
 
-	for key, value in pairs(whitelist_ips) do
-		if (whitelist_ips[key] >= int_ip and int_ip >= key) then
+--	for key, value in pairs(whitelist_ips) do
+--		if (whitelist_ips[key] >= int_ip and int_ip >= key) then
 			--Whitelist IP Filter.
 			--Ignoring this request.
-			return
-		end
-	end
+--			return
+--		end
+--	end
 
 	local requestline = HttpGetRequestLine()
 	if requestline then
@@ -403,17 +403,17 @@ function log(args)
 			fp_host = v
 		end
 
-		if load_balancer_headers[k] == k then
-			for key, value in pairs(load_balancer_ips) do
-				if (load_balancer_ips[key] >= int_ip and int_ip >= key) then
+--		if load_balancer_headers[k] == k then
+--			for key, value in pairs(load_balancer_ips) do
+--				if (load_balancer_ips[key] >= int_ip and int_ip >= key) then
 					--Replacing to original client IP.
-					request["TI"] = v
-					srcip = v
-					o1,o2,o3,o4 = v:match("(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)" )
-					int_ip = 16777216*o1 + 65536*o2 + 256*o3 + o4
-				end
-			end
-		end
+--					request["TI"] = v
+--					srcip = v
+--					o1,o2,o3,o4 = v:match("(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)" )
+--					int_ip = 16777216*o1 + 65536*o2 + 256*o3 + o4
+--				end
+--			end
+--		end
 
 		if type(v) == "table" then
 			request["TH_" .. k] = table.concat(v, "|&|")
