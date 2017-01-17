@@ -61,14 +61,15 @@ void es_get_config(string url,string & output){
 	curl_easy_perform(curl);
 
 	tmp = chunk.memory+10;
-	try{
-		output.assign(tmp.begin(),tmp.end()-2);
+	if(tmp.length() != 0){
+		try{
+			output.assign(tmp.begin(),tmp.end()-2);
+		}
+		catch (const std::length_error& le) {
+			syslog(LOG_NOTICE,"Cannot Connent to Elasticsearch[!!!] - Please Check That The Address \"%s\" Is Correct.",es_connect.c_str());
+			output = "0";
+		}
 	}
-	catch (const std::length_error& le) {
-		syslog(LOG_NOTICE,"Cannot Connent to Elasticsearch[!!!] - Please Check That The Address \"%s\" Is Correct.",es_connect.c_str());
-		output = "0";
-	}
-
 	free(chunk.memory);
 	curl_easy_cleanup(curl);
 }
@@ -137,6 +138,7 @@ void initElasticSearchData(){
 	es_insert("/telepath-scheduler/times/Friday/_create","{\"times\":[]}");
 	es_insert("/telepath-scheduler/times/Saturday/_create","{\"times\":[]}");
 	
+	es_insert("/telepath-config/config/extension_was_changed_id/_create","{\"value\":\"0\"}");	
 	es_insert("/telepath-config/config/syslog_port_id/_create","{\"value\":\"\"}");
 	es_insert("/telepath-config/config/syslog_protocol_id/_create","{\"value\":\"\"}");
 	es_insert("/telepath-config/config/syslog_delimiter_id/_create","{\"value\":\"\"}");

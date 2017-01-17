@@ -224,6 +224,7 @@ void *thread_php_script2(void*);
 
 unsigned int countShard;
 unsigned int minShard;
+unsigned int login_attempts=0;
 string minShardString;
 int stopflag=0;
 unsigned int engine_mode,reverse_proxy_mode,sniffer_mode;
@@ -839,7 +840,7 @@ bool validKey(string & key,unsigned int & epoch){
 	return true;
 
 }
-
+/*
 bool checkLicenseKey(){
 	string license_key;
 	unsigned int check_time,epoch;
@@ -875,7 +876,46 @@ bool checkLicenseKey(){
 		
 		return false;
 	}
+}
+*/
 
+bool checkLicenseKey(){
+	string license_key;
+        es_get_config("/telepath-config/config/license_key_id/_source",license_key);
+        unsigned int epoch,check_time=(unsigned int)time(NULL),checkLicenseFlag=1;
+        char tmp_cmd[5000];
+//      if(license_key != "0"){
+//              checkLicenseFlag = 0;
+//      }
+	if( validKey(license_key,epoch) == true ){
+		if(check_time > 2678400 + epoch){
+			sprintf(tmp_cmd,"{\"value\":\"EXPIRED-%u\"}",login_attempts);
+			es_insert("/telepath-config/config/license_mode_id",tmp_cmd);
+			
+			char open_elastic[300];
+			sprintf(open_elastic,"/opt/telepath/db/elasticsearch/bin/elasticsearch -d -Des.insecure.allow.root=true");
+			FILE* ppipe_elastic = popen(open_elastic, "w");
+			pclose(ppipe_elastic);
+			sleep(2);
+			syslog(LOG_NOTICE,"***Trial Version Expired***");
+			login_attempts++;
+			return false;
+		}else{
+			es_insert("/telepath-config/config/license_mode_id","{\"value\":\"VALID\"}");
+			login_attempts=0;
+			return true;
+		}
+	}else{
+		syslog(LOG_NOTICE,"INVALID");
+		sprintf(tmp_cmd,"{\"value\":\"INVALID-%u\"}",login_attempts);
+		es_insert("/telepath-config/config/license_mode_id",tmp_cmd);
+		syslog(LOG_NOTICE,"The license of your product may be invalid ... please check your license");
+		syslog(LOG_NOTICE,"In a case that you are sure that you have a valid license, please check the content of the /opt/telepath/db/elasticsearch/config/connect.conf file which indicates about the ip and the port of the elasticsearch. In a case that this file is not exist the defaulf value is http://localhost:9200 .");
+		syslog(LOG_NOTICE,"Waiting 10 seconds before checking the license key and the connection again ...");
+		sleep(10);
+		login_attempts++;
+		return false;
+	}
 }
 
 int main(int argc, char *argv[])
