@@ -730,8 +730,7 @@ if(argc > 1){
 	showSvnVersion(array[1]);
 }
 //createLicenseKey(argc,array);
-
-while(check_license()==false){};
+check_license();
 isEngineRunning();
 demonize();
 disableErrorMessages();

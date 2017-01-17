@@ -307,7 +307,7 @@ void attributeRules(bool learning_mode,Attribute & tmp_att,boost::unordered_map 
 
 void *thread_load_config(void *threadid)
 {
-	string output,output_ext=0;
+	string output;
 
 	while(globalEngine)
 	{
@@ -315,13 +315,7 @@ void *thread_load_config(void *threadid)
 			es_get_config("/telepath-config/config/add_unknown_applications_id/_source",output);
 			addUnknownApp = (unsigned short)atoi(output.c_str());
 		pthread_mutex_unlock(&mutexUnknownApp);
-		es_get_config("/telepath-config/config/extension_was_changed_id/_source",output_ext);
-		if(output_ext == "1"){
-			load_filter_extensions();
-			load_loadbalancer_ips();
-			load_loadbalancer_headers();
-			es_insert("/telepath-config/config/extension_was_changed_id","{\"value\":\"0\"}");
-		}
+
 		sleep(3);
 	}
 }

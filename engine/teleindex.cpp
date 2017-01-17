@@ -947,7 +947,6 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 						tmpUri.erase(pos+1,tmpUri.size()-1);
 						reverse(tmpUri.begin(),tmpUri.end());
 						for (boost::unordered_set <string>::iterator it = sFilterExtensions.begin(); it != sFilterExtensions.end(); ++it ){
-							syslog(LOG_NOTICE,"Blocklist: %s",(*it).c_str());
 							if(tmpUri == (*it)){
 								//syslog(LOG_NOTICE,"Blocklist: %s our uri extention: %s",(*it).c_str(),tmpUri.c_str());
 								return;
@@ -1002,7 +1001,7 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 
 				//loadbalancer check headers then ips
 				for (boost::unordered_set <string>::iterator it = sLoadbalancerHeaders.begin(); it != sLoadbalancerHeaders.end(); ++it ){
-					syslog(LOG_NOTICE,"%s",(*it).c_str());
+					//syslog(LOG_NOTICE,"%s",(*it).c_str());
 					if(attribute.name == (*it)){
 						for (std::vector<Range>::iterator it_ip = loadbalancer_ips.begin() ; it_ip != loadbalancer_ips.end(); ++it_ip){
 							if((*it_ip).inRange(ipToNum(teleo->mParams['a'/*UserIP*/]))){
