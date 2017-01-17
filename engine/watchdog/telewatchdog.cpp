@@ -878,7 +878,7 @@ bool checkLicenseKey(){
 			pclose(ppipe_elastic);
 			sleep(2);
 			syslog(LOG_NOTICE,"***Trial Version Expired***");
-			login_attempts++;
+
 		}else{
 			es_insert("/telepath-config/config/license_mode_id","{\"value\":\"VALID\"}");
 			login_attempts=0;
@@ -892,9 +892,9 @@ bool checkLicenseKey(){
 		syslog(LOG_NOTICE,"In a case that you are sure that you have a valid license, please check the content of the /opt/telepath/db/elasticsearch/config/connect.conf file which indicates about the ip and the port of the elasticsearch. In a case that this file is not exist the defaulf value is http://localhost:9200 .");
 		syslog(LOG_NOTICE,"Waiting 10 seconds before checking the license key and the connection again ...");
 		sleep(10);
-		login_attempts++;
 		return false;
 	}
+	login_attempts++;
 }
 
 
