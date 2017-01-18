@@ -413,7 +413,7 @@ void *thread_suricata_configuration_check(void *threadid){
 	
 	while(1){
 		if(sniffer_mode==1){
-			es_get_config("/telepath-config/config/config_was_changed_id/_source",output);
+			es_get_config("/telepath-config/config/interface_was_changed_id/_source",output);
 			if(output.compare("1") == 0){
 				try{
 					es_get_config("/telepath-config/interfaces/interface_id/_source",output);
@@ -440,7 +440,7 @@ void *thread_suricata_configuration_check(void *threadid){
 					pclose(ppipe_suricata);
 
 					//change the flag back
-					es_insert("/telepath-config/config/config_was_changed_id","{\"value\":\"0\"}");
+					es_insert("/telepath-config/config/interface_was_changed_id","{\"value\":\"0\"}");
 				}catch(...){}
 			}
 		}

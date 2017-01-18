@@ -138,6 +138,7 @@ void initElasticSearchData(){
 	es_insert("/telepath-scheduler/times/Friday/_create","{\"times\":[]}");
 	es_insert("/telepath-scheduler/times/Saturday/_create","{\"times\":[]}");
 
+	es_insert("/telepath-config/config/proxy_was_changed_id/_create","{\"value\":\"0\"}");
 	es_insert("/telepath-config/config/whitelist_cidr_id/_create","{\"value\":\"0\"}");
 	es_insert("/telepath-config/config/extension_was_changed_id/_create","{\"value\":\"0\"}");	
 	es_insert("/telepath-config/config/syslog_port_id/_create","{\"value\":\"\"}");
@@ -153,7 +154,7 @@ void initElasticSearchData(){
 	es_insert("/telepath-config/config/learning_so_far_id/_create","{\"value\":\"0\"}");
 	es_insert("/telepath-config/config/bot_intelligence_id/_create","{\"value\":\"1\"}");
 	es_insert("/telepath-config/config/rules_table_was_changed_id/_create","{\"value\":\"0\"}");
-	es_insert("/telepath-config/config/config_was_changed_id/_create","{\"value\":\"0\"}");
+	es_insert("/telepath-config/config/interface_was_changed_id/_create","{\"value\":\"0\"}");
 	es_insert("/telepath-config/config/business_flow_was_changed_id/_create","{\"value\":\"0\"}");
 	es_insert("/telepath-config/config/case_list_was_changed_id/_create","{\"value\":\"0\"}");
 	es_insert("/telepath-config/config/license_key_id/_create","{\"value\":\"0\"}");
