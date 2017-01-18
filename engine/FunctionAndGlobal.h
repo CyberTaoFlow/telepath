@@ -143,6 +143,8 @@ void load_filter_extensions(){
 		sFilterExtensions.insert(output.substr(0,pos));
 		output.erase(0,pos+3);
 	}
+	pos = output.find("\"");
+	sFilterExtensions.insert(output.substr(0,pos));	
 }
 
 //Loading whitelist ips
