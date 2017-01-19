@@ -1003,8 +1003,10 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 				for (boost::unordered_set <string>::iterator it = sLoadbalancerHeaders.begin(); it != sLoadbalancerHeaders.end(); ++it ){
 					//syslog(LOG_NOTICE,"%s",(*it).c_str());
 					if(attribute.name == (*it)){
+						//syslog(LOG_NOTICE,"HEADER: %s, ip to change: %s, new IP:%s",attribute.name.c_str(),teleo->mParams['a'/*UserIP*/].c_str(),attribute.value.c_str());
 						for (std::vector<Range>::iterator it_ip = loadbalancer_ips.begin() ; it_ip != loadbalancer_ips.end(); ++it_ip){
-							if((*it_ip).inRange(ipToNum(teleo->mParams['a'/*UserIP*/]))){
+							unsigned int int_ip = ipToNum(teleo->mParams['a'/*UserIP*/]);
+							if((*it_ip).inRange(int_ip)){
 								teleo->mParams['a'/*UserIP*/] = attribute.value;
 							}
 						}

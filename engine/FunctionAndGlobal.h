@@ -165,7 +165,7 @@ void load_whitelist_ips(){
 		if(pos == string::npos) pos = output.find("\"}");
 		fromIP = output.substr(0,pos);
 		output.erase(0,pos+4);
-		tempRange.init(ipToNum(toIP),ipToNum(fromIP));
+		tempRange.init(ipToNum(fromIP),ipToNum(toIP));
 		it = whitelist_ips.insert(it,tempRange);
 	}
 }
@@ -187,7 +187,7 @@ void load_loadbalancer_ips(){
 		if(pos == string::npos) pos = output.find("\"}");
 		fromIP = output.substr(0,pos);
 		output.erase(0,pos+4);
-		tempRange.init(ipToNum(toIP),ipToNum(fromIP));
+		tempRange.init(ipToNum(fromIP),ipToNum(toIP));
 		it = loadbalancer_ips.insert(it,tempRange);
 	}
 }

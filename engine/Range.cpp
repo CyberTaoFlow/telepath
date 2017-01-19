@@ -11,7 +11,6 @@ unsigned int ipToNum(string & ip){
 
 	for(unsigned int i=0 ; i<ip.size() ; i++){
 		if( (ip[i]=='.') || (i==ip.size()-1) ){
-			
 			switch(flag){
 				case 3:
 					tmp.assign(ip,i-size,size);
@@ -35,7 +34,6 @@ unsigned int ipToNum(string & ip){
 					ipNum += num;
 					return ipNum;
 			}
-
 			size=0;
 			flag--;
 			tmp.clear();
@@ -43,7 +41,6 @@ unsigned int ipToNum(string & ip){
 			size++;
 		}
 	}
-
 	return 0;
 }
 
