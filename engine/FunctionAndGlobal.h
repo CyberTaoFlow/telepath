@@ -136,6 +136,7 @@ bool check_license()
 void load_filter_extensions(){
 	size_t pos = 0;
 	string output;
+	sFilterExtensions.clear();
 	es_get_config("/telepath-config/filter_extensions/extensions_id/_source",output);
 	pos=output.find("[\"");
 	output.erase(0,pos+2);
@@ -195,6 +196,7 @@ void load_loadbalancer_ips(){
 void load_loadbalancer_headers(){
 	size_t pos = 0;
 	string output;
+	sLoadbalancerHeaders.clear();
 	es_get_config("/telepath-config/headers/loadbalancerheaders_id/_source",output);
 	pos=output.find("[\"");
 	output.erase(0,pos+2);
