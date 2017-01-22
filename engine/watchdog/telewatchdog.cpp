@@ -409,17 +409,17 @@ void get_pcap_filter(string & output,string & pcap){
 void *thread_suricata_configuration_check(void *threadid){
         char suricata_cmd[5000];
         FILE* ppipe_suricata;
-        string output,pcap,interface;
+        string output,pcap,interface,whitelist_cidr;
 	
 	while(1){
 		if(sniffer_mode==1){
 			es_get_config("/telepath-config/config/interface_was_changed_id/_source",output);
 			if(output.compare("1") == 0){
 				try{
+					es_get_config("/telepath-config/ips/whitelist_cidr_id/_source",whitelist_cidr);
 					es_get_config("/telepath-config/interfaces/interface_id/_source",output);
-	                        	get_pcap_filter(output,pcap);
-	                        	get_interface_name(output,interface);
-
+					get_pcap_filter(output,pcap);
+					get_interface_name(output,interface);					
 					syslog (LOG_NOTICE,"Suricata Configuration Was Changed[!!!]");
 					//Stop suricata
 					ppipe_suricata = popen("killall -9 Suricata-Main > /dev/null 2>&1 || true","w");
@@ -433,8 +433,8 @@ void *thread_suricata_configuration_check(void *threadid){
 					sprintf( suricata_cmd,"ifconfig %s up; ifconfig %s promisc;",interface.c_str(),interface.c_str());
 					ppipe_suricata = popen(suricata_cmd,"w");
 					pclose(ppipe_suricata);
-
-					sprintf( suricata_cmd,"/opt/telepath/suricata/suricata -D -c /opt/telepath/suricata/suricata.yaml --af-packet %s > /dev/null 2>&1",pcap.c_str());
+					
+					sprintf( suricata_cmd,"/opt/telepath/suricata/suricata -D -c /opt/telepath/suricata/suricata.yaml --af-packet \"%s %s\" > /dev/null 2>&1",pcap.c_str(),whitelist_cidr.c_str());
 					syslog (LOG_NOTICE,"%s",suricata_cmd);
 					ppipe_suricata = popen(suricata_cmd,"w");
 					pclose(ppipe_suricata);
@@ -467,7 +467,7 @@ void get_interface_name(string & output,string & interface){
 void *thread_init_suricata(void *threadid){
 	char suricata_cmd[5000];
 	FILE* ppipe_suricata;
-	string output,pcap,interface;
+	string output,pcap,interface,whitelist_cidr;
 
 	redisContext *redis;
 	redisReply *reply;
@@ -483,6 +483,7 @@ void *thread_init_suricata(void *threadid){
 		if(sniffer_mode==1){
 			if( (get_ps("Suricata-Main")==0) ){
 				if( files_queue.empty() ){
+					es_get_config("/telepath-config/ips/whitelist_cidr_id/_source",whitelist_cidr);
 					es_get_config("/telepath-config/interfaces/interface_id/_source",output);
 					get_pcap_filter(output,pcap);
 					get_interface_name(output,interface);
@@ -493,7 +494,7 @@ void *thread_init_suricata(void *threadid){
 					pclose(ppipe_suricata);
 
 					syslog(LOG_NOTICE, "No more files to upload ... Reload Suricata");
-					sprintf( suricata_cmd,"/opt/telepath/suricata/suricata -D -c /opt/telepath/suricata/suricata.yaml --af-packet %s > /dev/null 2>&1",pcap.c_str());
+					sprintf( suricata_cmd,"/opt/telepath/suricata/suricata -D -c /opt/telepath/suricata/suricata.yaml --af-packet \"%s %s\" > /dev/null 2>&1",pcap.c_str(),whitelist_cidr.c_str());
 					es_insert("/telepath-config/config/file_loader_mode_id","{\"value\":\"0\"}");
 				}else{
 					string pcap_file = files_queue.front();
