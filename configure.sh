@@ -183,8 +183,6 @@ check_installed() {
 	conf_maintenence
 	
 
-	# Run Tor and Bad IPs list
-	php /opt/telepath/ui/html/index.php cron
 	telepath start
 	
 	#set initial Telepath start when machine loads
@@ -811,6 +809,10 @@ case "$1" in
 	;;
 
 esac
+
+# Run Tor and Bad IPs list
+php /opt/telepath/ui/html/index.php cron
+	
 telepath start
 clear
 echo ""
