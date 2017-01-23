@@ -891,7 +891,7 @@ bool dynamicPageInit(string & page){
 
 void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & obj)
 {
-
+	string flag_loadbalncer="";
 	string ext,fullPageName,attName,postparams,appid,authorization;
 	unsigned int i,subDomainID,hash_page;
 	unsigned short statusCode;
@@ -1001,15 +1001,8 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 
 				//loadbalancer check headers then ips
 				for (boost::unordered_set <string>::iterator it = sLoadbalancerHeaders.begin(); it != sLoadbalancerHeaders.end(); ++it ){
-					//syslog(LOG_NOTICE,"%s",(*it).c_str());
 					if(attribute.name == (*it)){
-						//syslog(LOG_NOTICE,"HEADER: %s, ip to change: %s, new IP:%s",attribute.name.c_str(),teleo->mParams['a'/*UserIP*/].c_str(),attribute.value.c_str());
-						for (std::vector<Range>::iterator it_ip = loadbalancer_ips.begin() ; it_ip != loadbalancer_ips.end(); ++it_ip){
-							unsigned int int_ip = ipToNum(teleo->mParams['a'/*UserIP*/]);
-							if((*it_ip).inRange(int_ip)){
-								teleo->mParams['a'/*UserIP*/] = attribute.value;
-							}
-						}
+						flag_loadbalncer = attribute.value;
 					}
 				}
 					
@@ -1055,6 +1048,14 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 
 	}
 
+	if(flag_loadbalncer.length()>0){
+		for (std::vector<Range>::iterator it_ip = loadbalancer_ips.begin() ; it_ip != loadbalancer_ips.end(); ++it_ip){
+			unsigned int int_ip = ipToNum(teleo->mParams['a'/*UserIP*/]);
+			if((*it_ip).inRange(int_ip)){
+				teleo->mParams['a'/*UserIP*/] = flag_loadbalncer;
+			}
+		}
+	}
 	//syslog(LOG_NOTICE,"Getting Obj7 ===> %s:%s:%s:%s:%s:%s:%s:%s:%s",teleo->mParams['a'/*UserIP*/].c_str(),teleo->mParams['b'/*TimeStamp*/].c_str(),teleo->mParams['c'/*Page*/].c_str(),teleo->mParams['i'/*Protocol*/].c_str(),teleo->mParams['d'/*StatusCode*/].c_str(),teleo->mParams['j'/*RID*/].c_str(),teleo->mParams['h'/*Request*/].c_str(),teleo->mParams['z'/*user-agent*/].c_str(),teleo->mParams['f'/*App*/].c_str());
 
 	if(presence < 0){
