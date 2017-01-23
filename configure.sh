@@ -429,12 +429,12 @@ conf_update_apache() {
 	sed -i "/Defaults:$USER !requiretty/d" /etc/sudoers
 
 	# Modify sudoers
-        echo "Defaults:$USER !requiretty" >> /etc/sudoers
+    echo "Defaults:$USER !requiretty" >> /etc/sudoers
 	echo "$USER ALL = (ALL) NOPASSWD: /opt/telepath/bin/telepath, /opt/telepath/openresty/nginx/sbin/nginx"	 >> /etc/sudoers
-
+    
 	if [ ! -d /opt/telepath/ui/html/files ]; then
 		mkdir /opt/telepath/ui/html/files
-	fi
+	fi 
 
 	chmod 777 /opt/telepath/ui/html/files > /dev/null 2>&1 || true
 
@@ -484,6 +484,7 @@ conf_sqlite_db() {
     chmod 700 /opt/telepath/ui/html/application/sessions
     chown $USER:$USER /opt/telepath/ui/html/application/databases
     chown $USER:$USER /opt/telepath/ui/html/application/sessions
+    chown $USER:$USER /opt/telepath/ui/html/applications/config
 }
     
 conf_create_db() {
