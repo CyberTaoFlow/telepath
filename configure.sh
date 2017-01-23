@@ -182,9 +182,6 @@ check_installed() {
 	source $CONF
 	conf_maintenence
 	
-
-	# Run Tor and Bad IPs list
-	php /opt/telepath/ui/html/index.php cron
 	telepath start
 	
 	#set initial Telepath start when machine loads
@@ -429,12 +426,12 @@ conf_update_apache() {
 	sed -i "/Defaults:$USER !requiretty/d" /etc/sudoers
 
 	# Modify sudoers
-        echo "Defaults:$USER !requiretty" >> /etc/sudoers
+    echo "Defaults:$USER !requiretty" >> /etc/sudoers
 	echo "$USER ALL = (ALL) NOPASSWD: /opt/telepath/bin/telepath, /opt/telepath/openresty/nginx/sbin/nginx"	 >> /etc/sudoers
-
+    
 	if [ ! -d /opt/telepath/ui/html/files ]; then
 		mkdir /opt/telepath/ui/html/files
-	fi
+	fi 
 
 	chmod 777 /opt/telepath/ui/html/files > /dev/null 2>&1 || true
 
@@ -484,6 +481,7 @@ conf_sqlite_db() {
     chmod 700 /opt/telepath/ui/html/application/sessions
     chown $USER:$USER /opt/telepath/ui/html/application/databases
     chown $USER:$USER /opt/telepath/ui/html/application/sessions
+    chown $USER:$USER /opt/telepath/ui/html/application/config
 }
     
 conf_create_db() {
@@ -810,6 +808,10 @@ case "$1" in
 	;;
 
 esac
+
+# Run Tor and Bad IPs list
+echo "php /opt/telepath/ui/html/index.php cron"
+	
 telepath start
 clear
 echo ""
