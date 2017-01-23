@@ -481,7 +481,7 @@ conf_sqlite_db() {
     chmod 700 /opt/telepath/ui/html/application/sessions
     chown $USER:$USER /opt/telepath/ui/html/application/databases
     chown $USER:$USER /opt/telepath/ui/html/application/sessions
-    chown $USER:$USER /opt/telepath/ui/html/applications/config
+    chown $USER:$USER /opt/telepath/ui/html/application/config
 }
     
 conf_create_db() {
