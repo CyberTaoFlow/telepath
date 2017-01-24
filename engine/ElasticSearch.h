@@ -4,6 +4,7 @@
 using namespace std;
 
 string es_connect;
+string timeoutStr = "?timeout=5m";
 
 void read_connect_conf_file(){
 	ifstream myfile ("/opt/telepath/db/elasticsearch/config/connect.conf");
@@ -53,7 +54,7 @@ void es_get_config(string url,string & output){
 	chunk.memory = (char*)malloc(1);  /* will be grown as needed by the realloc above */ 
 	chunk.size = 0;
 
-	url = es_connect + url;
+	url = es_connect + url + timeoutStr;
 	curl_easy_setopt(curl,CURLOPT_CUSTOMREQUEST,"GET"); 
 	curl_easy_setopt(curl, CURLOPT_URL,url.c_str());
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
@@ -79,7 +80,7 @@ void es_mapping(string url,string postparams){
 	CURL *curl;
 	curl = curl_easy_init();
 
-	url = es_connect + url;
+	url = es_connect + url + timeoutStr;
 	curl_easy_setopt(curl,CURLOPT_CUSTOMREQUEST,"POST"); 
 	curl_easy_setopt(curl, CURLOPT_URL,url.c_str());
 	curl_easy_setopt(curl, CURLOPT_POSTFIELDS,postparams.c_str());
@@ -93,7 +94,7 @@ void es_insert(string url,string postparams){
 	CURL *curl;
 	curl = curl_easy_init();
 
-	url = es_connect + url;
+	url = es_connect + url + timeoutStr;
 	curl_easy_setopt(curl,CURLOPT_CUSTOMREQUEST,"PUT"); 
 	curl_easy_setopt(curl, CURLOPT_URL,url.c_str());
 	curl_easy_setopt(curl, CURLOPT_POSTFIELDS,postparams.c_str());
