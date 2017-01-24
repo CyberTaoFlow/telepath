@@ -809,10 +809,11 @@ case "$1" in
 
 esac
 
-# Run Tor and Bad IPs list
-echo "php /opt/telepath/ui/html/index.php cron"
 	
 telepath start
+# Run Tor and Bad IPs list
+php /opt/telepath/ui/html/index.php cron
+
 clear
 echo ""
 echo "Telepath v3 installation completed!"
