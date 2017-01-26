@@ -834,6 +834,8 @@ void updateApp(char *ptr)
 			parseAppsJson(root,prekey,domain,learning_so_far,operation_mode,move_to_production,redirect_mode,redirect_page,redirect_status_code,body_value_mode,basic_mode,digest_mode,ntlm_mode,body_value_html,form_param_name,cookie_mode,cookie_name,cookie_value,cookie_value_appearance,top_level_domain);
 			pthread_mutex_lock(&mutexAppMode);
 				itAppMode = mAppMode.find( domain );
+				//syslog(LOG_NOTICE,"Domian %s",domain.c_str());
+
 				if( itAppMode != mAppMode.end() ){
 					if(itAppMode->second.mode!=1 && operation_mode==1){
 						itAppMode->second.counter=0;

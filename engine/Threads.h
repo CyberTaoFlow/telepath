@@ -1742,27 +1742,45 @@ void *tokenize_thread(void *threadid)
 
 void *thread_app_was_updated(void *threadid)
 {
-	string app_name;
+	string app_name,output;
 	CURL *curl;
 	char url[200];
+	boost::unordered_set <string> sName;
+	boost::unordered_set <string>::iterator itnames;
+	size_t pos = 0;
 	
 	while(1)
 	{
 		sleep(1);
 
-		es_get_config("/telepath-config/config/app_list_was_changed_id/_source",app_name);
-		if(app_name=="0"){
+		es_get_config("/telepath-config/config/app_list_was_changed_id/_source",output);
+		if(output=="0"){
 			continue;
 		}
+		
+		pos=output.find("\"");
+		output.erase(0,pos+1);
+		while((pos = output.find("\",\"")) != string::npos){
+			sName.insert(output.substr(0,pos));
+			output.erase(0,pos+3);
+		}
+		pos = output.find("\"");
+		sName.insert(output.substr(0,pos));
 		es_insert("/telepath-config/config/app_list_was_changed_id","{\"value\":\"0\"}");	
+		
+		for (itnames=sName.begin(); itnames != sName.end(); itnames++){
+			//syslog(LOG_NOTICE,"app_name: %s",(*itnames).c_str());
+			app_name = (*itnames);
+			snprintf(url,sizeof(url)-1,"%s/telepath-domains/domains/%s/_source",es_connect.c_str(),app_name.c_str());
 
-		snprintf(url,sizeof(url)-1,"%s/telepath-domains/domains/%s/_source",es_connect.c_str(),app_name.c_str());
-		curl = curl_easy_init();
-		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST,"GET");
-		curl_easy_setopt(curl, CURLOPT_URL,url);
-		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, updateApp);
-		curl_easy_perform(curl);
-		curl_easy_cleanup(curl);
+			curl = curl_easy_init();
+			curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST,"GET");
+			curl_easy_setopt(curl, CURLOPT_URL,url);
+			curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, updateApp);
+			curl_easy_perform(curl);
+			curl_easy_cleanup(curl);
+		}
+		sName.clear();
 
 	}
 	pthread_exit(NULL);
