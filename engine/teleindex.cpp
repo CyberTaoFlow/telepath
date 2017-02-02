@@ -38,6 +38,7 @@ extern boost::unordered_set <string> sLoadbalancerHeaders;
 extern boost::unordered_set <string> sFilterExtensions;
 extern unsigned short password_masking;
 extern vector <Range> loadbalancer_ips;
+extern string sha256(const string str);
 //--------------------------------------------------------------
 extern void es_insert(string,string);
 //--------------------------------------------------------------
@@ -1056,6 +1057,24 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 			}
 		}
 	}
+
+	//Finger Print
+	string fingerprint = teleo->mParams['a'/*UserIP*/];
+
+	if(teleo->mParams['z'/*user-agent*/].size() > 0 && teleo->mParams['f'/*App*/].size() > 0){
+		fingerprint += teleo->mParams['z'/*user-agent*/] + teleo->mParams['f'/*App*/];
+	}
+	else{
+		fingerprint += teleo->mParams['u'/*RespIP*/];
+	}
+	fingerprint = sha256(fingerprint);
+	teleo->mParams['E'/*SHA256_SID*/] = fingerprint;
+	teleo->mParams['e'/*SID*/] = makeSID(fingerprint);
+	
+	//syslog(LOG_NOTICE,"srcIP: %s, UserAgent: %s, Host: %s",teleo->mParams['a'/*UserIP*/].c_str(),teleo->mParams['z'/*user-agent*/].c_str(),teleo->mParams['f'/*App*/].c_str());
+	//syslog(LOG_NOTICE,"fingerprint: %s", fingerprint.c_str());
+	//syslog(LOG_NOTICE,"fingerprintSha256: %s", sha256(fingerprint).c_str());
+
 	//syslog(LOG_NOTICE,"Getting Obj7 ===> %s:%s:%s:%s:%s:%s:%s:%s:%s",teleo->mParams['a'/*UserIP*/].c_str(),teleo->mParams['b'/*TimeStamp*/].c_str(),teleo->mParams['c'/*Page*/].c_str(),teleo->mParams['i'/*Protocol*/].c_str(),teleo->mParams['d'/*StatusCode*/].c_str(),teleo->mParams['j'/*RID*/].c_str(),teleo->mParams['h'/*Request*/].c_str(),teleo->mParams['z'/*user-agent*/].c_str(),teleo->mParams['f'/*App*/].c_str());
 
 	if(presence < 0){
