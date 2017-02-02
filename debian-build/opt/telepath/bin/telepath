@@ -3,7 +3,7 @@
 name_telewatchdog="telewatchdog"
 name_engine="engine"
 
-x=2000000
+x=4000000
 g="g"
 phymem=$(free|awk '/^Mem:/{print $2}')
 phymem=$((phymem / x))
