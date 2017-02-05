@@ -633,6 +633,7 @@ void showSvnVersion(char * mode){
 	}
 }
 
+/*
 void createLicenseKey(int argc,char* array[]){
 	if(argc > 1){
 		if( strcmp("-c",array[1]) == 0 ){
@@ -654,6 +655,7 @@ void createLicenseKey(int argc,char* array[]){
 		}
 	}
 }
+*/
 
 // Session initialization. 
 // Opening a new session or classifing an existing session to an old one.

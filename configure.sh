@@ -310,9 +310,9 @@ binaries() {
 					#sed -i 's/^#network.bind_host: 192.168.0.1/network.bind_host: 127.0.0.1/g' /opt/telepath/db/elasticsearch/config/elasticsearch.yml
 					sed -i 's/com.amazonaws: WARN/ ^#com.amazonaws: WARN/g' /opt/telepath/db/elasticsearch/config/loggin.yml
 					echo -e "*	soft nofile 100000\n* hard nofile  100000" >> /etc/security/limits.conf
-					echo "es=\$(grep MemTotal /proc/meminfo | awk '{print \$2/2/1000000}'  | head -c1)'g'; export ES_HEAP_SIZE=\$es;" >> ~/.bashrc
-					echo "es=\$(grep MemTotal /proc/meminfo | awk '{print \$2/2/1000000}'  | head -c1)'g'; export ES_HEAP_SIZE=\$es;" >> /root/.bashrc
-					echo "es=\$(grep MemTotal /proc/meminfo | awk '{print \$2/2/1000000}'  | head -c1)'g'; export ES_HEAP_SIZE=\$es; exit 0" > /etc/rc.local
+					#echo "es=\$(grep MemTotal /proc/meminfo | awk '{print \$2/4/1000000}'  | head -c1)'g'; export ES_HEAP_SIZE=\$es;" >> ~/.bashrc
+					#echo "es=\$(grep MemTotal /proc/meminfo | awk '{print \$2/4/1000000}'  | head -c1)'g'; export ES_HEAP_SIZE=\$es;" >> /root/.bashrc
+					#echo "es=\$(grep MemTotal /proc/meminfo | awk '{print \$2/4/1000000}'  | head -c1)'g'; export ES_HEAP_SIZE=\$es; exit 0" > /etc/rc.local
 					echo "script.groovy.sandbox.enabled: true" >> /opt/telepath/db/elasticsearch/config/elasticsearch.yml
 					echo "http://localhost:9200" > /opt/telepath/db/elasticsearch/config/connect.conf
 			else
