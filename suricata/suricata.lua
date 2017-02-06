@@ -439,64 +439,64 @@ function log(args)
 		end
 	end
 
-	if (load_cookies[fp_host]) then
-		if (fp_cookie) then
-			local cookie_tmp = string.find(fp_cookie, load_cookies[fp_host])
-			if (cookie_tmp) then
-				local fp_cookie = string.sub(fp_cookie, cookie_tmp, string.len(fp_cookie))
-				cookie_tmp = string.find(fp_cookie, "=")
-				local cookie_tmp2 = string.find(fp_cookie, ";")
-				fp_cookie = string.sub(fp_cookie, cookie_tmp+1, cookie_tmp2-1)
-				request["TS"] = sha_256.sha256(fp_cookie)
+--	if (load_cookies[fp_host]) then
+--		if (fp_cookie) then
+--			local cookie_tmp = string.find(fp_cookie, load_cookies[fp_host])
+--			if (cookie_tmp) then
+--				local fp_cookie = string.sub(fp_cookie, cookie_tmp, string.len(fp_cookie))
+--				cookie_tmp = string.find(fp_cookie, "=")
+--				local cookie_tmp2 = string.find(fp_cookie, ";")
+--				fp_cookie = string.sub(fp_cookie, cookie_tmp+1, cookie_tmp2-1)
+--				request["TS"] = sha_256.sha256(fp_cookie)
 			--The statistical cookie wasn't found in the following request.
-			else
-				fingerprint = ""
-				if fp_ua then
-					fingerprint = fingerprint .. fp_ua
-				else
-					fingerprint = dstip
-				end
-
-				if fp_host then
-					fingerprint = fingerprint .. fp_host
-				else
-					fingerprint = dstip
-				end
-				request["TS"] = sha_256.sha256(srcip .. fingerprint)
-			end
+--			else
+--				fingerprint = ""
+--				if fp_ua then
+--					fingerprint = fingerprint .. fp_ua
+--				else
+--					fingerprint = dstip
+--				end
+--
+--				if fp_host then
+--					fingerprint = fingerprint .. fp_host
+--				else
+--					fingerprint = dstip
+--				end
+--				request["TS"] = sha_256.sha256(srcip .. fingerprint)
+--			end
 		--The following request has no cookie header.
-		else
-			fingerprint = ""
-			if fp_ua then
-			fingerprint = fingerprint .. fp_ua
-			else
-				fingerprint = dstip
-			end
-
-			if fp_host then
-				fingerprint = fingerprint .. fp_host
-			else
-				fingerprint = dstip
-			end
-			request["TS"] = sha_256.sha256(srcip .. fingerprint)
-		end
-	--The load_cookies dictionary has no statistical cookie.
-	else
-		fingerprint = ""
-		if fp_ua then
-			fingerprint = fingerprint .. fp_ua
-		else
-			fingerprint = dstip
-		end
-
-		if fp_host then
-			fingerprint = fingerprint .. fp_host
-		else
-			fingerprint = dstip
-		end
-		request["TS"] = sha_256.sha256(srcip .. fingerprint)
-	end
-
+--		else
+--			fingerprint = ""
+--			if fp_ua then
+--			fingerprint = fingerprint .. fp_ua
+--			else
+--				fingerprint = dstip
+--			end
+--
+--			if fp_host then
+--				fingerprint = fingerprint .. fp_host
+--			else
+--				fingerprint = dstip
+--			end
+--			request["TS"] = sha_256.sha256(srcip .. fingerprint)
+--		end
+--	--The load_cookies dictionary has no statistical cookie.
+--	else
+--		fingerprint = ""
+--		if fp_ua then
+--			fingerprint = fingerprint .. fp_ua
+--		else
+--			fingerprint = dstip
+--		end
+--
+--		if fp_host then
+--			fingerprint = fingerprint .. fp_host
+--		else
+--			fingerprint = dstip
+--		end
+--		request["TS"] = sha_256.sha256(srcip .. fingerprint)
+--	end
+	request["TS"] = ""
 	express_flag = false
 
 	hr_queue = redis:lpop("E")
