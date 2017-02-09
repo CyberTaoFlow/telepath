@@ -893,7 +893,7 @@ bool dynamicPageInit(string & page){
 void encodeNoSQL (string & req_str){
 	replace(req_str.begin(),req_str.end(),'{','\\');
 	replace(req_str.begin(),req_str.end(),'}','\\');
-	replace(req_str.begin(),req_str.end(),',','\\');
+
 	//syslog(LOG_NOTICE,"New req_str: %s",req_str.c_str());
 }
 
