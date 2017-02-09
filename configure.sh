@@ -19,7 +19,7 @@ fi
 if [ -n "$(which apt-get)" ]; then
 	# apt-get -y install dialog php5 libapache2-mod-php5 gdb php5-sqlite lua-sec lua5.1 lua-socket libcurl-ocaml-dev luarocks jq #sendmail
 	apt-get -y install dialog php7.0 libapache2-mod-php7.0 gdb php7.0-sqlite3 lua-sec lua5.1 lua-socket libcurl-ocaml-dev luarocks jq #sendmail
-	apt-get -y install php-pear php7.0-dev php7.0-gd php7.0-msgpack
+	apt-get -y install php-pear php7.0-dev php7.0-gd php7.0-msgpack run-one
 	# pecl install msgpack-0.5.7
 	# echo extension=msgpack.so > /etc/php5/mods-available/msgpack.ini
 	# cd /etc/php5/apache2/conf.d/
@@ -65,7 +65,7 @@ DATACONF='/opt/telepath/conf/database.conf'
 #MYSQL_USER="root"
 conf_maintenence() {
     # Make sure we have exactly one copy of once a minute reports cron
-	command="php /opt/telepath/ui/html/index.php cron reports"
+	command="run-one php /opt/telepath/ui/html/index.php cron reports"
 	job="* * * * * $command"
 	cat <(fgrep -i -v "$command" <(crontab -l)) <(echo "$job") | crontab -
 
@@ -83,7 +83,7 @@ conf_maintenence() {
 conf_maintenence_old() {
 	
 	# Make sure we have exactly one copy of once a minute reports cron
-	command="php /opt/telepath/ui/html/index.php cron reports"
+	command="run-one php /opt/telepath/ui/html/index.php cron reports"
 	job="* * * * * $command"
 	cat <(fgrep -i -v "$command" <(crontab -l)) <(echo "$job") | crontab -
 	
@@ -453,7 +453,7 @@ conf_update_apache() {
 		fi
 		sed -i 's|DocumentRoot /var/www/html|DocumentRoot /opt/telepath/ui/html|g' /etc/apache2/sites-available/000-default.conf
 		sed -i 's|:80>|:8000>|g' /etc/apache2/sites-available/000-default.conf
-		sed -i 's|Listen 80\n|Listen 8000\n|g' /etc/apache2/ports.conf
+		sed -i 's|Listen 80|Listen 8000|g' /etc/apache2/ports.conf
 	fi
 	a2enmod rewrite
 	#chmod +x /opt/telepath/generate-ssl.sh
@@ -529,10 +529,10 @@ conf_create_db() {
 }
 cron_jobs(){
     crontab -l > currentCrons
-    echo "* * * * * php /opt/telepath/ui/html/index.php cases flag_requests_by_cases >> /var/log/flag_requests_by_cases.log 2>&1 || true" >> currentCrons
-    echo "*/5 * * * * php /opt/telepath/ui/html/index.php webusers store_users >> /var/log/web_users.log 2>&1 || true" >> currentCrons
-    echo "0 * * * * php /opt/telepath/ui/html/index.php cases store_similar_case_sessions >> /var/log/store_similar_case_sessions.log 2>&1 || true" >> currentCrons
-    echo "*/2 * * * * /opt/telepath/teleup.sh" >> currentCrons
+    echo "* * * * * run-one php /opt/telepath/ui/html/index.php cases flag_requests_by_cases >> /var/log/flag_requests_by_cases.log 2>&1 || true" >> currentCrons
+    echo "*/5 * * * * run-one php /opt/telepath/ui/html/index.php webusers store_users >> /var/log/web_users.log 2>&1 || true" >> currentCrons
+    echo "0 * * * * run-one php /opt/telepath/ui/html/index.php cases store_similar_case_sessions >> /var/log/store_similar_case_sessions.log 2>&1 || true" >> currentCrons
+    echo "*/2 * * * * run-one /opt/telepath/teleup.sh" >> currentCrons
     crontab currentCrons
     rm currentCrons
 }
@@ -548,7 +548,7 @@ conf_create_tbls() {
 
 conf_init_cron() {
 	# Add new job update+email (PHP)
-	croncmd="php /opt/telepath/ui/html/index.php cron"
+	croncmd="run-one php /opt/telepath/ui/html/index.php cron"
         cronjob="0 * * * * $croncmd"
         ( crontab -l | grep -v "$croncmd" ; echo "$cronjob" ) | crontab -
 	if [ -n "$(which yum)" ]; then
