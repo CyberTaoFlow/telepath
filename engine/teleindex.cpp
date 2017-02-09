@@ -5,6 +5,7 @@
 #include "Enumeration.h"
 #include <semaphore.h>
 #include "Range.h"
+#include <algorithm>
 #define MAX_PARAM 128
 #define MAX_VALUE 8192
 
@@ -889,6 +890,12 @@ bool dynamicPageInit(string & page){
 	}
 	return false;
 }
+void encodeNoSQL (string & req_str){
+	replace(req_str.begin(),req_str.end(),'{','\\');
+	replace(req_str.begin(),req_str.end(),'}','\\');
+	replace(req_str.begin(),req_str.end(),',','\\');
+	//syslog(LOG_NOTICE,"New req_str: %s",req_str.c_str());
+}
 
 void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & obj)
 {
@@ -904,6 +911,9 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 	double presence=1;
 
 	for(itConvertObj = obj.begin() ; itConvertObj != obj.end() ; itConvertObj++){
+		//syslog(LOG_NOTICE,"Old str: %s",itConvertObj->second.c_str());
+		encodeNoSQL(itConvertObj->second);
+		
 		if(itConvertObj->first.size() == 2){
 			if(itConvertObj->first[0] == 'R'){
 				if(itConvertObj->first[1] == 'I'){
@@ -1070,7 +1080,7 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 	fingerprint = sha256(fingerprint);
 	teleo->mParams['E'/*SHA256_SID*/] = fingerprint;
 	teleo->mParams['e'/*SID*/] = makeSID(fingerprint);
-	
+
 	//syslog(LOG_NOTICE,"srcIP: %s, UserAgent: %s, Host: %s",teleo->mParams['a'/*UserIP*/].c_str(),teleo->mParams['z'/*user-agent*/].c_str(),teleo->mParams['f'/*App*/].c_str());
 	//syslog(LOG_NOTICE,"fingerprint: %s", fingerprint.c_str());
 	//syslog(LOG_NOTICE,"fingerprintSha256: %s", sha256(fingerprint).c_str());
@@ -1112,6 +1122,7 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 			postparams.clear();
 		}
 	}
+
 	else if(post_data==true){
 		parseGetPostParams(postparams,vAttr,'P');
 	}
