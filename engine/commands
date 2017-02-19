@@ -1,0 +1,110 @@
+ArsOnMars123
+/* copy data from compiler server
+scp -i cykickOffice.pem ubuntu@35.161.193.181:/home/ubuntu/trunk/engine/engine.gz /tmp
+
+/* copy from one server to another
+scp /tmp/engine.gz test@192.168.1.243:/tmp
+
+/*git commands
+git diff
+
+git status
+
+git commit
+
+git push
+
+/*move the engine zip from temp to bin, unzip it, and give permission.
+mv /tmp/engine.gz /opt/telepath/bin/ ; gunzip -f /opt/telepath/bin/engine.gz ; chmod 755 /opt/telepath/bin/engine
+
+/* Syslog Data Information
+tail -n100 -f /var/log/syslog | grep Engine
+
+/* Start Suricata
+/opt/telepath/suricata/suricata -c /opt/telepath/suricata/suricata.yaml --af-packet tcp port 80�~@~O
+
+/* Start Suricata with demonize
+/opt/telepath/suricata/suricata -D -c /opt/telepath/suricata/suricata.yaml --af-packet tcp port 80�~@~O
+
+/* make watchdog
+make telewatchdog ; md5sum telewatchdog ; gzip -f telewatchdog ; mv telewatchdog.gz /tmp
+
+/* make engine full
+make engine_trial ; md5sum engine ; gzip -f engine ; mv engine.gz /tmp/�~@~O
+
+/* move engine to bin folder and give permission.
+mv /tmp/engine.gz /opt/telepath/bin/ ; gunzip -f /opt/telepath/bin/engine.gz ; chmod 755 /opt/telepath/bin/engine�~@~O
+
+/* move watchdog to bin folder and give permission.
+mv /tmp/telewatchdog.gz /opt/telepath/bin/ ; gunzip -f /opt/telepath/bin/telewatchdog.gz ; chmod 755 /opt/telepath/bin/telewatchdog
+
+/* redis
+redis-cli monitor
+redis-cli flushall
+
+/* Start Elastic search
+/opt/telepath/db/elasticsearch/bin/elasticsearch -d -Des.insecure.allow.root=true
+
+
+/* Remove all Slashes
+
+:%s/\\"/"/g
+
+/* Add All Slashes
+
+:%s/"/\\"/g
+
+/* Timing functions
+clock_t tStart = clock();
+syslog (LOG_NOTICE, "Time taken: %.6fs\n", (double)(clock() - tStart);
+
+//mahba ip
+128.139.197.116
+
+curl -XGET 'http://localhost:9200/telepath-domains/_search?pretty' -d '{"size":100,"query":{"filtered":{"filter":{"bool":{"must":{"term":{"cookie_mode":"<off/on = 0 or 1>"}}}}}}}'
+curl -XGET 'http://localhost:9200/telepath-20*/_search?pretty' -d '{"size":1000,"query":{"filtered":{"filter":{"bool":{"must":{"term":{"alerts.name":"<alert name>"}}}}}}}'
+curl -XGET 'http://localhost:9200/telepath-domains/_search?pretty' -d '{"size":1000}'
+
+
+curl -XGET 'http://localhost:9200/telepath-domains/_search?pretty' -d '{"size":100,"query":{"wildcard":{"host":"*.com"}}}'
+
+
+
+curl -XDELETE 'http://localhost:9200/telepath-rules' ;
+curl -XDELETE 'http://localhost:9200/telepath-actions' ;
+curl -XDELETE 'http://localhost:9200/telepath-bad-ips';
+curl -XDELETE 'http://localhost:9200/telepath-20160912';
+
+/* Suricata patch for MAHBA
+        host = HttpGetRequestHost()
+        if host then
+
+                local ending = host:find("ac.il")
+                if ending then
+                else
+                        return
+                end
+        end
+
+
+#!/bin/bash
+
+echo "******** Engine Compile ********"
+telepath stop
+
+sleep 2
+
+scp -i cykickOffice.pem ubuntu@35.161.193.181:/home/ubuntu/trunk/engine/engine.gz /tmp
+
+sleep 2
+
+mv /tmp/engine.gz /opt/telepath/bin/ ; gunzip -f /opt/telepath/bin/engine.gz ; chmod 755 /opt/telepath/bin/engine
+
+sleep 2
+
+telepath restart
+
+sleep 1
+
+#tailf -n2000 /var/log/syslog
+
