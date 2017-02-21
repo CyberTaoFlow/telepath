@@ -731,13 +731,13 @@ void *thread_sid_per_min(void *threadid)
 
 		syslog(LOG_NOTICE,"Sessions:%u mMem:%u |getRedis:%u |insertElastic:%u |dropApp:%u |dropPage:%u |dropMethod:%u |dropLong:%u|",size,(unsigned int)TC->teleObjQueue.size(),getRedis,insertElastic,dropApp,dropPage,dropMethod,longSessionDrop);	
 		
-		delta = getRedis - current;
-		current = getRedis;
-		if(delta == 0){
-			syslog(LOG_NOTICE,"Suricata didn't receive any DATA");
-			FILE *fd = popen("telepath suricata > /dev/null 2>&1","w");
-			pclose(fd);
-		}
+		// delta = getRedis - current;
+		// current = getRedis;
+		// if(delta == 0){
+		// 	syslog(LOG_NOTICE,"Suricata didn't receive any DATA");
+		// 	FILE *fd = popen("telepath suricata > /dev/null 2>&1","w");
+		// 	pclose(fd);
+		// }
 		if(errorCheck==getRedis){
 			counter++;
 		}else{
@@ -747,9 +747,10 @@ void *thread_sid_per_min(void *threadid)
 		
 		if(counter==3){
 	                delta = getRedis - current;
-			current = getRedis;
+					current = getRedis;
         	        if(delta == 0){
-	                        syslog(LOG_NOTICE,"Suricata didn't recive any DATA");
+        	        		counter=0;
+	                        syslog(LOG_NOTICE,"Suricata didn't receive any DATA");
                         	FILE *fd = popen("telepath suricata > /dev/null 2>&1","w");
                         	pclose(fd);
                 	}
