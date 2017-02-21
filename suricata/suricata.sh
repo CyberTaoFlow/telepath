@@ -27,18 +27,19 @@ cd ..
 ldconfig
 
 # download pfring
-git clone https://github.com/ntop/PF_RING.git
-cd PF_RING/kernel/
-make && sudo make install
-cd ../userland/lib
-./configure --prefix=/usr/local/pfring && make && sudo make install
-cd ../libpcap
-./configure --prefix=/usr/local/pfring && make && sudo make install
-cd ../tcpdump
-./configure --prefix=/usr/local/pfring && make && sudo make install
-sudo ldconfig
+#git clone https://github.com/ntop/PF_RING.git
+#cd PF_RING/kernel/
+#make && sudo make install
+#cd ../userland/lib
+#./configure --prefix=/usr/local/pfring && make && sudo make install
+#cd ../libpcap
+#./configure --prefix=/usr/local/pfring && make && sudo make install
+#cd ../tcpdump
+#./configure --prefix=/usr/local/pfring && make && sudo make install
+#sudo ldconfig
 
-modprobe pf_ring
+#modprobe pf_ring
+#-----
 
 #wget http://sourceforge.net/projects/ntop/files/PF_RING/PF_RING-6.0.3.tar.gz
 #tar -zxf PF_RING-6.0.3.tar.gz
