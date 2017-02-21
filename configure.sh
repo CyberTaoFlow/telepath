@@ -300,12 +300,12 @@ binaries() {
 
 			if [ ! -f "/opt/telepath/db/elasticsearch/config/elasticsearch.yml" ]; then
 					cd /opt/telepath/db/
-					#wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.5.2.tar.gz
-					wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.4.1/elasticsearch-2.4.1.tar.gz
-					tar -xf elasticsearch-2.4.1.tar.gz
-					mv elasticsearch-2.4.1/* elasticsearch
-					rm elasticsearch-2.4.1.tar.gz
-					rm -rf elasticsearch-2.4.1
+					wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.2.0.tar.gz
+					# wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.4.1/elasticsearch-2.4.1.tar.gz
+					tar -xf elasticsearch-5.2.0.tar.gz
+					mv elasticsearch-5.2.0/* elasticsearch
+					rm elasticsearch-5.2.0.tar.gz
+					rm -rf elasticsearch-5.2.0
 					#sed -i 's/^#index.number_of_shards: 1/index.number_of_shards: 1/g' /opt/telepath/db/elasticsearch/config/elasticsearch.yml
 					#sed -i 's/^#network.bind_host: 192.168.0.1/network.bind_host: 127.0.0.1/g' /opt/telepath/db/elasticsearch/config/elasticsearch.yml
 					sed -i 's/com.amazonaws: WARN/ ^#com.amazonaws: WARN/g' /opt/telepath/db/elasticsearch/config/loggin.yml
@@ -315,14 +315,17 @@ binaries() {
 					#echo "es=\$(grep MemTotal /proc/meminfo | awk '{print \$2/4/1000000}'  | head -c1)'g'; export ES_HEAP_SIZE=\$es; exit 0" > /etc/rc.local
 					echo "script.groovy.sandbox.enabled: true" >> /opt/telepath/db/elasticsearch/config/elasticsearch.yml
 					echo "http://localhost:9200" > /opt/telepath/db/elasticsearch/config/connect.conf
+					# create elasticsearch user
+					adduser --disabled-password --gecos "" elastic
+					chown -R elastic:elastic /opt/telepath/db/elasticsearch/
 			else
 					echo "Elasticsearch was detected under /etc/elasticsearch , skipping."
 			fi
 
 
 			# We need to install default rules
-			echo "Starting Elastissearch"
-			/opt/telepath/db/elasticsearch/bin/elasticsearch -d
+			# echo "Starting Elastissearch"
+			# /opt/telepath/db/elasticsearch/bin/elasticsearch -d
 
 	fi
 
