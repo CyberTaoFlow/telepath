@@ -27,18 +27,19 @@ cd ..
 ldconfig
 
 # download pfring
-git clone https://github.com/ntop/PF_RING.git
-cd PF_RING/kernel/
-make && sudo make install
-cd ../userland/lib
-./configure --prefix=/usr/local/pfring && make && sudo make install
-cd ../libpcap
-./configure --prefix=/usr/local/pfring && make && sudo make install
-cd ../tcpdump
-./configure --prefix=/usr/local/pfring && make && sudo make install
-sudo ldconfig
+#git clone https://github.com/ntop/PF_RING.git
+#cd PF_RING/kernel/
+#make && sudo make install
+#cd ../userland/lib
+#./configure --prefix=/usr/local/pfring && make && sudo make install
+#cd ../libpcap
+#./configure --prefix=/usr/local/pfring && make && sudo make install
+#cd ../tcpdump
+#./configure --prefix=/usr/local/pfring && make && sudo make install
+#sudo ldconfig
 
-modprobe pf_ring
+#modprobe pf_ring
+#--- 
 
 #wget http://sourceforge.net/projects/ntop/files/PF_RING/PF_RING-6.0.3.tar.gz
 #tar -zxf PF_RING-6.0.3.tar.gz
@@ -67,7 +68,8 @@ cd "suricata-$VER"
 
 mkdir -p /opt/telepath/suricata/logs
 
-./configure --prefix=/opt/telepath/suricata/ --sysconfdir=/opt/telepath/suricata/ --localstatedir=/opt/telepath/suricata/ --disable-detection --enable-luajit --with-libnss-libraries=/usr/lib --with-libnss-includes=/usr/include/nss/ --with-libnspr-libraries=/usr/lib --with-libluajit-includes=/usr/local/include/luajit-2.0/ --with-libluajit-libraries=/usr/lib/x86_64-linux-gnu/ --enable-pfring --with-libpfring-includes=/usr/local/pfring/include --with-libpfring-libraries=/usr/lib/x86_64-linux-gnu/
+#./configure --prefix=/opt/telepath/suricata/ --sysconfdir=/opt/telepath/suricata/ --localstatedir=/opt/telepath/suricata/ --disable-detection --enable-luajit --with-libnss-libraries=/usr/lib --with-libnss-includes=/usr/include/nss/ --with-libnspr-libraries=/usr/lib --with-libluajit-includes=/usr/local/include/luajit-2.0/ --with-libluajit-libraries=/usr/lib/x86_64-linux-gnu/ --enable-pfring --with-libpfring-includes=/usr/local/pfring/include --with-libpfring-libraries=/usr/lib/x86_64-linux-gnu/
+./configure --prefix=/opt/telepath/suricata/ --sysconfdir=/opt/telepath/suricata/ --localstatedir=/opt/telepath/suricata/ --disable-detection --enable-luajit --with-libnss-libraries=/usr/lib --with-libnss-includes=/usr/include/nss/ --with-libnspr-libraries=/usr/lib --with-libluajit-includes=/usr/local/include/luajit-2.0/ --with-libluajit-libraries=/usr/lib/x86_64-linux-gnu/
 make
 make install
 ln -s /opt/telepath/suricata/bin/suricata /opt/telepath/suricata/suricata
