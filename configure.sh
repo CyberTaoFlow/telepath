@@ -18,7 +18,7 @@ fi
 
 if [ -n "$(which apt-get)" ]; then
 	# apt-get -y install dialog php5 libapache2-mod-php5 gdb php5-sqlite lua-sec lua5.1 lua-socket libcurl-ocaml-dev luarocks jq #sendmail
-	apt-get -y install dialog php7.0 libapache2-mod-php7.0 gdb php7.0-sqlite3 lua-sec lua5.1 lua-socket libcurl-ocaml-dev luarocks jq #sendmail
+	apt-get -y install dialog php7.0 libapache2-mod-php7.0 gdb php7.0-sqlite3 lua-sec lua5.1 lua-socket libcurl-ocaml-dev luarocks jq htop oracle-java8-installer #sendmail
 	apt-get -y install php-pear php7.0-dev php7.0-gd php7.0-msgpack run-one
 	# pecl install msgpack-0.5.7
 	# echo extension=msgpack.so > /etc/php5/mods-available/msgpack.ini
