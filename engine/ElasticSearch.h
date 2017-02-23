@@ -4,7 +4,8 @@
 using namespace std;
 
 string es_connect;
-string timeoutStr = "?timeout=5m";
+//string timeoutStr = "?timeout=5m";
+string timeoutStr = "";
 
 void read_connect_conf_file(){
 	ifstream myfile ("/opt/telepath/db/elasticsearch/config/connect.conf");
