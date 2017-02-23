@@ -3,7 +3,7 @@
 name_telewatchdog="telewatchdog"
 name_engine="engine"
 
-x=4000000
+x=2000000
 g="g"
 phymem=$(free|awk '/^Mem:/{print $2}')
 phymem=$((phymem / x))
@@ -29,7 +29,7 @@ case $1 in # $1 - this is first parameter of command line
 
 	start)
 	gdb /proc/${PPID}/exe ${PPID} << END > /dev/null 2>&1 || true
-	call setenv("ES_HEAP_SIZE", "$phymem", 1)
+	#call setenv("ES_HEAP_SIZE", "$phymem", 1)
 	call setenv("LD_LIBRARY_PATH","/usr/local/lib:$LD_LIBRARY_PATH",1)
 END
 
