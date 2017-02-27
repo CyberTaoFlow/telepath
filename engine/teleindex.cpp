@@ -899,7 +899,7 @@ void encodeNoSQL (string & req_str){
 
 void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & obj)
 {
-	string flag_loadbalncer="";
+	string flag_loadbalncer="",fullCookie="";
 	string ext,fullPageName,attName,postparams,appid,authorization;
 	unsigned int i,subDomainID,hash_page;
 	unsigned short statusCode;
@@ -1023,6 +1023,8 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 					teleo->mParams['z'/*user-agent*/] = itConvertObj->second;
 				}
 				else if(attribute.name=="cookie"){
+					//syslog(LOG_NOTICE,"cookie: %s", attribute.value.c_str());
+					fullCookie = attribute.value;
 					parseCookieParams(attribute.value,vAttr);
 				}
 				else if(attribute.name=="host"){
@@ -1069,13 +1071,18 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 	}
 
 	//Finger Print
-	string fingerprint = teleo->mParams['a'/*UserIP*/];
+	string fingerprint = "";
+	if(fullCookie.empty()){
+		fingerprint = teleo->mParams['a'/*UserIP*/];
 
-	if(teleo->mParams['z'/*user-agent*/].size() > 0 && teleo->mParams['f'/*App*/].size() > 0){
-		fingerprint += teleo->mParams['z'/*user-agent*/] + teleo->mParams['f'/*App*/];
-	}
-	else{
-		fingerprint += teleo->mParams['u'/*RespIP*/];
+		if(teleo->mParams['z'/*user-agent*/].size() > 0 && teleo->mParams['f'/*App*/].size() > 0){
+			fingerprint += teleo->mParams['z'/*user-agent*/] + teleo->mParams['f'/*App*/];
+		}
+		else{
+			fingerprint += teleo->mParams['u'/*RespIP*/];
+		}
+	}else{
+		fingerprint = fullCookie;
 	}
 	fingerprint = sha256(fingerprint);
 	teleo->mParams['E'/*SHA256_SID*/] = fingerprint;
