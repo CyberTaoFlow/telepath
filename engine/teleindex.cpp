@@ -1023,7 +1023,7 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 					teleo->mParams['z'/*user-agent*/] = itConvertObj->second;
 				}
 				else if(attribute.name=="cookie"){
-					//syslog(LOG_NOTICE,"cookie: %s", attribute.value.c_str());
+					syslog(LOG_NOTICE,"cookie: %s", attribute.value.c_str());
 					fullCookie = attribute.value;
 					parseCookieParams(attribute.value,vAttr);
 				}
@@ -1060,7 +1060,8 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 		}
 
 	}
-
+	
+	try{
 	if(flag_loadbalncer.length()>0){
 		for (std::vector<Range>::iterator it_ip = loadbalancer_ips.begin() ; it_ip != loadbalancer_ips.end(); ++it_ip){
 			unsigned int int_ip = ipToNum(teleo->mParams['a'/*UserIP*/]);
@@ -1072,7 +1073,9 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 
 	//Finger Print
 	string fingerprint = "";
-	if(fullCookie.empty()){
+	if(fullCookie.size() > 0){
+			fingerprint = fullCookie;
+	}else{
 		fingerprint = teleo->mParams['a'/*UserIP*/];
 
 		if(teleo->mParams['z'/*user-agent*/].size() > 0 && teleo->mParams['f'/*App*/].size() > 0){
@@ -1081,17 +1084,16 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 		else{
 			fingerprint += teleo->mParams['u'/*RespIP*/];
 		}
-	}else{
-		fingerprint = fullCookie;
+
 	}
 	fingerprint = sha256(fingerprint);
 	teleo->mParams['E'/*SHA256_SID*/] = fingerprint;
 	teleo->mParams['e'/*SID*/] = makeSID(fingerprint);
-
-	//syslog(LOG_NOTICE,"srcIP: %s, UserAgent: %s, Host: %s",teleo->mParams['a'/*UserIP*/].c_str(),teleo->mParams['z'/*user-agent*/].c_str(),teleo->mParams['f'/*App*/].c_str());
-	//syslog(LOG_NOTICE,"fingerprint: %s", fingerprint.c_str());
+	
+	syslog(LOG_NOTICE,"srcIP: %s, UserAgent: %s, Host: %s",teleo->mParams['a'/*UserIP*/].c_str(),teleo->mParams['z'/*user-agent*/].c_str(),teleo->mParams['f'/*App*/].c_str());
+	syslog(LOG_NOTICE,"fingerprint: %s", fingerprint.c_str());
 	//syslog(LOG_NOTICE,"fingerprintSha256: %s", sha256(fingerprint).c_str());
-
+	}catch(...){ syslog(LOG_NOTICE,"Somting Wrong With Fingerprint Or Loadbalancer");}
 	//syslog(LOG_NOTICE,"Getting Obj7 ===> %s:%s:%s:%s:%s:%s:%s:%s:%s",teleo->mParams['a'/*UserIP*/].c_str(),teleo->mParams['b'/*TimeStamp*/].c_str(),teleo->mParams['c'/*Page*/].c_str(),teleo->mParams['i'/*Protocol*/].c_str(),teleo->mParams['d'/*StatusCode*/].c_str(),teleo->mParams['j'/*RID*/].c_str(),teleo->mParams['h'/*Request*/].c_str(),teleo->mParams['z'/*user-agent*/].c_str(),teleo->mParams['f'/*App*/].c_str());
 
 	if(presence < 0){
