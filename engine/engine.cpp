@@ -22,7 +22,7 @@
 #include <hiredis/hiredis.h>
 #include <msgpack.hpp>
 #include <stdio.h>
-#include <omp.h>
+
 
 #include <iomanip> 
 #include <openssl/sha.h>
@@ -725,7 +725,7 @@ void clearMyAttIrrelevantParams(){
 		vector <unsigned short> ().swap(itMyAttMap->second.sizeMarkovVec);
 	}
 }
-#pragma omp parallel
+
 int main (int argc,char* array[])
 {
 
