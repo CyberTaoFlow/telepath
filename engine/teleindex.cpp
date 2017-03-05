@@ -139,6 +139,7 @@ void findTitle(string & title,char * reply){
 	{
 		//cout << "title:" << reply << endl;
 		title.assign(pos,title_len);
+		//syslog(LOG_NOTICE, "Title: %s",title.c_str());
 	}
 }
 
@@ -580,8 +581,6 @@ void parseMultipart(string & str,vector <struct Attribute> & vAttr){
 						}else{
 							tAttr.value.assign(str.begin()+found2+1,str.begin()+found);
 						}
-
-
 					}else{
 						return;
 					}
