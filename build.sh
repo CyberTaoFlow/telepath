@@ -7,6 +7,8 @@
 VER=`cat .counter`;
 ((VER++))
 echo $VER > .counter;
+git commit .counter -m 'counter++'; git push
+
 BUILD_VER="1"
 OS=
 OS_VER=
