@@ -482,11 +482,13 @@ conf_sqlite_db() {
 	fi
     chown $USER:$USER /opt/telepath/ui/html/application/databases/telepath_users.db
     mkdir /opt/telepath/ui/html/application/sessions
+    mkdir /opt/telepath/ui/html/upload
     chmod 700 /opt/telepath/ui/html/application/databases
     chmod 700 /opt/telepath/ui/html/application/sessions
     chown $USER:$USER /opt/telepath/ui/html/application/databases
     chown $USER:$USER /opt/telepath/ui/html/application/sessions
     chown $USER:$USER /opt/telepath/ui/html/application/config
+    chown $USER:$USER /opt/telepath/ui/html/upload
 }
     
 conf_create_db() {
