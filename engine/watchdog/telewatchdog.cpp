@@ -464,6 +464,17 @@ void get_interface_name(string & output,string & interface){
 	}
 }
 
+void remove_pcap_files(string dirpath){
+	char tempURL[300];
+	try{
+		sprintf(tempURL,"exec rm -r /%s/*",dirpath.c_str());
+		system(tempURL);
+	}catch(...){
+		syslog(LOG_NOTICE,"Failed to Delete Files in %s",dirpath.c_str());
+	}
+	syslog(LOG_NOTICE,"All Files in %s Has been deleted", dirpath.c_str());
+}
+
 void *thread_init_suricata(void *threadid){
 	char suricata_cmd[5000];
 	FILE* ppipe_suricata;
@@ -494,6 +505,7 @@ void *thread_init_suricata(void *threadid){
 					pclose(ppipe_suricata);
 
 					syslog(LOG_NOTICE, "No more files to upload ... Reload Suricata");
+					remove_pcap_files("opt/telepath/ui/html/upload");
 					sprintf( suricata_cmd,"/opt/telepath/suricata/suricata -D -c /opt/telepath/suricata/suricata.yaml --af-packet \"%s %s\" > /dev/null 2>&1",pcap.c_str(),whitelist_cidr.c_str());
 					es_insert("/telepath-config/config/file_loader_mode_id","{\"value\":\"0\"}");
 				}else{
