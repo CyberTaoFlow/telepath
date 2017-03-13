@@ -448,7 +448,6 @@ void *thread_suricata_configuration_check(void *threadid){
 	}
 }
 
-
 void get_interface_name(string & output,string & interface){
 	size_t find_pos = output.find("interface_name\"");
 	if(find_pos != string::npos ){
@@ -479,7 +478,7 @@ void *thread_init_suricata(void *threadid){
 	char suricata_cmd[5000];
 	FILE* ppipe_suricata;
 	string output,pcap,interface,whitelist_cidr;
-
+	int pcap_delete_flag=0;
 	redisContext *redis;
 	redisReply *reply;
 
@@ -503,12 +502,15 @@ void *thread_init_suricata(void *threadid){
 					syslog(LOG_NOTICE,"%s",suricata_cmd);
 					ppipe_suricata = popen(suricata_cmd,"w");
 					pclose(ppipe_suricata);
-
+					if(pcap_delete_flag){
+						remove_pcap_files("opt/telepath/ui/html/upload");
+						pcap_delete_flag = 0;
+					}
 					syslog(LOG_NOTICE, "No more files to upload ... Reload Suricata");
-					remove_pcap_files("opt/telepath/ui/html/upload");
 					sprintf( suricata_cmd,"/opt/telepath/suricata/suricata -D -c /opt/telepath/suricata/suricata.yaml --af-packet \"%s %s\" > /dev/null 2>&1",pcap.c_str(),whitelist_cidr.c_str());
 					es_insert("/telepath-config/config/file_loader_mode_id","{\"value\":\"0\"}");
 				}else{
+					pcap_delete_flag = 1;
 					string pcap_file = files_queue.front();
 					syslog(LOG_NOTICE, "Next file to upload: %s", (char*)pcap_file.c_str() );
 					files_queue.pop();
