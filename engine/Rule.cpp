@@ -72,6 +72,7 @@ Rule::Rule(){
 	this->disable_db_save=false;
 	this->threshold = 0;
 	this->cmds.clear();
+	this->script_params.clear();
 	this->criteria_count=0;
 }
 
@@ -123,6 +124,7 @@ void Rule::clean(){
 	this->mCardinal_IP_flow.clear();
 	this->threshold = 0;
 	this->cmds.clear();
+	this->script_params.clear();
 	this->criteria_count=0;
 	this->domain_block.clear();
 
@@ -321,6 +323,25 @@ void Rule::print(){
 	cout << "\naction_name:" << this->action_name;
 	cout << "\nvalidReg:" << this->validReg;
 	cout << "\n-------------------------" << endl;
+}
+
+void Rule::print_ruleCmd(){
+
+		syslog(LOG_NOTICE,"CMDS PRINT: rule_name:%s",this->rule_name.c_str());
+		for(unsigned int i=0;i<this->cmds.size();i++){
+			syslog(LOG_NOTICE,"cmds: %s",this->cmds[i].c_str());
+		}
+
+}
+
+void Rule::print_ruleParams(){
+		syslog(LOG_NOTICE,"Params PRINT: rule_name:%s",this->rule_name.c_str());
+		for(unsigned int i=0;i<this->script_params.size();i++){
+			syslog(LOG_NOTICE,"params: %s",this->script_params[i].c_str());
+		}
+		for(unsigned int i=0;i<this->script_path.size();i++){
+			syslog(LOG_NOTICE,"path: %s",this->script_path[i].c_str());
+		}
 }
 
 void Rule::print_syslog(){

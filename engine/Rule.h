@@ -58,6 +58,8 @@ public:
 	bool validReg;
 	bool disable_db_save;
 	vector <string> cmds;
+	vector <string> script_params;
+	vector <string> script_path;
 	unsigned short criteria_count;
 
 	string domain_block;
@@ -80,6 +82,8 @@ public:
 	void setCriterionType();
 	void print();
 	void print_syslog();
+	void print_ruleParams();
+	void print_ruleCmd();
 	//-------------------------------
 
 
