@@ -433,40 +433,6 @@ void insert_alert(Rule & c_r,long long RID,string & src_ip,string & resp_ip,stri
 	char alertfields[300];
 	boost::unordered_map <long long,ElasticData>::iterator itRidAlertAndAction;
 
-	for(unsigned int i=0 ; i<c_r.cmds.size() ; i++){
-		if(c_r.cmds[i] == "captcha"){
-			sprintf(alertfields,"CAPTCHA_%s",(char*)src_ip.c_str());
-
-			pthread_mutex_lock(&mutexCaptcha);
-			valCaptchaQueue.push(alertfields);
-			pthread_mutex_unlock(&mutexCaptcha);
-			sem_post(&sem_captcha);
-		}
-		else if(c_r.cmds[i] == "block"){
-			sprintf(alertfields,"BLOCK_%s",(char*)src_ip.c_str());
-
-			pthread_mutex_lock(&mutexCaptcha);
-			valCaptchaQueue.push(alertfields);
-			pthread_mutex_unlock(&mutexCaptcha);
-			sem_post(&sem_captcha);
-		}else{
-			if(cookie.size()==0){
-				cookie="null";
-			}
-
-			// ---Command Execution---
-			//
-			// Runs a script with 4 arguments.
-			// Syntax :
-			// 	/tmp/my_script <source IP> <destination IP> <Cookie> <hostname> 
-			sprintf(alertfields,"%s %s %s %s %s",(char*)c_r.cmds[i].c_str(),(char*)src_ip.c_str(),(char*)resp_ip.c_str(),(char*)cookie.c_str(),(char*)hostname.c_str());
-
-			pthread_mutex_lock(&mutexCommand);
-			valCommandQueue.push(alertfields);
-			pthread_mutex_unlock(&mutexCommand);
-			sem_post(&sem_command);
-		}
-	}
 	if(c_r.disable_db_save==false){
 		pthread_mutex_lock(&mutexRidAlertAndBusiness);
 		itRidAlertAndAction = mRidAlertAndAction.find(RID);
@@ -535,6 +501,41 @@ void insert_alert(Rule & c_r,long long RID,string & src_ip,string & resp_ip,stri
 		pthread_mutex_lock(&mutexRidAlertAndBusiness);
 		sRidSaveDB.insert(RID);
 		pthread_mutex_unlock(&mutexRidAlertAndBusiness);
+	}
+
+	for(unsigned int i=0 ; i<c_r.cmds.size() ; i++){
+		if(c_r.cmds[i] == "captcha"){
+			sprintf(alertfields,"CAPTCHA_%s",(char*)src_ip.c_str());
+
+			pthread_mutex_lock(&mutexCaptcha);
+			valCaptchaQueue.push(alertfields);
+			pthread_mutex_unlock(&mutexCaptcha);
+			sem_post(&sem_captcha);
+		}
+		else if(c_r.cmds[i] == "block"){
+			sprintf(alertfields,"BLOCK_%s",(char*)src_ip.c_str());
+
+			pthread_mutex_lock(&mutexCaptcha);
+			valCaptchaQueue.push(alertfields);
+			pthread_mutex_unlock(&mutexCaptcha);
+			sem_post(&sem_captcha);
+		}else{
+			if(cookie.size()==0){
+				cookie="null";
+			}
+
+			// ---Command Execution---
+			//
+			// Runs a script with 4 arguments.
+			// Syntax :
+			// 	/tmp/my_script <source IP> <destination IP> <Cookie> <hostname> 
+			sprintf(alertfields,"%s %s %s %s %s",(char*)c_r.cmds[i].c_str(),(char*)src_ip.c_str(),(char*)resp_ip.c_str(),(char*)cookie.c_str(),(char*)hostname.c_str());
+
+			pthread_mutex_lock(&mutexCommand);
+			valCommandQueue.push(alertfields);
+			pthread_mutex_unlock(&mutexCommand);
+			sem_post(&sem_command);
+		}
 	}
 
 
