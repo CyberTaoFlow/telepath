@@ -908,7 +908,7 @@ bool checkLicenseKey(){
 			es_insert("/telepath-config/config/license_mode_id",tmp_cmd);
 			
 			char open_elastic[300];
-			sprintf(open_elastic,"su elastic -c \"/opt/telepath/db/elasticsearch/bin/elasticsearch -d\"");
+			sprintf(open_elastic,"/opt/telepath/db/elasticsearch/bin/elasticsearch -d -Des.insecure.allow.root=true");
 			FILE* ppipe_elastic = popen(open_elastic, "w");
 			pclose(ppipe_elastic);
 			sleep(2);
@@ -986,11 +986,11 @@ int main(int argc, char *argv[])
 		char open_elastic[300];
 		//unsigned int half_of_mem = ( unsigned int )( (sysconf(_SC_PHYS_PAGES) * sysconf(_SC_PAGESIZE)) / (1000*1000*2000) );
 		//if(half_of_mem==0){
-			//sprintf(open_elastic,"/opt/telepath/db/elasticsearch/bin/elasticsearch -d");
+			sprintf(open_elastic,"/opt/telepath/db/elasticsearch/bin/elasticsearch -d -Des.insecure.allow.root=true");
 		//}else{
 		//	sprintf(open_elastic,"/opt/telepath/db/elasticsearch/bin/elasticsearch -d -Xmx%ug -Xms%ug",half_of_mem,half_of_mem);
 		//}
-		sprintf(open_elastic,"su elastic -c \"/opt/telepath/db/elasticsearch/bin/elasticsearch -d\"");		
+
 		syslog (LOG_NOTICE,"Starting Elasticsearch[!!!] --file=%s",es_connect.c_str());
 		syslog (LOG_NOTICE, "%s",open_elastic);
 

@@ -38,9 +38,9 @@ VERSION="2.9"
 if [ "$ARG" == "v3" ]; then
 	echo "Choosed v3"
 	VERSION="3.0"
-# elif [ "$ARG" == "v2" ]; then
-# 	echo "Choosed v2"
-# 	VERSION="2.9"
+elif [ "$ARG" == "v2" ]; then
+	echo "Choosed v2"
+	VERSION="2.9"
 else
 	echo "Please choose a valid version (v2 || v3)"
 	exit 1
@@ -177,8 +177,9 @@ build_directory() {
 	rsync --exclude .svn -a suricata $BUILD_DIR/
 	echo "Suricata directories built"
 
-    # MKDIR Openresty
+        # MKDIR Openresty
 	rsync --exclude .svn -a openresty $BUILD_DIR/
+
 
 	# Sql structure (new)
 	rsync --exclude .svn -a db/tables $BUILD_DIR/db/
@@ -336,7 +337,7 @@ compile_all() {
 	
 	# TODO: V2 || V3
 	
-	make -j 10 engine_trial
+	make -j engine_trial
 
 	if [ ! -f "./engine" ]; then
 		echo "ENGINE compile failed, aborting"
@@ -346,7 +347,7 @@ compile_all() {
 	echo "Compiling WATCHDOG"
 	cd watchdog
 	make clean
-	make -j 10 telewatchdog
+	make -j telewatchdog
 	
 	if [ ! -f "./telewatchdog" ]; then
 		echo "WATCHDOG compile failed, aborting"
@@ -357,7 +358,7 @@ compile_all() {
 
 	echo "Compiling SCHEDULER"
 	make clean
-	make -j 10 scheduler
+	make -j scheduler
 
 	if [ ! -f "./scheduler" ]; then
 		echo "SCHEDULER compile failed, aborting"
@@ -521,25 +522,25 @@ if [ $OS == "UBUNTU" ]; then
 	fi
 
 
-	# if [ "$ARG" == "v2" ]; then
-	# 	# VERSION 2 STAGING
-	# 	echo "V2 Detected"
-	# 	if [ "$2" == "staging" ]; then
-	# 		echo "V2-> Staging Detected"
-	# 		reprepro -b /var/www/html/repo_v2/apt/debian includedeb trusty *.deb
-	# 		rm ./*.deb
-	# 		echo "ENJOY YOUR NEW BUILD!!!"
-	# 	fi
+	if [ "$ARG" == "v2" ]; then
+		# VERSION 2 STAGING
+		echo "V2 Detected"
+		if [ "$2" == "staging" ]; then
+			echo "V2-> Staging Detected"
+			reprepro -b /var/www/html/repo_v2/apt/debian includedeb trusty *.deb
+			rm ./*.deb
+			echo "ENJOY YOUR NEW BUILD!!!"
+		fi
 
-	# 	# VERSION 2 PRODUCTION
-	# 	if [ "$2" == "production" ]; then
-	# 		echo "V2-> Staging Detected"
-	# 		echo "Please login hybridsec to authenticate rsync"
-	# 		rsync -avzW ./*.deb root@188.166.57.109:/root/
-	# 		echo "Please login hybridsec to run publish script"
-	# 		ssh root@188.166.57.109 "cd /root/ && ./publish.sh"
-	# 		rm ./*.deb
-	# 		echo "ENJOY YOUR NEW BUILD!!!"
-	# 	fi
-	# fi
+		# VERSION 2 PRODUCTION
+		if [ "$2" == "production" ]; then
+			echo "V2-> Staging Detected"
+			echo "Please login hybridsec to authenticate rsync"
+			rsync -avzW ./*.deb root@188.166.57.109:/root/
+			echo "Please login hybridsec to run publish script"
+			ssh root@188.166.57.109 "cd /root/ && ./publish.sh"
+			rm ./*.deb
+			echo "ENJOY YOUR NEW BUILD!!!"
+		fi
+	fi
 fi

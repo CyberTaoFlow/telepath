@@ -14,7 +14,7 @@ echo "-----------------------------------";
 echo "<<<< Delete ElasticSearch Data >>>>";
 echo "-----------------------------------";
 echo "";
-su elastic -c "/opt/telepath/db/elasticsearch/bin/elasticsearch -d";
+/opt/telepath/db/elasticsearch/bin/elasticsearch -d -Des.insecure.allow.root=true;
 sleep 15;
 curl -XDELETE 'http://localhost:9200/telepath-20*?timeout=5m';
 curl -XDELETE 'http://localhost:9200/telepath-domains?timeout=5m';
