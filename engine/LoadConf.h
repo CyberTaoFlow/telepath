@@ -30,9 +30,9 @@ void parseRulesJson(Json::Value & root,string & preKey,map <string,rule_group_da
                         key2 = it.key().asString();
                 }
 
-		if( !(*it).isObject() ){
+				if( !(*it).isObject() ){
                        	key = it.key().asString();
-		}
+				}
 
                 if( (*it).isObject() ){
                         parseRulesJson( (*it),key2,mRulesGroup,rules,rule,rule_name,rule_orders);
@@ -41,15 +41,19 @@ void parseRulesJson(Json::Value & root,string & preKey,map <string,rule_group_da
                         Json::Value array = (*it);
                         for (j=0; j < array.size(); j++) {
                                 if( array[j].isObject() ){
-					preKey = it.key().asString();
+										preKey = it.key().asString();
                                         parseRulesJson( array[j],key2,mRulesGroup,rules,rule,rule_name,rule_orders);
                                 }
-				else if(array[j].isString()){
-					if(key=="cmd"){
-						val = array[j].asString();
-						rule.cmds.push_back(val);
-					}
-				}
+								else if(array[j].isString()){
+									if(key=="cmd"){
+										val = array[j].asString();
+										rule.cmds.push_back(val);
+									}
+									else if(key=="params"){
+										val = array[j].asString();
+										rule.script_params.push_back(val);
+									}
+								}
                         }
                 }else{
                         if ( (*it).isString() ){
@@ -58,7 +62,7 @@ void parseRulesJson(Json::Value & root,string & preKey,map <string,rule_group_da
                                 val = (*it).toStyledString();
                         }
 			
-		//	syslog(LOG_NOTICE,"preKey:%s  key:%s  val:%s",preKey.c_str(),key.c_str(),val.c_str());
+			//syslog(LOG_NOTICE,"preKey:%s  key:%s  val:%s",preKey.c_str(),key.c_str(),val.c_str());
 
 			if(preKey=="criteria"){
 				switch(key[0]){
@@ -208,6 +212,9 @@ void parseRulesJson(Json::Value & root,string & preKey,map <string,rule_group_da
 				}
 
 			}
+			else if(preKey == "criteriaexec"){
+				rule.script_path.push_back(val);
+            }
 
 			else if(preKey=="criteriaspecific"){
 				if(key=="domain"){
@@ -263,6 +270,7 @@ void getRule(char *ptr)
 			parsed = reader.parse(rule_json, root, false);
 
 			if(!parsed){
+				syslog(LOG_NOTICE,"%s",rule_json.c_str());
 				return;
 			}
 
@@ -329,7 +337,7 @@ void addRules()
 
 	CURL *curl;
 	char url[200];
-	unsigned int i,size;
+	unsigned int i,j,size;
 
 	for(i=0;i<addRulesIDs.size();i++){
 		sprintf(url,"%s/telepath-rules/rules/X%u/_source",es_connect.c_str(),addRulesIDs[i]);
@@ -347,8 +355,9 @@ void addRules()
 	for(i=size;i<rules.size();i++){
 		rules[i].setCriterionType();
 		mRulesGroup[rules[i].rule_name].rules.push_back(rules[i].criterion_hash);
-
 	}
+
+
 }
 
 void getRulesIDs(char *ptr)
