@@ -451,8 +451,8 @@ void loadRules(){ // Load rule_groups from database.
 	unsigned int from=0;
 	numRulesRotate=0;
 	while(1){
-		sprintf(url,"%s/telepath-rules/rules/_search?filter_path=hits.hits.stored_fields,hits.hits._id",es_connect.c_str());
-		sprintf(postfields,"{\"stored_fields\":[\"hash\"],\"size\":%u,\"from\":%u}",LOAD_RULES_BULK,from);
+		sprintf(url,"%s/telepath-rules/rules/_search?filter_path=hits.hits.fields,hits.hits._id",es_connect.c_str());
+		sprintf(postfields,"{\"fields\":[\"hash\"],\"size\":%u,\"from\":%u}",LOAD_RULES_BULK,from);
 		from += LOAD_RULES_BULK;
 
 		curl = curl_easy_init();
