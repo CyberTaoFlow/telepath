@@ -484,9 +484,12 @@ void *thread_insert_req(void *threadid)
 			insert_count=0;
 			dataPtr[0] = '\0';
 
-			curl_easy_setopt(curl,CURLOPT_URL,url);curl_easy_setopt(curl,CURLOPT_POSTFIELDS,query_insert);curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,dropprinting);curl_easy_perform(curl);
+			curl_easy_setopt(curl,CURLOPT_URL,url);
+			curl_easy_setopt(curl,CURLOPT_POSTFIELDS,query_insert);
+			curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,dropprinting);
+			curl_easy_perform(curl);
 
-			usleep(1000);
+			//usleep(1000);
 
 			dataPtr = query_insert+query_insert_size;
 		}else{
