@@ -428,7 +428,7 @@ function log(args)
 		v = unescape(v) --url decoding for header values.
 		k = string.lower(k) --lowercasing for header names.
 
-		if (k == "set_cookie") then
+		if (k == "set-cookie") then
 			fp_cookie = v
 		end
 
