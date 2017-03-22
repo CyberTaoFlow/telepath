@@ -545,12 +545,12 @@ void startThreads(){
 	if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); exit(1);}
 	pthread_detach(thread_s_p_m);
 
-        rc = pthread_create(&thread_req, NULL, thread_insert_req, (void *)empty);
-        if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); exit(1);}
+    rc = pthread_create(&thread_req, NULL, thread_insert_req, (void *)empty);
+    if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); exit(1);}
 	pthread_detach(thread_req);
 
-        rc = pthread_create(&thread_tokenize, NULL, tokenize_thread, (void *)empty);
-        if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); exit(1);}
+    rc = pthread_create(&thread_tokenize, NULL, tokenize_thread, (void *)empty);
+    if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); exit(1);}
 	pthread_detach(thread_tokenize);
 
 	rc = pthread_create(&thread_sch, NULL, thread_scheduler, (void *)empty);
@@ -1171,7 +1171,7 @@ while(globalEngine){ // while engine learning - run the engine every time we get
 	}
 
 	//TODO saving according to redis
-	if(cycleLearning > 500){
+	if(cycleLearning > 5000){
 		/*if(RIDs_counter > (moveToProductionAfter * operationPercent) ){
 			checkOperation();
 		}*/
