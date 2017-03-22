@@ -172,7 +172,7 @@ public:
 							sprintf(tmp,"\"score_flow\":%f,\"score_landing\":%f,\"score_average\":%f},",flow_score,landing_normal,avg_score_user);
 							strcat(user_scores,tmp);
 						}
-					}else{
+					}else{ 
 						flow_score = 1;
 						landing_normal = 1;
 
