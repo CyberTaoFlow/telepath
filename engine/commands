@@ -68,7 +68,7 @@ curl -XGET 'http://localhost:9200/telepath-domains/_search?pretty' -d '{"size":1
 
 curl -XGET 'http://localhost:9200/telepath-domains/_search?pretty' -d '{"size":100,"query":{"wildcard":{"host":"*.com"}}}'
 
-
+curl -XPOST 'http://localhost:9200/telepath-config/config/license_key_id' -d '{"value":"<license here>"}'
 
 curl -XDELETE 'http://localhost:9200/telepath-rules' ;
 curl -XDELETE 'http://localhost:9200/telepath-actions' ;
