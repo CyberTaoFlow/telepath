@@ -25,11 +25,11 @@ function init (args)
 	return needs
 end
 
-block_extensions = {}
-whitelist_ips = {}
-load_balancer_ips = {}
-load_balancer_headers = {}
-load_cookies = {}
+-- block_extensions = {}
+-- whitelist_ips = {}
+-- load_balancer_ips = {}
+-- load_balancer_headers = {}
+-- load_cookies = {}
 records = {}
 record_hosts = {}
 count = 0
@@ -37,10 +37,10 @@ count = 0
 
 function setup (args)
 	-- Emptying the global configuration arrays --
-	block_extensions = {}
-	whitelist_ips = {}
-	load_balancer_ips = {}
-	load_balancer_headers = {}
+	-- block_extensions = {}
+	-- whitelist_ips = {}
+	-- load_balancer_ips = {}
+	-- load_balancer_headers = {}
 
 	file = io.open("/opt/telepath/db/elasticsearch/config/connect.conf", "r")
 	if (file) then
@@ -52,111 +52,111 @@ function setup (args)
 	end
 
 	-- Loading filter extensions --
-	login_url = es_location .. "/telepath-config/filter_extensions/extensions_id/_source"
+	-- login_url = es_location .. "/telepath-config/filter_extensions/extensions_id/_source"
 
-	c = cURL.easy{
-		url            = login_url,
-		ssl_verifypeer = false,
-		ssl_verifyhost = false,
-		writefunction  = function(str)
-			local tmp = string.find(str, "%[")
-			local tmp2 = string.find(str, "%]")
-			if (tmp and tmp2) then
-				output = string.sub(str, tmp+1, tmp2-1)
-				for word in string.gmatch(output, '([^",]+)') do
-					block_extensions[word] = word
-				end
-			end
-		end
-	}
-	c:perform()
+	-- c = cURL.easy{
+	-- 	url            = login_url,
+	-- 	ssl_verifypeer = false,
+	-- 	ssl_verifyhost = false,
+	-- 	writefunction  = function(str)
+	-- 		local tmp = string.find(str, "%[")
+	-- 		local tmp2 = string.find(str, "%]")
+	-- 		if (tmp and tmp2) then
+	-- 			output = string.sub(str, tmp+1, tmp2-1)
+	-- 			for word in string.gmatch(output, '([^",]+)') do
+	-- 				block_extensions[word] = word
+	-- 			end
+	-- 		end
+	-- 	end
+	-- }
+	-- c:perform()
 
 	-- Loading whitelist ips --
-	login_url = es_location .. "/telepath-config/ips/whitelist_id/_source"
-	c = cURL.easy{
-		url            = login_url,
-		ssl_verifypeer = false,
-		ssl_verifyhost = false,
-		writefunction  = function(str)
-			local tmp = string.find(str, "%[")
-			local tmp2 = string.find(str, "%]")
-			if (tmp and tmp2) then
-				output = string.sub(str, tmp+1, tmp2-1)
-				counter=0
-				for word in string.gmatch(output, '([^:"]+)') do
-					local o1,o2,o3,o4 = word:match("(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)" )
-					if ( o1 and o2 and o3 and o4 ) then
-						local int_ip = 16777216*o1 + 65536*o2 + 256*o3 + o4
-						counter = counter + 1
-						if (counter % 2 == 0) then
-                                                        if (tmp >= int_ip) then
-                                                                whitelist_ips[int_ip] = tmp
-                                                        else
-                                                                whitelist_ips[tmp] = int_ip
-                                                        end
-						else
-							tmp = int_ip
-						end
-					end
-				end
-			end
-		end
-	}
-	c:perform()
+	-- login_url = es_location .. "/telepath-config/ips/whitelist_id/_source"
+	-- c = cURL.easy{
+	-- 	url            = login_url,
+	-- 	ssl_verifypeer = false,
+	-- 	ssl_verifyhost = false,
+	-- 	writefunction  = function(str)
+	-- 		local tmp = string.find(str, "%[")
+	-- 		local tmp2 = string.find(str, "%]")
+	-- 		if (tmp and tmp2) then
+	-- 			output = string.sub(str, tmp+1, tmp2-1)
+	-- 			counter=0
+	-- 			for word in string.gmatch(output, '([^:"]+)') do
+	-- 				local o1,o2,o3,o4 = word:match("(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)" )
+	-- 				if ( o1 and o2 and o3 and o4 ) then
+	-- 					local int_ip = 16777216*o1 + 65536*o2 + 256*o3 + o4
+	-- 					counter = counter + 1
+	-- 					if (counter % 2 == 0) then
+ --                                                        if (tmp >= int_ip) then
+ --                                                                whitelist_ips[int_ip] = tmp
+ --                                                        else
+ --                                                                whitelist_ips[tmp] = int_ip
+ --                                                        end
+	-- 					else
+	-- 						tmp = int_ip
+	-- 					end
+	-- 				end
+	-- 			end
+	-- 		end
+	-- 	end
+	-- }
+	-- c:perform()
 
 	-- Loading loadbalancer ips --
-	login_url = es_location .. "/telepath-config/ips/loadbalancerips_id/_source"
-	c = cURL.easy{
-		url            = login_url,
-		ssl_verifypeer = false,
-		ssl_verifyhost = false,
-		writefunction  = function(str)
-			local tmp = string.find(str, "%[")
-			local tmp2 = string.find(str, "%]")
-			if (tmp and tmp2) then
-				output = string.sub(str, tmp+1, tmp2-1)
-				counter=0
-				for word in string.gmatch(output, '([^:"]+)') do
-					local o1,o2,o3,o4 = word:match("(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)" )
-					if ( o1 and o2 and o3 and o4 ) then
-						local int_ip = 16777216*o1 + 65536*o2 + 256*o3 + o4
-						counter = counter + 1
-						if (counter % 2 == 0) then
-							if (tmp >= int_ip) then
-								load_balancer_ips[int_ip] = tmp
-							else
-								load_balancer_ips[tmp] = int_ip
-							end
-						else
-							tmp = int_ip
-						end
-					end
+	-- login_url = es_location .. "/telepath-config/ips/loadbalancerips_id/_source"
+	-- c = cURL.easy{
+	-- 	url            = login_url,
+	-- 	ssl_verifypeer = false,
+	-- 	ssl_verifyhost = false,
+	-- 	writefunction  = function(str)
+	-- 		local tmp = string.find(str, "%[")
+	-- 		local tmp2 = string.find(str, "%]")
+	-- 		if (tmp and tmp2) then
+	-- 			output = string.sub(str, tmp+1, tmp2-1)
+	-- 			counter=0
+	-- 			for word in string.gmatch(output, '([^:"]+)') do
+	-- 				local o1,o2,o3,o4 = word:match("(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)" )
+	-- 				if ( o1 and o2 and o3 and o4 ) then
+	-- 					local int_ip = 16777216*o1 + 65536*o2 + 256*o3 + o4
+	-- 					counter = counter + 1
+	-- 					if (counter % 2 == 0) then
+	-- 						if (tmp >= int_ip) then
+	-- 							load_balancer_ips[int_ip] = tmp
+	-- 						else
+	-- 							load_balancer_ips[tmp] = int_ip
+	-- 						end
+	-- 					else
+	-- 						tmp = int_ip
+	-- 					end
+	-- 				end
 
 
-				end
-			end
-		end
-	}
-	c:perform()
+	-- 			end
+	-- 		end
+	-- 	end
+	-- }
+	-- c:perform()
 
 	-- Loading loadbalancer headers --
-	login_url = es_location .. "/telepath-config/headers/loadbalancerheaders_id/_source"
-	c = cURL.easy{
-		url            = login_url,
-		ssl_verifypeer = false,
-		ssl_verifyhost = false,
-		writefunction  = function(str)
-			local tmp = string.find(str, "%[")
-			local tmp2 = string.find(str, "%]")
-			if (tmp and tmp2) then
-				output = string.sub(str, tmp+1, tmp2-1)
-				for word in string.gmatch(output, '([^",]+)') do
-					load_balancer_headers[word] = word
-				end
-			end
-		end
-	}
-	c:perform()
+	-- login_url = es_location .. "/telepath-config/headers/loadbalancerheaders_id/_source"
+	-- c = cURL.easy{
+	-- 	url            = login_url,
+	-- 	ssl_verifypeer = false,
+	-- 	ssl_verifyhost = false,
+	-- 	writefunction  = function(str)
+	-- 		local tmp = string.find(str, "%[")
+	-- 		local tmp2 = string.find(str, "%]")
+	-- 		if (tmp and tmp2) then
+	-- 			output = string.sub(str, tmp+1, tmp2-1)
+	-- 			for word in string.gmatch(output, '([^",]+)') do
+	-- 				load_balancer_headers[word] = word
+	-- 			end
+	-- 		end
+	-- 	end
+	-- }
+	-- c:perform()
 	----------------------------------
 
 	-- Loading domain cookies --
@@ -209,31 +209,14 @@ function setup (args)
 
 	----------------------------------
 
-	login_url = es_location .. "/telepath-config/config/config_was_changed_id"
-	c = cURL.easy{
-		url            = login_url,
-		ssl_verifypeer = false,
-		ssl_verifyhost = false,
-		postfields = "{\"value\":\"0\"}",
-	}
-	c:perform()
-
-	--Debug Printings
-	--for kk, vv in pairs(whitelist_ips) do
-	--	print (kk .. "=====" .. vv)
-	--end
-
-	--for kk, vv in pairs(block_extensions) do
-	--	print (kk .. "=====" .. vv)
-	--end
-
-	--for kk, vv in pairs(load_balancer_headers) do
-	--	print (kk .. "=====" .. vv)
-	--end
-
-	--for kk, vv in pairs(load_balancer_ips) do
-	--	print (kk .. "=====" .. vv)
-	--end
+	-- login_url = es_location .. "/telepath-config/config/config_was_changed_id"
+	-- c = cURL.easy{
+	-- 	url            = login_url,
+	-- 	ssl_verifypeer = false,
+	-- 	ssl_verifyhost = false,
+	-- 	postfields = "{\"value\":\"0\"}",
+	-- }
+	-- c:perform()
 
 end
 
@@ -251,15 +234,15 @@ end
 
 function log(args)
 
-	count = count + 1
-		-- Checking if the configuration was changed.
-		if (count > 1000) then
-		count = 0
-		config_was_changed_id = redis:lpop("C")
-			if (config_was_changed_id) then
-				setup()
-			end
-	end
+	-- count = count + 1
+	-- 	-- Checking if the configuration was changed.
+	-- 	if (count > 1000) then
+	-- 	count = 0
+	-- 	config_was_changed_id = redis:lpop("C")
+	-- 		if (config_was_changed_id) then
+	-- 			setup()
+	-- 		end
+	-- end
 
 	local uri = HttpGetRequestUriRaw()
 	uri = unescape(uri) --url decoding for uri & GET parameters.
