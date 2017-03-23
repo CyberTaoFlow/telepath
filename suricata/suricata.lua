@@ -27,8 +27,6 @@ end
 
 block_extensions = {}
 whitelist_ips = {}
---whitelist_ips[2219196937] = 2219196939
---whitelist_ips[2219196940] = 2219196942
 load_balancer_ips = {}
 load_balancer_headers = {}
 load_cookies = {}
@@ -278,18 +276,6 @@ function log(args)
 		uri = string.sub(uri,1,question_mark-1)
 	end
 
---	local ext = uri:reverse():find("%.")
---	if ext then
---		ext = #uri - ext+1
---		ext = string.sub(uri,ext)
-
---		if block_extensions[ext] == ext then
-			--Extension Filter.
-			--Ignoring this request.
---			return
---		end
---	end
-
 	--Getting source IP and destination IP.
 	ipver, srcip, dstip, proto, sp, dp = SCFlowTuple()
 
@@ -302,14 +288,6 @@ function log(args)
 	end
 
 	int_ip = 16777216*o1 + 65536*o2 + 256*o3 + o4
-
---	for key, value in pairs(whitelist_ips) do
---		if (whitelist_ips[key] >= int_ip and int_ip >= key) then
-			--Whitelist IP Filter.
-			--Ignoring this request.
---			return
---		end
---	end
 
 	local requestline = HttpGetRequestLine()
 	if requestline then
@@ -336,12 +314,6 @@ function log(args)
 		--Ignoring this request.
 		return
 	end
-
-	-- Checking if the configuration was changed. 
-	-- config_was_changed_id = redis:lpop("C")
-	-- if (config_was_changed_id) then
-	-- 	setup()
-	-- end
 
 	rq_body = ""
 	rs_body = ""
@@ -403,18 +375,6 @@ function log(args)
 			fp_host = v
 		end
 
---		if load_balancer_headers[k] == k then
---			for key, value in pairs(load_balancer_ips) do
---				if (load_balancer_ips[key] >= int_ip and int_ip >= key) then
-					--Replacing to original client IP.
---					request["TI"] = v
---					srcip = v
---					o1,o2,o3,o4 = v:match("(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)" )
---					int_ip = 16777216*o1 + 65536*o2 + 256*o3 + o4
---				end
---			end
---		end
-
 		if type(v) == "table" then
 			request["TH_" .. k] = table.concat(v, "|&|")
 		else
@@ -439,63 +399,6 @@ function log(args)
 		end
 	end
 
---	if (load_cookies[fp_host]) then
---		if (fp_cookie) then
---			local cookie_tmp = string.find(fp_cookie, load_cookies[fp_host])
---			if (cookie_tmp) then
---				local fp_cookie = string.sub(fp_cookie, cookie_tmp, string.len(fp_cookie))
---				cookie_tmp = string.find(fp_cookie, "=")
---				local cookie_tmp2 = string.find(fp_cookie, ";")
---				fp_cookie = string.sub(fp_cookie, cookie_tmp+1, cookie_tmp2-1)
---				request["TS"] = sha_256.sha256(fp_cookie)
-			--The statistical cookie wasn't found in the following request.
---			else
---				fingerprint = ""
---				if fp_ua then
---					fingerprint = fingerprint .. fp_ua
---				else
---					fingerprint = dstip
---				end
---
---				if fp_host then
---					fingerprint = fingerprint .. fp_host
---				else
---					fingerprint = dstip
---				end
---				request["TS"] = sha_256.sha256(srcip .. fingerprint)
---			end
-		--The following request has no cookie header.
---		else
---			fingerprint = ""
---			if fp_ua then
---			fingerprint = fingerprint .. fp_ua
---			else
---				fingerprint = dstip
---			end
---
---			if fp_host then
---				fingerprint = fingerprint .. fp_host
---			else
---				fingerprint = dstip
---			end
---			request["TS"] = sha_256.sha256(srcip .. fingerprint)
---		end
---	--The load_cookies dictionary has no statistical cookie.
---	else
---		fingerprint = ""
---		if fp_ua then
---			fingerprint = fingerprint .. fp_ua
---		else
---			fingerprint = dstip
---		end
---
---		if fp_host then
---			fingerprint = fingerprint .. fp_host
---		else
---			fingerprint = dstip
---		end
---		request["TS"] = sha_256.sha256(srcip .. fingerprint)
---	end
 	request["TS"] = ""
 	express_flag = false
 
