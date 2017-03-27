@@ -42,6 +42,8 @@ extern vector <Range> loadbalancer_ips;
 extern string sha256(const string str);
 //--------------------------------------------------------------
 extern void es_insert(string,string);
+extern void spitJson2(string & name,vector <string> & json_array);
+extern void spitJson(string & name,vector <string> & json_array);
 //--------------------------------------------------------------
 
 boost::unordered_map <string,string> usernamePerIP;
@@ -681,6 +683,7 @@ void parseGetPostParams(string & str,vector <struct Attribute> & vAttr,char attr
 
 				parseString(tAttr.name);
 				parseString(tAttr.value);
+				//syslog(LOG_NOTICE,"parsed obj: %s-%s",tAttr.name.c_str(),tAttr.value.c_str());
 
 				tAttr.attribute_source=attribute_source;
 				vAttr.push_back(tAttr);
@@ -706,6 +709,7 @@ void parseCookieParams(string & str,vector <struct Attribute> & vAttr){
 				}else{
 					tAttr.name.append(str.begin()+pos,str.begin()+i);
 				}
+				//syslog(LOG_NOTICE,"%s",tAttr.name.c_str());
 
 				tAttr.attribute_source='H';
 
@@ -800,6 +804,25 @@ void parseNestedCookie(string param_name,string param_value,vector <struct Attri
 			}
 		}
 	}
+}
+
+void parseJson(string & name,vector <struct Attribute> & vAttr){
+	Json::Value root;   
+    Json::Reader reader;
+    struct Attribute tAttr;
+    bool parsingSuccessful = reader.parse( name.c_str(), root );     //parse process
+    if ( !parsingSuccessful )
+    {
+        syslog(LOG_NOTICE,"Failed to parse %s", reader.getFormattedErrorMessages().c_str());
+    }else{
+    	for (Json::Value::iterator it=root.begin(); it!=root.end(); ++it){
+        	tAttr.name = it.key().asString();
+        	tAttr.value = (*it).asString();
+        	tAttr.attribute_source = 'J';
+
+        	vAttr.push_back(tAttr);
+    	}
+    }
 }
 
 void parseXML(mxml_node_t *tree,string res,vector <struct Attribute> & vAttr){
@@ -906,12 +929,12 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 	vector <struct Attribute> vAttr;
 	struct Attribute attribute;
 	size_t found;
-	bool multipart_flag=false,xml_content_flag=false,xml_tag_flag=false,post_data=false;
+	bool multipart_flag=false,xml_content_flag=false,xml_tag_flag=false,post_data=false,json_flag=false;
 	double presence=1;
 
 	for(itConvertObj = obj.begin() ; itConvertObj != obj.end() ; itConvertObj++){
 		//syslog(LOG_NOTICE,"Old str: %s",itConvertObj->second.c_str());
-		encodeNoSQL(itConvertObj->second);
+		//encodeNoSQL(itConvertObj->second);
 		
 		if(itConvertObj->first.size() == 2){
 			if(itConvertObj->first[0] == 'R'){
@@ -945,7 +968,7 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 					teleo->mParams['E'/*SHA256_SID*/] = itConvertObj->second;
 					teleo->mParams['e'/*SID*/] = makeSID(itConvertObj->second);
 				}
-				else if(itConvertObj->first[1] == 'B'){
+				else if(itConvertObj->first[1] == 'B'){					
 					postparams = itConvertObj->second;
 				}
 				else if(itConvertObj->first[1] == 'U'){
@@ -1047,8 +1070,12 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 						xml_content_flag=true;
 						continue;
 					}
-
+					found = attribute.value.find("json");
+					if (found!=std::string::npos){
+						json_flag = true;
+					}
 					if(const_content_type.count(attribute.value) != 0){
+						//syslog(LOG_NOTICE,"%s",attribute.value.c_str());
 						post_data=true;
 					}
 				}else{
@@ -1130,7 +1157,12 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 			postparams.clear();
 		}
 	}
-
+	else if(json_flag){
+		//syslog(LOG_NOTICE,"Json was found: %s",postparams.c_str());
+		std::vector<string> json_arr;
+		parseJson(postparams,vAttr);
+		
+	}
 	else if(post_data==true){
 		parseGetPostParams(postparams,vAttr,'P');
 	}
