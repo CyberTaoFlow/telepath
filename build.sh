@@ -7,7 +7,7 @@
 VER=`cat .counter`;
 ((VER++))
 echo $VER > .counter;
-git commit .counter -m 'counter++'; git push
+git commit .counter -m 'counter++'; git tag -a v3.0.$VER -m "$2 v3.0.$VER"; git push
 
 BUILD_VER="1"
 OS=
