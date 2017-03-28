@@ -732,7 +732,6 @@ int main (int argc,char* array[])
 if(argc > 1){
 	showSvnVersion(array[1]);
 }
-syslog(LOG_NOTICE,"Check Builder");
 //createLicenseKey(argc,array);
 while(check_license()==false);
 
