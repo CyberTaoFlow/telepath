@@ -981,6 +981,7 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 						reverse(tmpUri.begin(),tmpUri.end());
 						for (boost::unordered_set <string>::iterator it = sFilterExtensions.begin(); it != sFilterExtensions.end(); ++it ){
 							if(tmpUri == (*it)){
+								dropApp++;
 								//syslog(LOG_NOTICE,"Blocklist: %s our uri extention: %s",(*it).c_str(),tmpUri.c_str());
 								return;
 							}
