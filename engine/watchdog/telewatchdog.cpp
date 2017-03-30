@@ -921,7 +921,7 @@ bool checkLicenseKey(){
 			return true;
 		}
 	}else{
-		syslog(LOG_NOTICE,"INVALID");
+		//syslog(LOG_NOTICE,"INVALID");
 		sprintf(tmp_cmd,"{\"value\":\"INVALID-%u\"}",login_attempts);
 		es_insert("/telepath-config/config/license_mode_id",tmp_cmd);
 		syslog(LOG_NOTICE,"The license of your product may be invalid ... please check your license");
