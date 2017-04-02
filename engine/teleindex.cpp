@@ -807,22 +807,27 @@ void parseNestedCookie(string param_name,string param_value,vector <struct Attri
 }
 
 void parseJson(string & name,vector <struct Attribute> & vAttr){
-	Json::Value root;   
-    Json::Reader reader;
-    struct Attribute tAttr;
-    bool parsingSuccessful = reader.parse( name.c_str(), root );     //parse process
-    if ( !parsingSuccessful )
-    {
-        syslog(LOG_NOTICE,"Failed to parse %s", reader.getFormattedErrorMessages().c_str());
-    }else{
-    	for (Json::Value::iterator it=root.begin(); it!=root.end(); ++it){
-        	tAttr.name = it.key().asString();
-        	tAttr.value = (*it).asString();
-        	tAttr.attribute_source = 'J';
+	try{
+		Json::Value root;   
+	    Json::Reader reader;
+	    struct Attribute tAttr;
+	    syslog(LOG_NOTICE, "%s",name.c_str());
+	    bool parsingSuccessful = reader.parse( name.c_str(), root );     //parse process
+	    if ( !parsingSuccessful )
+	    {
+	        syslog(LOG_NOTICE,"Failed to parse %s", reader.getFormattedErrorMessages().c_str());
+	    }else{
+	    	for (Json::Value::iterator it=root.begin(); it!=root.end(); ++it){
+	        	tAttr.name = it.key().asString();
+	        	tAttr.value = (*it).asString();
+	        	tAttr.attribute_source = 'J';
 
-        	vAttr.push_back(tAttr);
-    	}
-    }
+	        	vAttr.push_back(tAttr);
+	    	}
+	    }
+	}catch(...){
+		syslog(LOG_NOTICE, "Json fail");
+	}
 }
 
 void parseXML(mxml_node_t *tree,string res,vector <struct Attribute> & vAttr){
@@ -981,6 +986,7 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 						reverse(tmpUri.begin(),tmpUri.end());
 						for (boost::unordered_set <string>::iterator it = sFilterExtensions.begin(); it != sFilterExtensions.end(); ++it ){
 							if(tmpUri == (*it)){
+								dropApp++;
 								//syslog(LOG_NOTICE,"Blocklist: %s our uri extention: %s",(*it).c_str(),tmpUri.c_str());
 								return;
 							}
@@ -1159,8 +1165,7 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 	}
 	else if(json_flag){
 		//syslog(LOG_NOTICE,"Json was found: %s",postparams.c_str());
-		std::vector<string> json_arr;
-		parseJson(postparams,vAttr);
+		//parseJson(postparams,vAttr);
 		
 	}
 	else if(post_data==true){
