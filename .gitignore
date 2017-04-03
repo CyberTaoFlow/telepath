@@ -1,4 +1,6 @@
 ui_v3/
+debian-build/
+debian/
 engine/objects/*.o
 engine/*.gz
 engine/*.a
