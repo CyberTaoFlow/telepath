@@ -42,8 +42,7 @@ extern vector <Range> loadbalancer_ips;
 extern string sha256(const string str);
 //--------------------------------------------------------------
 extern void es_insert(string,string);
-extern void spitJson2(string & name,vector <string> & json_array);
-extern void spitJson(string & name,vector <string> & json_array);
+
 //--------------------------------------------------------------
 
 boost::unordered_map <string,string> usernamePerIP;
@@ -806,27 +805,63 @@ void parseNestedCookie(string param_name,string param_value,vector <struct Attri
 	}
 }
 
+void parseJsonRecursive(Json::Value & root,vector <struct Attribute> & vAttr){
+		string key,val;
+        unsigned int j;
+        struct Attribute tAttr;
+        tAttr.attribute_source = 'J';
+        Json::Value::iterator it = root.begin();
+        for (Json::Value::iterator it=root.begin(); it!=root.end(); ++it){
+        	if((*it).isObject()){
+         		parseJsonRecursive((*it),vAttr);
+        		tAttr.name = it.key().asString();
+				tAttr.value = "JsonObject";
+
+				vAttr.push_back(tAttr);
+				//syslog(LOG_NOTICE,"tAttr- Key: %s , Value: %s",tAttr.name.c_str(),tAttr.value.c_str());
+        	}else if((*it).isArray()){
+        		Json::Value array = (*it);
+        		for (j=0; j < array.size(); j++) {
+        			if( array[j].isObject() ){
+						parseJsonRecursive(array[j],vAttr);
+						tAttr.name = it.key().asString();
+						tAttr.value = "JsonObject";
+
+						vAttr.push_back(tAttr);
+						//syslog(LOG_NOTICE,"tAttr- Key: %s , Value: %s",tAttr.name.c_str(),tAttr.value.c_str());
+					}
+        		}
+        	}else{ //else it is not an Json Object
+				tAttr.name = it.key().asString();
+				if ( (*it).isString() ){
+					val = (*it).asString();
+					parseString(val);
+					tAttr.value = val;
+				}else{
+					val = (*it).toStyledString();
+					parseString(val);
+					tAttr.value = val;
+				}
+				vAttr.push_back(tAttr);
+				//syslog(LOG_NOTICE,"tAttr- Key: %s , Value: %s",tAttr.name.c_str(),tAttr.value.c_str());
+        	}
+        }
+}
+
 void parseJson(string & name,vector <struct Attribute> & vAttr){
 	try{
 		Json::Value root;   
 	    Json::Reader reader;
 	    struct Attribute tAttr;
-	    syslog(LOG_NOTICE, "%s",name.c_str());
 	    bool parsingSuccessful = reader.parse( name.c_str(), root );     //parse process
 	    if ( !parsingSuccessful )
 	    {
 	        syslog(LOG_NOTICE,"Failed to parse %s", reader.getFormattedErrorMessages().c_str());
 	    }else{
-	    	for (Json::Value::iterator it=root.begin(); it!=root.end(); ++it){
-	        	tAttr.name = it.key().asString();
-	        	tAttr.value = (*it).asString();
-	        	tAttr.attribute_source = 'J';
-
-	        	vAttr.push_back(tAttr);
-	    	}
+	    	parseJsonRecursive(root,vAttr);
 	    }
 	}catch(...){
-		syslog(LOG_NOTICE, "Json fail");
+		syslog(LOG_NOTICE, "Json Parsing Failed");
 	}
 }
 
@@ -1164,8 +1199,9 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 		}
 	}
 	else if(json_flag){
-		//syslog(LOG_NOTICE,"Json was found: %s",postparams.c_str());
-		//parseJson(postparams,vAttr);
+		if(postparams.length() > 0){
+			parseJson(postparams,vAttr);
+		}
 		
 	}
 	else if(post_data==true){
@@ -1390,6 +1426,7 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 		}
 
 		string_to_utf8(vAttr[i].value, vAttr[i].vec_value);
+
 		teleo->mAttr.insert(pair<unsigned int,struct Attribute>(vAttr[i].hash,vAttr[i]));
 	}
 
