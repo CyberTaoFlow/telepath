@@ -810,7 +810,7 @@ void parseJsonRecursive(Json::Value & root,vector <struct Attribute> & vAttr){
         unsigned int j;
         struct Attribute tAttr;
         tAttr.attribute_source = 'J';
-        Json::Value::iterator it = root.begin();
+
         for (Json::Value::iterator it=root.begin(); it!=root.end(); ++it){
         	if((*it).isObject()){
          		parseJsonRecursive((*it),vAttr);
@@ -821,14 +821,43 @@ void parseJsonRecursive(Json::Value & root,vector <struct Attribute> & vAttr){
 				//syslog(LOG_NOTICE,"tAttr- Key: %s , Value: %s",tAttr.name.c_str(),tAttr.value.c_str());
         	}else if((*it).isArray()){
         		Json::Value array = (*it);
+        		int printOnceFlag = 1;
         		for (j=0; j < array.size(); j++) {
+
         			if( array[j].isObject() ){
 						parseJsonRecursive(array[j],vAttr);
+
 						tAttr.name = it.key().asString();
 						tAttr.value = "JsonObject";
-
-						vAttr.push_back(tAttr);
+						if(printOnceFlag){
+							vAttr.push_back(tAttr);
+							printOnceFlag = 0;
+						}
 						//syslog(LOG_NOTICE,"tAttr- Key: %s , Value: %s",tAttr.name.c_str(),tAttr.value.c_str());
+					}else if(array[j].isArray()){
+						parseJsonRecursive(array[j],vAttr);
+						tAttr.name = it.key().asString();
+						tAttr.value = "JsonArray";
+
+						if(printOnceFlag){
+							vAttr.push_back(tAttr);
+							printOnceFlag = 0;
+						}
+					}else{
+						tAttr.name = it.key().asString();
+						if ( (*it).isString() ){
+							val = (*it).asString();
+							parseString(val);
+							tAttr.value = val;
+						}else{
+							val = (*it).toStyledString();
+							parseString(val);
+							tAttr.value = val;
+						}
+						if(printOnceFlag){
+							vAttr.push_back(tAttr);
+							printOnceFlag = 0;
+						}
 					}
         		}
         	}else{ //else it is not an Json Object
