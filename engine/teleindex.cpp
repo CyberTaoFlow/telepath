@@ -879,16 +879,20 @@ void parseJsonRecursive(Json::Value & root,vector <struct Attribute> & vAttr){
 
 void parseJson(string & name,vector <struct Attribute> & vAttr){
 	try{
-		Json::Value root;   
-	    Json::Reader reader;
-	    struct Attribute tAttr;
-	    bool parsingSuccessful = reader.parse( name.c_str(), root );     //parse process
-	    if ( !parsingSuccessful )
-	    {
-	        syslog(LOG_NOTICE,"Failed to parse %s", reader.getFormattedErrorMessages().c_str());
-	    }else{
-	    	parseJsonRecursive(root,vAttr);
-	    }
+	Json::Value root;   
+	Json::Reader reader;
+	  	
+	if(name[0]=='['){
+		name = name.substr(1, name.length()-2);
+	}
+		// syslog(LOG_NOTICE, "%s",name.c_str());
+	bool parsingSuccessful = reader.parse( name.c_str(), root );     //parse process
+	if ( !parsingSuccessful )
+	{
+	   syslog(LOG_NOTICE,"Failed to parse %s", reader.getFormattedErrorMessages().c_str());
+	}else{
+		parseJsonRecursive(root,vAttr);
+	}
 	}catch(...){
 		syslog(LOG_NOTICE, "Json Parsing Failed");
 	}
