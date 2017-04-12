@@ -1,4 +1,4 @@
-#include "jsoncpp/json.h"
+ #include "jsoncpp/json.h"
 #include "teleindex.h"
 #include "mxml/mxml.h"
 #include "base64.h"
@@ -812,34 +812,27 @@ void parseJsonRecursive(Json::Value & root,vector <struct Attribute> & vAttr){
         tAttr.attribute_source = 'J';
 
         for (Json::Value::iterator it=root.begin(); it!=root.end(); ++it){
-        	if((*it).isObject()){
-         		parseJsonRecursive((*it),vAttr);
-        		tAttr.name = it.key().asString();
-				tAttr.value = "JsonObject";
-
-				vAttr.push_back(tAttr);
-				//syslog(LOG_NOTICE,"tAttr- Key: %s , Value: %s",tAttr.name.c_str(),tAttr.value.c_str());
-        	}else if((*it).isArray()){
+        	
+        	if((*it).isArray()){
         		Json::Value array = (*it);
         		int printOnceFlag = 1;
         		for (j=0; j < array.size(); j++) {
 
-        			if( array[j].isObject() ){
-						parseJsonRecursive(array[j],vAttr);
-
-						tAttr.name = it.key().asString();
-						tAttr.value = "JsonObject";
-						if(printOnceFlag){
-							vAttr.push_back(tAttr);
-							printOnceFlag = 0;
-						}
-						//syslog(LOG_NOTICE,"tAttr- Key: %s , Value: %s",tAttr.name.c_str(),tAttr.value.c_str());
-					}else if(array[j].isArray()){
+					if(array[j].isArray()){
 						parseJsonRecursive(array[j],vAttr);
 						tAttr.name = it.key().asString();
 						tAttr.value = "JsonArray";
 
 						if(printOnceFlag){
+							vAttr.push_back(tAttr);
+							printOnceFlag = 0;
+						}
+					}else if( array[j].isObject() ){
+						parseJsonRecursive(array[j],vAttr);
+
+						tAttr.name = it.key().asString();
+						tAttr.value = "JsonObject";
+						if(printOnceFlag && tAttr.name !="Arr"){
 							vAttr.push_back(tAttr);
 							printOnceFlag = 0;
 						}
@@ -860,6 +853,13 @@ void parseJsonRecursive(Json::Value & root,vector <struct Attribute> & vAttr){
 						}
 					}
         		}
+        	}else if((*it).isObject()){
+         		parseJsonRecursive((*it),vAttr);
+        		tAttr.name = it.key().asString();
+				tAttr.value = "JsonObject";
+
+				vAttr.push_back(tAttr);
+				//syslog(LOG_NOTICE,"tAttr- Key: %s , Value: %s",tAttr.name.c_str(),tAttr.value.c_str());
         	}else{ //else it is not an Json Object
 				tAttr.name = it.key().asString();
 				if ( (*it).isString() ){
@@ -879,17 +879,27 @@ void parseJsonRecursive(Json::Value & root,vector <struct Attribute> & vAttr){
 
 void parseJson(string & name,vector <struct Attribute> & vAttr){
 	try{
-	Json::Value root;   
+	Json::Value root;
 	Json::Reader reader;
-	  	
+
 	if(name[0]=='['){
-		name = name.substr(1, name.length()-2);
+		name.insert(0,1,':');
+		name.insert(0,1,'\'');
+		name.insert(0,1,'r');
+		name.insert(0,1,'r');
+		name.insert(0,1,'A');
+		name.insert(0,1,'\'');
+		name.insert(0,1,'{');
+		name.append("}");
+		//syslog(LOG_NOTICE, "%s",name.c_str());
+
 	}
-		// syslog(LOG_NOTICE, "%s",name.c_str());
+	//syslog(LOG_NOTICE, "%s",name.c_str());
 	bool parsingSuccessful = reader.parse( name.c_str(), root );     //parse process
 	if ( !parsingSuccessful )
 	{
-	   syslog(LOG_NOTICE,"Failed to parse %s", reader.getFormattedErrorMessages().c_str());
+		syslog(LOG_NOTICE, "%s",name.c_str());
+		syslog(LOG_NOTICE,"Failed to parse %s", reader.getFormattedErrorMessages().c_str());
 	}else{
 		parseJsonRecursive(root,vAttr);
 	}
