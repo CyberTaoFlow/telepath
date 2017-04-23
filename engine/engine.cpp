@@ -514,7 +514,7 @@ void initSyslog(){
 void startThreads(){
 
 	unsigned long rc,empty=0;
-	pthread_t thread_sch,thread_s_p_m,thread_logins,thread_load,thread_delete;
+	pthread_t thread_sch,thread_s_p_m,thread_logins,thread_load,thread_delete,thread_memory;
 	pthread_t thread_req,thread_tokenize,thread_cmd,thread_cap,thread_app_updated;
 	pthread_t thread_m[NUM_OF_MARKOV_THREADS],thread_mS[NUM_OF_MARKOV_THREADS],thread_gA[NUM_OF_GET_ATT],thread_gAP[NUM_OF_GET_ATT];
 
@@ -559,12 +559,15 @@ void startThreads(){
 
 	rc = pthread_create(&thread_app_updated, NULL, thread_app_was_updated, (void *)empty);
 	if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); exit(1);}
-	pthread_detach(thread_sch);
+	pthread_detach(thread_app_updated);
 
 	rc = pthread_create(&thread_delete, NULL, thread_Delete_Domain, (void *)empty);
 	if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); exit(1);}
-	pthread_detach(thread_sch);
+	pthread_detach(thread_delete);
 
+	// rc = pthread_create(&thread_memory, NULL, thread_check_memory, (void *)empty);
+	// if (rc){ printf("ERROR; return code from pthread_create() is %lu\n", rc); exit(1);}
+	// pthread_detach(thread_memory);
 
 	// Create NUM_OF_MARKOV_THREADS threads which calculate the attribute scores.
 	for(markov_i=0 ; markov_i < NUM_OF_MARKOV_THREADS;markov_i++){

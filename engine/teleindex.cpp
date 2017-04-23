@@ -1183,9 +1183,9 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 
 	//Finger Print
 	string fingerprint = "";
-	if(fullCookie.size() > 0){
-			fingerprint = fullCookie;
-	}else{
+	//if(fullCookie.size() > 0){
+	//		fingerprint = fullCookie;
+	//}else{
 		fingerprint = teleo->mParams['a'/*UserIP*/];
 
 		if(teleo->mParams['z'/*user-agent*/].size() > 0 && teleo->mParams['f'/*App*/].size() > 0){
@@ -1195,7 +1195,7 @@ void TeleCache::addobject(TeleObject *teleo,std::unordered_map<string,string> & 
 			fingerprint += teleo->mParams['u'/*RespIP*/];
 		}
 
-	}
+	//}
 	fingerprint = sha256(fingerprint);
 	teleo->mParams['E'/*SHA256_SID*/] = fingerprint;
 	teleo->mParams['e'/*SID*/] = makeSID(fingerprint);
