@@ -539,6 +539,7 @@ cron_jobs(){
     echo "* * * * * run-one php /opt/telepath/ui/html/index.php cases flag_requests_by_cases >> /var/log/flag_requests_by_cases.log 2>&1 || true" >> currentCrons
     echo "*/5 * * * * run-one php /opt/telepath/ui/html/index.php webusers store_users >> /var/log/web_users.log 2>&1 || true" >> currentCrons
     echo "0 * * * * run-one php /opt/telepath/ui/html/index.php cases store_similar_case_sessions >> /var/log/store_similar_case_sessions.log 2>&1 || true" >> currentCrons
+    echo "0 1 * * * run-one php /opt/telepath/ui/html/index.php applications mark_low_requests >> /var/log/mark_low_requests.log 2>&1 || true" >> currentCrons
     echo "*/2 * * * * run-one /opt/telepath/teleup.sh" >> currentCrons
     crontab currentCrons
     rm currentCrons
