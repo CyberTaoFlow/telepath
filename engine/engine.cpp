@@ -355,7 +355,7 @@ void findAppID(string & appName,string & appid){
 			else if(itAppMode->second.subdomains.size() <= 300){
 				if(itAppMode->second.subdomains.count(appName) == 0){ // Attribute name was not found.
 					snprintf(url,sizeof(url)-1,"/telepath-domains/domains/%s/_update",itAppMode->first.c_str());
-					snprintf(buffer,sizeof(buffer)-1,"{\"script\":\"ctx._source.subdomains+=sub\",\"params\":{\"sub\":\"%s\"}}",appName.c_str());
+					snprintf(buffer,sizeof(buffer)-1,"{\"script\":{\"inline\":\"ctx._source.subdomains.add(params.sub)\",\"lang\":\"painless\",\"params\":{\"sub\":\"%s\"}}}",appName.c_str());
 					es_mapping(string(url),string(buffer) );
 					itAppMode->second.subdomains.insert(appName);
 				}
